@@ -1,0 +1,75 @@
+package com.duarf.app.ui.screens
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AboutScreen(onBack: () -> Unit) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("About DUARF") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp)) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text("DUARF Sentinel", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.height(4.dp))
+                    Text("Version 1.0.0 (Release Build)", style = MaterialTheme.typography.bodyMedium)
+                    Spacer(Modifier.height(8.dp))
+                    Text("Engine: 1.0.0-rules (Aho-Corasick + Rule Fusion)", style = MaterialTheme.typography.bodySmall)
+                    Text("Packs: Rules v1, Tier 1 (en, hi, hi-Latn)", style = MaterialTheme.typography.bodySmall)
+                    Text("Storage: Android Keystore AES-256-GCM + Room", style = MaterialTheme.typography.bodySmall)
+                }
+            }
+
+            Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp)) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text("How DUARF Works", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        "DUARF runs an entirely local scam detection engine on your phone. " +
+                                "Incoming WhatsApp notifications are analyzed within milliseconds for phishing URLs, " +
+                                "malicious APK files, digital arrest threats, electricity cutoff lures, and OTP asks. " +
+                                "All analysis happens in RAM, and benign messages are never stored.",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
+
+            Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp)) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text("Emergency Contacts", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.height(8.dp))
+                    Text("National Cyber Crime Helpline: 1930", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+                    Text("National Cyber Crime Portal: cybercrime.gov.in", style = MaterialTheme.typography.bodySmall)
+                }
+            }
+        }
+    }
+}

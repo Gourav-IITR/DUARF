@@ -1,3 +1,197 @@
 <resources>
     <string name="app_name">DUARF</string>
+    <string name="unknown_sender">Unknown Sender</string>
+
+    <!-- Notification channels and alerts -->
+    <string name="channel_danger_name">Scam alerts</string>
+    <string name="channel_danger_desc">Immediate high-priority heads-up for likely scams</string>
+    <string name="channel_caution_name">Cautions</string>
+    <string name="channel_caution_desc">Silent cautions for suspicious messages</string>
+
+    <string name="alert_danger_title">Likely scam from %1$s</string>
+    <string name="alert_caution_title">Be careful with message from %1$s</string>
+    <string name="alert_generic_summary">Suspicious elements detected in this message</string>
+    <string name="action_see_why">See why</string>
+    <string name="action_not_a_scam">Not a scam</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">DUARF WhatsApp Scam Detector</string>
+    <string name="onboarding_desc_1">DUARF protects you from scams, phishing links, fake APKs, and fraud on WhatsApp completely on-device.</string>
+
+    <string name="onboarding_title_2">100% Private — Zero Network Access</string>
+    <string name="onboarding_desc_2">DUARF does not have internet permission. Your messages never leave your phone, and benign messages are never saved to disk.</string>
+
+    <string name="onboarding_title_3">Notification Access</string>
+    <string name="onboarding_desc_3">DUARF needs notification access to analyze incoming WhatsApp messages as they arrive and alert you instantly.</string>
+    <string name="btn_grant_notification_access">Grant Notification Access</string>
+    <string name="access_granted">Access Granted</string>
+
+    <string name="onboarding_title_4">Alert Notifications</string>
+    <string name="onboarding_desc_4">Allow notifications so DUARF can display heads-up alerts when a dangerous scam message is detected.</string>
+    <string name="btn_grant_post_notifications">Enable Notifications</string>
+
+    <string name="onboarding_title_5">Background Battery Optimization</string>
+    <string name="onboarding_desc_5">On some devices (Xiaomi, Samsung, Oppo), set DUARF battery usage to Unrestricted so real-time protection is not stopped.</string>
+    <string name="btn_battery_settings">Open Battery Settings</string>
+
+    <string name="onboarding_title_6">Send a Test Scam Alert</string>
+    <string name="onboarding_desc_6">Verify your protection right now by running a simulated scam message through the detection pipeline.</string>
+    <string name="btn_send_test_alert">Send Test Alert</string>
+    <string name="btn_get_started">Get Started</string>
+
+    <!-- Home Screen -->
+    <string name="status_protected">Protected</string>
+    <string name="status_action_needed">Action Required</string>
+    <string name="status_listener_running">Listening for WhatsApp messages</string>
+    <string name="status_listener_disabled">Notification access is disabled</string>
+    <string name="card_weekly_stats">This Week</string>
+    <string name="stat_checked">Checked</string>
+    <string name="stat_cautions">Cautions</string>
+    <string name="stat_dangers">Dangers</string>
+
+    <string name="card_check_message">Check a Message</string>
+    <string name="hint_paste_message">Paste any message or link here...</string>
+    <string name="btn_analyze">Analyze</string>
+    <string name="toggle_unknown_number">This came from a number I don\'t know</string>
+
+    <string name="title_recent_alerts">Recent Alerts</string>
+    <string name="no_recent_alerts">No scam alerts. You\'re all clear!</string>
+    <string name="view_all">View all</string>
+
+    <!-- Alert Detail & Check Result -->
+    <string name="level_danger">DANGER — Likely Scam</string>
+    <string name="level_caution">CAUTION — Be Careful</string>
+    <string name="level_safe">LOOKS SAFE — Stay Alert</string>
+    <string name="label_message_content">Message Content</string>
+    <string name="label_reasons">Why DUARF Flagged This</string>
+    <string name="label_advice">What You Should Do</string>
+    <string name="advice_1">Do not click any links, open files, or transfer money.</string>
+    <string name="advice_2">Block and report the sender inside WhatsApp.</string>
+    <string name="advice_3">If you shared money or OTP, immediately call national cyber helpline 1930 or visit cybercrime.gov.in.</string>
+
+    <string name="btn_this_is_safe">This is safe</string>
+    <string name="btn_this_is_scam">This is a scam</string>
+    <string name="btn_trust_sender">Trust this sender</string>
+    <string name="btn_share_warning">Share this warning</string>
+
+    <!-- History Screen -->
+    <string name="history_title">Alert History</string>
+    <string name="filter_all">All</string>
+    <string name="filter_danger">Danger</string>
+    <string name="filter_caution">Caution</string>
+    <string name="no_history">No alerts in history</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="setting_language">Language</string>
+    <string name="setting_sensitivity">Detection Sensitivity</string>
+    <string name="sensitivity_low">Low (Fewer alerts)</string>
+    <string name="sensitivity_balanced">Balanced (Recommended)</string>
+    <string name="sensitivity_high">High (Maximum protection)</string>
+    <string name="setting_group_alerts">Alert on Group Messages</string>
+    <string name="setting_retention">Data Retention Period</string>
+    <string name="retention_7_days">7 Days</string>
+    <string name="retention_30_days">30 Days</string>
+    <string name="retention_90_days">90 Days</string>
+    <string name="setting_privacy_proof">Proof of Privacy</string>
+    <string name="setting_about">About &amp; Versions</string>
+    <string name="setting_delete_all">Delete All Data</string>
+    <string name="dialog_delete_title">Delete All Data?</string>
+    <string name="dialog_delete_desc">This permanently deletes all alerts, statistics, and encryption keys from your device. This cannot be undone.</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <!-- Privacy Proof Screen -->
+    <string name="privacy_proof_title">Proof of Privacy</string>
+    <string name="privacy_no_internet_title">Zero Internet Capability</string>
+    <string name="privacy_no_internet_desc">DUARF does not have android.permission.INTERNET. It cannot make any network requests or transmit your data to any server.</string>
+    <string name="privacy_how_to_verify">How to Verify Yourself in Android Settings:</string>
+    <string name="privacy_step_1">1. Open device Settings &gt; Apps &gt; DUARF.</string>
+    <string name="privacy_step_2">2. Tap Permissions and notice \'Internet\' or \'Network\' is completely absent.</string>
+    <string name="privacy_step_3">3. Tap Mobile Data &amp; Wi-Fi and observe 0 bytes used.</string>
+    <string name="label_declared_permissions">Declared App Permissions</string>
+
+    <!-- Reasons strings (§11) -->
+    <string name="reason_l01_title">Malicious or unexpected APK file</string>
+    <string name="reason_l01_detail">The message delivers or links to an Android app package (.apk). Legitimate organizations never send apps over WhatsApp.</string>
+    <string name="reason_l02_title">Brand and website mismatch</string>
+    <string name="reason_l02_detail">The message mentions a known brand but links to an unverified domain.</string>
+    <string name="reason_l03_title">Lookalike or fake website domain</string>
+    <string name="reason_l03_detail">The domain looks similar to an official institution but is deceptive.</string>
+    <string name="reason_l04_title">Numerical IP address link</string>
+    <string name="reason_l04_detail">The link uses a raw IP address instead of a domain name.</string>
+    <string name="reason_l05_title">Shortened web link</string>
+    <string name="reason_l05_detail">The link hides its true destination using a URL shortener.</string>
+    <string name="reason_l06_title">Risky website extension</string>
+    <string name="reason_l06_detail">The website uses a domain extension frequently associated with scams.</string>
+    <string name="reason_l07_title">Deceptive characters in link</string>
+    <string name="reason_l07_detail">The link uses foreign or lookalike characters to mimic a legitimate site.</string>
+    <string name="reason_l08_title">Obfuscated website address</string>
+    <string name="reason_l08_detail">The link was deliberately formatted to bypass security filters.</string>
+    <string name="reason_l09_title">Unofficial government claim</string>
+    <string name="reason_l09_detail">Claims to be government or police, but does not use an official .gov.in or .nic.in address.</string>
+    <string name="reason_l10_title">Deceptive link destination</string>
+    <string name="reason_l10_detail">The link uses a user-info trick to hide where it actually leads.</string>
+    <string name="reason_l11_title">Known scam website</string>
+    <string name="reason_l11_detail">The website is on a verified blocklist of fraudulent addresses.</string>
+    <string name="reason_l12_title">Redirects to another chat</string>
+    <string name="reason_l12_detail">The sender wants you to move to a different platform or chat.</string>
+
+    <string name="reason_a01_title">Asks for OTP, PIN, or password</string>
+    <string name="reason_a01_detail">Requests secret authentication codes. Banks and services never ask for your OTP.</string>
+    <string name="reason_a02_title">Requests installing an app</string>
+    <string name="reason_a02_detail">Instructs you to download an app or remote control tool.</string>
+    <string name="reason_a03_title">Demands payment or advance fee</string>
+    <string name="reason_a03_detail">Asks for an upfront charge, fine, registration fee, or penalty.</string>
+    <string name="reason_a04_title">UPI PIN to receive money trap</string>
+    <string name="reason_a04_detail">Claims you must enter a UPI PIN or scan a QR code to receive money. Entering your PIN always sends money, never receives it!</string>
+    <string name="reason_a05_title">Asks for Aadhaar, PAN, or card details</string>
+    <string name="reason_a05_detail">Requests personal or banking credentials.</string>
+    <string name="reason_a06_title">Demands secrecy or video call</string>
+    <string name="reason_a06_detail">Orders you not to tell family or police, or stay on call continuously.</string>
+    <string name="reason_a07_title">Click link to verify account</string>
+    <string name="reason_a07_detail">Directs you to click an unverified link to update or reactivate services.</string>
+    <string name="reason_a08_title">Asks to move to Telegram</string>
+    <string name="reason_a08_detail">Requests moving from WhatsApp to Telegram.</string>
+    <string name="reason_a09_title">Money request from new number</string>
+    <string name="reason_a09_detail">Claims to be a contact on a new number asking for emergency funds.</string>
+
+    <string name="reason_p01_title">Urgency or artificial deadline</string>
+    <string name="reason_p01_detail">Pressures you to act within hours to prevent rational thought.</string>
+    <string name="reason_p02_title">Threat of account or SIM block</string>
+    <string name="reason_p02_detail">Threatens that your bank account, KYC, or phone service will be suspended.</string>
+    <string name="reason_p03_title">Threat of arrest or legal action</string>
+    <string name="reason_p03_detail">Claims an arrest warrant, police FIR, or digital arrest.</string>
+    <string name="reason_p04_title">Threat of electricity or utility cutoff</string>
+    <string name="reason_p04_detail">Threatens immediate disconnection of electricity tonight.</string>
+    <string name="reason_p05_title">Lottery or prize lure</string>
+    <string name="reason_p05_detail">Promises large cash prizes or lucky draws you never entered.</string>
+    <string name="reason_p06_title">Work from home / part-time job lure</string>
+    <string name="reason_p06_detail">Offers unrealistic daily earnings for simple video likes or reviews.</string>
+    <string name="reason_p07_title">High or guaranteed investment returns</string>
+    <string name="reason_p07_detail">Promises doubled money, stock tips, or guaranteed profits.</string>
+    <string name="reason_p08_title">Instant loan without documents</string>
+    <string name="reason_p08_detail">Advertises predatory or fake instant loan approval.</string>
+    <string name="reason_p09_title">Cashback or refund lure</string>
+    <string name="reason_p09_detail">Claims unclaimed rewards or cashbacks are waiting.</string>
+    <string name="reason_p10_title">Institution impersonation</string>
+    <string name="reason_p10_detail">Sent from a personal mobile number while claiming to represent a bank, government, or company.</string>
+    <string name="reason_p11_title">Fake parcel delivery problem</string>
+    <string name="reason_p11_detail">Claims a parcel is held due to incomplete address.</string>
+    <string name="reason_p12_title">Fake traffic challan notice</string>
+    <string name="reason_p12_detail">Urges immediate payment for a vehicle challan.</string>
+    <string name="reason_p13_title">Wedding or invitation lure</string>
+    <string name="reason_p13_detail">Uses an event invitation lure to deliver malware.</string>
+    <string name="reason_p14_title">Generic mass greeting</string>
+    <string name="reason_p14_detail">Uses generic salutations typical of mass fraud campaigns.</string>
+    <string name="reason_t01_title">Hidden or manipulated text</string>
+    <string name="reason_t01_detail">Uses invisible characters or foreign lookalike letters to evade detection.</string>
+    <string name="reason_s01_title">Sent from an unknown number</string>
+    <string name="reason_s01_detail">Sent from an unsaved number not in your contacts.</string>
+    <string name="reason_s02_title">Sent from a foreign country code</string>
+    <string name="reason_s02_detail">Sent from an international number outside India.</string>
+    <string name="reason_s03_title">First message from this sender</string>
+    <string name="reason_s03_detail">You have never received messages from this number before.</string>
+    <string name="reason_model_title">Suspicious scam pattern</string>
+    <string name="reason_model_detail">The overall pattern of phrasing closely matches known scam campaigns.</string>
 </resources>

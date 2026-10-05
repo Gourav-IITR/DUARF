@@ -1,0 +1,197 @@
+<resources>
+    <string name="app_name">DUARF</string>
+    <string name="unknown_sender">अज्ञात प्रेषक</string>
+
+    <!-- Notification channels and alerts -->
+    <string name="channel_danger_name">धोखाधड़ी चेतावनी</string>
+    <string name="channel_danger_desc">संभावित स्कैम संदेशों के लिए तत्काल अलर्ट</string>
+    <string name="channel_caution_name">सावधानी</string>
+    <string name="channel_caution_desc">संदिग्ध संदेशों के लिए मूक सूचनाएं</string>
+
+    <string name="alert_danger_title">%1$s से संभावित स्कैम</string>
+    <string name="alert_caution_title">%1$s के संदेश से सावधान रहें</string>
+    <string name="alert_generic_summary">इस संदेश में संदिग्ध तत्व पाए गए हैं</string>
+    <string name="action_see_why">कारण देखें</string>
+    <string name="action_not_a_scam">स्कैम नहीं है</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">DUARF व्हाट्सएप स्कैम डिटेक्टर</string>
+    <string name="onboarding_desc_1">DUARF आपको व्हाट्सएप पर धोखाधड़ी, फर्जी लिंक, खतरनाक एपीके और ठगी से पूरी तरह सुरक्षित रखता है।</string>
+
+    <string name="onboarding_title_2">100% सुरक्षित — इंटरनेट की कोई अनुमति नहीं</string>
+    <string name="onboarding_desc_2">DUARF के पास इंटरनेट अनुमति नहीं है। आपके संदेश कभी फोन से बाहर नहीं जाते।</string>
+
+    <string name="onboarding_title_3">नोटिफिकेशन एक्सेस</string>
+    <string name="onboarding_desc_3">व्हाट्सएप संदेशों की तुरंत जांच करने के लिए DUARF को नोटिफिकेशन एक्सेस की आवश्यकता है।</string>
+    <string name="btn_grant_notification_access">नोटिफिकेशन एक्सेस दें</string>
+    <string name="access_granted">अनुमति मिल गई</string>
+
+    <string name="onboarding_title_4">अलर्ट नोटिफिकेशन</string>
+    <string name="onboarding_desc_4">खतरनाक संदेश मिलने पर अलर्ट दिखाने के लिए नोटिफिकेशन की अनुमति दें।</string>
+    <string name="btn_grant_post_notifications">नोटिफिकेशन सक्षम करें</string>
+
+    <string name="onboarding_title_5">बैटरी ऑप्टिमाइजेशन</string>
+    <string name="onboarding_desc_5">कुछ फोनों में DUARF की बैटरी को Unrestricted पर सेट करें ताकि सुरक्षा बंद न हो।</string>
+    <string name="btn_battery_settings">बैटरी सेटिंग्स खोलें</string>
+
+    <string name="onboarding_title_6">टेस्ट अलर्ट भेजें</string>
+    <string name="onboarding_desc_6">एक नकली स्कैम संदेश का परीक्षण करके सुरक्षा की जांच करें।</string>
+    <string name="btn_send_test_alert">टेस्ट अलर्ट भेजें</string>
+    <string name="btn_get_started">शुरू करें</string>
+
+    <!-- Home Screen -->
+    <string name="status_protected">सुरक्षित</string>
+    <string name="status_action_needed">कार्रवाई आवश्यक</string>
+    <string name="status_listener_running">व्हाट्सएप संदेशों पर नजर रखी जा रही है</string>
+    <string name="status_listener_disabled">नोटिफिकेशन एक्सेस बंद है</string>
+    <string name="card_weekly_stats">इस सप्ताह</string>
+    <string name="stat_checked">जांचे गए</string>
+    <string name="stat_cautions">सावधानी</string>
+    <string name="stat_dangers">खतरा</string>
+
+    <string name="card_check_message">संदेश की जांच करें</string>
+    <string name="hint_paste_message">कोई भी संदेश या लिंक यहां पेस्ट करें...</string>
+    <string name="btn_analyze">जांचें</string>
+    <string name="toggle_unknown_number">यह अनजान नंबर से आया है</string>
+
+    <string name="title_recent_alerts">हालिया अलर्ट</string>
+    <string name="no_recent_alerts">कोई स्कैम अलर्ट नहीं। आप सुरक्षित हैं!</string>
+    <string name="view_all">सभी देखें</string>
+
+    <!-- Alert Detail & Check Result -->
+    <string name="level_danger">खतरा — संभावित धोखाधड़ी</string>
+    <string name="level_caution">सावधान — सतर्क रहें</string>
+    <string name="level_safe">सुरक्षित लग रहा है</string>
+    <string name="label_message_content">संदेश सामग्री</string>
+    <string name="label_reasons">चेतावनी के मुख्य कारण</string>
+    <string name="label_advice">आपको क्या करना चाहिए</string>
+    <string name="advice_1">किसी भी लिंक पर क्लिक न करें, फाइल न खोलें और पैसे न भेजें।</string>
+    <string name="advice_2">व्हाट्सएप में प्रेषक को तुरंत ब्लॉक और रिपोर्ट करें।</string>
+    <string name="advice_3">यदि पैसे या ओटीपी साझा किए हैं, तो तुरंत साइबर हेल्पलाइन 1930 पर कॉल करें या cybercrime.gov.in पर जाएं।</string>
+
+    <string name="btn_this_is_safe">यह सुरक्षित है</string>
+    <string name="btn_this_is_scam">यह स्कैम है</string>
+    <string name="btn_trust_sender">इस प्रेषक पर भरोसा करें</string>
+    <string name="btn_share_warning">यह चेतावनी साझा करें</string>
+
+    <!-- History Screen -->
+    <string name="history_title">अलर्ट इतिहास</string>
+    <string name="filter_all">सभी</string>
+    <string name="filter_danger">खतरा</string>
+    <string name="filter_caution">सावधानी</string>
+    <string name="no_history">इतिहास में कोई अलर्ट नहीं है</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="setting_language">भाषा (Language)</string>
+    <string name="setting_sensitivity">डिटेक्शन संवेदनशीलता</string>
+    <string name="sensitivity_low">कम (कम अलर्ट)</string>
+    <string name="sensitivity_balanced">संतुलित (अनुशंसित)</string>
+    <string name="sensitivity_high">उच्च (अधिकतम सुरक्षा)</string>
+    <string name="setting_group_alerts">ग्रुप संदेशों पर अलर्ट करें</string>
+    <string name="setting_retention">डेटा रखने की अवधि</string>
+    <string name="retention_7_days">7 दिन</string>
+    <string name="retention_30_days">30 दिन</string>
+    <string name="retention_90_days">90 दिन</string>
+    <string name="setting_privacy_proof">गोपनीयता का प्रमाण</string>
+    <string name="setting_about">ऐप के बारे में</string>
+    <string name="setting_delete_all">सारा डेटा हटाएं</string>
+    <string name="dialog_delete_title">सारा डेटा हटाएं?</string>
+    <string name="dialog_delete_desc">यह आपके फोन से सभी अलर्ट, आंकड़े और एन्क्रिप्शन कुंजियों को हमेशा के लिए हटा देगा।</string>
+    <string name="btn_delete">हटाएं</string>
+    <string name="btn_cancel">रद्द करें</string>
+
+    <!-- Privacy Proof Screen -->
+    <string name="privacy_proof_title">गोपनीयता का प्रमाण</string>
+    <string name="privacy_no_internet_title">शून्य इंटरनेट क्षमता</string>
+    <string name="privacy_no_internet_desc">DUARF के पास android.permission.INTERNET नहीं है। यह किसी भी सर्वर को डेटा नहीं भेज सकता।</string>
+    <string name="privacy_how_to_verify">सेटिंग्स में स्वयं जांच कैसे करें:</string>
+    <string name="privacy_step_1">1. फोन सेटिंग्स &gt; ऐप्स &gt; DUARF खोलें।</string>
+    <string name="privacy_step_2">2. अनुमतियां (Permissions) देखें; इंटरनेट गायब मिलेगा।</string>
+    <string name="privacy_step_3">3. मोबाइल डेटा और वाई-फाई में 0 बाइट्स का उपयोग दिखेगा।</string>
+    <string name="label_declared_permissions">घोषित अनुमतियां</string>
+
+    <!-- Reasons strings (§11) -->
+    <string name="reason_l01_title">संदिग्ध एपीके (APK) फाइल</string>
+    <string name="reason_l01_detail">संदेश में सीधे ऐप (.apk) डाउनलोड करने को कहा गया है। असली कंपनियां कभी व्हाट्सएप पर ऐप फाइल नहीं भेजतीं।</string>
+    <string name="reason_l02_title">ब्रांड और वेबसाइट का बेमेल</string>
+    <string name="reason_l02_detail">संदेश में किसी जाने-माने बैंक या संस्था का नाम है लेकिन लिंक फर्जी है।</string>
+    <string name="reason_l03_title">मिलती-जुलती फर्जी वेबसाइट</string>
+    <string name="reason_l03_detail">लिंक देखने में असली जैसा है लेकिन यह एक नकली डोमेन है।</string>
+    <string name="reason_l04_title">संख्यात्मक आईपी पता लिंक</string>
+    <string name="reason_l04_detail">लिंक में डोमेन के स्थान पर सीधे आईपी पता दिया गया है।</string>
+    <string name="reason_l05_title">छोटा किया गया लिंक (Shortened URL)</string>
+    <string name="reason_l05_detail">असली वेबसाइट को छिपाने के लिए URL Shortener का उपयोग किया गया है।</string>
+    <string name="reason_l06_title">जोखिम भरा डोमेन एक्सटेंशन</string>
+    <string name="reason_l06_detail">यह वेबसाइट धोखाधड़ी के लिए इस्तेमाल होने वाले एक्सटेंशन पर है।</string>
+    <string name="reason_l07_title">भ्रामक अक्षरों वाला लिंक</string>
+    <string name="reason_l07_detail">असली साइट की नकल करने के लिए विदेशी या मिलते-जुलते अक्षरों का उपयोग किया गया है।</string>
+    <string name="reason_l08_title">छिपाया गया वेब पता</string>
+    <string name="reason_l08_detail">सुरक्षा फिल्टर से बचने के लिए लिंक को तोड़-मरोड़ कर लिखा गया है।</string>
+    <string name="reason_l09_title">फर्जी सरकारी या पुलिस दावा</string>
+    <string name="reason_l09_detail">सरकार या पुलिस होने का दावा है लेकिन .gov.in या .nic.in डोमेन नहीं है।</string>
+    <string name="reason_l10_title">भ्रामक लिंक संरचना</string>
+    <string name="reason_l10_detail">असली गंतव्य छिपाने के लिए लिंक में छल किया गया है।</string>
+    <string name="reason_l11_title">ज्ञात धोखाधड़ी वेबसाइट</string>
+    <string name="reason_l11_detail">यह वेबसाइट ब्लैकलिस्टेड धोखाधड़ी सूची में दर्ज है।</string>
+    <string name="reason_l12_title">अन्य चैट पर ले जाने का प्रयास</string>
+    <string name="reason_l12_detail">प्रेषक आपको टेलीग्राम या अन्य प्लेटफॉर्म पर ले जाना चाहता है।</string>
+
+    <string name="reason_a01_title">ओटीपी, पिन या पासवर्ड मांगा गया</string>
+    <string name="reason_a01_detail">गोपनीय सुरक्षा कोड मांगा गया है। बैंक या कोई भी सेवा कभी ओटीपी नहीं मांगती।</string>
+    <string name="reason_a02_title">ऐप इंस्टॉल करने का निर्देश</string>
+    <string name="reason_a02_detail">कोई ऐप या रिमोट कंट्रोल टूल डाउनलोड करने को कहा गया है।</string>
+    <string name="reason_a03_title">भुगतान या अग्रिम शुल्क की मांग</string>
+    <string name="reason_a03_detail">अग्रिम राशि, जुर्माना या रजिस्ट्रेशन फीस मांगी जा रही है।</string>
+    <string name="reason_a04_title">पैसे लेने के लिए यूपीआई पिन का जाल</string>
+    <string name="reason_a04_detail">पैसे प्राप्त करने के लिए पिन दर्ज करने को कहा जा रहा है। याद रखें, पिन डालने से केवल पैसे कटते हैं, आते कभी नहीं!</string>
+    <string name="reason_a05_title">आधार, पैन या कार्ड विवरण की मांग</string>
+    <string name="reason_a05_detail">व्यक्तिगत या बैंकिंग दस्तावेज मांगे गए हैं।</string>
+    <string name="reason_a06_title">गोपनीयता या कॉल पर बने रहने का दबाव</string>
+    <string name="reason_a06_detail">किसी को न बताने या वीडियो कॉल न काटने की धमकी दी जा रही है।</string>
+    <string name="reason_a07_title">खाता चालू रखने के लिए लिंक पर क्लिक</string>
+    <string name="reason_a07_detail">सेवाएं बंद होने का डर दिखाकर लिंक पर क्लिक कराया जा रहा है।</string>
+    <string name="reason_a08_title">टेलीग्राम पर संपर्क करने का आग्रह</string>
+    <string name="reason_a08_detail">व्हाट्सएप से हटकर टेलीग्राम पर जुड़ने को कहा गया है।</string>
+    <string name="reason_a09_title">नए नंबर से पैसे की आपातकालीन मांग</string>
+    <string name="reason_a09_detail">नया नंबर बताकर अस्पताल या आपातकाल के बहाने पैसे मांगे जा रहे हैं।</string>
+
+    <string name="reason_p01_title">अत्यधिक जल्दबाजी या समय सीमा</string>
+    <string name="reason_p01_detail">सोचने का समय न मिले इसलिए तुरंत निर्णय लेने का दबाव बनाया गया है।</string>
+    <string name="reason_p02_title">खाता या सिम बंद होने की धमकी</string>
+    <string name="reason_p02_detail">केवाईसी समाप्त होने या खाता निलंबित होने का डर दिखाया गया है।</string>
+    <string name="reason_p03_title">गिरफ्तारी या कानूनी कार्रवाई की धमकी</string>
+    <string name="reason_p03_detail">डिजिटल अरेस्ट, पुलिस केस या अरेस्ट वारंट का डर दिखाया जा रहा है।</string>
+    <string name="reason_p04_title">बिजली या कनेक्शन कटने की धमकी</string>
+    <string name="reason_p04_detail">आज रात बिजली कनेक्शन काट दिए जाने का भय दिखाया गया है।</string>
+    <string name="reason_p05_title">लॉटरी या इनाम का लालच</string>
+    <string name="reason_p05_detail">लाखों रुपये के इनाम या लकी ड्रा का झांसा दिया गया है।</string>
+    <string name="reason_p06_title">घर बैठे पार्ट-टाइम नौकरी का लालच</string>
+    <string name="reason_p06_detail">यूट्यूब वीडियो लाइक करके रोज हजारों कमाने का फर्जी वादा।</string>
+    <string name="reason_p07_title">पैसे दोगुना करने या स्टॉक टिप्स का झांसा</string>
+    <string name="reason_p07_detail">शेयर बाजार में गारंटीड मुनाफे या पैसे दोगुना करने का लालच।</string>
+    <string name="reason_p08_title">बिना दस्तावेज तुरंत लोन</string>
+    <string name="reason_p08_detail">फर्जी या खतरनाक लोन ऐप्स का लालच।</string>
+    <string name="reason_p09_title">कैशबैक या रिफंड का लालच</string>
+    <string name="reason_p09_detail">अप्रूव हुए कैशबैक या रिवॉर्ड पॉइंट का झांसा।</string>
+    <string name="reason_p10_title">संस्था का फर्जी रूप धारण करना</string>
+    <string name="reason_p10_detail">व्यक्तिगत मोबाइल नंबर से बैंक या सरकारी संस्था बनकर संदेश भेजा गया है।</string>
+    <string name="reason_p11_title">फर्जी पार्सल डिलीवरी समस्या</string>
+    <string name="reason_p11_detail">अधूरे पते के नाम पर पार्सल रुकने का झांसा।</string>
+    <string name="reason_p12_title">फर्जी ट्रैफिक चालान नोटिस</string>
+    <string name="reason_p12_detail">वाहन चालान भरने के नाम पर फर्जी लिंक या ऐप।</string>
+    <string name="reason_p13_title">शादी या निमंत्रण पत्र का लालच</string>
+    <string name="reason_p13_detail">शादी के कार्ड के नाम पर मैलवेयर डाउनलोड कराने की कोशिश।</string>
+    <string name="reason_p14_title">सामान्य सामूहिक अभिवादन</string>
+    <string name="reason_p14_detail">सामूहिक धोखाधड़ी में इस्तेमाल होने वाले सामान्य संबोधन।</string>
+    <string name="reason_t01_title">छिपाए गए या हेरफेर किए गए अक्षर</string>
+    <string name="reason_t01_detail">सुरक्षा पकड़ से बचने के लिए अदृश्य वर्णों का उपयोग।</string>
+    <string name="reason_s01_title">अज्ञात नंबर से प्राप्त</string>
+    <string name="reason_s01_detail">यह नंबर आपकी संपर्क सूची (Contacts) में सहेजा नहीं गया है।</string>
+    <string name="reason_s02_title">विदेशी नंबर से प्राप्त</string>
+    <string name="reason_s02_detail">भारत (+91) से बाहर के अंतरराष्ट्रीय देश कोड से भेजा गया।</string>
+    <string name="reason_s03_title">इस प्रेषक का पहला संदेश</string>
+    <string name="reason_s03_detail">इस नंबर से पहले कभी कोई संदेश नहीं आया था।</string>
+    <string name="reason_model_title">संदिग्ध स्कैम पैटर्न</string>
+    <string name="reason_model_detail">संदेश की भाषा और संरचना ज्ञात धोखाधड़ी संदेशों से काफी मिलती है।</string>
+</resources>
