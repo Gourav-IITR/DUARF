@@ -40,7 +40,22 @@ data class LanguageMetrics(
     val dangerPrecision: Double,
     val recall: Double,
     val benignToDangerPct: Double,
-    val benignToCautionPct: Double
+    val benignToCautionPct: Double,
+    val passedGates: Boolean = true,
+    val failureReasons: List<String> = emptyList()
+)
+
+@Serializable
+data class AdversarialMetrics(
+    val total: Int,
+    val scam: Int,
+    val benign: Int,
+    val scamRecall: Double? = null,
+    val fpDanger: Int = 0,
+    val fpCaution: Int = 0,
+    val benignToDangerPct: Double = 0.0,
+    val benignToCautionPct: Double = 0.0,
+    val precision: Double? = null
 )
 
 @Serializable
@@ -60,6 +75,7 @@ data class EvaluationMetrics(
     val benignRaisedToCautionOrAbovePercent: Double,
     val passedTier1Gates: Boolean,
     val perLanguage: List<LanguageMetrics> = emptyList(),
+    val adversarialMetrics: AdversarialMetrics? = null,
     val adversarialRecall: Double? = null,
     val rulesOnlyRecall: Double? = null,
     val rulesPlusMlRecall: Double? = null
@@ -268,6 +284,7 @@ private fun runEval(args: List<String>) {
     val rulesOnlyCounters = StatCounters()
     val perLangCounters = HashMap<String, StatCounters>()
     val advCounters = StatCounters()
+    val fnGroupIds = HashMap<String, Int>()
 
     val lines = inputFile.readLines()
     for (line in lines) {
@@ -314,7 +331,12 @@ private fun runEval(args: List<String>) {
                 when (v) {
                     AlertLevel.DANGER -> c.tpDanger++
                     AlertLevel.CAUTION -> c.tpCaution++
-                    AlertLevel.NONE -> c.fnNone++
+                    AlertLevel.NONE -> {
+                        c.fnNone++
+                        if (c == overall) {
+                            fnGroupIds[row.group_id] = (fnGroupIds[row.group_id] ?: 0) + 1
+                        }
+                    }
                 }
             } else {
                 c.benign++
@@ -350,26 +372,65 @@ private fun runEval(args: List<String>) {
 
     // Tier 1 Gates (§16.2):
     // Danger precision >= 0.97, Recall at Caution or above >= 0.90, Benign->Danger <= 0.3%, Benign->Caution <= 2.0%
-    val passedTier1 = dangerPrec >= 0.97 && recall >= 0.90 && bToDanger <= 0.3 && bToCaution <= 2.0
+    val overallPassed = dangerPrec >= 0.97 && recall >= 0.90 && bToDanger <= 0.3 && bToCaution <= 2.0
+
+    val tier1Langs = setOf("en", "hi", "hi-Latn")
+    var anyTier1LangFailed = false
 
     val langList = ArrayList<LanguageMetrics>()
     for ((l, c) in perLangCounters.entries.sortedBy { it.key }) {
         val (lp, lr, lb) = calcMetrics(c)
+        val dPrec = Math.round(lp * 1000.0) / 1000.0
+        val rec = Math.round(lr * 1000.0) / 1000.0
+        val bDanger = Math.round(lb.first * 100.0) / 100.0
+        val bCaution = Math.round(lb.second * 100.0) / 100.0
+
+        val failures = ArrayList<String>()
+        if (tier1Langs.contains(l)) {
+            if (c.scam > 0 && dPrec < 0.97) failures.add("Danger Precision $dPrec < 0.97")
+            if (c.scam > 0 && rec < 0.90) failures.add("Caution+ Recall $rec < 0.90")
+            if (c.benign > 0 && bDanger > 0.3) failures.add("Benign->Danger $bDanger% > 0.3%")
+            if (c.benign > 0 && bCaution > 2.0) failures.add("Benign->Caution $bCaution% > 2.0%")
+        }
+        val langPassed = failures.isEmpty()
+        if (!langPassed && tier1Langs.contains(l)) {
+            anyTier1LangFailed = true
+        }
+
         langList.add(
             LanguageMetrics(
                 lang = l,
                 total = c.total,
                 scam = c.scam,
                 benign = c.benign,
-                dangerPrecision = Math.round(lp * 1000.0) / 1000.0,
-                recall = Math.round(lr * 1000.0) / 1000.0,
-                benignToDangerPct = Math.round(lb.first * 100.0) / 100.0,
-                benignToCautionPct = Math.round(lb.second * 100.0) / 100.0
+                dangerPrecision = dPrec,
+                recall = rec,
+                benignToDangerPct = bDanger,
+                benignToCautionPct = bCaution,
+                passedGates = langPassed,
+                failureReasons = failures
             )
         )
     }
 
-    val advRecall = if (advCounters.scam > 0) (advCounters.tpDanger + advCounters.tpCaution).toDouble() / advCounters.scam else null
+    val passedTier1 = overallPassed && !anyTier1LangFailed
+
+    val advScamRec = if (advCounters.scam > 0) (advCounters.tpDanger + advCounters.tpCaution).toDouble() / advCounters.scam else null
+    val advPrec = if (advCounters.tpDanger + advCounters.fpDanger > 0) advCounters.tpDanger.toDouble() / (advCounters.tpDanger + advCounters.fpDanger) else 1.0
+    val advBDanger = if (advCounters.benign > 0) (advCounters.fpDanger.toDouble() / advCounters.benign) * 100.0 else 0.0
+    val advBCaution = if (advCounters.benign > 0) ((advCounters.fpCaution + advCounters.fpDanger).toDouble() / advCounters.benign) * 100.0 else 0.0
+
+    val advMetrics = AdversarialMetrics(
+        total = advCounters.total,
+        scam = advCounters.scam,
+        benign = advCounters.benign,
+        scamRecall = advScamRec?.let { Math.round(it * 1000.0) / 1000.0 },
+        fpDanger = advCounters.fpDanger,
+        fpCaution = advCounters.fpCaution,
+        benignToDangerPct = Math.round(advBDanger * 100.0) / 100.0,
+        benignToCautionPct = Math.round(advBCaution * 100.0) / 100.0,
+        precision = Math.round(advPrec * 1000.0) / 1000.0
+    )
 
     val evalMetrics = EvaluationMetrics(
         totalRows = overall.total,
@@ -387,7 +448,8 @@ private fun runEval(args: List<String>) {
         benignRaisedToCautionOrAbovePercent = Math.round(bToCaution * 100.0) / 100.0,
         passedTier1Gates = passedTier1,
         perLanguage = langList,
-        adversarialRecall = advRecall?.let { Math.round(it * 1000.0) / 1000.0 },
+        adversarialMetrics = advMetrics,
+        adversarialRecall = advMetrics.scamRecall,
         rulesOnlyRecall = Math.round(rulesRec * 1000.0) / 1000.0,
         rulesPlusMlRecall = Math.round(recall * 1000.0) / 1000.0
     )
@@ -404,20 +466,33 @@ private fun runEval(args: List<String>) {
         Benign - CAUTION (FP):${overall.fpCaution}
         Benign - DANGER (FP): ${overall.fpDanger}
         -------------------------------------------------------------------------
-        Danger Precision:     ${evalMetrics.dangerPrecision} (Target: >= 0.97)
-        Caution+ Recall:      ${evalMetrics.cautionOrAboveRecall} (Target: >= 0.90)
-        Benign -> Danger:     ${evalMetrics.benignRaisedToDangerPercent}% (Target: <= 0.3%)
-        Benign -> Caution+:   ${evalMetrics.benignRaisedToCautionOrAbovePercent}% (Target: <= 2.0%)
+        Overall Metrics:
+          Danger Precision:   ${evalMetrics.dangerPrecision} (Target: >= 0.97)
+          Caution+ Recall:    ${evalMetrics.cautionOrAboveRecall} (Target: >= 0.90)
+          Benign -> Danger:   ${evalMetrics.benignRaisedToDangerPercent}% (Target: <= 0.3%)
+          Benign -> Caution+: ${evalMetrics.benignRaisedToCautionOrAbovePercent}% (Target: <= 2.0%)
         -------------------------------------------------------------------------
-        PER-LANGUAGE BREAKDOWN:
+        PER-LANGUAGE BREAKDOWN (§16.2 Tier 1 Gates):
     """.trimIndent())
 
     for (lm in langList) {
-        println("  Language [${lm.lang.padEnd(7)}]: Total=${lm.total}, Scam=${lm.scam}, Benign=${lm.benign} | Prec=${lm.dangerPrecision}, Rec=${lm.recall}, B->Danger=${lm.benignToDangerPct}%")
+        val status = if (lm.passedGates) "[PASS]" else "[FAIL: ${lm.failureReasons.joinToString(", ")}]"
+        println("  Language [${lm.lang.padEnd(7)}]: Total=${lm.total}, Scam=${lm.scam}, Benign=${lm.benign} | Prec=${lm.dangerPrecision}, Rec=${lm.recall}, B->Danger=${lm.benignToDangerPct}%, B->Caution=${lm.benignToCautionPct}% $status")
     }
 
-    if (advRecall != null) {
-        println("  Adversarial subset:   Total=${advCounters.total}, Scam=${advCounters.scam} | Recall=${evalMetrics.adversarialRecall}")
+    if (fnGroupIds.isNotEmpty()) {
+        println("  False Negatives by template (group_id): $fnGroupIds")
+    }
+
+    if (advMetrics.total > 0) {
+        println("""
+        -------------------------------------------------------------------------
+        ADVERSARIAL EVALUATION (§16.2 / Point 5):
+          Total Rows:         ${advMetrics.total} (Scam: ${advMetrics.scam}, Benign: ${advMetrics.benign})
+          Scam Recall:        ${advMetrics.scamRecall ?: 1.0}
+          Benign False Pos:   Danger=${advMetrics.fpDanger} (${advMetrics.benignToDangerPct}%), Caution=${advMetrics.fpCaution} (${advMetrics.benignToCautionPct}%)
+          Adversarial Prec:   ${advMetrics.precision ?: 1.0}
+        """.trimIndent())
     }
 
     println("""

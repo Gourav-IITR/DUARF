@@ -170,7 +170,6 @@
     },
     {
       "id": "trn-scam-util-04",
-      "category": "hi-Latn",
       "category": "UTILITY_DISCONNECT",
       "lang": "hi-Latn",
       "sender_kind": "NUMBER_ONLY",
@@ -207,6 +206,14 @@
       "lang": "hi-Latn",
       "sender_kind": "NUMBER_ONLY",
       "text": "Aapka Rs {amount} cashback approve hua hai. Paise pane ke liye upi pin enter karo abhi ke abhi.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-upi-05",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Billing settlement: Rs {amount} waiting to be credited. Authorize with your secret UPI PIN to collect balance on {brand_payment}.",
       "adversarial": false
     },
     {
@@ -271,6 +278,14 @@
       "lang": "hi-Latn",
       "sender_kind": "NUMBER_ONLY",
       "text": "Customer service: Bank issue solve karne ke liye anydesk install karo aur 9 digit code batao.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-remote-05",
+      "category": "REMOTE_ACCESS",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Helpdesk engineer notice: For remote inspection and screen calibration, run AnyDesk application from store and provide address code.",
       "adversarial": false
     },
     {
@@ -407,6 +422,14 @@
       "lang": "hi-Latn",
       "sender_kind": "NUMBER_ONLY",
       "text": "India post delivery fail ho gayi hai address galat hone se. 24 ghante me address update karo: http://{domain}/track",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-deliv-04",
+      "category": "DELIVERY_COURIER",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Express delivery update: Package dispatch failed due to address illegible on parcel. Please reschedule drop-off slot at http://{domain}/schedule before return.",
       "adversarial": false
     },
     {
@@ -609,6 +632,46 @@
       "lang": "hi-Latn",
       "sender_kind": "NAMED",
       "text": "Mujhe 500 rupaye GPay kar de bhai, petrol pump par khada hu network slow hai.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-08",
+      "category": "CHAT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Hello, how are you doing? Hope everything is well with you and your family.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-09",
+      "category": "CHAT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Good morning! Are you free for a quick telephone call today?",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-10",
+      "category": "CHAT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Hey, where are you right now? Let us catch up this evening after work.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-11",
+      "category": "CHAT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "नमस्ते, आप कैसे हैं? सब ठीक-ठाक है ना घर पर?",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-12",
+      "category": "CHAT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Hello bhai, kaisa hai? Sab badhiya na? Call karna free hoke.",
       "adversarial": false
     },
     {

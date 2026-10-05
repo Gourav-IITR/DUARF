@@ -95,4 +95,59 @@ class NegativeLexiconOtpTest {
         assertThat(verdict.reasons.any { it.signalId == "A01" }).isTrue()
         assertThat(verdict.level).isNotEqualTo(AlertLevel.NONE)
     }
+
+    @Test
+    fun `adversarial english OTP evasion fires A01 when do not share precedes request to send to me`() {
+        val msg = createMessage("Don't share with anyone, send the OTP to me immediately to prevent block.")
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "A01" }).isTrue()
+        assertThat(verdict.level).isNotEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun `adversarial english OTP evasion fires A01 when request to send to me precedes do not share`() {
+        val msg = createMessage("Send the OTP to me right now. Do not tell anyone else.")
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "A01" }).isTrue()
+        assertThat(verdict.level).isNotEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun `adversarial hindi OTP evasion fires A01 when kisi ko mat batana precedes otp mujhe bhejo`() {
+        val msg = createMessage("किसी को मत बताना, ओटीपी मुझे भेजो खाता चालू रखने के लिए।")
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "A01" }).isTrue()
+        assertThat(verdict.level).isNotEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun `adversarial hindi OTP evasion fires A01 when otp mujhe bhejo precedes kisi ko mat batana`() {
+        val msg = createMessage("ओटीपी मुझे भेजो तुरंत। किसी को मत बताना यह गोपनीय है।")
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "A01" }).isTrue()
+        assertThat(verdict.level).isNotEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun `adversarial hinglish OTP evasion fires A01 when kisi ko mat batana precedes otp mujhe bhejo`() {
+        val msg = createMessage("Kisi ko mat batana, OTP mujhe bhejo account reactivate karne ke liye.")
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "A01" }).isTrue()
+        assertThat(verdict.level).isNotEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun `adversarial hinglish OTP evasion fires A01 when otp mujhe bhejo precedes kisi ko mat batana`() {
+        val msg = createMessage("OTP mujhe bhejo jaldi se, kisi ko mat batana.")
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "A01" }).isTrue()
+        assertThat(verdict.level).isNotEqualTo(AlertLevel.NONE)
+    }
 }
+

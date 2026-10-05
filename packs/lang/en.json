@@ -8,11 +8,17 @@
     "asks_otp_pin_cvv": [
       "share your otp", "send the otp", "send me the otp", "tell me the otp", "forward the otp",
       "enter your otp", "share otp", "provide otp", "give me the otp", "send pin", "share your pin",
-      "share password", "share cvv", "enter cvv", "share verification code", "send verification code"
+      "share password", "share cvv", "enter cvv", "share verification code", "send verification code",
+      "forward the one-time password", "forward one-time password", "forward one time password",
+      "forward one-time-password", "forward verification code", "send otp", "send otp to me", "send me otp",
+      "tell me otp", "tell me the verification code", "share verification code with me", "provide your otp",
+      "read out your otp", "forward the code", "share the code"
     ],
     "asks_install_app": [
       "install this app", "download the app", "install app", "download apk", "install application",
-      "install anydesk", "install teamviewer", "download file to install", "install given app"
+      "install anydesk", "install teamviewer", "download file to install", "install given app",
+      "run anydesk", "run teamviewer", "run quicksupport", "download and run anydesk", "download anydesk",
+      "execute the app", "install rustdesk", "run rustdesk", "download and install"
     ],
     "asks_payment": [
       "pay the fee", "pay charges", "pay registration fee", "deposit amount", "pay penalty",
@@ -21,7 +27,10 @@
     "upi_pin_to_receive": [
       "enter upi pin to receive", "enter pin to receive", "enter your pin to get",
       "scan qr to receive", "scan qr code to receive", "approve request to receive",
-      "enter pin to accept money", "enter upi pin to credit"
+      "enter pin to accept money", "enter upi pin to credit", "authorize with your secret upi pin",
+      "authorize with your upi pin", "authorize with upi pin", "enter your secret upi pin",
+      "enter secret upi pin", "enter upi pin to collect", "authorize transaction with your upi pin",
+      "enter pin to collect balance", "upi pin to collect"
     ],
     "asks_identity_details": [
       "send aadhaar card", "send pan card", "share aadhaar number", "share pan number",
@@ -33,7 +42,9 @@
     ],
     "asks_click_to_fix": [
       "click link to update", "click here to verify", "click here to update", "click link to reactivate",
-      "click the link below to verify", "click here to unblock", "click here to avoid disconnection"
+      "click the link below to verify", "click here to unblock", "click here to avoid disconnection",
+      "reschedule drop-off slot at", "reschedule drop-off slot", "authenticate identity at",
+      "claim at http", "claim at https", "claim at", "re-activate at", "update at http"
     ],
     "asks_move_platform": [
       "message me on telegram", "join telegram group", "contact on telegram", "join whatsapp group",
@@ -53,11 +64,15 @@
     ],
     "threat_legal_arrest": [
       "digital arrest", "arrest warrant", "fir registered", "money laundering case",
-      "narcotics parcel", "illegal package seized", "court summons", "cbi inquiry", "police complaint"
+      "narcotics parcel", "illegal package seized", "court summons", "cbi inquiry", "police complaint",
+      "under virtual arrest", "virtual arrest", "non-bailable arrest warrant", "arrest warrant issued",
+      "police directorate", "cyber crime department notice"
     ],
     "threat_utility_disconnect": [
       "electricity will be disconnected", "power will be cut", "electricity power cutoff",
-      "gas connection disconnected", "bill unpaid power cutoff", "water supply disconnected"
+      "gas connection disconnected", "bill unpaid power cutoff", "water supply disconnected",
+      "disconnection order will execute", "disconnection order", "power cutoff at", "disconnection will execute",
+      "power supply will be disconnected", "power service disconnected"
     ],
     "lure_prize_lottery": [
       "congratulations you won", "won lottery", "lucky draw winner", "prize of Rs",
@@ -65,15 +80,21 @@
     ],
     "lure_job_task": [
       "part time job", "work from home", "earn 3000 daily", "earn daily", "like youtube videos",
-      "review products and earn", "data entry job", "easy online tasks", "daily payout"
+      "review products and earn", "data entry job", "easy online tasks", "daily payout",
+      "remote assignment", "reviewing online restaurants", "reviewing restaurants", "review restaurants",
+      "freelance recruiter", "daily payment of rs"
     ],
     "lure_investment": [
       "guaranteed returns", "double your investment", "stock tips group", "ipo allotment guaranteed",
-      "crypto investment profit", "daily 10% profit", "insider trading tips"
+      "crypto investment profit", "daily 10% profit", "insider trading tips",
+      "guaranteed 200% return", "guaranteed return", "commodity contracts",
+      "intraday commodity contracts", "intraday contracts", "wealth manager"
     ],
     "lure_instant_loan": [
       "pre-approved loan", "instant loan approved", "loan with zero documents",
-      "personal loan without cibil", "instant cash loan approved"
+      "personal loan without cibil", "instant cash loan approved",
+      "zero documentation cash loan", "zero documentation loan", "loan disbursed straight to bank",
+      "cash loan disbursed", "instant financial assistance"
     ],
     "lure_refund_cashback": [
       "refund approved", "cashback of Rs", "reward points expiring", "claim your cashback",
@@ -81,7 +102,10 @@
     ],
     "delivery_failed": [
       "delivery failed", "parcel could not be delivered", "incorrect address update now",
-      "package held at warehouse", "shipment delayed update address"
+      "package held at warehouse", "shipment delayed update address",
+      "destination address illegible", "address illegible", "delivery has failed",
+      "reschedule drop-off slot", "reschedule drop-off", "reschedule delivery",
+      "package is returned", "before package is returned", "could not be delivered"
     ],
     "traffic_challan": [
       "traffic challan pending", "e-challan notice", "pay your fine", "vehicle challan issued",

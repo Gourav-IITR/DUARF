@@ -313,6 +313,38 @@
       "sender_kind": "NAMED",
       "text": "Navratri ki hardik shubhkamnaye aapko aur poore pariwar ko! Maa Durga sab par kripa banaye rakhein.",
       "adversarial": false
+    },
+    {
+      "id": "tst-ben-adv-01",
+      "category": "CHAT",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Hey! Check out our college reunion pictures here: http://{shortener}/{slug} before the link expires.",
+      "adversarial": true
+    },
+    {
+      "id": "tst-ben-adv-02",
+      "category": "CHAT",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Bhai kal morning 10 baje presentation hai meeting room me, slides finalize kar lena.",
+      "adversarial": true
+    },
+    {
+      "id": "tst-ben-adv-03",
+      "category": "PROMO",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Weekend discount! Use coupon code S A V E 2 0 on checkout for flat 20% off on your order.",
+      "adversarial": true
+    },
+    {
+      "id": "tst-ben-adv-04",
+      "category": "AWARENESS",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "सावधानी सूचना: बैंक कभी भी फोन या संदेश पर गुप्त ओ टी पी अथवा पिन नहीं मांगते। सतर्क रहें।",
+      "adversarial": true
     }
   ]
 }

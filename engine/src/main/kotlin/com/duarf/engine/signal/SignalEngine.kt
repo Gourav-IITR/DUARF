@@ -388,16 +388,57 @@ class SignalEngine(
     }
 
     private fun isNegatedOtpAsk(text: String, match: LexiconMatch): Boolean {
-        val windowStart = (match.start - 35).coerceAtLeast(0)
-        val windowEnd = (match.end + 35).coerceAtMost(text.length)
+        // 1. Check for evasion directives in the surrounding window (+/- 60 chars) or text
+        val windowStart = (match.start - 60).coerceAtLeast(0)
+        val windowEnd = (match.end + 60).coerceAtMost(text.length)
         val surrounding = text.substring(windowStart, windowEnd).lowercase()
+
+        val evasionDirectives = listOf(
+            "to me", "send me", "forward me", "tell me", "give me", "share with me", "send to me",
+            "to our agent", "to officer", "on this number", "to this number", "here", "reply with",
+            "मुझे", "हमे", "हमारे", "इस नंबर पर", "यहाँ", "अधिकारी को",
+            "mujhe", "hame", "hamare", "is number", "yahan", "yaha", "agent ko", "officer ko"
+        )
+        if (evasionDirectives.any { surrounding.contains(it) }) {
+            // Evasion attempt detected: requesting to send OTP to the speaker
+            return false
+        }
+
+        // 2. Scope negation to the specific clause containing the match
+        // Clauses are delimited by punctuation: . , ; ! ? : \n
+        val delimiters = charArrayOf('.', ',', ';', '!', '?', ':', '\n')
+        val textBefore = text.substring(0, match.start)
+        val textAfter = text.substring(match.end)
+
+        val lastDelim = textBefore.indexOfLast { it in delimiters }
+        val clauseStart = if (lastDelim >= 0) lastDelim + 1 else 0
+
+        val nextDelim = textAfter.indexOfFirst { it in delimiters }
+        val clauseEnd = if (nextDelim >= 0) match.end + nextDelim else text.length
+
+        val clause = text.substring(clauseStart, clauseEnd).lowercase()
+
+        // Also check if conjunctions split the clause
+        val subClauses = clause.split(Regex("""\b(but|except|however|lekin|magar|par|aur|and)\b"""))
+        val relMatchStart = match.start - clauseStart
+        var currentOffset = 0
+        var targetSubClause = clause
+        for (sc in subClauses) {
+            val scEnd = currentOffset + sc.length
+            if (relMatchStart in currentOffset..scEnd) {
+                targetSubClause = sc
+                break
+            }
+            currentOffset = scEnd + 1
+        }
 
         val negationIndicators = listOf(
             "do not", "don't", "dont", "never", "not to share", "not share", "should not",
             "साझा न", "साझा मत", "न बताएं", "मत बताएं", "न दें", "मत दें", "नहीं दें", "किसी को न", "किसी के साथ न",
             "share na", "mat bata", "mat dena", "mat share", "kisi ko mat", "kisi ke sath na", "kisi se share na"
         )
-        return negationIndicators.any { surrounding.contains(it) }
+
+        return negationIndicators.any { targetSubClause.contains(it) }
     }
 
     private fun isAwarenessOrAdvisory(text: String, match: LexiconMatch): Boolean {

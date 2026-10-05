@@ -20,8 +20,8 @@ def compute_file_sha256(path):
     return h.hexdigest()
 
 def main():
-    train_svm = "ml/data/train.svm"
-    dev_svm = "ml/data/dev.svm"
+    train_svm = "ml/data/train.libsvm" if os.path.exists("ml/data/train.libsvm") else "ml/data/train.svm"
+    dev_svm = "ml/data/dev.libsvm" if os.path.exists("ml/data/dev.libsvm") else "ml/data/dev.svm"
     train_jsonl = "ml/data/train.jsonl"
     
     print("Loading LIBSVM datasets...")
@@ -70,16 +70,38 @@ def main():
     # Decision function on dev split
     z_dev = best_model.decision_function(X_dev).reshape(-1, 1)
 
-    # Fit Platt scaling calibration on dev split
+    # Fit Platt scaling calibration on dev split using target smoothing
     print("Fitting Platt scaling calibration on dev logits...")
-    calibrator = LogisticRegression(solver="lbfgs", random_state=SEED)
-    calibrator.fit(z_dev, y_dev)
-    calib_a = float(calibrator.coef_[0][0])
-    calib_b = float(calibrator.intercept_[0])
+    n_pos = float(np.sum(y_dev == 1))
+    n_neg = float(np.sum(y_dev == 0))
+    t_pos = (n_pos + 1.0) / (n_pos + 2.0)
+    t_neg = 1.0 / (n_neg + 2.0)
+    t = np.where(y_dev == 1, t_pos, t_neg)
+    
+    from scipy.optimize import minimize
+    from scipy.special import expit
+    
+    def platt_loss(params):
+        A, B = params
+        logits = A * z_dev.ravel() + B
+        log_p = -np.logaddexp(0, -logits)
+        log_1mp = -np.logaddexp(0, logits)
+        return -np.sum(t * log_p + (1.0 - t) * log_1mp)
+        
+    def platt_grad(params):
+        A, B = params
+        logits = A * z_dev.ravel() + B
+        p = expit(logits)
+        err = p - t
+        return np.array([np.sum(err * z_dev.ravel()), np.sum(err)])
+
+    res = minimize(platt_loss, [1.0, 0.0], jac=platt_grad, method="L-BFGS-B")
+    calib_a = float(res.x[0])
+    calib_b = float(res.x[1])
     print(f"Platt scaling params: A={calib_a:.4f}, B={calib_b:.4f}")
 
     # Compute calibrated dev metrics
-    calibrated_probs = 1.0 / (1.0 + np.exp(-(calib_a * z_dev.ravel() + calib_b)))
+    calibrated_probs = expit(calib_a * z_dev.ravel() + calib_b)
     calibrated_preds = (calibrated_probs >= 0.5).astype(int)
 
     dev_metrics = {
@@ -89,7 +111,36 @@ def main():
         "f1": float(f1_score(y_dev, calibrated_preds)),
         "roc_auc": float(roc_auc_score(y_dev, calibrated_probs))
     }
+
+    # Compute per-language dev metrics
+    dev_langs = []
+    dev_jsonl = "ml/data/dev.jsonl"
+    if os.path.exists(dev_jsonl):
+        with open(dev_jsonl, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    dev_langs.append(json.loads(line).get("lang", "en"))
+
+    per_lang_dev_metrics = {}
+    if len(dev_langs) == len(y_dev):
+        for l in sorted(set(dev_langs)):
+            mask = np.array([lang == l for lang in dev_langs])
+            if mask.sum() > 0 and len(np.unique(y_dev[mask])) > 1:
+                per_lang_dev_metrics[l] = {
+                    "count": int(mask.sum()),
+                    "accuracy": float(accuracy_score(y_dev[mask], calibrated_preds[mask])),
+                    "precision": float(precision_score(y_dev[mask], calibrated_preds[mask], zero_division=0)),
+                    "recall": float(recall_score(y_dev[mask], calibrated_preds[mask], zero_division=0)),
+                    "f1": float(f1_score(y_dev[mask], calibrated_preds[mask], zero_division=0))
+                }
+            elif mask.sum() > 0:
+                per_lang_dev_metrics[l] = {
+                    "count": int(mask.sum()),
+                    "accuracy": float(accuracy_score(y_dev[mask], calibrated_preds[mask]))
+                }
+
     print(f"Calibrated Dev Metrics: {dev_metrics}")
+    print(f"Per-Language Dev Metrics: {per_lang_dev_metrics}")
 
     # Weight quantization to int8
     raw_weights = best_model.coef_[0]
@@ -162,6 +213,7 @@ def main():
             "int8_range": [-127, 127]
         },
         "dev_metrics": dev_metrics,
+        "per_language_dev_metrics": per_lang_dev_metrics,
         "operating_thresholds": {
             "low": {"caution": 0.55, "danger": 0.80},
             "balanced": {"caution": 0.45, "danger": 0.72},

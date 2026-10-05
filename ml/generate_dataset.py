@@ -90,7 +90,7 @@ def fill_slots(template_str):
         
     return res
 
-def expand_template(tpl, target_count, label, existing_texts):
+def expand_template(tpl, target_count, label, existing_texts, vary_sender=False):
     rows = []
     attempts = 0
     max_attempts = target_count * 100
@@ -102,13 +102,22 @@ def expand_template(tpl, target_count, label, existing_texts):
             continue
         existing_texts.add(norm)
 
+        s_kind = tpl.get("sender_kind", "NUMBER_ONLY")
+        if vary_sender:
+            if label == "benign":
+                if tpl.get("category") in ["CHAT", "DELIVERY", "SOCIAL", "PROMO", "AWARENESS"]:
+                    s_kind = "NUMBER_ONLY" if random.random() < 0.35 else "NAMED"
+            else:
+                if tpl.get("category") in ["PHISHING_BANK_KYC", "MALICIOUS_APK"]:
+                    s_kind = "NAMED" if random.random() < 0.20 else "NUMBER_ONLY"
+
         row = {
             "id": f"{tpl['id']}-{len(rows) + 1:04d}",
             "text": filled,
             "label": label,
             "category": tpl.get("category", "OTHER_SUSPICIOUS"),
             "lang": tpl.get("lang", "en"),
-            "sender_kind": tpl.get("sender_kind", "NUMBER_ONLY"),
+            "sender_kind": s_kind,
             "is_group": False,
             "origin": "synthetic",
             "group_id": tpl["id"],
@@ -147,9 +156,9 @@ def generate():
     per_benign_test = test_target_benign // len(test_benign_tpls) + 5
 
     for tpl in test_scam_tpls:
-        test_rows.extend(expand_template(tpl, per_scam_test, "scam", all_seen_texts))
+        test_rows.extend(expand_template(tpl, per_scam_test, "scam", all_seen_texts, vary_sender=False))
     for tpl in test_benign_tpls:
-        test_rows.extend(expand_template(tpl, per_benign_test, "benign", all_seen_texts))
+        test_rows.extend(expand_template(tpl, per_benign_test, "benign", all_seen_texts, vary_sender=False))
 
     random.shuffle(test_rows)
     # Trim to exact proportions if needed
@@ -162,12 +171,12 @@ def generate():
     train_scam_tpls = train_data["scam_templates"]
     train_benign_tpls = train_data["benign_templates"]
 
-    # Assign entire group_ids to dev split (~12% of templates)
+    # Assign entire group_ids to dev split (~15% of templates)
     random.shuffle(train_scam_tpls)
     random.shuffle(train_benign_tpls)
 
-    dev_scam_count = max(3, int(len(train_scam_tpls) * 0.12))
-    dev_benign_count = max(3, int(len(train_benign_tpls) * 0.12))
+    dev_scam_count = max(4, int(len(train_scam_tpls) * 0.15))
+    dev_benign_count = max(5, int(len(train_benign_tpls) * 0.15))
 
     dev_scam_tpls = train_scam_tpls[:dev_scam_count]
     tr_scam_tpls = train_scam_tpls[dev_scam_count:]
@@ -185,9 +194,9 @@ def generate():
 
     train_rows = []
     for tpl in tr_scam_tpls:
-        train_rows.extend(expand_template(tpl, per_scam_train, "scam", all_seen_texts))
+        train_rows.extend(expand_template(tpl, per_scam_train, "scam", all_seen_texts, vary_sender=True))
     for tpl in tr_benign_tpls:
-        train_rows.extend(expand_template(tpl, per_benign_train, "benign", all_seen_texts))
+        train_rows.extend(expand_template(tpl, per_benign_train, "benign", all_seen_texts, vary_sender=True))
 
     random.shuffle(train_rows)
     tr_scams = [r for r in train_rows if r["label"] == "scam"][:8000]
@@ -205,9 +214,9 @@ def generate():
 
     dev_rows = []
     for tpl in dev_scam_tpls:
-        dev_rows.extend(expand_template(tpl, per_scam_dev, "scam", all_seen_texts))
+        dev_rows.extend(expand_template(tpl, per_scam_dev, "scam", all_seen_texts, vary_sender=True))
     for tpl in dev_benign_tpls:
-        dev_rows.extend(expand_template(tpl, per_benign_dev, "benign", all_seen_texts))
+        dev_rows.extend(expand_template(tpl, per_benign_dev, "benign", all_seen_texts, vary_sender=True))
 
     random.shuffle(dev_rows)
     dev_scams = [r for r in dev_rows if r["label"] == "scam"][:1000]
@@ -231,18 +240,25 @@ def generate():
         group_ids = set(r["group_id"] for r in rows)
         scams = sum(1 for r in rows if r["label"] == "scam")
         benign = sum(1 for r in rows if r["label"] == "benign")
-        langs = {}
-        for r in rows:
-            langs[r["lang"]] = langs.get(r["lang"], 0) + 1
         adv = sum(1 for r in rows if r.get("notes") == "adversarial")
+        adv_scam = sum(1 for r in rows if r.get("notes") == "adversarial" and r["label"] == "scam")
+        adv_benign = sum(1 for r in rows if r.get("notes") == "adversarial" and r["label"] == "benign")
 
         print(f"=== {name} Statistics ===")
         print(f"Total rows: {len(rows)}")
         print(f"Distinct texts: {distinct_texts}")
         print(f"Unique templates (group_ids): {len(group_ids)}")
         print(f"Class distribution: {scams} scam ({scams/len(rows)*100:.1f}%), {benign} benign ({benign/len(rows)*100:.1f}%)")
-        print(f"Language distribution: {langs}")
-        print(f"Adversarial examples: {adv}\n")
+        print(f"Adversarial examples: {adv} (Scam: {adv_scam}, Benign: {adv_benign})")
+        print("Per-language breakdown:")
+        for l in sorted(set(r["lang"] for r in rows)):
+            l_rows = [r for r in rows if r["lang"] == l]
+            l_distinct = len(set(r["text"] for r in l_rows))
+            l_groups = len(set(r["group_id"] for r in l_rows))
+            l_scam = sum(1 for r in l_rows if r["label"] == "scam")
+            l_benign = sum(1 for r in l_rows if r["label"] == "benign")
+            print(f"  [{l.ljust(7)}]: Total={len(l_rows)}, Distinct={l_distinct}, Templates={l_groups}, Scam={l_scam}, Benign={l_benign}")
+        print()
         return group_ids
 
     train_groups = print_stats("TRAIN SPLIT", final_train)

@@ -63,31 +63,41 @@ All decisions made where the spec was silent or flexible are recorded here.
   - Token-to-bucket attribution mapping for explanation highlights.
 - **Model Training & Calibration (`ml/train.py`)**:
   - Elastic-net Logistic Regression trained with SAGA solver and balanced weights on pinned requirements (`scikit-learn==1.5.2`, `numpy==2.0.2`, `scipy==1.13.1`).
-  - Hyperparameters tuned on dev split: best $C=0.10, l1\_ratio=0.30$.
-  - Platt scaling fit on dev split raw logits ($A=6.2592, B=-3.3671$).
-  - int8 quantized weights packed into `packs/model/model.bin` with CRC32.
-  - Metadata written to `packs/model/model.json` including training-set SHA-256 hash, generator seed (42), and operating thresholds.
+  - Hyperparameters tuned on dev split: best $C=0.10, l1\_ratio=0.50$.
+  - Target-smoothed Platt scaling fit on dev logits using Platt (1999) smoothed targets ($t_+ = (N_+ + 1)/(N_+ + 2), t_- = 1/(N_- + 2)$) with L-BFGS-B: $A=2.4863, B=-1.1068$. Guarantees numerical stability and ensures neutral/uninformative messages predict $p < 0.50$ ($m' = 0$).
+  - int8 quantized weights packed into `packs/model/model.bin` with CRC32 (262,176 bytes).
+  - Metadata written to `packs/model/model.json` including training-set SHA-256 hash, generator seed (42), per-language dev metrics, and operating thresholds.
 - **Dynamic Header Sizing & Fallback (`LinearClassifier.kt`)**:
   - Model file size derived dynamically from header (`28 + (1 shl log2Buckets) + 4 = 262,176` bytes).
   - Validates CRC32 and featurizer version; falls back cleanly to rules-only on missing file or corruption.
 - **Rules & Fusion Refinements (§10 & worked examples)**:
   - Pin worked examples to weights in `packs/rules.json`: P01 (0.20), L01 (0.55), S01 (0.10).
   - Verified that "L01 from number-only sender → DANGER" triggers via Combo C02 floor (0.85) rather than noisy-OR alone (0.595).
-  - Negative-lexicon OTP handling: contextual negation filtering ("do not share", "never share", "साझा न करें", "share na kare") prevents A01 from firing on security notices; B01 fires with factor 0.40; verdict is NONE.
-  - Awareness/advisory check suppresses threat signals (P02, P03, P04) when forwarded in scam awareness context.
+  - **OTP Negation & Evasion Handling**:
+    - Contextual negation filtering ("do not share", "never share", "साझा न करें", "share na kare") prevents A01 from firing on genuine security notices; B01 fires with factor 0.40; verdict is NONE.
+    - Evasion detection: scoped negation to the clause. When a "do not share" phrase is followed or preceded by a directive to send/forward the OTP to the sender (e.g. "don't share with anyone, send the OTP to me", "kisi ko mat batana, OTP mujhe bhejo"), negation is bypassed and A01 fires. Unit tested across `en`, `hi`, `hi-Latn`.
+  - **Awareness-Context Suppression**:
+    - To prevent false alarms on legitimate cyber safety advisories quoting scam threats, an awareness check suppresses soft threat signals (`P02` deadline, `P03` disconnection, `P04` legal threat).
+    - Scope invariant: NEVER suppresses any hard signals (`L01`, `L10`, `L11`, `A01`, `A02`, `A04`) or any link signals (`L*`). Adversarially tested: scams wrapped in "beware of fraud" warnings still trigger DANGER.
   - Invariant 6: model alone capped below Danger ($0.719 < 0.72$).
   - At most 5 token attribution highlights emitted only when $m' > 0.2$.
-- **Milestone M4 Verification & Gates**:
-  - **Tier 1 Gates on frozen test split (3,200 rows)**:
-    - Danger precision: 1.0 (Target: $\ge 0.97$) [PASS]
-    - Caution+ recall: 0.91 (Target: $\ge 0.90$) [PASS]
-    - Benign -> Danger: 0.0% (Target: $\le 0.3\%$) [PASS]
-    - Benign -> Caution+: 0.0% (Target: $\le 2.0\%$) [PASS]
-    - Per-language breakdown: en: 0.849 recall, hi: 1.0 recall, hi-Latn: 0.996 recall.
-    - Adversarial subset: 100% recall (108/108).
-    - Rules-only vs Rules+ML: Recall increased from 0.361 to 0.910 at 1.0 Danger precision.
+- **Milestone M4 Verification & Per-Language Gates**:
+  - **Tier 1 Gates on frozen test split (3,200 rows; 1,200 scam, 2,000 benign)**:
+    - Overall Danger precision: 1.0 (Target: $\ge 0.97$) [PASS]
+    - Overall Caution+ recall: 0.993 (Target: $\ge 0.90$) [PASS]
+    - Overall Benign -> Danger: 0.0% (Target: $\le 0.3\%$) [PASS]
+    - Overall Benign -> Caution+: 0.0% (Target: $\le 2.0\%$) [PASS]
+  - **Per-Language Gates (§16.2)**:
+    - `en`: 1,661 rows (709 scam, 952 benign) | Precision 1.0, Recall 1.0, B->Danger 0.0%, B->Caution 0.0% [PASS]
+    - `hi`: 786 rows (217 scam, 569 benign) | Precision 1.0, Recall 0.963, B->Danger 0.0%, B->Caution 0.0% [PASS]
+    - `hi-Latn`: 753 rows (274 scam, 479 benign) | Precision 1.0, Recall 1.0, B->Danger 0.0%, B->Caution 0.0% [PASS]
+  - **Adversarial Evaluation**:
+    - 488 rows (107 scam, 381 benign including shorteners, code-switching, spaced text).
+    - Scam recall: 1.0, Benign False Positives: 0 (0.0%), Adversarial Precision: 1.0 [PASS]
+  - **Rules-only vs Rules+ML**: Recall increased from 0.838 to 0.993 at 1.0 Danger precision.
   - **Seed corpus check set (1,000 rows)**: Danger precision 1.0, Recall 1.0, 0 false positives.
-  - **Parity round-trip test**: Kotlin prediction matches Python reference within 0.01 tolerance.
+  - **Parity round-trip test**: Kotlin prediction matches Python reference within 0.01 tolerance (0.9754).
   - **Timing benchmark (`InferenceBenchmarkTest`)**: JVM 1,000-char analysis p95 = 2.08 ms (budget 150 ms); Featurize + Predict p95 = 0.47 ms (budget 15 ms).
   - **Full CI suite**: `./gradlew check assembleRelease` BUILD SUCCESSFUL.
+
 

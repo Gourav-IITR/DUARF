@@ -7,7 +7,9 @@
   "lexicons": {
     "asks_otp_pin_cvv": [
       "otp batao", "otp bhejo", "otp share karo", "pin batao", "otp send karo",
-      "cvv bata", "password bhejo", "code batao", "otp forward karo"
+      "cvv bata", "password bhejo", "code batao", "otp forward karo",
+      "otp mujhe bhejo", "otp mujhe batao", "mujhe otp bhejo", "mujhe otp batao",
+      "hume otp bhejo", "officer ko otp batao", "agent ko otp do", "otp provide karo"
     ],
     "asks_install_app": [
       "app install karo", "apk download karo", "app download karein", "anydesk install karo",
@@ -31,7 +33,8 @@
     ],
     "asks_click_to_fix": [
       "link par click karo", "click karke update karo", "verify karne ke liye link khole",
-      "unblock karne ke liye click kare"
+      "unblock karne ke liye click kare", "re-activate karein", "reactivate karein",
+      "activate karein", "unblock karein", "click karke verify karein"
     ],
     "asks_move_platform": [
       "telegram par message karo", "telegram group join karo", "whatsapp group se judo"
@@ -44,7 +47,9 @@
     ],
     "threat_account_block": [
       "khata band ho jayega", "account block ho gaya", "kyc expire ho gayi",
-      "sim block ho jayegi", "pan link nahi hai", "account suspend ho jayega"
+      "sim block ho jayegi", "pan link nahi hai", "account suspend ho jayega",
+      "login band kar diya gaya hai", "login band ho gaya", "netbanking band kar di gayi hai",
+      "khata band kar diya gaya hai", "account band ho gaya"
     ],
     "threat_legal_arrest": [
       "digital arrest", "arrest warrant", "fir darj", "cbi inquiry",
