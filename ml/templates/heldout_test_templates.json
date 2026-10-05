@@ -1,0 +1,318 @@
+{
+  "scam_templates": [
+    {
+      "id": "tst-scam-apk-01",
+      "category": "MALICIOUS_APK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Your parcel delivery has failed. Check real-time tracking and delivery note via official courier attachment: {file_apk}",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-apk-02",
+      "category": "MALICIOUS_APK",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "आपका पार्सल डिलीवरी में विफल रहा। पुनः डिलीवरी के लिए इस एप्लिकेशन {file_apk} को तुरंत अपने फोन में इंस्टॉल करें।",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-apk-03",
+      "category": "MALICIOUS_APK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Important notice: Gas subsidy check karne ke liye subsidy_service.apk apne phone me install karein.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-kyc-01",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Urgent notification from {brand_bank}: Document verification pending for customer profile. Authenticate identity at http://{lookalike_domain}/e-kyc before midnight.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-kyc-02",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "{brand_bank} आधिकारिक सूचना: पहचान पत्र का सत्यापन लंबित है। तुरंत इस लिंक http://{lookalike_domain}/portal पर दस्तावेज सत्यापित कराएं।",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-kyc-03",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Banking Alert: Aapka netbanking login band kar diya gaya hai security reason se. Re-activate karein: http://{lookalike_domain}/access",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-arrest-01",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Cyber Police Directorate: Severe offences detected under IT Act on your SIM credentials. You are under virtual arrest. Join urgent video hearing immediately.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-arrest-02",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "केंद्रीय जांच ब्यूरो: आपके खिलाफ गैर-जमानती अरेस्ट वारंट पारित किया गया है। फोन कॉल न काटें और तुरंत अधिकारी से जुड़े रहें।",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-util-01",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Urgent power notice: Outstanding electric charges remaining for consumer #{consumer_id}. Disconnection order will execute at 9:30 tonight. Call {phone}.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-util-02",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "विद्युत आपूर्ति बंद होने की चेतावनी: आज रात बिजली सेवा बंद कर दी जाएगी। लाइनमैन अधिकारी {phone} पर शीघ्र संपर्क करें।",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-upi-01",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Payment gateway alert: Settlement of Rs {amount} waiting to be deposited. Authorize with your secret UPI PIN to collect balance.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-upi-02",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "GPay Reward Portal: Aapko Rs {amount} ka inaam mila hai. Accept karne ke liye UPI pin enter karein.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-otp-01",
+      "category": "OTP_ACCOUNT_TAKEOVER",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Telecom Central Registry: Unverified number found. Forward the one-time password from your SMS inbox to representative {phone} right now.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-otp-02",
+      "category": "OTP_ACCOUNT_TAKEOVER",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Aapke bank khate me transaction ruka hua hai. Turant phone par aaya OTP provide karo unfreeze karne ke liye.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-remote-01",
+      "category": "REMOTE_ACCESS",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Helpdesk engineer: For screen calibration and security inspection, run AnyDesk from the store and read out your address code.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-job-01",
+      "category": "JOB_TASK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Freelance recruiter: Simple remote assignment reviewing online restaurants. Instant daily payment of Rs 3,500. Chat on Telegram: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-job-02",
+      "category": "JOB_TASK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Ghar baithe kamai: Daily 4000 rupaye milenge short videos dekhne ke. Telegram par message bhejo: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-invest-01",
+      "category": "INVESTMENT_TRADING",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Institutional wealth manager: Guaranteed 200% return on intraday commodity contracts within forty-eight hours. Join Telegram channel: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-loan-01",
+      "category": "LOAN_CREDIT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Immediate financial assistance: Zero documentation cash loan of Rs {loan_amount} disbursed straight to bank. Claim at http://{domain}/disburse",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-deliv-01",
+      "category": "DELIVERY_COURIER",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Express delivery notification: Destination address illegible. Reschedule drop-off slot at http://{domain}/redelivery before package is returned.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-scam-adv-01",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "B a n k alert: A c c o u n t block in 2 4 hrs. Visit hxxp://{lookalike_domain}/sec to unblock.",
+      "adversarial": true
+    },
+    {
+      "id": "tst-scam-adv-02",
+      "category": "MALICIOUS_APK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Court notice: Challan pending. Install echallan . a p k from http://{shortener}/{slug}",
+      "adversarial": true
+    }
+  ],
+  "benign_templates": [
+    {
+      "id": "tst-ben-bank-01",
+      "category": "BANK",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Transaction Alert: A debit of INR {amount}.00 took place on card ending {acct_last4} at {pos_merchant} on {date}. Net usable balance: INR {avail_bal}.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-bank-02",
+      "category": "BANK",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "लेनदेन सूचना: आपके कार्ड {acct_last4} द्वारा {pos_merchant} पर ₹{amount} का भुगतान पूरा हुआ। वर्तमान शेष राशि: ₹{avail_bal}।",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-bank-03",
+      "category": "BANK",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Bank suchna: Aapke khate {acct_last4} me Rs {amount} credit ho gaya hai NEFT dwara. Total balance Rs {avail_bal}.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-otp-01",
+      "category": "OTP",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "One-Time Password: Use {otp_code} to authorize your fund transfer of INR {amount}. Never disclose your secret OTP or password to anyone.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-otp-02",
+      "category": "OTP",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "सुरक्षित लॉगिन: आपका सत्यापन कोड {otp_code} है। यह कोड अत्यंत गोपनीय है, इसे बैंक कर्मचारियों सहित किसी को न बताएं।",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-otp-03",
+      "category": "OTP",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Merchant payment ke liye OTP code hai {otp_code}. Kripya yeh OTP kisi se share na karein, surakshit rahein.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-deliv-01",
+      "category": "DELIVERY",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Delivery confirmation: Consignment #{tracking_id} dispatched with courier personnel {driver_name}. Hand over receiving code {deliv_pin} at arrival.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-deliv-02",
+      "category": "DELIVERY",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "पार्सल डिलीवरी: आपका कूरियर पार्सल {tracking_id} आज शाम तक पहुंचेगा। डिलीवरी एजेंट {driver_name} को पिन {deliv_pin} बताएं।",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-bill-01",
+      "category": "UTILITY",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Monthly utility billing: Electric consumption account #{consumer_id} billed for INR {amount}. Settle dues by {due_date} at the counter or authorized app.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-personal-01",
+      "category": "CHAT",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Good afternoon, did you get a chance to go through the doctor prescription from yesterday? Let me know how grandpa is feeling.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-personal-02",
+      "category": "CHAT",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Hey, transferring Rs {amount} to your UPI account for the concert passes. Check your phone once.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-personal-03",
+      "category": "CHAT",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "नमस्ते अंकल, क्या आप इस रविवार को हमारे घर दोपहर के भोजन पर आ रहे हैं? पिताजी पूछ रहे थे।",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-personal-04",
+      "category": "CHAT",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Arey sun, kal college ke seminar ki presentation tayar hai kya? Library me milte hai 10 baje.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-warning-01",
+      "category": "AWARENESS",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Security advisory forward: Cyber police warns against answering video calls claiming digital arrest or drug parcel charges. Please inform your parents.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-warning-02",
+      "category": "AWARENESS",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "चेतावनी संदेश: बैंक कभी भी फोन पर आपसे पिन या पासवर्ड नहीं मांगते। यदि कोई ऐसा संदेश प्राप्त हो तो उत्तर न दें।",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-social-01",
+      "category": "SOCIAL",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Warmest congratulations on graduating with honors! Wishing you immense success in your engineering career ahead.",
+      "adversarial": false
+    },
+    {
+      "id": "tst-ben-social-02",
+      "category": "SOCIAL",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Navratri ki hardik shubhkamnaye aapko aur poore pariwar ko! Maa Durga sab par kripa banaye rakhein.",
+      "adversarial": false
+    }
+  ]
+}

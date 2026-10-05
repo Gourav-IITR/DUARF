@@ -47,5 +47,6 @@ data class LoadedPacks(
     val upiHandles: Set<String>,
     val remoteApps: Set<String>,
     val pslLines: List<String>,
-    val blocklist: Set<String>
+    val blocklist: Set<String>,
+    val modelBytes: ByteArray? = null
 )

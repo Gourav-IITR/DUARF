@@ -12,3 +12,6 @@ captures
 *.aab
 app/src/main/assets/packs/
 engine-cli/eval/
+ml/venv/
+ml/.venv/
+ml/data/

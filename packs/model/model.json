@@ -1,0 +1,45 @@
+{
+  "format_version": 1,
+  "featurizer_version": 1,
+  "log2_buckets": 18,
+  "generator_seed": 42,
+  "training_set_sha256": "88937678b2d62553fbbac219506b2b2a0b047047495437e39f17dc92ce658011",
+  "trained_at": "2026-10-05T22:39:29.642226+00:00",
+  "best_hyperparameters": {
+    "C": 0.1,
+    "l1_ratio": 0.3
+  },
+  "platt_scaling": {
+    "A": 6.2592396611124075,
+    "B": -3.367076939600285
+  },
+  "quantization": {
+    "scale": 0.08312260378335394,
+    "bias": 0.3446208776781377,
+    "int8_range": [
+      -127,
+      127
+    ]
+  },
+  "dev_metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "roc_auc": 0.9999999999999999
+  },
+  "operating_thresholds": {
+    "low": {
+      "caution": 0.55,
+      "danger": 0.8
+    },
+    "balanced": {
+      "caution": 0.45,
+      "danger": 0.72
+    },
+    "high": {
+      "caution": 0.35,
+      "danger": 0.65
+    }
+  }
+}

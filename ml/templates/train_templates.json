@@ -1,0 +1,663 @@
+{
+  "scam_templates": [
+    {
+      "id": "trn-scam-apk-01",
+      "category": "MALICIOUS_APK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear customer, your wedding invitation is attached. Please download and install {file_apk} to view venue details.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-apk-02",
+      "category": "MALICIOUS_APK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Traffic Police Notice: Pending e-challan of Rs {amount} against vehicle {veh_num}. Download {file_apk} from http://{domain}/pay to avoid court summons.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-apk-03",
+      "category": "MALICIOUS_APK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear {brand_bank} user, your account will be suspended today. Install {brand_bank}_security.apk from http://{domain}/update immediately.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-apk-04",
+      "category": "MALICIOUS_APK",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "शादी का कार्ड देखने के लिए कृपया {file_apk} डाउनलोड करके अपने फोन में इंस्टॉल करें।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-apk-05",
+      "category": "MALICIOUS_APK",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "यातायात पुलिस चालान: आपका ₹{amount} का चालान बाकी है। तुरंत {file_apk} डाउनलोड करें।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-apk-06",
+      "category": "MALICIOUS_APK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Shadi ka card dekhne ke liye {file_apk} install karein aur sabhi photos dekhein.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-apk-07",
+      "category": "MALICIOUS_APK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Aapka traffic challan pending hai Rs {amount}. Turant {file_apk} download karke clear karo.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-apk-adv-01",
+      "category": "MALICIOUS_APK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Install urgent update f i l e : http://{shortener}/{slug} for {brand_bank}. a p k file.",
+      "adversarial": true
+    },
+    {
+      "id": "trn-scam-kyc-01",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear {brand_bank} customer, your debit card and netbanking will be blocked within 24 hours. Update your KYC at http://{lookalike_domain}/kyc to continue service.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-kyc-02",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "{brand_bank} alert: Your PAN card is not linked to account {acct_num}. Complete online re-KYC at http://{domain}/verify before 8 PM.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-kyc-03",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "{brand_bank} ग्राहक: आपका खाता आज रात 12 बजे तक बंद कर दिया जाएगा। पैन कार्ड और आधार लिंक करने के लिए http://{lookalike_domain}/login पर जाएं।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-kyc-04",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear user, aapka {brand_bank} account suspend hone wala hai. Turant KYC update karein: http://{lookalike_domain}/update",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-kyc-05",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "{brand_bank} alert: KYC expire ho gaya hai 24 ghante me account freeze ho jayega. Click link: http://{domain}/pan",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-kyc-adv-01",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Urgent notice: {brand_bank} K Y C expired! V i s i t hxxp://{lookalike_domain} to unfreeze account.",
+      "adversarial": true
+    },
+    {
+      "id": "trn-scam-arrest-01",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Crime Branch CBI: Digital arrest warrant issued for parcel containing contraband narcotics seized in your name. Do not disconnect call, stay on Skype video conference.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-arrest-02",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Mumbai Police cyber cell: FIR lodged against Aadhaar {aadhaar_last4} for money laundering transaction of Rs {amount}. Pay security bond immediately to avoid arrest.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-arrest-03",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "सीबीआई मुख्यालय: आपके नाम पर डिजिटल अरेस्ट वारंट जारी हुआ है। वीडियो कॉल पर बने रहें और किसी को भी सूचित न करें।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-arrest-04",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Delhi Police notice: Aapke naam par illegal parcel pakda gaya hai. Digital arrest warrant nikla hai call mat katna.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-util-01",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear consumer, your electricity connection will be disconnected tonight at 9:30 PM due to previous month unpaid bill of Rs {amount}. Contact electricity officer at {phone}.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-util-02",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Power Corporation notice: Immediate bill payment required. Power cutoff at 9:30 PM. Pay bill at http://{domain}/electricity now.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-util-03",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "प्रिय बिजली उपभोक्ता, आज रात 9:30 बजे आपका बिजली कनेक्शन काट दिया जाएगा। तुरंत बिल का भुगतान करें: http://{domain}/bill",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-util-04",
+      "category": "hi-Latn",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Bijli bill jama na hone ke karan aaj raat 9:30 baje bijli kaat di jayegi. Officer ko call karo {phone}.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-upi-01",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Congratulations! You have received cashback reward of Rs {amount} from {brand_payment}. Enter your UPI PIN to claim money in your bank account.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-upi-02",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Refund approval: Rs {amount} approved for your order. Scan the QR code and approve request on PhonePe with your PIN to receive funds.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-upi-03",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "बधाई हो! आपको ₹{amount} का कैशबैक मिला है। पैसे अपने बैंक खाते में प्राप्त करने के लिए यूपीआई पिन दर्ज करें।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-upi-04",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Aapka Rs {amount} cashback approve hua hai. Paise pane ke liye upi pin enter karo abhi ke abhi.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-otp-01",
+      "category": "OTP_ACCOUNT_TAKEOVER",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear customer, your {brand_telecom} SIM will be deactivated today. Tell me the OTP received on your mobile to complete KYC verification.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-otp-02",
+      "category": "OTP_ACCOUNT_TAKEOVER",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Customer Care Officer: Share your 6 digit OTP to unfreeze your credit card immediately.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-otp-03",
+      "category": "OTP_ACCOUNT_TAKEOVER",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "सिम कार्ड बंद होने से बचाने के लिए तुरंत अपना ओटीपी बताएं और आधार वेरीफाई करवाएं।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-otp-04",
+      "category": "OTP_ACCOUNT_TAKEOVER",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Account chalu rakhne ke liye mobile par aaya hua OTP share karo jaldi.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-remote-01",
+      "category": "REMOTE_ACCESS",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Technical support: To fix transaction error of Rs {amount}, install AnyDesk application and grant permission.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-remote-02",
+      "category": "REMOTE_ACCESS",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Bank Customer Service: Download TeamViewer quicksupport app on mobile to resolve blocked ATM card.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-remote-03",
+      "category": "REMOTE_ACCESS",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "बैंक सहायता: तकनीकी समस्या हल करने के लिए तुरंत एनीडेस्क ऐप डाउनलोड करके कोड बताएं।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-remote-04",
+      "category": "REMOTE_ACCESS",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Customer service: Bank issue solve karne ke liye anydesk install karo aur 9 digit code batao.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-job-01",
+      "category": "JOB_TASK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Part-time job offer: Earn Rs 3,000 - 8,000 daily by simply rating hotels and subscribing YouTube channels. Contact manager on Telegram: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-job-02",
+      "category": "JOB_TASK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Work from home hiring: Daily income Rs 2,500 guaranteed for Google reviews. Message on WhatsApp {phone} or Telegram.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-job-03",
+      "category": "JOB_TASK",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "घर बैठे ऑनलाइन काम करके रोजाना ₹3000 कमाएं। आसान काम वीडियो लाइक करना। टेलीग्राम पर संपर्क करें: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-job-04",
+      "category": "JOB_TASK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Online part time work: Daily 2000-5000 kamaye youtube video like karke. Telegram join karo: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-invest-01",
+      "category": "INVESTMENT_TRADING",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Double your money in 7 days! 100% guaranteed profit in cryptocurrency & stock trading. Join our VIP insider group: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-invest-02",
+      "category": "INVESTMENT_TRADING",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Earn 15% daily guaranteed return on your investment. Minimum deposit Rs 1,000. Join WhatsApp group for guaranteed calls.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-invest-03",
+      "category": "INVESTMENT_TRADING",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "शेयर बाजार में 100% गारंटीड रिटर्न। 10 दिन में पैसे डबल करें। टेलीग्राम वीआईपी चैनल से जुड़ें: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-invest-04",
+      "category": "INVESTMENT_TRADING",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Stock market trading me guaranteed daily profit. 10000 lagao aur 50000 kamao. Telegram link: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-lottery-01",
+      "category": "LOTTERY_PRIZE",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear customer, your mobile number has won cash prize of Rs 25,00,000 in KBC All India Lucky Draw. Call officer {name} at {phone} to claim prize.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-lottery-02",
+      "category": "LOTTERY_PRIZE",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "बधाई हो! आपके मोबाइल नंबर ने केबीसी लकी ड्रा में 25 लाख रुपये जीते हैं। अपना इनाम क्लेम करने के लिए संपर्क करें: {phone}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-lottery-03",
+      "category": "LOTTERY_PRIZE",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Aapne jita hai 25 lakh ka lottery prize. Lottery manager se baat karne ke liye call karein {phone}.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-loan-01",
+      "category": "LOAN_CREDIT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Pre-approved instant loan of Rs {loan_amount} approved at 1% interest rate with zero CIBIL check. Click http://{domain}/loan to disburse amount in 5 minutes.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-loan-02",
+      "category": "LOAN_CREDIT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "बिना किसी दस्तावेज के ₹{loan_amount} का तत्काल पर्सनल लोन मंजूर हुआ। खाते में पैसे पाने के लिए आवेदन करें: http://{domain}/apply",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-loan-03",
+      "category": "LOAN_CREDIT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Instant personal loan Rs {loan_amount} bina CIBIL check ke approve ho gaya hai. Link par apply karo: http://{domain}/quick",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-deliv-01",
+      "category": "DELIVERY_COURIER",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "India Post alert: Your parcel {tracking_id} could not be delivered due to wrong house address. Update address within 24 hours at http://{domain}/address to avoid return.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-deliv-02",
+      "category": "DELIVERY_COURIER",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "इंडिया पोस्ट: आपका पार्सल गलत पते के कारण नहीं पहुंच सका। कृपया अपना सही पता अपडेट करें: http://{domain}/parcel",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-deliv-03",
+      "category": "DELIVERY_COURIER",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "India post delivery fail ho gayi hai address galat hone se. 24 ghante me address update karo: http://{domain}/track",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-impers-01",
+      "category": "IMPERSONATED_CONTACT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Hi, this is my new phone number. My old phone fell in water and I am stuck in an emergency hospital bill. Please send Rs {amount} urgently to UPI id {upi_id}.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-impers-02",
+      "category": "IMPERSONATED_CONTACT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "नमस्ते, यह मेरा नया नंबर है। अस्पताल में एक मेडिकल इमरजेंसी हो गई है, मुझे तुरंत ₹{amount} की जरूरत है। इस यूपीआई पर भेजें: {upi_id}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-impers-03",
+      "category": "IMPERSONATED_CONTACT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Hey yeh mera new number hai. Emergency aa gayi hai please {amount} rupaye transfer kar do {upi_id} par, kal wapas de dunga.",
+      "adversarial": false
+    }
+  ],
+  "benign_templates": [
+    {
+      "id": "trn-ben-bank-01",
+      "category": "BANK",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Dear customer, Rs {amount}.00 debited from A/C XX{acct_last4} on {date} at {pos_merchant}. Avail Bal: Rs {avail_bal}. Call 1800-11-2211 if not done by you.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-bank-02",
+      "category": "BANK",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Your A/C XX{acct_last4} is credited by Rs {amount}.00 on {date} by NEFT/IMPS reference {ref_id}. Total available balance is Rs {avail_bal}.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-bank-03",
+      "category": "BANK",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "आपके खाते XX{acct_last4} से ₹{amount} का भुगतान सफल रहा। शेष राशि: ₹{avail_bal}। यदि यह आपने नहीं किया है तो तुरंत बैंक को सूचित करें।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-bank-04",
+      "category": "BANK",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Aapke bank account XX{acct_last4} se Rs {amount} debit ho gaya hai {pos_merchant} par. Available balance hai Rs {avail_bal}.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-otp-01",
+      "category": "OTP",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "{otp_code} is your OTP for online transaction of Rs {amount} at {pos_merchant}. Do not share your OTP with anyone, including bank officials.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-otp-02",
+      "category": "OTP",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Your login verification code for {brand_bank} netbanking is {otp_code}. Valid for 10 minutes. Never share this code with anyone.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-otp-03",
+      "category": "OTP",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "नेटबैंकिंग लॉगिन के लिए आपका ओटीपी {otp_code} है। यह ओटीपी 5 मिनट के लिए वैध है। इसे किसी के साथ साझा न करें।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-otp-04",
+      "category": "OTP",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Aapka {brand_bank} login OTP hai {otp_code}. Yeh code kisi ke sath share na karein, bank kabhi OTP nahi mangta.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-deliv-01",
+      "category": "DELIVERY",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Your package from {ecommerce_brand} containing order #{order_id} is out for delivery with our delivery associate {driver_name}. Share PIN {deliv_pin} at delivery.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-deliv-02",
+      "category": "DELIVERY",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Shipment {tracking_id} has been delivered successfully at your address today at {time}. Thank you for choosing BlueDart.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-deliv-03",
+      "category": "DELIVERY",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "आपका {ecommerce_brand} ऑर्डर डिलीवरी के लिए निकल चुका है। डिलीवरी एजेंट {driver_name} को डिलीवरी पिन {deliv_pin} बताएं।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-deliv-04",
+      "category": "DELIVERY",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Aapka order delivery ke liye nikal chuka hai. Delivery boy ko receiving pin {deliv_pin} share karein parcel lene par.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-bill-01",
+      "category": "UTILITY",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Dear consumer {consumer_id}, your electricity bill for the period {bill_month} is Rs {amount}. Due date is {due_date}. Pay via official portal or app.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-bill-02",
+      "category": "UTILITY",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "बिजली बिल सूचना: उपभोक्ता संख्या {consumer_id} का इस माह का बिल ₹{amount} है। अंतिम तिथि {due_date} है।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-bill-03",
+      "category": "UTILITY",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Consumer number {consumer_id} ka electricity bill Rs {amount} generate ho gaya hai. Last date {due_date} hai.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-01",
+      "category": "CHAT",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Hey bro, are we still meeting for lunch today at {place}? Let me know when you leave office.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-02",
+      "category": "CHAT",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Can you please send me Rs {amount} on GPay? I need to pay for grocery and left my wallet at home.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-03",
+      "category": "CHAT",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Please check the presentation slides I shared on Google Drive and give your feedback by tomorrow.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-04",
+      "category": "CHAT",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "अरे भाई, क्या आज शाम को कॉफी के लिए चल रहे हो? मुझे बता देना जब तुम निकलो।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-05",
+      "category": "CHAT",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "कृपया मुझे ₹{amount} फोनपे पर भेज दो, मैं शाम को घर आकर वापस कर दूंगा।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-06",
+      "category": "CHAT",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Bhai kal morning me cricket match khelne aana hai ground par 7 baje sharp.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-personal-07",
+      "category": "CHAT",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Mujhe 500 rupaye GPay kar de bhai, petrol pump par khada hu network slow hai.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-warning-01",
+      "category": "AWARENESS",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Guys beware: lots of fake electricity disconnection messages are going around asking to call random numbers. Do not fall for these scams.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-warning-02",
+      "category": "AWARENESS",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "सभी ध्यान दें: व्हाट्सएप पर शादी के कार्ड के नाम पर फर्जी एपीके फाइलें आ रही हैं, ऐसे किसी भी लिंक या फाइल को न खोलें।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-warning-03",
+      "category": "AWARENESS",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Group me dhyan de sabhi log: koi bhi unknown number se OTP ya KYC update ka message aaye toh click mat karna, fraud ho raha hai.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-social-01",
+      "category": "SOCIAL",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Wishing you and your family a very happy and prosperous Diwali! May this year bring health and success.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-social-02",
+      "category": "SOCIAL",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "आप सभी को होली के पावन पर्व की हार्दिक शुभकामनाएं! खुशियों भरा दिन रहे।",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-social-03",
+      "category": "SOCIAL",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Happy birthday mere bhai! Hamesha khush raho aur tarakki karo life me.",
+      "adversarial": false
+    }
+  ]
+}

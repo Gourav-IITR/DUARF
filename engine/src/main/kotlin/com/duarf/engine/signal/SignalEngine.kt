@@ -218,9 +218,15 @@ class SignalEngine(
 
             when (intent) {
                 // Asks
-                "asks_otp_pin_cvv" -> signals.add(
-                    FiredSignal("A01", "asks_otp_pin_cvv", 0.60, ScamCategory.OTP_ACCOUNT_TAKEOVER, span)
-                )
+                "asks_otp_pin_cvv" -> {
+                    val isNegated = isNegatedOtpAsk(normalized.normalizedText, match) ||
+                            isNegatedOtpAsk(normalized.deobfuscatedText, match)
+                    if (!isNegated) {
+                        signals.add(
+                            FiredSignal("A01", "asks_otp_pin_cvv", 0.60, ScamCategory.OTP_ACCOUNT_TAKEOVER, span)
+                        )
+                    }
+                }
                 "asks_install_app" -> {
                     // Check if mentions remote apps specifically
                     val isRemote = remoteApps.any { normalized.normalizedText.contains(it) }
@@ -258,15 +264,27 @@ class SignalEngine(
                 "urgency_deadline" -> signals.add(
                     FiredSignal("P01", "urgency_deadline", 0.20, ScamCategory.PHISHING_BANK_KYC, span)
                 )
-                "threat_account_block" -> signals.add(
-                    FiredSignal("P02", "threat_account_block", 0.35, ScamCategory.PHISHING_BANK_KYC, span)
-                )
-                "threat_legal_arrest" -> signals.add(
-                    FiredSignal("P03", "threat_legal_arrest", 0.50, ScamCategory.AUTHORITY_DIGITAL_ARREST, span)
-                )
-                "threat_utility_disconnect" -> signals.add(
-                    FiredSignal("P04", "threat_utility_disconnect", 0.45, ScamCategory.UTILITY_DISCONNECT, span)
-                )
+                "threat_account_block" -> {
+                    if (!isAwarenessOrAdvisory(normalized.normalizedText, match)) {
+                        signals.add(
+                            FiredSignal("P02", "threat_account_block", 0.35, ScamCategory.PHISHING_BANK_KYC, span)
+                        )
+                    }
+                }
+                "threat_legal_arrest" -> {
+                    if (!isAwarenessOrAdvisory(normalized.normalizedText, match)) {
+                        signals.add(
+                            FiredSignal("P03", "threat_legal_arrest", 0.50, ScamCategory.AUTHORITY_DIGITAL_ARREST, span)
+                        )
+                    }
+                }
+                "threat_utility_disconnect" -> {
+                    if (!isAwarenessOrAdvisory(normalized.normalizedText, match)) {
+                        signals.add(
+                            FiredSignal("P04", "threat_utility_disconnect", 0.45, ScamCategory.UTILITY_DISCONNECT, span)
+                        )
+                    }
+                }
                 "lure_prize_lottery" -> signals.add(
                     FiredSignal("P05", "lure_prize_lottery", 0.40, ScamCategory.LOTTERY_PRIZE, span)
                 )
@@ -328,34 +346,74 @@ class SignalEngine(
             val hasOtpCode = extracted.otpCodes.isNotEmpty()
             val hasUrls = extracted.urls.isNotEmpty()
             val hasAsks = signals.any { it.signalId.startsWith("A") }
-            val hasDoNotShare = normalized.normalizedText.contains("do not share") || normalized.normalizedText.contains("किसी के साथ साझा न करें") || normalized.normalizedText.contains("kisi ke sath share na")
+            val hasDoNotShare = normalized.normalizedText.contains("do not share") ||
+                    normalized.normalizedText.contains("never share") ||
+                    normalized.normalizedText.contains("don't share") ||
+                    normalized.normalizedText.contains("dont share") ||
+                    normalized.normalizedText.contains("साझा न करें") ||
+                    normalized.normalizedText.contains("साझा न") ||
+                    normalized.normalizedText.contains("न बताएं") ||
+                    normalized.normalizedText.contains("मत बताएं") ||
+                    normalized.normalizedText.contains("share na kare") ||
+                    normalized.normalizedText.contains("share na") ||
+                    normalized.normalizedText.contains("mat bata") ||
+                    normalized.normalizedText.contains("mat batana")
 
             if (hasOtpCode && !hasUrls && !hasAsks && hasDoNotShare) {
                 dampeners.add(FiredDampener("B01", "otp_delivery_only", 0.40))
             }
+        }
 
-            // B02: Official domains only
-            if (extracted.urls.isNotEmpty()) {
-                val allUrlsOfficial = extracted.urls.all { url ->
-                    extracted.brands.any { b -> b.officialDomains.contains(url.registrableDomain) }
-                }
-                if (allUrlsOfficial) {
-                    dampeners.add(FiredDampener("B02", "official_domains_only", 0.30))
-                }
+        // B02: Official domains only
+        if (extracted.urls.isNotEmpty()) {
+            val allUrlsOfficial = extracted.urls.all { url ->
+                extracted.brands.any { b -> b.officialDomains.contains(url.registrableDomain) }
             }
-
-            // B03: Established conversation (named sender and 20+ messages)
-            if (message.senderKind == SenderKind.NAMED && messageCountForSender >= 20) {
-                dampeners.add(FiredDampener("B03", "established_conversation", 0.15))
-            }
-
-            // B04: User trusted sender
-            if (isTrustedSender) {
-                dampeners.add(FiredDampener("B04", "user_trusted_sender", 0.50))
+            if (allUrlsOfficial) {
+                dampeners.add(FiredDampener("B02", "official_domains_only", 0.30))
             }
         }
 
+        // B03: Established conversation (named sender and 20+ messages)
+        if (message.senderKind == SenderKind.NAMED && messageCountForSender >= 20) {
+            dampeners.add(FiredDampener("B03", "established_conversation", 0.15))
+        }
+
+        // B04: User trusted sender
+        if (isTrustedSender) {
+            dampeners.add(FiredDampener("B04", "user_trusted_sender", 0.50))
+        }
+
         return Pair(signals, dampeners)
+    }
+
+    private fun isNegatedOtpAsk(text: String, match: LexiconMatch): Boolean {
+        val windowStart = (match.start - 35).coerceAtLeast(0)
+        val windowEnd = (match.end + 35).coerceAtMost(text.length)
+        val surrounding = text.substring(windowStart, windowEnd).lowercase()
+
+        val negationIndicators = listOf(
+            "do not", "don't", "dont", "never", "not to share", "not share", "should not",
+            "साझा न", "साझा मत", "न बताएं", "मत बताएं", "न दें", "मत दें", "नहीं दें", "किसी को न", "किसी के साथ न",
+            "share na", "mat bata", "mat dena", "mat share", "kisi ko mat", "kisi ke sath na", "kisi se share na"
+        )
+        return negationIndicators.any { surrounding.contains(it) }
+    }
+
+    private fun isAwarenessOrAdvisory(text: String, match: LexiconMatch): Boolean {
+        val windowStart = (match.start - 60).coerceAtLeast(0)
+        val windowEnd = (match.end + 60).coerceAtMost(text.length)
+        val surrounding = text.substring(windowStart, windowEnd).lowercase()
+
+        val indicators = listOf(
+            "warns against", "warn against", "warning", "advisory", "beware", "fake", "do not fall for",
+            "चेतावनी", "सावधान", "अलर्ट", "फर्जी", "बचें", "धोखाधड़ी",
+            "fraud se bache", "fraud alert", "savdhan", "fake hai", "satark rahe"
+        )
+        return indicators.any { surrounding.contains(it) } ||
+                text.lowercase().contains("security advisory") ||
+                text.lowercase().contains("cyber police warns") ||
+                text.lowercase().contains("police warns")
     }
 
     private fun mapMatchToOriginalSpan(match: LexiconMatch, normalized: NormalizedText): TextSpan {

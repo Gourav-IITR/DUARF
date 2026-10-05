@@ -49,3 +49,45 @@ All decisions made where the spec was silent or flexible are recorded here.
   - Canary test: 200 benign messages containing unique canary tokens verified to never be stored or persisted in any database table or log.
   - Retention test: verified stale alerts are purged according to retention thresholds.
   - Wipe test: verified "Delete all data" completely clears all tables, resets preferences, and wipes crypto keys.
+
+## Milestone M4
+- **Dataset Pipeline (`ml/`)**:
+  - Synthetic dataset generator (`ml/generate_dataset.py`) with fixed seed (42), independent held-out test templates (`heldout_test_templates.json`), and training templates (`train_templates.json`).
+  - Total sizes: 20,000 train rows (60% benign, heavy on hard negatives: bank alerts, OTPs, deliveries, utilities, chats, scam awareness), 2,500 dev rows (60% benign), 3,200 frozen test rows (62.5% benign).
+  - All splits grouped strictly by `group_id` with zero group leakage. Exact normalized texts deduplicated across splits.
+  - Seed corpus (1,000 rows in `eval/corpus.jsonl`) kept completely out of training/dev/test as an extra check set.
+- **Kotlin Featurizer v1 (`Featurizer.kt`, `MurmurHash3.kt`)**:
+  - Entity placeholder replacement (`__url__`, `__phone__`, `__upi__`, `__amount__`, `__code__`, `__file_apk__`, `__brand_<kind>__`).
+  - Word unigrams (`w|`), word bigrams (`b|`), character 3-5 grams (`c|`), and meta features (`m|`). Confirmed zero rule signal IDs in model features (§9.2).
+  - MurmurHash3 32-bit x86 hash into $2^{18}$ buckets (262,144 buckets). Features scaled by $1 / \sqrt{k}$ ($L_2$ norm).
+  - Token-to-bucket attribution mapping for explanation highlights.
+- **Model Training & Calibration (`ml/train.py`)**:
+  - Elastic-net Logistic Regression trained with SAGA solver and balanced weights on pinned requirements (`scikit-learn==1.5.2`, `numpy==2.0.2`, `scipy==1.13.1`).
+  - Hyperparameters tuned on dev split: best $C=0.10, l1\_ratio=0.30$.
+  - Platt scaling fit on dev split raw logits ($A=6.2592, B=-3.3671$).
+  - int8 quantized weights packed into `packs/model/model.bin` with CRC32.
+  - Metadata written to `packs/model/model.json` including training-set SHA-256 hash, generator seed (42), and operating thresholds.
+- **Dynamic Header Sizing & Fallback (`LinearClassifier.kt`)**:
+  - Model file size derived dynamically from header (`28 + (1 shl log2Buckets) + 4 = 262,176` bytes).
+  - Validates CRC32 and featurizer version; falls back cleanly to rules-only on missing file or corruption.
+- **Rules & Fusion Refinements (§10 & worked examples)**:
+  - Pin worked examples to weights in `packs/rules.json`: P01 (0.20), L01 (0.55), S01 (0.10).
+  - Verified that "L01 from number-only sender → DANGER" triggers via Combo C02 floor (0.85) rather than noisy-OR alone (0.595).
+  - Negative-lexicon OTP handling: contextual negation filtering ("do not share", "never share", "साझा न करें", "share na kare") prevents A01 from firing on security notices; B01 fires with factor 0.40; verdict is NONE.
+  - Awareness/advisory check suppresses threat signals (P02, P03, P04) when forwarded in scam awareness context.
+  - Invariant 6: model alone capped below Danger ($0.719 < 0.72$).
+  - At most 5 token attribution highlights emitted only when $m' > 0.2$.
+- **Milestone M4 Verification & Gates**:
+  - **Tier 1 Gates on frozen test split (3,200 rows)**:
+    - Danger precision: 1.0 (Target: $\ge 0.97$) [PASS]
+    - Caution+ recall: 0.91 (Target: $\ge 0.90$) [PASS]
+    - Benign -> Danger: 0.0% (Target: $\le 0.3\%$) [PASS]
+    - Benign -> Caution+: 0.0% (Target: $\le 2.0\%$) [PASS]
+    - Per-language breakdown: en: 0.849 recall, hi: 1.0 recall, hi-Latn: 0.996 recall.
+    - Adversarial subset: 100% recall (108/108).
+    - Rules-only vs Rules+ML: Recall increased from 0.361 to 0.910 at 1.0 Danger precision.
+  - **Seed corpus check set (1,000 rows)**: Danger precision 1.0, Recall 1.0, 0 false positives.
+  - **Parity round-trip test**: Kotlin prediction matches Python reference within 0.01 tolerance.
+  - **Timing benchmark (`InferenceBenchmarkTest`)**: JVM 1,000-char analysis p95 = 2.08 ms (budget 150 ms); Featurize + Predict p95 = 0.47 ms (budget 15 ms).
+  - **Full CI suite**: `./gradlew check assembleRelease` BUILD SUCCESSFUL.
+

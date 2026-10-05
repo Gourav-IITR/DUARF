@@ -8,7 +8,7 @@
     "asks_otp_pin_cvv": [
       "share your otp", "send the otp", "send me the otp", "tell me the otp", "forward the otp",
       "enter your otp", "share otp", "provide otp", "give me the otp", "send pin", "share your pin",
-      "share password", "share cvv", "enter cvv", "verification code"
+      "share password", "share cvv", "enter cvv", "share verification code", "send verification code"
     ],
     "asks_install_app": [
       "install this app", "download the app", "install app", "download apk", "install application",

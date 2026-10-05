@@ -50,6 +50,13 @@ class DefaultScamEngine(
         )
     }
 
+    private val featurizer: com.duarf.engine.ml.Featurizer = com.duarf.engine.ml.Featurizer()
+    private val classifier: com.duarf.engine.ml.LinearClassifier? = try {
+        packs.modelBytes?.let { com.duarf.engine.ml.LinearClassifier.fromBytes(it) }
+    } catch (_: Exception) {
+        null
+    }
+
     override fun analyze(
         message: IncomingMessage,
         context: List<IncomingMessage>,
@@ -101,26 +108,37 @@ class DefaultScamEngine(
             // 5. Evaluate combos (§7.3)
             val combos = ComboEngine.evaluateCombos(allSignals)
 
-            // 6. Score fusion (§10) - model probability is null in M1 (rules only)
+            // 6. ML model prediction (§9)
+            val modelPrediction = try {
+                classifier?.let { cls ->
+                    val featurized = featurizer.featurize(message, normalized, extracted)
+                    cls.predict(featurized)
+                }
+            } catch (_: Exception) {
+                null
+            }
+
+            // 7. Score fusion (§10)
             val fusion = ScoreFusion.fuse(
                 signals = allSignals,
                 dampeners = dampeners,
                 combos = combos,
-                modelProbability = null,
+                modelProbability = modelPrediction?.probability,
                 sensitivity = sensitivity
             )
 
-            // 7. Explanations and highlights (§11)
+            // 8. Explanations and highlights (§11)
             val (reasons, highlights) = ExplanationEngine.generateReasonsAndHighlights(
                 signals = allSignals,
-                topCombo = fusion.topCombo
+                topCombo = fusion.topCombo,
+                modelHighlights = modelPrediction?.highlights ?: emptyList()
             )
 
             Verdict(
                 level = fusion.level,
                 score = fusion.score,
                 ruleScore = fusion.ruleScore,
-                modelProbability = null,
+                modelProbability = modelPrediction?.probability,
                 category = fusion.category,
                 reasons = reasons,
                 highlights = highlights,

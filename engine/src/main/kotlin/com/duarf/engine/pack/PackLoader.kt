@@ -64,6 +64,12 @@ object PackLoader {
             .filter { it.isNotEmpty() && !it.startsWith("#") }
             .toSet()
 
+        val modelBytes = try {
+            source.readBytes("model/model.bin")
+        } catch (_: Exception) {
+            null
+        }
+
         return LoadedPacks(
             rules = rules,
             brands = brands,
@@ -73,7 +79,8 @@ object PackLoader {
             upiHandles = upiHandles,
             remoteApps = remoteApps,
             pslLines = pslLines,
-            blocklist = blocklist
+            blocklist = blocklist,
+            modelBytes = modelBytes
         )
     }
 }

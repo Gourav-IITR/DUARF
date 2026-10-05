@@ -104,8 +104,8 @@ object ScoreFusion {
 
         return FusionResult(
             level = level,
-            score = (score * 1000).toLong() / 1000.0, // round to 3 decimals
-            ruleScore = (ruleScore * 1000).toLong() / 1000.0,
+            score = Math.round(score * 1000.0) / 1000.0, // round to 3 decimals
+            ruleScore = Math.round(ruleScore * 1000.0) / 1000.0,
             modelProbability = modelProbability,
             category = category,
             topCombo = highestCombo
