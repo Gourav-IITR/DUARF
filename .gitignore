@@ -11,3 +11,4 @@ captures
 *.apk
 *.aab
 app/src/main/assets/packs/
+engine-cli/eval/

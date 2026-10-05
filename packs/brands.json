@@ -1,0 +1,154 @@
+[
+  {
+    "id": "sbi",
+    "kind": "BANK",
+    "names": ["sbi", "state bank of india", "एसबीआई", "स्टेट बैंक"],
+    "officialDomains": ["sbi.co.in", "onlinesbi.sbi"],
+    "source": "https://sbi.co.in",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "hdfc",
+    "kind": "BANK",
+    "names": ["hdfc", "hdfc bank", "एचडीएफसी"],
+    "officialDomains": ["hdfcbank.com"],
+    "source": "https://hdfcbank.com",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "icici",
+    "kind": "BANK",
+    "names": ["icici", "icici bank", "आईसीआईसीआई"],
+    "officialDomains": ["icicibank.com"],
+    "source": "https://icicibank.com",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "pnb",
+    "kind": "BANK",
+    "names": ["pnb", "punjab national bank", "पीएनबी"],
+    "officialDomains": ["pnbindia.in"],
+    "source": "https://pnbindia.in",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "axis",
+    "kind": "BANK",
+    "names": ["axis bank", "axis", "एक्सिस बैंक"],
+    "officialDomains": ["axisbank.com"],
+    "source": "https://axisbank.com",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "kotak",
+    "kind": "BANK",
+    "names": ["kotak", "kotak mahindra bank", "कोटक"],
+    "officialDomains": ["kotak.com"],
+    "source": "https://kotak.com",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "bob",
+    "kind": "BANK",
+    "names": ["bank of baroda", "bob", "बैंक ऑफ बड़ौदा"],
+    "officialDomains": ["bankofbaroda.in"],
+    "source": "https://bankofbaroda.in",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "gpay",
+    "kind": "PAYMENTS",
+    "names": ["google pay", "gpay"],
+    "officialDomains": ["pay.google.com"],
+    "source": "https://pay.google.com",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "phonepe",
+    "kind": "PAYMENTS",
+    "names": ["phonepe", "फोनपे"],
+    "officialDomains": ["phonepe.com"],
+    "source": "https://phonepe.com",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "paytm",
+    "kind": "PAYMENTS",
+    "names": ["paytm", "पेटीएम"],
+    "officialDomains": ["paytm.com"],
+    "source": "https://paytm.com",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "jio",
+    "kind": "TELECOM",
+    "names": ["jio", "reliance jio", "जियो"],
+    "officialDomains": ["jio.com"],
+    "source": "https://jio.com",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "airtel",
+    "kind": "TELECOM",
+    "names": ["airtel", "bharti airtel", "एयरटेल"],
+    "officialDomains": ["airtel.in"],
+    "source": "https://airtel.in",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "incometax",
+    "kind": "GOVERNMENT",
+    "names": ["income tax", "it department", "आयकर विभाग"],
+    "officialDomains": ["incometax.gov.in"],
+    "source": "https://incometax.gov.in",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "uidai",
+    "kind": "GOVERNMENT",
+    "names": ["uidai", "aadhaar", "आधार"],
+    "officialDomains": ["uidai.gov.in"],
+    "source": "https://uidai.gov.in",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "epfo",
+    "kind": "GOVERNMENT",
+    "names": ["epfo", "epf", "ईपीएफओ"],
+    "officialDomains": ["epfindia.gov.in"],
+    "source": "https://epfindia.gov.in",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "parivahan",
+    "kind": "GOVERNMENT",
+    "names": ["parivahan", "echallan", "e-challan", "परिवहन"],
+    "officialDomains": ["parivahan.gov.in", "echallan.parivahan.gov.in"],
+    "source": "https://parivahan.gov.in",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "indiapost",
+    "kind": "COURIER",
+    "names": ["india post", "भारतीय डाक"],
+    "officialDomains": ["indiapost.gov.in"],
+    "source": "https://indiapost.gov.in",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "police",
+    "kind": "LAW_ENFORCEMENT",
+    "names": ["cbi", "ed", "police", "cyber crime", "crime branch", "पुलिस"],
+    "officialDomains": ["cbi.gov.in", "cybercrime.gov.in"],
+    "source": "https://cybercrime.gov.in",
+    "verifiedOn": "2026-10-06"
+  },
+  {
+    "id": "electricity",
+    "kind": "UTILITY",
+    "names": ["electricity board", "power corp", "bijli vibhag", "विद्युत विभाग"],
+    "officialDomains": [],
+    "source": "https://example.com",
+    "verifiedOn": "2026-10-06"
+  }
+]

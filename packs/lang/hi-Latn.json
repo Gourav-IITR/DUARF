@@ -1,0 +1,86 @@
+{
+  "code": "hi-Latn",
+  "displayName": "Hinglish",
+  "script": "Latn",
+  "tier": 1,
+  "reviewedBy": null,
+  "lexicons": {
+    "asks_otp_pin_cvv": [
+      "otp batao", "otp bhejo", "otp share karo", "pin batao", "otp send karo",
+      "cvv bata", "password bhejo", "code batao", "otp forward karo"
+    ],
+    "asks_install_app": [
+      "app install karo", "apk download karo", "app download karein", "anydesk install karo",
+      "application download kare"
+    ],
+    "asks_payment": [
+      "fees jama karo", "paise transfer karo", "fine bharo", "advance bhejo",
+      "charges pay karo", "penalty bharo"
+    ],
+    "upi_pin_to_receive": [
+      "paise lene ke liye pin dalo", "upi pin enter karo paise pane ke liye",
+      "qr scan karke paise lo", "pin dalo aur credit ho jayega", "approve karo paise lene ke liye"
+    ],
+    "asks_identity_details": [
+      "aadhaar card bhejo", "pan card bhejo", "aadhaar details share karo",
+      "bank account number send karo", "card ka photo bhejo"
+    ],
+    "asks_secrecy_or_stay_on_call": [
+      "call mat katna", "call pe bane raho", "video call disconnect mat karna",
+      "kisi ko mat batana", "secret rakhna", "police ko mat batana"
+    ],
+    "asks_click_to_fix": [
+      "link par click karo", "click karke update karo", "verify karne ke liye link khole",
+      "unblock karne ke liye click kare"
+    ],
+    "asks_move_platform": [
+      "telegram par message karo", "telegram group join karo", "whatsapp group se judo"
+    ],
+    "money_from_new_number": [
+      "yeh mera naya number hai", "emergency hai paise bhejo", "hospital me hu paise chahiye"
+    ],
+    "urgency_deadline": [
+      "turant", "abhi ke abhi", "aaj raat tak", "24 ghante me", "immediately karo"
+    ],
+    "threat_account_block": [
+      "khata band ho jayega", "account block ho gaya", "kyc expire ho gayi",
+      "sim block ho jayegi", "pan link nahi hai", "account suspend ho jayega"
+    ],
+    "threat_legal_arrest": [
+      "digital arrest", "arrest warrant", "fir darj", "cbi inquiry",
+      "narcotics parcel pakda gaya", "police complaint"
+    ],
+    "threat_utility_disconnect": [
+      "bijli kat jayegi", "bijli connection kaat diya jayega", "light cut jayegi",
+      "power cut ho jayega", "bill unpaid light cut"
+    ],
+    "lure_prize_lottery": [
+      "lottery jeeti hai", "lucky draw winner", "inam jeeta hai", "kbc lottery lagi hai"
+    ],
+    "lure_job_task": [
+      "part time job", "ghar baithe kamaye", "daily 3000 kamaye", "video like karke kamaye",
+      "online kamai"
+    ],
+    "lure_investment": [
+      "guaranteed return", "paisa double", "stock market tips", "double munafa"
+    ],
+    "lure_instant_loan": [
+      "turant loan approved", "bina document loan", "pre-approved loan"
+    ],
+    "lure_refund_cashback": [
+      "refund mil gaya", "cashback prapt kare", "reward points expire"
+    ],
+    "delivery_failed": [
+      "parcel delivery fail", "address update karo", "delivery ruki hai"
+    ],
+    "traffic_challan": [
+      "traffic challan pending", "e-challan bharo", "challan pay karo"
+    ],
+    "invitation_lure": [
+      "shadi ka card", "wedding invitation card download", "marriage card"
+    ],
+    "generic_mass_greeting": [
+      "dear customer", "priya grahak", "dear user"
+    ]
+  }
+}

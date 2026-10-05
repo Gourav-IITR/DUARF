@@ -1,0 +1,9 @@
+anydesk
+teamviewer
+quicksupport
+rustdesk
+airmirror
+zoho assist
+splashtop
+screen share
+remotedesktop
