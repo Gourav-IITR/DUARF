@@ -231,10 +231,15 @@ All decisions made where the spec was silent or flexible are recorded here.
     - *Security awareness pretext wrapping / negation pretexting*: embedding credential collection directives inside authentic-sounding security warning phrases with negation clauses ("सुरक्षा सूचना: किसी को भी कोड मत बताना...").
   - **Evaluation Invariant**: In accordance with the protocol, this gap is recorded as known and was **not** patched against the test split.
 - **M6 Hardening Plan**:
-  - *Normalizer Improvements*: Enhance `TextNormalizer` to handle advanced obfuscation variants, including unicode homoglyphs, inter-character spacing and delimiters, mixed scripts, and Devanagari orthographic variants.
-  - *Data Generator Expansion*: Add these obfuscation techniques to synthetic training and dev set generators (`ml/templates/train_templates.json`, `ml/generate_dataset.py`).
+  1. *Paraphrase Coverage for A01 (`asks_otp_pin_cvv`) in hi/hi-Latn/en Lexicons*: Add descriptive terms for codes and credentials (e.g. "सत्यापन कोड", "गुप्त कोड", "verification code", "secret code", "security PIN") derived strictly from dev data, not from test templates.
+  2. *Tighten "do not share" Negation*: Negation may ONLY suppress A01 when:
+     - The message contains NO request for the user to reply, send, read out, or confirm a code, AND
+     - The sender is NOT `NUMBER_ONLY` (genuine OTP deliveries do not originate from unknown consumer numbers).
+     - Add dev-set adversarial cases of security-warning-wrapped OTP requests.
+  3. *Normalizer Improvements*: Enhance `TextNormalizer` to handle homoglyphs, inter-character spacing and delimiters, mixed scripts, and Devanagari orthographic variants.
   - *Evaluation Protocol*: Evaluate all model and rule improvements exclusively on development splits (`dev`, `dev2`, `dev3`).
   - *Checkpoint Rule*: Frozen test split re-runs are strictly deferred until the M6 checkpoint.
+
 
 
 

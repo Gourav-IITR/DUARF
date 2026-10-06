@@ -14,7 +14,11 @@ Items marked "verify" and Section 19 human inputs are tracked here.
      - Lexical substitution / synonym evasion (descriptive Indic paraphrasing of credential tokens, bypassing primary keyword matching).
      - Security awareness pretext wrapping / negation pretexting (embedding harvesting instructions inside security warning text with negation clauses).
    - **M6 Hardening Plan**:
-     - Improve the text normalizer to detect and handle obfuscations (homoglyphs, spacing, mixed scripts, Devanagari orthographic variants).
-     - Add these obfuscation techniques to synthetic train and dev generators.
-     - Evaluate exclusively on dev splits (`dev`, `dev2`, `dev3`).
-     - Frozen test split re-runs strictly deferred until the M6 checkpoint.
+     1. **Paraphrase coverage for A01 (`asks_otp_pin_cvv`) in hi/hi-Latn/en lexicons**: Add descriptive terms for codes and credentials (e.g. "सत्यापन कोड", "गुप्त कोड", "verification code", "secret code", "security PIN") built strictly from dev data, not from test templates.
+     2. **Tighten "do not share" negation logic**: Negation may ONLY suppress A01 when:
+        - The message contains NO request for the user to reply, send, read out, or confirm a code, AND
+        - The sender is NOT `NUMBER_ONLY` (genuine OTP deliveries do not originate from unknown consumer numbers).
+        - Add dev-set adversarial cases of security-warning-wrapped OTP requests.
+     3. **Normalizer improvements**: Enhance `TextNormalizer` to handle homoglyphs, spacing/delimiters, and mixed scripts across Indic/Latin.
+     - *Evaluation protocol*: Evaluated exclusively on dev splits (`dev`, `dev2`, `dev3`). Frozen test split re-runs strictly deferred until the M6 checkpoint.
+
