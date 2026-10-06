@@ -21,4 +21,4 @@ Items marked "verify" and Section 19 human inputs are tracked here.
         - Add dev-set adversarial cases of security-warning-wrapped OTP requests.
      3. **Normalizer improvements**: Enhance `TextNormalizer` to handle homoglyphs, spacing/delimiters, and mixed scripts across Indic/Latin.
      - *Evaluation protocol*: Evaluated exclusively on dev splits (`dev`, `dev2`, `dev3`). Frozen test split re-runs strictly deferred until the M6 checkpoint.
-
+8. **License**: Open-source license TBD.
