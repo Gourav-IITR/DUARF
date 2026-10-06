@@ -8,3 +8,13 @@ Items marked "verify" and Section 19 human inputs are tracked here.
 4. **Verified official domains in `brands.json` (§19.4)**: Unverified, needs human check against cited sources and verification dates.
 5. **Play developer account & signing keys (§19.5)**: Placeholder keystore and configuration used for release builds in local development.
 6. **Final branding assets (§19.6)**: Placeholder vector assets used in MVP.
+7. **Known gap after M4: obfuscated scams (adversarial recall 0.50; hi 0.886)**:
+   - Evaluated on frozen test split: Devanagari Hindi recall was 0.886 < 0.90, failing the Tier 1 per-language gate due to 47 misses on adversarial template `fresh-scam-adv-02`. Overall adversarial recall was 0.50.
+   - **Obfuscation technique in `fresh-scam-adv-02` (by type only)**:
+     - Lexical substitution / synonym evasion (descriptive Indic paraphrasing of credential tokens, bypassing primary keyword matching).
+     - Security awareness pretext wrapping / negation pretexting (embedding harvesting instructions inside security warning text with negation clauses).
+   - **M6 Hardening Plan**:
+     - Improve the text normalizer to detect and handle obfuscations (homoglyphs, spacing, mixed scripts, Devanagari orthographic variants).
+     - Add these obfuscation techniques to synthetic train and dev generators.
+     - Evaluate exclusively on dev splits (`dev`, `dev2`, `dev3`).
+     - Frozen test split re-runs strictly deferred until the M6 checkpoint.

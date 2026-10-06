@@ -471,6 +471,7 @@ private fun runEval(args: List<String>) {
           Caution+ Recall:    ${evalMetrics.cautionOrAboveRecall} (Target: >= 0.90)
           Benign -> Danger:   ${evalMetrics.benignRaisedToDangerPercent}% (Target: <= 0.3%)
           Benign -> Caution+: ${evalMetrics.benignRaisedToCautionOrAbovePercent}% (Target: <= 2.0%)
+          Tier 1 Gate Status: ${if (passedTier1) "[PASS]" else "[FAIL: " + (if (!overallPassed) "Overall metrics miss; " else "") + (if (anyTier1LangFailed) langList.filter { !it.passedGates }.joinToString("; ") { "${it.lang} ${it.failureReasons.joinToString(", ")}" } else "") + "]"}
         -------------------------------------------------------------------------
         PER-LANGUAGE BREAKDOWN (§16.2 Tier 1 Gates):
     """.trimIndent())

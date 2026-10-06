@@ -211,16 +211,30 @@ All decisions made where the spec was silent or flexible are recorded here.
   - Per-Language Breakdown:
     - `en`: Total 1,112 (Scam 415, Benign 697) | Prec 1.0, Rec 1.0, B$\to$Danger 0.0%, B$\to$Caution 0.0% [PASS]
     - `hi-Latn`: Total 1,060 (Scam 371, Benign 689) | Prec 1.0, Rec 0.987, B$\to$Danger 0.0%, B$\to$Caution 0.0% [PASS]
-    - `hi`: Total 1,028 (Scam 414, Benign 614) | Prec 1.0, Rec 0.886, B$\to$Danger 0.0%, B$\to$Caution 0.0% [Rec 0.886 < 0.90 due to 47 misses on adversarial template `fresh-scam-adv-02`]
+    - `hi`: Total 1,028 (Scam 414, Benign 614) | Prec 1.0, Rec 0.886, B$\to$Danger 0.0%, B$\to$Caution 0.0% **[FAIL: Caution+ Recall 0.886 < 0.90 due to 47 misses on adversarial template `fresh-scam-adv-02`]**
+  - **Tier 1 Gate Result**: **FAIL** (Overall Caution+ Recall 0.957 and Danger Precision 1.0 pass, but per-language gate fails due to `hi` Caution+ Recall 0.886 < 0.90)
   - Adversarial Evaluation:
-    - Total: 248 (Scam: 94, Benign: 154) | Scam Recall: 0.50, Benign FP Danger: 0 (0.0%), Benign FP Caution: 0 (0.0%), Adversarial Precision: 1.0 [PASS]
+    - Total: 248 (Scam: 94, Benign: 154) | Scam Recall: 0.50, Benign FP Danger: 0 (0.0%), Benign FP Caution: 0 (0.0%), Adversarial Precision: 1.0 [PASS on FP, gap on adversarial recall]
   - Recall Comparison:
     - Rules-only Recall: 0.648 $\to$ Rules + ML Recall: **0.957** (+30.9 percentage point gain)
 - **Real-World Case Evaluation (`eval/real_world.jsonl`)**:
   - Scored row `real-echallan-01-doc` ("RTO E challan.apk"): Level=DANGER, Score=0.969, RuleScore=0.85, Signals=[L01, S01, S03] **[PASS]**
   - Context row `real-echallan-01-img` ("Photo"): Preceding image stored as context, not scored.
   - Real-World Accuracy: 1 / 1 (100%).
-- **Full CI Suite**: `./gradlew check assembleRelease` BUILD SUCCESSFUL in 23s (all 292 tasks pass).
+- **Full CI Suite**: `./gradlew check assembleRelease` BUILD SUCCESSFUL (all 292 tasks pass).
+
+### 6. Known Gap After M4 & M6 Hardening Plan
+- **Known gap after M4: obfuscated scams (adversarial recall 0.50; hi 0.886)**:
+  - Evaluation on the frozen test split identified an adversarial vulnerability where Devanagari Hindi recall dropped to 0.886, failing the Tier 1 per-language gate ($\ge 0.90$) due to 47 misses on template `fresh-scam-adv-02`. Adversarial recall was 0.50.
+  - **Obfuscation technique in `fresh-scam-adv-02` (by type only)**:
+    - *Lexical substitution / synonym evasion*: descriptive Indic paraphrasing of credential tokens ("गुप्त सत्यापन कोड"), bypassing primary loanword and keyword matching ("OTP", "ओटीपी").
+    - *Security awareness pretext wrapping / negation pretexting*: embedding credential collection directives inside authentic-sounding security warning phrases with negation clauses ("सुरक्षा सूचना: किसी को भी कोड मत बताना...").
+  - **Evaluation Invariant**: In accordance with the protocol, this gap is recorded as known and was **not** patched against the test split.
+- **M6 Hardening Plan**:
+  - *Normalizer Improvements*: Enhance `TextNormalizer` to handle advanced obfuscation variants, including unicode homoglyphs, inter-character spacing and delimiters, mixed scripts, and Devanagari orthographic variants.
+  - *Data Generator Expansion*: Add these obfuscation techniques to synthetic training and dev set generators (`ml/templates/train_templates.json`, `ml/generate_dataset.py`).
+  - *Evaluation Protocol*: Evaluate all model and rule improvements exclusively on development splits (`dev`, `dev2`, `dev3`).
+  - *Checkpoint Rule*: Frozen test split re-runs are strictly deferred until the M6 checkpoint.
 
 
 
