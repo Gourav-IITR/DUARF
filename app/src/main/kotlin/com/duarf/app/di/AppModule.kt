@@ -81,8 +81,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideScamEngine(@ApplicationContext context: Context): ScamEngine {
-        val packSource = AssetPackSource(context)
-        return DefaultScamEngine.fromPackSource(packSource)
-    }
+    fun provideScamEngine(@ApplicationContext context: Context): ScamEngine =
+        com.duarf.app.engine.LazyScamEngine(context)
 }

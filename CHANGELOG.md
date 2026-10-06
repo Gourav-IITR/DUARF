@@ -240,6 +240,25 @@ All decisions made where the spec was silent or flexible are recorded here.
   - *Evaluation Protocol*: Evaluate all model and rule improvements exclusively on development splits (`dev`, `dev2`, `dev3`).
   - *Checkpoint Rule*: Frozen test split re-runs are strictly deferred until the M6 checkpoint.
 
+## Android Regex Compatibility & Lazy Startup Hardening
+- **ICU Regex Compatibility (Featurizer)**:
+  - Android's ICU-backed `Pattern` rejects `Pattern.UNICODE_CHARACTER_CLASS` with `IllegalArgumentException`.
+  - Replaced `Pattern.UNICODE_CHARACTER_CLASS` with explicit character classes behaving identically on both JVM and Android ICU:
+    - Whitespace: `[\p{Z}\t\n\u000B\f\r\u0085]`
+    - Punctuation: `\p{P}`
+    - Pattern: `Pattern.compile("(__[a-z0-9_]+__)|([^\\p{Z}\\t\\n\\u000B\\f\\r\\u0085\\p{P}]+)")` (zero flags).
+  - Validated across all 33,100 dataset texts (`train`, `dev`, `dev2`, `dev3`, `test`, `corpus`): **0 token differences, 0 feature index differences**. Model weights, CRC32, and featurizer version remain 100% valid.
+- **Regex Audit across `:engine` and `:capture`**:
+  - Confirmed zero occurrences of unsupported flags, `\p{javaX}`, `\p{IsX}`, POSIX classes (`\p{Alnum}`, `\p{Alpha}`), or variable-width lookbehinds.
+  - All existing regexes (`UrlParser`, `PublicSuffixList`, `EntityExtractor`, `NotificationParser`) use standard ASCII classes or fixed-length lookbehinds fully supported across JVM and ICU.
+- **Committed Golden Vectors & Instrumented Test (§16.1)**:
+  - Created `packs/golden_vectors.json` containing 200 fixed texts from seed corpus with committed feature indices, L2 norms, alert levels, and scores.
+  - Added `:engine` JVM unit test `GoldenVectorFeaturizerTest.kt`.
+  - Added `:app` instrumented test `GoldenVectorInstrumentedTest.kt` in `app/src/androidTest/` that builds `DefaultScamEngine` from real APK assets and validates that Android ART / ICU matches committed vectors with zero drift.
+- **Lazy Engine Startup & Graceful Degradation**:
+  - Implemented `LazyScamEngine` in `:app`: packs and model are loaded off the main thread on `Dispatchers.IO`, keeping `Application.onCreate` non-blocking.
+  - In the event of an initialization error or corruption, `LazyScamEngine` logs audited events (`SafeLog.EventCode.ERROR_ENGINE_INIT`) and degrades to a non-crashing fallback engine returning `AlertLevel.NONE`.
+
 
 
 

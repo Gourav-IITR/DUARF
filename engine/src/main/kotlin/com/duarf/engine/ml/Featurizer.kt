@@ -26,7 +26,10 @@ class Featurizer(
     val bucketCount: Int = 1 shl log2Buckets
     private val bucketMask: Int = bucketCount - 1
 
-    private val tokenPattern = Pattern.compile("(__[a-z0-9_]+__)|([^\\s\\p{Punct}]+)", Pattern.UNICODE_CHARACTER_CLASS)
+    // Explicit Unicode whitespace [\p{Z}\t\n\u000B\f\r\u0085] and punctuation \p{P} without flags,
+    // ensuring identical tokenization on both JVM and Android ICU (Invariant 8) while avoiding
+    // Android's unsupported UNICODE_CHARACTER_CLASS flag.
+    private val tokenPattern = Pattern.compile("(__[a-z0-9_]+__)|([^\\p{Z}\\t\\n\\u000B\\f\\r\\u0085\\p{P}]+)")
 
     fun featurize(
         message: IncomingMessage,

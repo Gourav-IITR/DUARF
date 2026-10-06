@@ -91,6 +91,11 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.truth)
+
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.junit)
 }
 
 apply(from = rootProject.file("tools/ci/ci-checks.gradle.kts"))

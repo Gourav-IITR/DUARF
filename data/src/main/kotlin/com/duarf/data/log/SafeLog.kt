@@ -10,7 +10,9 @@ object SafeLog {
         DB_RETENTION_PURGED(201),
         DB_ALL_WIPED(202),
         CRYPTO_KEY_GENERATED(203),
-        ERROR_CRYPTO(299)
+        ERROR_CRYPTO(299),
+        ERROR_ENGINE_INIT(300),
+        ERROR_ENGINE_ANALYSIS(301)
     }
 
     fun event(event: EventCode, count: Long = 0) {
