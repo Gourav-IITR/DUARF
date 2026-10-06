@@ -442,8 +442,24 @@ All decisions made where the spec was silent or flexible are recorded here.
 - **Known Gap Recorded (`OPEN_QUESTIONS.md`)**:
   - Recorded item 10 tracking Hindi government-scheme and loan-fee scams (e.g. `new-scam-hi-05`). Missing Hindi brand aliases for government schemes (for `L09`), `P08` Hindi loan lure lexicon (`ऋण स्वीकृत`, `लोन मंजूर`), and `A03` upfront fee phrasing (`फाइल चार्ज भेजें`). Detection rules remain frozen; planned for the next lexicon/data round verified on dev splits.
 
-
-
-
-
+### 13. Privacy & Safety Controls for Real Notification Recordings
+- **.gitignore Invariant (§2, §14, §19)**:
+  - Excluded real notification recordings and private message evaluation sets from git tracking: `recordings/`, `**/recordings/`, `*.recording.json`, `*.recording.jsonl`, `*.recording.txt`, `eval/private/`, `**/private/`. Real recordings live strictly on developer machines.
+- **CI & Pre-Commit PII Scanner**:
+  - Created `tools/ci/check_pii.py` supporting `--staged`, `--all`, and `--history` modes.
+  - Added Gradle verification task `verifyNoPiiLeakage` to `tools/ci/ci-checks.gradle.kts` wired into `./gradlew check`.
+  - Enforces detection across tracked files and commits for:
+    1. Indian mobile numbers (`(?<![\d.a-zA-Z])(?:\+91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}(?![\d.a-zA-Z])`), exempting documented synthetic placeholders (`+91 98765 43210`, `+91 91234 56789`, etc.), toll-free support numbers (`1800...`, `1930`), and foreign test placeholders.
+    2. Bank account numbers (`9–18` digits preceded by English/Hindi account keywords `a/c`, `account`, `खाता संख्या`, etc.), allowing masked account numbers (`**1234`, `XXXX1234`).
+    3. OTP codes (`4–8` digits adjacent to `OTP` / `ओटीपी`), exempting synthetic test placeholders (`123456`, `492019`, etc.).
+    4. UPI IDs (`local@handle` where handle is in `packs/lists/upi_handles.txt`), exempting documented test placeholders (`user@okaxis`, `helpme2024@ybl`).
+    5. Personal/private email addresses, exempting documented placeholders (`user@example.com`, `support@example.com`, `test@example.com`) and RFC 2606 / RFC 6761 reserved example domains (`.example.com`, `.example.org`, `.example.net`, `.example`, `.test`, `.invalid`, `.localhost`).
+- **Versioned Git Hook (`tools/ci/hooks/pre-commit`)**:
+  - Configured repository-level versioned git hooks via `git config core.hooksPath tools/ci/hooks`.
+  - Moved pre-commit hook into tracked file `tools/ci/hooks/pre-commit`.
+  - Documented one-line developer setup (`git config core.hooksPath tools/ci/hooks`) in `README.md` under "Contributing".
+- **Test Fixture Redaction Policy**:
+  - Added Core Rule 5 in `AGENTS.md` and updated `docs/ARCHITECTURE.md` (§14, §19): before converting real notification recordings into test fixtures, all names, numbers, amounts, and codes must be redacted first. Only redacted fixtures with synthetic placeholders may be committed.
+- **Repository History Audit**:
+  - Full git history scan (`git log -p --all`) across all 14 commits confirmed zero real numbers, zero account numbers, zero unredacted OTPs, zero unredacted UPI IDs, and zero unredacted email addresses committed in repo history (0 findings).
 

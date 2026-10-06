@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# tools/ci/hooks/pre-commit
+# Versioned Git pre-commit hook to prevent unredacted PII from being committed (§2, §14, §19)
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+PYTHON_EXEC="$(command -v python3 || command -v python || true)"
+
+if [ -z "$PYTHON_EXEC" ]; then
+    echo "[ERROR] python3 not found. Cannot run PII pre-commit check." >&2
+    exit 1
+fi
+
+"$PYTHON_EXEC" "$REPO_ROOT/tools/ci/check_pii.py" --staged

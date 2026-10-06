@@ -224,6 +224,146 @@ val verifyDangerQualifyingSignals by tasks.registering {
     }
 }
 
-tasks.named("check") {
-    dependsOn(verifyDependencies, verifyPermissions, verifyExportedComponents, verifyNoContentLogging, verifyNoDebugToolsInRelease, verifyDangerQualifyingSignals)
+val verifyNoPiiLeakage by tasks.registering {
+    description = "Enforces that no Indian mobile numbers, bank account numbers, raw OTP codes, UPI IDs, or private email addresses are committed in the repository (§2, §14, §19)"
+    group = "verification"
+    doLast {
+        val phoneRegex = Regex("""(?<![\d.a-zA-Z])(?:\+91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}(?![\d.a-zA-Z])""")
+        val acctRegex = Regex("""(?i)(?:\b(?:a/c|account|ac\s*no|acc\s*no)\b|खाता(?:\s*(?:संख्या|नंबर|नं))?)\s*[:#.-]?\s*\d{9,18}\b""")
+        val otpRegex = Regex("""(?i)(?:\botp\b|ओटीपी)\s*[:=is-]{0,15}\s*\b\d{4,8}\b|\b\d{4,8}\b\s*[:=is-]{0,15}\s*(?:\botp\b|ओटीपी)""")
+        val upiRegex = Regex("""\b[a-zA-Z0-9.\-_]{2,50}@([a-zA-Z0-9]+)\b""")
+        val emailRegex = Regex("""\b[a-zA-Z0-9._%+-]+@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\b""")
+
+        val allowedPhones = setOf(
+            "+919876543210", "+91 98765 43210", "9876543210", "98765 43210", "+91-98765-43210",
+            "+919123456789", "+91 91234 56789", "9123456789", "91234 56789",
+            "+919000000000", "+91 90000 00000", "9000000000", "90000 00000",
+            "+919999999999", "+91 99999 99999", "9999999999", "99999 99999",
+            "+919876543211", "+91 98765 43211", "9876543211", "98765 43211",
+            "+447911123456", "+44 7911 123456", "+44 7911123456", "7911123456",
+            "18002583838"
+        )
+
+        val allowedOtps = setOf(
+            "123456", "654321", "000000", "111111",
+            "492019", "382910", "592014", "392018"
+        )
+
+        val allowedUpi = setOf(
+            "user@okaxis",
+            "helpme2024@ybl"
+        )
+
+        val allowedEmails = setOf(
+            "user@example.com",
+            "support@example.com",
+            "test@example.com"
+        )
+
+        val handlesFile = rootProject.file("packs/lists/upi_handles.txt")
+        val upiHandles = if (handlesFile.exists()) {
+            handlesFile.readLines().map { it.trim().lowercase() }.filter { it.isNotEmpty() && !it.startsWith("#") }.toSet()
+        } else {
+            setOf("okaxis", "okhdfcbank", "oksbi", "okicici", "ybl", "ibl", "axl", "paytm", "apl", "upi", "postbank", "kotak", "barodampay", "aubank", "indus", "federal", "jupiteraxis", "fbl")
+        }
+
+        fun isAllowedEmail(raw: String, domain: String): Boolean {
+            val rawLower = raw.lowercase()
+            val domLower = domain.lowercase()
+            if (rawLower in allowedEmails) return true
+            if (domLower == "example.com" || domLower.endsWith(".example.com")) return true
+            if (domLower == "example.org" || domLower.endsWith(".example.org")) return true
+            if (domLower == "example.net" || domLower.endsWith(".example.net")) return true
+            if (domLower == "example" || domLower.endsWith(".example")) return true
+            if (domLower == "test" || domLower.endsWith(".test")) return true
+            if (domLower == "invalid" || domLower.endsWith(".invalid")) return true
+            if (domLower == "localhost" || domLower.endsWith(".localhost")) return true
+            return false
+        }
+
+        val tollFreeRegex = Regex("""^(?:\+91[\s-]?)?1800\d{6,7}$""")
+        val digitsExtractRegex = Regex("""\b\d{4,8}\b""")
+
+        // Obtain tracked files from git, with fallback to directory walk
+        val trackedFiles: List<File> = try {
+            val byteOut = java.io.ByteArrayOutputStream()
+            project.exec {
+                commandLine("git", "ls-files")
+                standardOutput = byteOut
+            }
+            byteOut.toString(java.nio.charset.StandardCharsets.UTF_8)
+                .lines()
+                .filter { it.isNotBlank() }
+                .map { rootProject.file(it) }
+                .filter { it.exists() && it.isFile }
+        } catch (e: Exception) {
+            val ignoredDirs = setOf(".git", "build", ".gradle", ".idea", "captures", ".cxx", ".externalNativeBuild", "venv", ".venv")
+            rootProject.rootDir.walkTopDown()
+                .filter { file -> !ignoredDirs.any { file.path.contains("/$it/") || file.path.endsWith("/$it") } }
+                .filter { it.isFile }
+                .toList()
+        }
+
+        val ignoredExtensions = setOf("bin", "apk", "aab", "jar", "png", "jpg", "jpeg", "ico", "webp", "class", "dex")
+        val violations = mutableListOf<String>()
+
+        trackedFiles.forEach { file ->
+            if (file.extension.lowercase() !in ignoredExtensions) {
+                file.useLines { lines ->
+                    lines.forEachIndexed { index, line ->
+                        phoneRegex.findAll(line).forEach { match ->
+                            val raw = match.value.trim()
+                            val norm = raw.replace(" ", "").replace("-", "")
+                            if (raw !in allowedPhones && norm !in allowedPhones && !tollFreeRegex.matches(raw)) {
+                                violations.add("PHONE: ${file.relativeTo(rootProject.rootDir)}:${index + 1}: '$raw' in line: ${line.take(100)}")
+                            }
+                        }
+
+                        acctRegex.findAll(line).forEach { match ->
+                            violations.add("ACCOUNT: ${file.relativeTo(rootProject.rootDir)}:${index + 1}: '${match.value.trim()}' in line: ${line.take(100)}")
+                        }
+
+                        otpRegex.findAll(line).forEach { match ->
+                            val raw = match.value.trim()
+                            val digitsMatch = digitsExtractRegex.find(raw)
+                            val digits = digitsMatch?.value
+                            if (digits != null && digits !in allowedOtps) {
+                                violations.add("OTP: ${file.relativeTo(rootProject.rootDir)}:${index + 1}: '$raw' in line: ${line.take(100)}")
+                            }
+                        }
+
+                        upiRegex.findAll(line).forEach { match ->
+                            val handle = match.groupValues[1].lowercase()
+                            if (handle in upiHandles) {
+                                val raw = match.value.lowercase()
+                                if (raw !in allowedUpi) {
+                                    violations.add("UPI: ${file.relativeTo(rootProject.rootDir)}:${index + 1}: '${match.value}' in line: ${line.take(100)}")
+                                }
+                            }
+                        }
+
+                        emailRegex.findAll(line).forEach { match ->
+                            val raw = match.value
+                            val domain = match.groupValues[1]
+                            if (!isAllowedEmail(raw, domain)) {
+                                violations.add("EMAIL: ${file.relativeTo(rootProject.rootDir)}:${index + 1}: '$raw' in line: ${line.take(100)}")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (violations.isNotEmpty()) {
+            throw GradleException(
+                "CRITICAL Invariant 2 violation (§2, §14, §19): Potential PII leakage detected in tracked repository files:\n" +
+                violations.joinToString("\n")
+            )
+        }
+    }
 }
+
+tasks.named("check") {
+    dependsOn(verifyDependencies, verifyPermissions, verifyExportedComponents, verifyNoContentLogging, verifyNoDebugToolsInRelease, verifyDangerQualifyingSignals, verifyNoPiiLeakage)
+}
+

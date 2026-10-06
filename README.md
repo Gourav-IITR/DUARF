@@ -237,9 +237,14 @@ The resulting `packs/model/model.bin` (262,176 bytes) and `packs/model/model.jso
 
 ## Contributing
 
-1. **Adding Rules or Signals**: Rules are defined in [`packs/rules.json`](packs/rules.json). Language lexicons live in [`packs/lang/{lang}.json`](packs/lang/). All regexes must behave identically across JVM and Android ICU without unsupported flags.
-2. **Evaluation Protocol**: Test split results are strictly frozen. When false negatives are found, developers must **never** tune rules, lexicons, or training templates to match test split rows directly. Corrections must be addressed through development splits (`dev`, `dev2`, `dev3`).
-3. **Invariant Enforcement**: Every pull request must pass `./gradlew check`. Any attempt to introduce network permissions, tracking SDKs, or raw content logging will fail the build.
+1. **Pre-Commit Hook Setup (One-Line)**:
+   Enable the repository's versioned pre-commit hooks to automatically prevent accidental leaks of personal phone numbers, bank accounts, real OTPs, UPI IDs, or private email addresses:
+   ```bash
+   git config core.hooksPath tools/ci/hooks
+   ```
+2. **Adding Rules or Signals**: Rules are defined in [`packs/rules.json`](packs/rules.json). Language lexicons live in [`packs/lang/{lang}.json`](packs/lang/). All regexes must behave identically across JVM and Android ICU without unsupported flags.
+3. **Evaluation Protocol**: Test split results are strictly frozen. When false negatives are found, developers must **never** tune rules, lexicons, or training templates to match test split rows directly. Corrections must be addressed through development splits (`dev`, `dev2`, `dev3`).
+4. **Invariant Enforcement**: Every pull request must pass `./gradlew check`. Any attempt to introduce network permissions, tracking SDKs, unredacted PII, or raw content logging will fail the build.
 
 ---
 

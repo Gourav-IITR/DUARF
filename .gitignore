@@ -15,3 +15,12 @@ engine-cli/eval/
 ml/venv/
 ml/.venv/
 ml/data/
+
+# Real notification recordings and private message evaluation sets (§2, §14, §19)
+recordings/
+**/recordings/
+*.recording.json
+*.recording.jsonl
+*.recording.txt
+eval/private/
+**/private/

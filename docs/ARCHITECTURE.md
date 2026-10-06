@@ -689,9 +689,12 @@ CI tasks under `tools/ci/`, all blocking:
 | `verifyExportedComponents` | Any component is exported other than the launcher activity, `CheckMessageActivity` and the listener service (which is permission-protected) |
 | `verifyNoContentLogging` | `:capture`, `:engine` or `:data` call `android.util.Log`, `println` or `Timber` outside the audited `SafeLog` wrapper, which accepts only enumerated event codes and numbers |
 | `verifyEngineIsPure` | `:engine` resolves any `android.*` or `androidx.*` dependency |
+| `verifyDangerQualifyingSignals` | `danger_qualifying_signals` in `packs/rules.json` diverges from Section 6 / Section 10 specification |
+| `verifyNoPiiLeakage` | Any committed or tracked file contains an Indian mobile number pattern (outside allowlisted placeholders), a bank account number pattern, a 4–8 digit code next to "OTP" / "ओटीपी", a UPI ID (`local@handle` for handles in `upi_handles.txt`), or a private email address |
 
 Also required:
 
+- Pre-commit hook (`tools/ci/hooks/pre-commit`, configured via `git config core.hooksPath tools/ci/hooks`) and CI task (`verifyNoPiiLeakage`) block committing unredacted PII. Real notification recordings are strictly gitignored (`recordings/`, `*.recording.json`, `eval/private/`). When converting recordings into test fixtures, names, numbers, amounts, and codes must be redacted first.
 - Libraries merge their own manifest entries. Before adding any dependency, check what it contributes to the merged manifest. WorkManager, for example, brings `ACCESS_NETWORK_STATE`, `WAKE_LOCK` and `RECEIVE_BOOT_COMPLETED`, which is why this design avoids it.
 - Debug builds enable `StrictMode` network detection as a tripwire.
 - No `WebView` anywhere.
@@ -814,7 +817,7 @@ Post-MVP candidates:
 
 ## 19. Inputs only the human can supply
 
-1. **Real notification fixtures.** Recorder output from two or three phones (ideally Pixel, Samsung, Xiaomi or similar) covering one-to-one, group, number-only sender, business account, document and media messages, on both WhatsApp packages. Needed to confirm the "verify" items in section 5.2.
+1. **Real notification fixtures.** Recorder output from two or three phones (ideally Pixel, Samsung, Xiaomi or similar) covering one-to-one, group, number-only sender, business account, document and media messages, on both WhatsApp packages. Needed to confirm the "verify" items in section 5.2. *Redaction rule*: Real recordings live strictly on the local machine and are ignored by `.gitignore` (`recordings/`, `*.recording.json`, `eval/private/`). When converting a recording into a committed test fixture, all personal names, phone numbers, account numbers, amounts, and OTP/verification codes must be redacted first using documented synthetic placeholders (e.g. `+91 98765 43210`, `123456`).
 2. **Real messages for evaluation.** Scam messages across categories and languages, and many ordinary messages, collected with consent and stripped of personal details.
 3. **Native-speaker review** of each language pack and its reason translations.
 4. **Verified official domains** for `brands.json`, each with source and date.
