@@ -439,6 +439,8 @@ All decisions made where the spec was silent or flexible are recorded here.
   - Implemented positive control tests verifying that qualifying signals or combo floors $\ge \text{dangerThreshold}$ CAN produce `DANGER`.
 - **Score Clamping Refinement (`ScoreFusion.kt`)**:
   - Clamped `roundedScore` directly to `Math.round((dangerThreshold - 0.001) * 1000.0) / 1000.0` when unqualified for Danger, ensuring floating point rounding never allows an unqualified score to reach or round up to `dangerThreshold`.
+- **Known Gap Recorded (`OPEN_QUESTIONS.md`)**:
+  - Recorded item 10 tracking Hindi government-scheme and loan-fee scams (e.g. `new-scam-hi-05`). Missing Hindi brand aliases for government schemes (for `L09`), `P08` Hindi loan lure lexicon (`ऋण स्वीकृत`, `लोन मंजूर`), and `A03` upfront fee phrasing (`फाइल चार्ज भेजें`). Detection rules remain frozen; planned for the next lexicon/data round verified on dev splits.
 
 
 

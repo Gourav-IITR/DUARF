@@ -26,4 +26,11 @@ Items marked "verify" and Section 19 human inputs are tracked here.
    - **Status**: **Structure unverified**. No real-device notification recordings yet.
    - Google Messages (`com.google.android.apps.messaging`) and Samsung Messages (`com.samsung.android.messaging`) are monitored behind the "Check SMS" toggle. The parser extracts sender from `MessagingStyle.person.name` or `EXTRA_TITLE` and logs which field the sender originated from via `NotificationRecorder`. Real-world recordings from Google Messages and Samsung Messages will be provided to verify structure and extras key conventions.
    - Other OEM SMS apps (Xiaomi `com.android.mms` / MIUI Messaging, OnePlus `com.oneplus.mms`, Oppo/Vivo `com.coloros.mms`, Transsion, etc.) are marked **verify**. Their `NotificationCompat.MessagingStyle`, extras key conventions (`EXTRA_TITLE`, `EXTRA_TEXT`, `EXTRA_BIG_TEXT`), and DLT header presentation must be captured with `NotificationRecorder` on real physical devices before adding their package names to `NotificationParser`.
+10. **Known gap: Hindi government-scheme / loan-fee scams (rules frozen)**:
+    - **Observed Behavior**: Messages matching templates like `new-scam-hi-05` (e.g. *"प्रधानमंत्री मुद्रा योजना के तहत ₹5,00,000 का ऋण 1% ब्याज पर स्वीकृत हुआ है। फाइल चार्ज ₹21015 इस लिंक http://... पर भेजें।"*) currently fire only `L06` (risky TLD) and `S01`/`S03` (unknown number), landing on borderline scores.
+    - **Missing Elements**:
+      1. Hindi brand aliases for government schemes (PM Mudra / प्रधानमंत्री मुद्रा योजना, PM Kisan / पीएम किसान, Ayushman Bharat / आयुष्मान भारत, etc.) in `brands.json` so `L09` (`gov_claim_non_gov_domain`) can fire when paired with non-governmental links.
+      2. `P08` Hindi loan lure lexicon (`ऋण स्वीकृत`, `लोन मंजूर`, `ब्याज पर स्वीकृत`).
+      3. `A03` upfront fee phrasing (`फाइल चार्ज भेजें`, `प्रोसेसिंग फीस भेजें`, `फाइल चार्ज इस लिंक पर भेजें`).
+    - **Plan**: Address in the next lexicon/data round, verified on dev splits (`dev`, `dev2`, `dev3`). Detection rules remain frozen for the current release.
 
