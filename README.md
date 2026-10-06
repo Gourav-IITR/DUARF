@@ -3,27 +3,26 @@
 On-device scam detection for WhatsApp on Android. The name is "fraud" spelled backwards.
 
 > **Status**: Early development (milestone M4 of 6). Not on the Play Store yet. Not a substitute for user caution.
-> What works today: notification monitoring, share sheet inspection, rule engine, ML featurizer and linear classifier, local Keystore encryption, and privacy CI enforcement.
+> Notification monitoring and share-sheet checks are implemented but not yet verified on real devices; WhatsApp's notification format is still being confirmed.
+> What works today: local notification capture, share-sheet inspection, rule engine, ML featurizer and linear classifier, local Keystore encryption, and privacy CI enforcement.
 > What does not work today: image/screenshot OCR, regional languages beyond English/Hindi, and automated background pack updates.
 
 ---
 
 ## What It Does
 
-Duarf runs entirely on your phone to identify fraud, phishing, and malicious attachments in incoming WhatsApp messages before you interact with them. It reads notification text locally, extracts indicators like APK filenames, suspicious links, and urgency claims, and displays an on-device warning banner with concrete reasons. Benign personal messages are analyzed in memory and immediately discarded.
+Duarf runs entirely on your phone to identify fraud, phishing, and malicious attachments in incoming WhatsApp messages. It reads notification text locally, extracts indicators like APK filenames, suspicious links, and urgency claims, and displays an on-device notification with concrete reasons. Benign personal messages are analyzed in memory and immediately discarded.
 
-Example alert for an APK lure from an unknown sender:
+Example alert notification for an APK lure from an unknown number:
 ```text
-DANGER: Malicious App Attachment
-Sender: +91 XXXXX XXXXX
-File: RTO E challan.apk
+Likely scam from +91 XXXXX XXXXX
+Malicious or unexpected APK file
 
-Reasons:
-- The attachment is an Android application package (.apk), not a document or traffic receipt.
-- The sender is an unsaved phone number claiming official government authority.
-- Android will prompt to install software if opened.
+• Malicious or unexpected APK file
+• Sent from an unknown number
+• First message from this sender
 
-Recommended action: Do not open or install this file. Delete the message.
+[See why]   [Not a scam]
 ```
 
 ---
@@ -51,7 +50,7 @@ flowchart TD
    - **Rule Engine**: Evaluates link, sender, action, and urgency heuristics, applying combo floors (such as APK + unknown sender $\ge 0.85$).
    - **ML Classifier**: Featurizes text into $2^{18}$ MurmurHash3 buckets with an int8 quantized elastic-net model calibrated via Platt scaling.
 5. **Score Fusion**: Combines rule and model probabilities using a dampened noisy-OR formula.
-6. **Product Rule Gating (Section 10)**: A `DANGER` alert strictly requires a hard signal (`L01`, `L10`, `L11`, `A01`, `A02`, `A04`), an active combo floor, or a high-risk domain signal (`L02`, `L03`, `L07`, `L09`). The ML model and soft signals can reach `CAUTION` at most ($m' \le 0.719$), guaranteeing that aggressive alerts always cite a concrete deterministic violation.
+6. **Product Rule Gating (Section 10)**: A `DANGER` alert strictly requires a hard signal (`L01`, `L10`, `L11`, `A01`, `A02`, `A04`), an active combo floor, or a high-risk domain signal (`L02`, `L03`, `L07`, `L09`). The ML model and soft signals can reach `CAUTION` at most (the final score is capped at 0.719), guaranteeing that aggressive alerts always cite a concrete deterministic violation.
 
 ---
 
@@ -60,9 +59,9 @@ flowchart TD
 Duarf operates under strict architectural guarantees documented in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md):
 
 - **Zero Network Permissions**: The app does not request `android.permission.INTERNET`. It cannot communicate over the network.
-- **Zero Third-Party SDKs**: No Google Analytics, Firebase, Crashlytics, Sentry, ads, or network client libraries are included in release builds.
-- **Benign Discard**: Benign messages are analyzed strictly in volatile memory and are never persisted to SQLite, Room, or disk.
-- **Local Encryption**: Flagged alerts are encrypted with AES-256-GCM using keys stored in the hardware-backed Android Keystore, with HMAC-SHA256 integrity validation.
+- **No analytics, ads, crash-reporting or networking libraries**: No Google Analytics, Firebase, Crashlytics, Sentry, ads, or network client libraries are included in release builds.
+- **Benign Discard**: Benign messages are analyzed strictly in volatile memory; benign message text is never written to disk (only hashed counters).
+- **Local Encryption**: Flagged alerts are encrypted with AES-256-GCM authenticated encryption using keys stored in Android Keystore (hardware-backed where the device supports it). HMAC-SHA256 is used for hashing conversation identifiers, not integrity.
 - **Automatic Purge**: Alerts older than the retention period (default 30 days) are automatically deleted upon insertion and on demand.
 - **Audited Logging**: Application logs use integer event codes only (`SafeLog`). Raw message text, phone numbers, and keys are never logged.
 
@@ -70,10 +69,10 @@ Duarf operates under strict architectural guarantees documented in [docs/ARCHITE
 
 You can verify the binary's privacy guarantees independently:
 
-1. **Inspect on Device**: Go to **Settings > Apps > DUARF > Permissions**. The system reports "No permissions requested" or "No permissions allowed".
+1. **Inspect on Device**: Go to **Settings > Apps > DUARF > Permissions**. The only permission listed is Notifications; Internet never appears. (Notification listener access is granted separately under **Settings > Apps > Special app access > Device & app notifications**).
 2. **Inspect APK Permissions**:
    ```bash
-   apkanalyzer manifest permissions app/build/outputs/apk/debug/app-debug.apk
+   apkanalyzer manifest permissions app/build/outputs/apk/release/app-release.apk
    ```
    Output lists only `POST_NOTIFICATIONS`, `VIBRATE`, and dynamic receiver permissions. `android.permission.INTERNET` is absent.
 3. **Inspect Dependencies**:
@@ -93,11 +92,11 @@ You can verify the binary's privacy guarantees independently:
 
 Duarf cannot protect against every vector. Known architectural constraints include:
 
-- **Muted Chats**: Android does not post notification events for muted conversations, preventing capture.
+- **Muted Chats**: WhatsApp posts no notification for them.
 - **Foreground Messages**: Messages read while a chat is actively open on screen do not generate notifications.
-- **Truncated Notifications**: Android notification previews truncate messages longer than roughly 500 characters. Full text requires manual paste or share sheet check.
+- **Truncated Notifications**: Android notification previews truncate long messages. Full text requires manual paste or share sheet check.
 - **Images and Voice Notes**: The MVP does not perform OCR on images or audio transcription on voice notes. Scams contained entirely within screenshot flyers cannot be read automatically.
-- **Work Profiles and Cloned Apps**: Separate work or dual-instance installations require independent notification listener enrollment.
+- **Work Profiles and Cloned Apps**: WhatsApp in work profiles or dual/cloned apps is not covered.
 - **Offline Updates**: Because Duarf lacks network access, detection rules and model weights only update when you update the application package.
 - **Known M4 Detection Gap**: Obfuscated scams using descriptive Indic paraphrasing (such as "गुप्त सत्यापन कोड" instead of "OTP") wrapped in security advisory pretexting are currently caught at lower recall (adversarial recall 0.50, Hindi recall 0.886). Hardening is scheduled for M6.
 
@@ -129,7 +128,7 @@ Evaluated strictly once on the frozen synthetic test split (`eval/m4_fresh_test_
 | **Adversarial Subset Recall** | - | **0.500** (47 / 94) | Known gap |
 | **Tier 1 Per-Language Gates** | All $\ge 0.90$ | `en`: 1.0, `hi-Latn`: 0.987, `hi`: 0.886 | **FAIL** (`hi` recall < 0.90) |
 
-*Real-world check*: Scored traffic challan APK lure (`eval/real_world.jsonl`) evaluated to `DANGER` (score 0.969, rule score 0.85).
+*Real-world check*: Scored traffic challan APK lure (`eval/real_world.jsonl`, 1 message; notification format unverified) evaluated to `DANGER` (score 0.969, rule score 0.85).
 
 > **Important**: The numbers above reflect synthetic template generation designed to measure heuristic coverage and false alarm suppression. Real-world accuracy remains unproven until field evaluation on live messages is complete.
 
@@ -156,14 +155,14 @@ Evaluated strictly once on the frozen synthetic test split (`eval/m4_fresh_test_
 ### Prerequisites
 
 - **Java Development Kit**: JDK 21 (uses Android Studio embedded JBR or OpenJDK 21).
-- **Android Studio**: Koala / Ladybug or newer.
+- **Android Studio**: Koala (2024.1.1) or newer (required for AGP 8.6.1).
 - **Android SDK**: `compileSdk = 36`, `targetSdk = 36`, `minSdk = 26`.
 - **Python** (for ML pipeline): Python 3.9+.
 
 ### Build Commands
 
 ```bash
-# 1. Run unit test suite across all modules
+# 1. Run unit test suite across all modules (macOS JAVA_HOME example below)
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
 ./gradlew test
 
@@ -224,8 +223,8 @@ The resulting `packs/model/model.bin` (262,176 bytes) and `packs/model/model.jso
 - [x] **Milestone M2**: Notification capture, deduplication, and share target.
 - [x] **Milestone M3**: Encrypted storage, retention purge, Compose UI, Section 16.4 privacy tests.
 - [x] **Milestone M4**: Kotlin featurizer, linear classifier, Platt calibration, product rule gating, evaluation reports.
-- [ ] **Milestone M5**: System integration, performance benchmarking on physical hardware, regional language packs.
-- [ ] **Milestone M6**: Hardening, adversarial evasion defense (M6 plan), battery profiling, release signing.
+- [ ] **Milestone M5**: Regional language packs (Tier 2/3).
+- [ ] **Milestone M6**: Hardening (paraphrase and obfuscation defense), low-end device performance, accessibility, Play release.
 
 ### Post-MVP Ideas
 
@@ -245,7 +244,7 @@ The resulting `packs/model/model.bin` (262,176 bytes) and `packs/model/model.jso
 
 ## Disclaimer
 
-Duarf is an independent open-source project and is not affiliated with, sponsored by, or endorsed by WhatsApp or Meta Platforms, Inc. The name "WhatsApp" is used exclusively to denote application compatibility.
+Duarf is an independent project and is not affiliated with, sponsored by, or endorsed by WhatsApp or Meta Platforms, Inc. The name "WhatsApp" is used exclusively to denote application compatibility.
 
 ---
 
