@@ -58,7 +58,7 @@ class DuarfViewModel @Inject constructor(
 
     val allAlerts: Flow<List<DecryptedAlert>> = alertRepository.allAlerts
 
-    fun analyzeMessage(text: String, isUnknownNumber: Boolean = true) {
+    fun analyzeMessage(text: String, isUnknownNumber: Boolean = true, attachmentHint: String? = null) {
         if (text.isBlank()) return
         viewModelScope.launch {
             _isChecking.value = true
@@ -74,7 +74,7 @@ class DuarfViewModel @Inject constructor(
                     senderCountryCode = "+91",
                     isGroup = false,
                     text = text,
-                    attachmentHint = null,
+                    attachmentHint = attachmentHint,
                     receivedAtMillis = System.currentTimeMillis()
                 )
                 val verdict = scamEngine.analyze(msg, emptyList(), prefs.sensitivity)

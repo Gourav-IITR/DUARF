@@ -63,10 +63,11 @@ class MainActivity : ComponentActivity() {
             return
         }
 
-        // Shared text from CheckMessageActivity (§5.3)
+        // Shared text/file from CheckMessageActivity (§5.3)
         val checkText = intent.getStringExtra("EXTRA_CHECK_TEXT")
+        val attachmentHint = intent.getStringExtra("EXTRA_ATTACHMENT_HINT")
         if (!checkText.isNullOrBlank()) {
-            viewModel.analyzeMessage(checkText, isUnknownNumber = true)
+            viewModel.analyzeMessage(checkText, isUnknownNumber = true, attachmentHint = attachmentHint)
             navController.navigate("check_result")
         }
     }

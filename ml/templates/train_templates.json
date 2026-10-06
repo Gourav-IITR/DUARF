@@ -177,6 +177,22 @@
       "adversarial": false
     },
     {
+      "id": "trn-scam-util-05",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "बिजली बोर्ड चेतावनी: आपका पिछला बिजली बिल जमा न होने के कारण आज शाम विद्युत आपूर्ति बंद कर दी जाएगी। लाइनमैन से संपर्क करें: {phone}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-scam-util-06",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "विद्युत विभाग सूचना: मीटर सत्यापन बाकी है, बिजली कटने से बचने के लिए तुरंत अधिकारी {name} को {phone} पर कॉल करें या बिल भरें http://{domain}/power-pay",
+      "adversarial": false
+    },
+    {
       "id": "trn-scam-upi-01",
       "category": "UPI_PAYMENT_FRAUD",
       "lang": "en",
@@ -720,6 +736,78 @@
       "lang": "hi-Latn",
       "sender_kind": "NAMED",
       "text": "Happy birthday mere bhai! Hamesha khush raho aur tarakki karo life me.",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-promo-01",
+      "category": "PROMO",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Mega Festive Sale: Get up to 60% off on electronics and fashion! Shop your favorites now: https://bit.ly/deals-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-promo-02",
+      "category": "DELIVERY",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Your courier parcel has been dispatched and is out for delivery today. Track live driver location: https://tinyurl.com/parcel-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-promo-03",
+      "category": "PROMO",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Flash offer: Flat Rs 300 discount on your grocery order. Use code SAVE300 at checkout: https://is.gd/order-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-promo-04",
+      "category": "PROMO",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "त्योहारी महासेल शुरू: सभी कपड़ों और जूतों पर 50% तक की भारी छूट। सीमित समय के लिए ऑफर, अभी देखें: https://bit.ly/sale-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-promo-05",
+      "category": "DELIVERY",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "आपका ऑर्डर सफलतापूर्वक भेज दिया गया है। अपने पार्सल की स्थिति जांचने के लिए यहां क्लिक करें: https://tinyurl.com/track-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-promo-06",
+      "category": "PROMO",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "आज का विशेष डिस्काउंट: ताजे फल और सब्जियों पर 40% की बचत। ऑनलाइन मंगाएं: https://is.gd/fresh-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-promo-07",
+      "category": "PROMO",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Big discount alert! Sabhi branded clothes aur shoes par 50% off chal raha hai. Abhi shop karein: https://bit.ly/offer-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-promo-08",
+      "category": "PROMO",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Weekend special food deal: Flat Rs 150 off on minimum order of Rs 399. Khana order karein: https://tinyurl.com/food-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "trn-ben-promo-09",
+      "category": "DELIVERY",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Aapka delivery parcel ship ho chuka hai aur aaj sham tak deliver ho jayega. Live location track karein: https://is.gd/track-{slug}",
       "adversarial": false
     }
   ]

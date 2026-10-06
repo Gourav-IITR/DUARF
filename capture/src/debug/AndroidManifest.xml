@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <!-- Debug-only provider to install NotificationRecorder hook (§16.3) -->
+        <provider
+            android:name="com.duarf.capture.debug.NotificationRecorderInitProvider"
+            android:authorities="${applicationId}.notification_recorder_init"
+            android:exported="false"
+            android:initOrder="100" />
+    </application>
+
+</manifest>

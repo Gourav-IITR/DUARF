@@ -113,6 +113,7 @@ class WaNotificationListener : NotificationListenerService() {
             for (sbn in notificationChannel) {
                 try {
                     _healthState.value = _healthState.value.copy(lastEventMillis = System.currentTimeMillis())
+                    debugHook?.onNotificationReceived(this@WaNotificationListener, sbn)
 
                     val messages = parser.parse(sbn)
                     for (msg in messages) {
@@ -137,6 +138,10 @@ class WaNotificationListener : NotificationListenerService() {
     companion object {
         private val _healthState = MutableStateFlow(ListenerHealth())
         val healthState: StateFlow<ListenerHealth> = _healthState.asStateFlow()
+
+        // Callback hook for debug recording (§16.3)
+        @Volatile
+        var debugHook: NotificationDebugHook? = null
 
         // Callback hook for engine consumption
         var messageConsumer: ((IncomingMessage, List<IncomingMessage>) -> Unit)? = null

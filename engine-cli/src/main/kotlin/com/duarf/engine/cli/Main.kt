@@ -505,6 +505,50 @@ private fun runEval(args: List<String>) {
         =========================================================================
     """.trimIndent())
 
+    // Evaluate real-world corpus if present (§16.2 / user item 4)
+    val realWorldFile = File("eval/real_world.jsonl").let { if (it.exists()) it else File("../eval/real_world.jsonl") }
+    if (realWorldFile.exists()) {
+        println("==================== REAL-WORLD EVALUATION (§16.2) ====================")
+        val rwLines = realWorldFile.readLines().filter { it.isNotBlank() && !it.trim().startsWith("#") }
+        val contextMsgs = ArrayList<IncomingMessage>()
+        var rwScoredCount = 0
+        var rwCorrectCount = 0
+
+        for (rwLine in rwLines) {
+            val rwRow = try { json.decodeFromString<CorpusRow>(rwLine) } catch (_: Exception) { continue }
+            val sKind = if (rwRow.sender_kind.uppercase() == "NAMED") SenderKind.NAMED else SenderKind.NUMBER_ONLY
+            val msg = IncomingMessage(
+                fingerprint = rwRow.id,
+                source = SourceKind.NOTIFICATION,
+                app = SourceApp.WHATSAPP,
+                conversationKey = "rw_${rwRow.group_id}",
+                senderDisplay = if (sKind == SenderKind.NAMED) "Contact" else "+919876543210",
+                senderKind = sKind,
+                senderCountryCode = "+91",
+                isGroup = rwRow.is_group,
+                text = rwRow.text,
+                attachmentHint = if (rwRow.text.endsWith(".apk")) "application/vnd.android.package-archive" else null,
+                receivedAtMillis = System.currentTimeMillis()
+            )
+
+            if (rwRow.label.lowercase() == "context_only") {
+                contextMsgs.add(msg)
+                println("  [Context] ID=${rwRow.id}: Text=\"${rwRow.text}\" (Preceding context stored, not scored)")
+            } else {
+                val rwVerdict = engine.analyze(msg, context = contextMsgs)
+                rwScoredCount++
+                val expectedLevel = if (rwRow.label.lowercase() == "scam") AlertLevel.DANGER else AlertLevel.NONE
+                val passed = rwVerdict.level == expectedLevel || (rwRow.label.lowercase() == "scam" && rwVerdict.level == AlertLevel.CAUTION)
+                if (passed) rwCorrectCount++
+                val sigList = rwVerdict.reasons.map { it.signalId }.joinToString(", ")
+                println("  [Scored]  ID=${rwRow.id}: Text=\"${rwRow.text}\" -> Level=${rwVerdict.level}, Score=${rwVerdict.score}, RuleScore=${rwVerdict.ruleScore}, Signals=[$sigList] [${if (passed) "PASS" else "FAIL"}]")
+                contextMsgs.add(msg)
+            }
+        }
+        println("  Real-World Total Scored: $rwScoredCount, Correct: $rwCorrectCount / $rwScoredCount")
+        println("=========================================================================\n")
+    }
+
     if (outFile != null) {
         outFile.parentFile?.mkdirs()
         outFile.writeText(json.encodeToString(evalMetrics))

@@ -779,7 +779,12 @@ Done when: all budgets, gates and checks pass on the release build.
 - **Notification access is a powerful permission.** The same access is what spyware asks for. The no-network build, the privacy proof screen and, ideally, open-sourcing the code are what make the request reasonable.
 - **Adversaries adapt.** Once the app is public, scammers can test messages against it. Offline detection cannot hide its rules; plan on regular pack updates.
 
-Post-MVP candidates: SMS and Telegram sources, OCR for image scams, family mode (alerts mirrored to a trusted relative, which needs a network design of its own), a distilled transformer classifier, on-device LLM explanations on capable phones, and optional privacy-preserving blocklist updates.
+Post-MVP candidates:
+- **OCR for image scams**: On-device optical character recognition for images in notifications and shared media. Canonical example: real-world e-challan APK scam where scammers send an image containing the threatening violation/fine notice text ("Traffic police e-challan: pay Rs 1000 or vehicle impounded") followed by a document attachment ("RTO E challan.apk"). In MVP, the image text is invisible and detection relies strictly on the document attachment and sender context (L01 + S01 → DANGER); post-MVP on-device OCR will extract text directly from image payloads to surface embedded threats and authority impersonation.
+- SMS and Telegram capture sources.
+- Family mode (alerts mirrored to a trusted relative, requiring an offline-first or private network design).
+- Distilled transformer classifier and on-device LLM explanations on capable hardware.
+- Optional privacy-preserving blocklist updates.
 
 ---
 

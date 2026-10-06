@@ -138,6 +138,48 @@ val verifyNoContentLogging by tasks.registering {
     }
 }
 
+val verifyNoDebugToolsInRelease by tasks.registering {
+    description = "Enforces that release builds contain no debug tools such as NotificationRecorder"
+    group = "verification"
+    doLast {
+        // 1. Check capture release library classes JAR if it exists
+        val captureJar = rootProject.file("capture/build/intermediates/runtime_library_classes_jar/release/bundleLibRuntimeToJarRelease/classes.jar")
+        if (captureJar.exists()) {
+            val jarFile = java.util.jar.JarFile(captureJar)
+            val forbidden = jarFile.entries().asSequence().any { it.name.contains("NotificationRecorder") }
+            jarFile.close()
+            if (forbidden) {
+                throw GradleException("Invariant violation: NotificationRecorder found in capture release JAR!")
+            }
+        }
+
+        // 2. Check release APK if it exists
+        val apkFile = file("${layout.buildDirectory.get()}/outputs/apk/release/app-release.apk")
+        if (apkFile.exists()) {
+            val zip = java.util.zip.ZipFile(apkFile)
+            val entries = zip.entries().asSequence().map { it.name }.toList()
+            if (entries.any { it.contains("NotificationRecorder") }) {
+                zip.close()
+                throw GradleException("Invariant violation: NotificationRecorder file found in release APK zip entries!")
+            }
+
+            val dexEntries = entries.filter { it.endsWith(".dex") }
+            val forbiddenClassDescriptor = "Lcom/duarf/capture/debug/NotificationRecorder;"
+            for (dexName in dexEntries) {
+                val input = zip.getInputStream(zip.getEntry(dexName))
+                val bytes = input.readBytes()
+                input.close()
+                val content = String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1)
+                if (content.contains(forbiddenClassDescriptor)) {
+                    zip.close()
+                    throw GradleException("Invariant violation: NotificationRecorder class found in release APK dex: $dexName!")
+                }
+            }
+            zip.close()
+        }
+    }
+}
+
 tasks.named("check") {
-    dependsOn(verifyDependencies, verifyPermissions, verifyExportedComponents, verifyNoContentLogging)
+    dependsOn(verifyDependencies, verifyPermissions, verifyExportedComponents, verifyNoContentLogging, verifyNoDebugToolsInRelease)
 }

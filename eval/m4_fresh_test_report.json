@@ -1,0 +1,62 @@
+{
+    "totalRows": 3200,
+    "totalScam": 1200,
+    "totalBenign": 2000,
+    "truePositivesDanger": 683,
+    "truePositivesCaution": 465,
+    "falseNegativesNone": 52,
+    "trueNegativesNone": 2000,
+    "falsePositivesCaution": 0,
+    "falsePositivesDanger": 0,
+    "dangerPrecision": 1.0,
+    "cautionOrAboveRecall": 0.957,
+    "benignRaisedToDangerPercent": 0.0,
+    "benignRaisedToCautionOrAbovePercent": 0.0,
+    "passedTier1Gates": false,
+    "perLanguage": [
+        {
+            "lang": "en",
+            "total": 1112,
+            "scam": 415,
+            "benign": 697,
+            "dangerPrecision": 1.0,
+            "recall": 1.0,
+            "benignToDangerPct": 0.0,
+            "benignToCautionPct": 0.0
+        },
+        {
+            "lang": "hi",
+            "total": 1028,
+            "scam": 414,
+            "benign": 614,
+            "dangerPrecision": 1.0,
+            "recall": 0.886,
+            "benignToDangerPct": 0.0,
+            "benignToCautionPct": 0.0,
+            "passedGates": false,
+            "failureReasons": [
+                "Caution+ Recall 0.886 < 0.90"
+            ]
+        },
+        {
+            "lang": "hi-Latn",
+            "total": 1060,
+            "scam": 371,
+            "benign": 689,
+            "dangerPrecision": 1.0,
+            "recall": 0.987,
+            "benignToDangerPct": 0.0,
+            "benignToCautionPct": 0.0
+        }
+    ],
+    "adversarialMetrics": {
+        "total": 248,
+        "scam": 94,
+        "benign": 154,
+        "scamRecall": 0.5,
+        "precision": 1.0
+    },
+    "adversarialRecall": 0.5,
+    "rulesOnlyRecall": 0.648,
+    "rulesPlusMlRecall": 0.957
+}

@@ -57,8 +57,8 @@ class PythonKotlinParityTest {
 
         val pred = classifier.predict(feat)
 
-        // Python reference probability: 0.9754
-        val pythonProb = 0.9754
+        // Python reference probability: 0.9731
+        val pythonProb = 0.9731
         assertThat(pred.probability).isWithin(0.01).of(pythonProb)
     }
 }

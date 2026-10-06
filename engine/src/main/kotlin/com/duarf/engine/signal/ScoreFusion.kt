@@ -15,7 +15,24 @@ data class FusionResult(
 
 object ScoreFusion {
 
+    // Hard signals (§10): L01, L10, L11, A01, A02, A04
     private val HARD_SIGNALS = setOf("L01", "L10", "L11", "A01", "A02", "A04")
+
+    // High-risk link signals qualifying for Danger: L02, L03, L07, L09
+    private val HIGH_RISK_LINK_SIGNALS = setOf("L02", "L03", "L07", "L09")
+
+    // Full set of signal IDs that permit DANGER (spec §10 product rule):
+    // L01: apk_file_or_link
+    // L02: brand_domain_mismatch
+    // L03: lookalike_domain
+    // L07: punycode_or_mixed_script_domain
+    // L09: gov_claim_non_gov_domain
+    // L10: url_userinfo_trick
+    // L11: blocklisted_domain
+    // A01: asks_otp_pin_cvv
+    // A02: asks_install_app
+    // A04: upi_pin_to_receive
+    val DANGER_QUALIFYING_SIGNALS = HARD_SIGNALS + HIGH_RISK_LINK_SIGNALS
 
     fun fuse(
         signals: List<FiredSignal>,
@@ -84,15 +101,14 @@ object ScoreFusion {
             Sensitivity.HIGH -> Pair(0.35, 0.65)
         }
 
-        // Invariant 6: Concrete signal = any fired L*, A*, P*, T* signal with weight >= 0.20
-        // If none fired, clamp score to just below the Danger threshold
-        val hasConcreteSignal = signals.any { s ->
-            val isTargetFamily = s.signalId.startsWith("L") || s.signalId.startsWith("A") ||
-                    s.signalId.startsWith("P") || s.signalId.startsWith("T")
-            isTargetFamily && s.weight >= 0.20
-        }
+        // General product rule (spec §10, Invariant 6):
+        // DANGER requires a hard signal (L01, L10, L11, A01, A02, A04),
+        // an active combo floor >= dangerThreshold, or L02/L03/L07/L09.
+        // Soft signals (L05 shortener, L06 TLD, S*, P*, etc.) plus the model can reach CAUTION at most.
+        val qualifiesForDanger = signals.any { it.signalId in DANGER_QUALIFYING_SIGNALS } ||
+                (highestCombo != null && comboFloor >= dangerThreshold)
 
-        if (!hasConcreteSignal && score >= dangerThreshold) {
+        if (!qualifiesForDanger && score >= dangerThreshold) {
             score = dangerThreshold - 0.001
         }
 

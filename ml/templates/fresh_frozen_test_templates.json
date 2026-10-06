@@ -1,0 +1,422 @@
+{
+  "scam_templates": [
+    {
+      "id": "fresh-scam-en-01",
+      "category": "MALICIOUS_APK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear customer, your credit card reward points worth Rs {amount} are expiring today. Install {brand_bank}_rewards.apk from http://{domain}/claim to convert points to cash.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-en-02",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Income Tax Department: An approved tax refund of Rs {amount} is ready for transfer. Submit your bank account details at http://{domain}/refund-portal immediately.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-en-03",
+      "category": "DELIVERY_COURIER",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "India Post alert: Your imported shipment #{tracking_id} cannot be delivered due to pending customs clearance fee of Rs 48. Pay at http://{domain}/indiapost to reschedule.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-en-04",
+      "category": "REMOTE_ACCESS",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Security warning from {brand_bank}: Suspicious unauthorized transactions detected. Download QuickSupport.apk from http://{domain}/support to secure your phone right now.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-en-05",
+      "category": "JOB_TASK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Earn Rs 3,500 daily by evaluating Google Maps hotels and restaurants. No experience needed. Join our recruitment manager on Telegram: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-en-06",
+      "category": "INVESTMENT_TRADING",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Exclusive institutional crypto presale offering guaranteed 400% weekly return. Deposit minimum Rs 5,000 to trade: http://{domain}/crypto-invest",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-en-07",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "State Electricity Board Notice: Immediate disconnection scheduled tonight at 9:00 PM for unpaid bill of Rs {amount}. Pay bill right away: http://{domain}/power-bill",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-en-08",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Delhi Police Cyber Cell: Arrest warrant issued under FIR 489/26 for illegal parcel interception. Join mandatory Skype interrogation call immediately: {phone}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-01",
+      "category": "MALICIOUS_APK",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "आयुष्मान भारत योजना: आपका नया 5 लाख रुपये वाला गोल्डन हेल्थ कार्ड जारी हो गया है। कार्ड डाउनलोड करने के लिए {file_apk} इंस्टॉल करें।",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-02",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "आयकर विभाग नोटिस: आपके वित्तीय वर्ष का ₹{amount} का टैक्स रिफंड मंजूर हो गया है। राशि पाने के लिए फॉर्म भरें: http://{domain}/it-refund",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-03",
+      "category": "DELIVERY_COURIER",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "भारतीय डाक पार्सल सूचना: अधूरा पता होने के कारण आपका पार्सल रोक दिया गया है। पता अपडेट करने के लिए शुल्क भरें: http://{domain}/speedpost",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-04",
+      "category": "MALICIOUS_APK",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "पीएम किसान सम्मान निधि: 18वीं किस्त के ₹2000 आपके खाते में भेजने हेतु ई-केवाईसी सत्यापन ऐप {file_apk} डाउनलोड करके चालू करें।",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-05",
+      "category": "JOB_TASK",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "घर बैठे मोबाइल से यूट्यूब वीडियो लाइक करके रोजाना ₹3000 कमाएं। बिना किसी पंजीकरण शुल्क के। संपर्क करें: http://{domain}/easy-job",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-06",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "बिजली विभाग चेतावनी: उपभोक्ता संख्या {consumer_id} का ₹{amount} बिल बकाया है। आज रात बिजली कट जाएगी। लाइनमैन से बात करें: {phone}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-07",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "सीबीआई क्राइम ब्रांच नोटिस: आपके आधार कार्ड पर संदिग्ध मनी लॉन्ड्रिंग खाता पाया गया है। गिरफ्तारी से बचने हेतु तुरंत जांच अधिकारी {name} से संपर्क करें: {phone}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-08",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "फोनपे विशेष रिवॉर्ड: आपने ₹{amount} का लकी कूपन जीता है। इनाम की राशि सीधे बैंक खाते में जमा करने के लिए अपना यूपीआई पिन दर्ज करें।",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-latn-01",
+      "category": "MALICIOUS_APK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear user, aapka SBI Yono reward points Rs {amount} expire ho raha hai. Points cash me convert karne ke liye {file_apk} install karein.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-latn-02",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Aapka HDFC bank account block kar diya gaya hai KYC pending hone par. Turant documents verify karein: http://{domain}/kyc-verify",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-latn-03",
+      "category": "DELIVERY_COURIER",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "BlueDart Parcel Alert: Address galat hone ki wajah se order hold par hai. Turant address correct karein: http://{domain}/bluedart-update",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-latn-04",
+      "category": "JOB_TASK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Part-time work from home: Hotels review karke daily Rs 2500 kamayein. Salary direct bank me. Telegram join karein: https://t.me/{telegram_user}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-latn-05",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Bijli board notice: Aaj raat 9:30 PM par power supply disconnect kar di jayegi. Bill pay karein ya officer ko call karein {phone}.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-latn-06",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Mumbai Police cyber cell: Aapke naam par narcotics parcel pakda gaya hai. Turant warrant cancel karne ke liye call karein {phone}.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-latn-07",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Google Pay cashback offer: Aapko mila hai Rs {amount} ka refund voucher. Paise claim karne ke liye apna UPI PIN dalein.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-hi-latn-08",
+      "category": "MALICIOUS_APK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Traffic Police: pending e-challan DL-vehicle par notice jari hua hai. Court case se bachne ke liye {file_apk} install karke pay karein.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-scam-adv-01",
+      "category": "MALICIOUS_APK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "F.i.l.e a.t.t.a.c.h.e.d: Please i-n-s-t-a-l-l {file_apk} from http://{domain}/download for urgent tax confirmation.",
+      "adversarial": true
+    },
+    {
+      "id": "fresh-scam-adv-02",
+      "category": "OTP_ACCOUNT_TAKEOVER",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "सुरक्षा सूचना: किसी को भी कोड मत बताना, अपना गुप्त सत्यापन कोड सीधे हमें {phone} पर भेजें।",
+      "adversarial": true
+    }
+  ],
+  "benign_templates": [
+    {
+      "id": "fresh-ben-en-01",
+      "category": "PROMO",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Festive Mega Deal: Get flat 50% discount across top electronic brands! Order online now: https://bit.ly/festive-deal-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-en-02",
+      "category": "DELIVERY",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Your package is out for delivery with our courier partner. Track live driver route: https://tinyurl.com/express-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-en-03",
+      "category": "BENIGN_BANK_TXN",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "{brand_bank}: INR {amount}.00 debited from A/C ending {acct_last4} at {pos_merchant} on {date}. Avail Bal: INR {avail_bal}.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-en-04",
+      "category": "BENIGN_OTP",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Your one-time login password for {ecommerce_brand} is {otp_code}. Valid for 10 minutes. DUARF security note: never share your password.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-en-05",
+      "category": "BENIGN_HEALTHCARE",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Apollo Pharmacy: Your medicine order #{order_id} is packed and ready for pickup at our {place} store.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-en-06",
+      "category": "BENIGN_UTILITY",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "BSES Electricity bill of Rs {amount} for consumer #{consumer_id} generated for {bill_month}. Due date: {due_date}.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-en-07",
+      "category": "BENIGN_CHAT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Hey, are you free for dinner tonight at {place}? Let me know when you finish work.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-en-08",
+      "category": "PROMO",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Weekend special: Flat Rs 200 cashback on grocery orders over Rs 999. Grab deals here: https://is.gd/grocery-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-01",
+      "category": "PROMO",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "ग्रैंड डिस्काउंट सेल: कपड़ों और जूतों पर 50% की भारी छूट। सीमित समय के लिए ऑफर: https://bit.ly/mega-sale-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-02",
+      "category": "DELIVERY",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "आपका पार्सल आज डिलीवरी के लिए निकल चुका है। डिलीवरी की स्थिति देखने के लिए यहां क्लिक करें: https://tinyurl.com/track-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-03",
+      "category": "BENIGN_BANK_TXN",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "{brand_bank}: आपके खाते XX{acct_last4} में ₹{amount}.00 सफलतापूर्वक जमा कर दिए गए हैं। शेष राशि: ₹{avail_bal}।",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-04",
+      "category": "BENIGN_OTP",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "आपके खाते के सत्यापन हेतु ओटीपी कोड {otp_code} है। यह 5 मिनट के लिए वैध है। अपना ओटीपी किसी से साझा न करें।",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-05",
+      "category": "BENIGN_TELECOM",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "{brand_telecom}: आपका ₹{amount} का मासिक डेटा रिचार्ज सफलतापूर्वक सक्रिय हो गया है। वैधता 28 दिन।",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-06",
+      "category": "BENIGN_UTILITY",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "विद्युत निगम रसीद: उपभोक्ता संख्या {consumer_id} का ₹{amount} का बिल भुगतान प्राप्त हो गया है। धन्यवाद।",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-07",
+      "category": "BENIGN_CHAT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "भाई कल सुबह 10 बजे कॉलेज पहुंच जाना, प्रोजेक्ट जमा करने की आखिरी तारीख है।",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-08",
+      "category": "PROMO",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "दैनिक सुपर डिस्काउंट: ताजे फल और डेयरी उत्पादों पर 30% बचत। अभी ऑर्डर करें: https://is.gd/daily-save-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-latn-01",
+      "category": "PROMO",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Big fashion weekend sale: Branded shoes aur clothes par flat 50% discount chal raha hai: https://bit.ly/fashion-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-latn-02",
+      "category": "DELIVERY",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Aapka courier order dispatch ho chuka hai aur aaj sham tak deliver ho jayega. Live track karein: https://tinyurl.com/deliv-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-latn-03",
+      "category": "BENIGN_BANK_TXN",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "{brand_bank}: Rs {amount}.00 debit hua hai account ending {acct_last4} se at {pos_merchant}. Available balance: Rs {avail_bal}.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-latn-04",
+      "category": "BENIGN_OTP",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Aapka login verification OTP hai {otp_code}. Ye code 10 minutes ke liye valid hai. Kisi ke sath share na karein.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-latn-05",
+      "category": "BENIGN_HEALTHCARE",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Practo: Dr. {name} ke sath aapka clinic appointment kal subah 11:30 AM confirmed hai {place} clinic par.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-latn-06",
+      "category": "BENIGN_TELECOM",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "{brand_telecom}: Aapka monthly unlimited recharge plan Rs {amount} activate ho gaya hai. Validity 28 days.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-latn-07",
+      "category": "BENIGN_CHAT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Bhai kal sham ko football match dekhne chalte hain stadium me. Tickets maine book kar li hain.",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-hi-latn-08",
+      "category": "PROMO",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Food delivery offer: Flat Rs 120 discount on minimum order of Rs 299. Order karein: https://is.gd/food-{slug}",
+      "adversarial": false
+    },
+    {
+      "id": "fresh-ben-adv-01",
+      "category": "BENIGN_CHAT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Check out these travel photographs from our hiking trip: https://bit.ly/hiking-album-{slug}. Hope you like them!",
+      "adversarial": true
+    },
+    {
+      "id": "fresh-ben-adv-02",
+      "category": "BENIGN_CHAT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Bhai maine naya phone order kiya hai https://tinyurl.com/phone-deal-{slug} se, badhiya discount mila 30% off.",
+      "adversarial": true
+    }
+  ]
+}

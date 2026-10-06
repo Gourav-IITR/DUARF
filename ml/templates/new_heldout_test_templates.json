@@ -1,0 +1,422 @@
+{
+  "scam_templates": [
+    {
+      "id": "new-scam-en-01",
+      "category": "DELIVERY_COURIER",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Your BlueDart shipment #{tracking_num} is delayed due to incorrect street address. Update address within 24h at http://{domain}/address to reschedule delivery.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-en-02",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "HDFC Bank Alert: Your netbanking session has expired due to pending PAN card verification. Update immediately at http://{domain}/pan-verify to prevent freeze.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-en-03",
+      "category": "LOTTERY_PRIZE",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Congratulations! You have won an iPhone 16 Pro in Amazon festive lucky draw. Claim your gift voucher now at http://{domain}/claim-gift.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-en-04",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Telecom Regulatory Authority notice: Your mobile number has been reported for illegal cyber activities. Contact CBI investigation officer immediately at +91{phone}.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-en-05",
+      "category": "REMOTE_ACCESS",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear customer, your bank transaction of Rs {amount} failed. Install AnyDesk remote support app from http://{domain}/support to reverse the debited money.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-en-06",
+      "category": "LOAN_CREDIT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Pre-approved instant personal loan of Rs 5,00,000 sanctioned for your profile. Disburse directly to bank by paying Rs 2,500 processing fee at http://{domain}/loan-pay.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-en-07",
+      "category": "JOB_TASK",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Work from home part-time vacancy: Earn Rs 3000 to 5000 daily by rating hotels and YouTube videos. Contact HR manager on WhatsApp: http://{domain}/chat.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-en-08",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "PhonePe reward: You received a cash prize of Rs {amount}. Authorize receipt by clicking collect request and entering your secret UPI PIN.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-01",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "प्रिय ग्राहक, आपका एसबीआई बैंक खाता पैन कार्ड लिंक न होने के कारण आज रात 12 बजे बंद कर दिया जाएगा। तुरंत http://{domain}/kyc पर जाकर अपडेट करें।",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-02",
+      "category": "LOTTERY_PRIZE",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "बधाई हो! आपको केबीसी लकी ड्रा में ₹25,00,000 की लॉटरी लगी है। अपना चेक प्राप्त करने के लिए टैक्स राशि ₹{amount} इस नंबर पर जमा करें।",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-03",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "बिजली बिल सूचना: आपका पिछला बिजली बिल जमा नहीं हुआ है। आज रात बिजली काट दी जाएगी। तुरंत बिल जमा करने के लिए कॉल करें +91{phone}।",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-04",
+      "category": "AUTHORITY_DIGITAL_ARREST",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "साइबर क्राइम ब्रांच दिल्ली: आपके आधार कार्ड से अवैध पार्सल भेजा गया है। गिरफ्तारी वारंट से बचने के लिए तुरंत इस नंबर पर संपर्क करें।",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-05",
+      "category": "LOAN_CREDIT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "प्रधानमंत्री मुद्रा योजना के तहत ₹5,00,000 का ऋण 1% ब्याज पर स्वीकृत हुआ है। फाइल चार्ज ₹{amount} इस लिंक http://{domain}/loan पर भेजें।",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-06",
+      "category": "MALICIOUS_APK",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "सरकारी राशन कार्ड सूची में अपना नाम देखने के लिए {file_apk} डाउनलोड करें और फोन में इंस्टॉल करें।",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-07",
+      "category": "JOB_TASK",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "घर बैठे मोबाइल से डाटा एंट्री का काम करके रोजाना ₹2000 कमाएं। बिना किसी निवेश के। अभी संपर्क करें http://{domain}/job पर।",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-08",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "गूगल पे कैशबैक ऑफर: आपको ₹{amount} का स्क्रैच कार्ड मिला है। पैसे सीधे बैंक में पाने के लिए अपना गुप्त यूपीआई पिन डालें।",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-latn-01",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Dear user, aapka ICICI bank account block ho jayega 24 hours me. Turant PAN card link karein is link par: http://{domain}/kyc-update.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-latn-02",
+      "category": "LOTTERY_PRIZE",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Badhai ho! Jio Diwali offer me aapne jeeta hai Brand New Car. Tax clearance ke liye Rs {amount} pay karein is link par http://{domain}/claim.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-latn-03",
+      "category": "UTILITY_DISCONNECT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Bijli vibhag notice: Aapka light connection disconnected hoga aaj rat 9 baje. Bill pay karne ke liye turant call karein +91{phone}.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-latn-04",
+      "category": "MALICIOUS_APK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Aapke naam ka parcel custom police ne pakad liya hai. Release form dekhne ke liye {file_apk} install karein.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-latn-05",
+      "category": "REMOTE_ACCESS",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Bank account unblock karne ke liye QuickSupport app download karke 9 digit code customer care ko batayein.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-latn-06",
+      "category": "JOB_TASK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Amazon part time job: Rozana 2 ghante phone par review likh kar Rs 4000 kamayein. WhatsApp join karein http://{domain}/apply.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-latn-07",
+      "category": "UPI_PAYMENT_FRAUD",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Aapko Paytm se Rs {amount} ka refund mila hai. Paise receive karne ke liye collect request accept karke secret UPI PIN enter karein.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-hi-latn-08",
+      "category": "LOAN_CREDIT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Aadhaar card par instant Rs 2,00,000 personal loan approve ho gaya hai. Loan transfer ke liye Rs 1500 fee is link http://{domain}/loan par pay karein.",
+      "adversarial": false
+    },
+    {
+      "id": "new-scam-adv-01",
+      "category": "PHISHING_BANK_KYC",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "U R G E N T : Your b a n k card is f r o z e n . Click h t t p : / / {domain} / k y c to unlock immediately.",
+      "adversarial": true
+    },
+    {
+      "id": "new-scam-adv-02",
+      "category": "MALICIOUS_APK",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Fraud alert warning from bank: Beware of unauthorized transactions. Install our official security shield {file_apk} to protect your account.",
+      "adversarial": true
+    }
+  ],
+  "benign_templates": [
+    {
+      "id": "new-ben-en-01",
+      "category": "BENIGN_BANK_ALERT",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "HDFC Bank: Rs {amount} debited from A/C **1234 on {date} towards grocery store POS. Avl bal: Rs {bal}. If not done by you, call 18002583838.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-en-02",
+      "category": "BENIGN_DELIVERY",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Your Amazon package containing order #{order_id} is out for delivery today. Delivery agent will arrive by 5 PM. Track live at https://amazon.in/orders.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-en-03",
+      "category": "BENIGN_HEALTHCARE",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Apollo Diagnostics: Your blood routine test report for visit ID #{order_id} is ready to view and download at https://apollodiagnostics.in/reports.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-en-04",
+      "category": "BENIGN_EDUCATION",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "British Council Library: Your borrowed book 'Design Patterns' is due for return on {date}. Renew online at https://britishcouncil.org.in.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-en-05",
+      "category": "BENIGN_UTILITY",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Airtel Xstream Fiber: Your bill of Rs {amount} for broadband account #{acc_num} has been paid successfully. Thank you for choosing Airtel.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-en-06",
+      "category": "BENIGN_TRAVEL",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "IRCTC: PNR {pnr_num}, Train 12951, Coach B2, Seat 45 (Confirmed). Charting status prepared. Have a safe journey.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-en-07",
+      "category": "BENIGN_EDUCATION",
+      "lang": "en",
+      "sender_kind": "NAMED",
+      "text": "Delhi Public School: Monthly tuition fee receipt for student Aryan (Class 8-B) generated. Download receipt at https://dpsrkp.net/portal.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-en-08",
+      "category": "BENIGN_CHAT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Hey Rahul, let's meet up this Saturday for coffee around 4 PM at Connaught Place. Let me know if that works for you.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-01",
+      "category": "BENIGN_BANK_ALERT",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "पंजाब नेशनल बैंक: आपके खाता संख्या **5678 में ₹{amount} एनईएफटी द्वारा जमा किए गए हैं। शेष राशि: ₹{bal}।",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-02",
+      "category": "BENIGN_UTILITY",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "भारत गैस: आपका घरेलू गैस सिलेंडर रिफिल सफलतापूर्वक बुक हो गया है। बुकिंग संख्या: {order_id}। डिलीवरी 2 दिन में होगी।",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-03",
+      "category": "BENIGN_TRAVEL",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "दिल्ली मेट्रो: आपके स्मार्ट कार्ड {card_num} में ₹{amount} का ऑनलाइन रिचार्ज सफल रहा। मेट्रो में आपका स्वागत है।",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-04",
+      "category": "BENIGN_HEALTHCARE",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "एम्स अस्पताल नई दिल्ली: आपका ओपीडी टोकन नंबर {token_num} दिनांक {date} को कमरा नंबर 12 में निर्धारित है।",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-05",
+      "category": "BENIGN_UTILITY",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "उत्तर प्रदेश पावर कारपोरेशन: उपभोक्ता संख्या {acc_num} के लिए ₹{amount} का बिजली बिल भुगतान प्राप्त हुआ। धन्यवाद।",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-06",
+      "category": "BENIGN_GOVERNMENT",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "ईपीएफओ भारत: आपके पीएफ खाते **4321 में माह सितंबर का अंशदान ₹{amount} जमा कर दिया गया है।",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-07",
+      "category": "BENIGN_ADVISORY",
+      "lang": "hi",
+      "sender_kind": "NAMED",
+      "text": "कृषि विज्ञान केंद्र: आगामी 3 दिनों में भारी बारिश की संभावना है। कृपया धान की फसल की सुरक्षा के उपाय करें।",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-08",
+      "category": "BENIGN_CHAT",
+      "lang": "hi",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "नमस्ते चाचा जी, हम सब कल शाम को घर आ रहे हैं। क्या बाजार से कुछ जरूरी सामान लाना है?",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-latn-01",
+      "category": "BENIGN_BANK_ALERT",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "SBI: Rs {amount} debited from A/C **8910 on {date} at Local Supermarket UPI. Available balance Rs {bal}.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-latn-02",
+      "category": "BENIGN_DELIVERY",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Zomato: Aapka khana restaurant se pick ho chuka hai. Delivery partner Rohit 15 minutes me pahunch raha hai.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-latn-03",
+      "category": "BENIGN_COMMUNITY",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Royal Heights Society: Flat {flat_num} ka maintenance bill Rs {amount} receive ho gaya hai. Thank you.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-latn-04",
+      "category": "BENIGN_TRAVEL",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Uber: Aapki ride ka bill Rs {amount} settle ho gaya hai. Invoice download karein https://uber.com/trips.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-latn-05",
+      "category": "BENIGN_ENTERTAINMENT",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "BookMyShow: Stree 2 movie ke 2 tickets confirmed PVR Saket par. Booking ID #{order_id}.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-latn-06",
+      "category": "BENIGN_HEALTHCARE",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Practo: Dr. Sharma ke sath aapka appointment kal subah 11:30 AM confirmed hai Clinic Hauz Khas me.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-latn-07",
+      "category": "BENIGN_TELECOM",
+      "lang": "hi-Latn",
+      "sender_kind": "NAMED",
+      "text": "Jio: Aapka 28 days validity recharge plan Rs {amount} successfully activate ho gaya hai.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-hi-latn-08",
+      "category": "BENIGN_CHAT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Bhai kal sham ko football match dekhne chalte hain stadium me. Tickets maine book kar li hain.",
+      "adversarial": false
+    },
+    {
+      "id": "new-ben-adv-01",
+      "category": "BENIGN_CHAT",
+      "lang": "en",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Check out this photography portfolio from our trip: https://bit.ly/photo-album-trip. Loved the mountain pictures!",
+      "adversarial": true
+    },
+    {
+      "id": "new-ben-adv-02",
+      "category": "BENIGN_CHAT",
+      "lang": "hi-Latn",
+      "sender_kind": "NUMBER_ONLY",
+      "text": "Bhai maine new laptop order kiya hai https://tinyurl.com/laptop-deal se, zabardast discount mila 40% off.",
+      "adversarial": true
+    }
+  ]
+}

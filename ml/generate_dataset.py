@@ -130,7 +130,11 @@ def generate():
     with open("ml/templates/train_templates.json", "r", encoding="utf-8") as f:
         train_data = json.load(f)
     with open("ml/templates/heldout_test_templates.json", "r", encoding="utf-8") as f:
-        test_data = json.load(f)
+        dev2_data = json.load(f)
+    with open("ml/templates/new_heldout_test_templates.json", "r", encoding="utf-8") as f:
+        dev3_data = json.load(f)
+    with open("ml/templates/fresh_frozen_test_templates.json", "r", encoding="utf-8") as f:
+        fresh_test_data = json.load(f)
 
     os.makedirs("ml/data", exist_ok=True)
     all_seen_texts = set()
@@ -144,16 +148,44 @@ def generate():
                 all_seen_texts.add(" ".join(r["text"].strip().split()))
         print(f"Loaded {len(all_seen_texts)} seed corpus texts to strictly exclude from training/dev/test.")
 
-    # 1. Generate Test Split from independent heldout test templates
+    # 1. Generate DEV2 Split (former test split 1)
+    dev2_rows = []
+    dev2_scam_tpls = dev2_data["scam_templates"]
+    dev2_benign_tpls = dev2_data["benign_templates"]
+    per_scam_dev2 = 1200 // len(dev2_scam_tpls) + 5
+    per_benign_dev2 = 2000 // len(dev2_benign_tpls) + 5
+
+    for tpl in dev2_scam_tpls:
+        dev2_rows.extend(expand_template(tpl, per_scam_dev2, "scam", all_seen_texts, vary_sender=False))
+    for tpl in dev2_benign_tpls:
+        dev2_rows.extend(expand_template(tpl, per_benign_dev2, "benign", all_seen_texts, vary_sender=False))
+
+    random.shuffle(dev2_rows)
+    final_dev2 = [r for r in dev2_rows if r["label"] == "scam"][:1200] + [r for r in dev2_rows if r["label"] == "benign"][:2000]
+    random.shuffle(final_dev2)
+
+    # 2. Generate DEV3 Split (former test split 2, renamed to dev3)
+    dev3_rows = []
+    dev3_scam_tpls = dev3_data["scam_templates"]
+    dev3_benign_tpls = dev3_data["benign_templates"]
+    per_scam_dev3 = 1200 // len(dev3_scam_tpls) + 5
+    per_benign_dev3 = 2000 // len(dev3_benign_tpls) + 5
+
+    for tpl in dev3_scam_tpls:
+        dev3_rows.extend(expand_template(tpl, per_scam_dev3, "scam", all_seen_texts, vary_sender=False))
+    for tpl in dev3_benign_tpls:
+        dev3_rows.extend(expand_template(tpl, per_benign_dev3, "benign", all_seen_texts, vary_sender=False))
+
+    random.shuffle(dev3_rows)
+    final_dev3 = [r for r in dev3_rows if r["label"] == "scam"][:1200] + [r for r in dev3_rows if r["label"] == "benign"][:2000]
+    random.shuffle(final_dev3)
+
+    # 3. Generate FRESH Frozen Test Split from fresh_frozen_test_templates.json
     test_rows = []
-    test_scam_tpls = test_data["scam_templates"]
-    test_benign_tpls = test_data["benign_templates"]
-
-    test_target_scam = 1200
-    test_target_benign = 2000 # Total ~3200 (62.5% benign)
-
-    per_scam_test = test_target_scam // len(test_scam_tpls) + 5
-    per_benign_test = test_target_benign // len(test_benign_tpls) + 5
+    test_scam_tpls = fresh_test_data["scam_templates"]
+    test_benign_tpls = fresh_test_data["benign_templates"]
+    per_scam_test = 1200 // len(test_scam_tpls) + 5
+    per_benign_test = 2000 // len(test_benign_tpls) + 5
 
     for tpl in test_scam_tpls:
         test_rows.extend(expand_template(tpl, per_scam_test, "scam", all_seen_texts, vary_sender=False))
@@ -161,36 +193,38 @@ def generate():
         test_rows.extend(expand_template(tpl, per_benign_test, "benign", all_seen_texts, vary_sender=False))
 
     random.shuffle(test_rows)
-    # Trim to exact proportions if needed
-    test_scams = [r for r in test_rows if r["label"] == "scam"][:1200]
-    test_benign = [r for r in test_rows if r["label"] == "benign"][:2000]
-    final_test = test_scams + test_benign
+    final_test = [r for r in test_rows if r["label"] == "scam"][:1200] + [r for r in test_rows if r["label"] == "benign"][:2000]
     random.shuffle(final_test)
 
-    # 2. Generate Train and Dev from train templates, splitting by group_id
+    # 4. Generate Train and Dev from train templates, splitting by group_id
+    # Guarantee >=6 templates per language in dev (3 scam, 3 benign per language, including promo shortener hard negatives)
     train_scam_tpls = train_data["scam_templates"]
     train_benign_tpls = train_data["benign_templates"]
 
-    # Assign entire group_ids to dev split (~15% of templates)
-    random.shuffle(train_scam_tpls)
-    random.shuffle(train_benign_tpls)
+    dev_scam_tpls = []
+    tr_scam_tpls = []
+    for lang in ["en", "hi", "hi-Latn"]:
+        lang_scams = [t for t in train_scam_tpls if t["lang"] == lang]
+        random.shuffle(lang_scams)
+        dev_scam_tpls.extend(lang_scams[:3])
+        tr_scam_tpls.extend(lang_scams[3:])
 
-    dev_scam_count = max(4, int(len(train_scam_tpls) * 0.15))
-    dev_benign_count = max(5, int(len(train_benign_tpls) * 0.15))
+    dev_benign_tpls = []
+    tr_benign_tpls = []
+    for lang in ["en", "hi", "hi-Latn"]:
+        lang_benign = [t for t in train_benign_tpls if t["lang"] == lang]
+        random.shuffle(lang_benign)
+        # Guarantee at least 1 promo template in dev per language
+        promos = [t for t in lang_benign if t.get("category") in ("PROMO", "DELIVERY")]
+        others = [t for t in lang_benign if t.get("category") not in ("PROMO", "DELIVERY")]
+        dev_pick = [promos[0]] + others[:2] if promos else lang_benign[:3]
+        dev_benign_tpls.extend(dev_pick)
+        remaining = [t for t in lang_benign if t not in dev_pick]
+        tr_benign_tpls.extend(remaining)
 
-    dev_scam_tpls = train_scam_tpls[:dev_scam_count]
-    tr_scam_tpls = train_scam_tpls[dev_scam_count:]
-
-    dev_benign_tpls = train_benign_tpls[:dev_benign_count]
-    tr_benign_tpls = train_benign_tpls[dev_benign_count:]
-
-    # Expand Train
-    # Target: ~8,000 scam, ~12,000 benign (Total 20,000, 60% benign)
-    train_target_scam = 8000
-    train_target_benign = 12000
-
-    per_scam_train = train_target_scam // len(tr_scam_tpls) + 5
-    per_benign_train = train_target_benign // len(tr_benign_tpls) + 5
+    # Expand Train (Target: 8,000 scam, 12,000 benign -> 20,000)
+    per_scam_train = 8000 // len(tr_scam_tpls) + 5
+    per_benign_train = 12000 // len(tr_benign_tpls) + 5
 
     train_rows = []
     for tpl in tr_scam_tpls:
@@ -199,18 +233,12 @@ def generate():
         train_rows.extend(expand_template(tpl, per_benign_train, "benign", all_seen_texts, vary_sender=True))
 
     random.shuffle(train_rows)
-    tr_scams = [r for r in train_rows if r["label"] == "scam"][:8000]
-    tr_benign = [r for r in train_rows if r["label"] == "benign"][:12000]
-    final_train = tr_scams + tr_benign
+    final_train = [r for r in train_rows if r["label"] == "scam"][:8000] + [r for r in train_rows if r["label"] == "benign"][:12000]
     random.shuffle(final_train)
 
-    # Expand Dev
-    # Target: ~1,000 scam, ~1,500 benign (Total 2,500, 60% benign)
-    dev_target_scam = 1000
-    dev_target_benign = 1500
-
-    per_scam_dev = dev_target_scam // len(dev_scam_tpls) + 5
-    per_benign_dev = dev_target_benign // len(dev_benign_tpls) + 5
+    # Expand Dev (Target: 1,000 scam, 1,500 benign -> 2,500)
+    per_scam_dev = 1000 // len(dev_scam_tpls) + 5
+    per_benign_dev = 1500 // len(dev_benign_tpls) + 5
 
     dev_rows = []
     for tpl in dev_scam_tpls:
@@ -219,9 +247,7 @@ def generate():
         dev_rows.extend(expand_template(tpl, per_benign_dev, "benign", all_seen_texts, vary_sender=True))
 
     random.shuffle(dev_rows)
-    dev_scams = [r for r in dev_rows if r["label"] == "scam"][:1000]
-    dev_benign = [r for r in dev_rows if r["label"] == "benign"][:1500]
-    final_dev = dev_scams + dev_benign
+    final_dev = [r for r in dev_rows if r["label"] == "scam"][:1000] + [r for r in dev_rows if r["label"] == "benign"][:1500]
     random.shuffle(final_dev)
 
     # Write splits
@@ -232,6 +258,8 @@ def generate():
 
     write_jsonl("ml/data/train.jsonl", final_train)
     write_jsonl("ml/data/dev.jsonl", final_dev)
+    write_jsonl("ml/data/dev2.jsonl", final_dev2)
+    write_jsonl("ml/data/dev3.jsonl", final_dev3)
     write_jsonl("ml/data/test.jsonl", final_test)
 
     # Verification and Statistics Reporting
@@ -263,13 +291,21 @@ def generate():
 
     train_groups = print_stats("TRAIN SPLIT", final_train)
     dev_groups = print_stats("DEV SPLIT", final_dev)
-    test_groups = print_stats("TEST SPLIT", final_test)
+    dev2_groups = print_stats("DEV2 SPLIT", final_dev2)
+    dev3_groups = print_stats("DEV3 SPLIT", final_dev3)
+    test_groups = print_stats("TEST SPLIT (FRESH FROZEN)", final_test)
 
     # Assert no group_id leakage across splits
     assert len(train_groups.intersection(dev_groups)) == 0, "Train and Dev share group_ids!"
+    assert len(train_groups.intersection(dev2_groups)) == 0, "Train and Dev2 share group_ids!"
+    assert len(train_groups.intersection(dev3_groups)) == 0, "Train and Dev3 share group_ids!"
     assert len(train_groups.intersection(test_groups)) == 0, "Train and Test share group_ids!"
+    assert len(dev_groups.intersection(dev2_groups)) == 0, "Dev and Dev2 share group_ids!"
+    assert len(dev_groups.intersection(dev3_groups)) == 0, "Dev and Dev3 share group_ids!"
     assert len(dev_groups.intersection(test_groups)) == 0, "Dev and Test share group_ids!"
-    print("SUCCESS: Zero group_id overlap across train, dev, and test splits.")
+    assert len(dev2_groups.intersection(test_groups)) == 0, "Dev2 and Test share group_ids!"
+    assert len(dev3_groups.intersection(test_groups)) == 0, "Dev3 and Test share group_ids!"
+    print("SUCCESS: Zero group_id overlap across train, dev, dev2, dev3, and test splits.")
 
 if __name__ == "__main__":
     generate()

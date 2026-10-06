@@ -111,4 +111,76 @@ class ScoreFusionWorkedExamplesTest {
         assertThat(result.score).isAtLeast(0.45)
         assertThat(result.level).isEqualTo(AlertLevel.CAUTION)
     }
+
+    @Test
+    fun `worked example 6 - L05 shortener plus S01 with model 0_99 reaches CAUTION at most`() {
+        val l05 = FiredSignal("L05", "url_shortener", 0.20, ScamCategory.PHISHING_BANK_KYC, null)
+        val s01 = FiredSignal("S01", "sender_number_only", 0.10, ScamCategory.OTHER_SUSPICIOUS, null)
+
+        val result = ScoreFusion.fuse(
+            signals = listOf(l05, s01),
+            dampeners = emptyList(),
+            combos = emptyList(),
+            modelProbability = 0.99,
+            sensitivity = Sensitivity.BALANCED
+        )
+
+        // Soft signal L05 + S01 + model cannot reach DANGER (capped at 0.719)
+        assertThat(result.score).isLessThan(0.72)
+        assertThat(result.score).isAtLeast(0.45)
+        assertThat(result.level).isEqualTo(AlertLevel.CAUTION)
+    }
+
+    @Test
+    fun `worked example 7 - soft pressure signals P01 and P02 with model 0_99 reach CAUTION at most`() {
+        val p01 = FiredSignal("P01", "urgency_deadline", 0.20, ScamCategory.PHISHING_BANK_KYC, null)
+        val p02 = FiredSignal("P02", "threat_account_block", 0.35, ScamCategory.PHISHING_BANK_KYC, null)
+        val s01 = FiredSignal("S01", "sender_number_only", 0.10, ScamCategory.OTHER_SUSPICIOUS, null)
+
+        val result = ScoreFusion.fuse(
+            signals = listOf(p01, p02, s01),
+            dampeners = emptyList(),
+            combos = emptyList(),
+            modelProbability = 0.99,
+            sensitivity = Sensitivity.BALANCED
+        )
+
+        assertThat(result.score).isLessThan(0.72)
+        assertThat(result.score).isAtLeast(0.45)
+        assertThat(result.level).isEqualTo(AlertLevel.CAUTION)
+    }
+
+    @Test
+    fun `worked example 8 - lookalike domain L03 with model reaches DANGER`() {
+        val l03 = FiredSignal("L03", "lookalike_domain", 0.60, ScamCategory.PHISHING_BANK_KYC, null)
+        val s01 = FiredSignal("S01", "sender_number_only", 0.10, ScamCategory.OTHER_SUSPICIOUS, null)
+
+        val result = ScoreFusion.fuse(
+            signals = listOf(l03, s01),
+            dampeners = emptyList(),
+            combos = emptyList(),
+            modelProbability = 0.90,
+            sensitivity = Sensitivity.BALANCED
+        )
+
+        // L03 is in DANGER_QUALIFYING_SIGNALS, so fused score can reach DANGER
+        assertThat(result.score).isAtLeast(0.72)
+        assertThat(result.level).isEqualTo(AlertLevel.DANGER)
+    }
+
+    @Test
+    fun `worked example 9 - OTP ask A01 with model reaches DANGER`() {
+        val a01 = FiredSignal("A01", "asks_otp_pin_cvv", 0.60, ScamCategory.OTP_ACCOUNT_TAKEOVER, null)
+
+        val result = ScoreFusion.fuse(
+            signals = listOf(a01),
+            dampeners = emptyList(),
+            combos = emptyList(),
+            modelProbability = 0.85,
+            sensitivity = Sensitivity.BALANCED
+        )
+
+        assertThat(result.score).isAtLeast(0.72)
+        assertThat(result.level).isEqualTo(AlertLevel.DANGER)
+    }
 }
