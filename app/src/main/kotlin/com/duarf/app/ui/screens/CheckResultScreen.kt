@@ -95,19 +95,32 @@ fun CheckResultScreen(
                     }
                 }
 
-                if (verdict.reasons.isNotEmpty()) {
+                val displayReasons = if (verdict.level == AlertLevel.NONE) {
+                    verdict.reasons.filter { !it.signalId.startsWith("S") }
+                } else {
+                    verdict.reasons
+                }
+
+                if (displayReasons.isNotEmpty()) {
+                    val heading = if (verdict.level == AlertLevel.NONE) {
+                        stringResource(R.string.label_checked)
+                    } else {
+                        stringResource(R.string.label_reasons)
+                    }
                     Text(
-                        text = stringResource(R.string.label_reasons),
+                        text = heading,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
 
-                    verdict.reasons.forEach { reason ->
+                    displayReasons.forEach { reason ->
                         ReasonItemCard(reason = reason)
                     }
                 }
 
                 if (verdict.level != AlertLevel.NONE) {
+                    val isSoftCaution = verdict.level == AlertLevel.CAUTION &&
+                            verdict.reasons.none { it.signalId in setOf("L01", "L10", "L11", "A01", "A02", "A04") }
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
@@ -121,11 +134,15 @@ fun CheckResultScreen(
                                 color = MaterialTheme.colorScheme.onSecondaryContainer
                             )
                             Spacer(Modifier.height(8.dp))
-                            Text("1. " + stringResource(R.string.advice_1), style = MaterialTheme.typography.bodySmall)
-                            Spacer(Modifier.height(4.dp))
-                            Text("2. " + stringResource(R.string.advice_2), style = MaterialTheme.typography.bodySmall)
-                            Spacer(Modifier.height(4.dp))
-                            Text("3. " + stringResource(R.string.advice_3), style = MaterialTheme.typography.bodySmall)
+                            if (isSoftCaution) {
+                                Text(stringResource(R.string.advice_caution_soft), style = MaterialTheme.typography.bodySmall)
+                            } else {
+                                Text("1. " + stringResource(R.string.advice_1), style = MaterialTheme.typography.bodySmall)
+                                Spacer(Modifier.height(4.dp))
+                                Text("2. " + stringResource(R.string.advice_2), style = MaterialTheme.typography.bodySmall)
+                                Spacer(Modifier.height(4.dp))
+                                Text("3. " + stringResource(R.string.advice_3), style = MaterialTheme.typography.bodySmall)
+                            }
                         }
                     }
                 }

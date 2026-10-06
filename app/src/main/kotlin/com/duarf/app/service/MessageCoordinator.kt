@@ -28,6 +28,11 @@ class MessageCoordinator @Inject constructor(
     private val coordinatorScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     fun initialize() {
+        coordinatorScope.launch {
+            preferences.userPreferencesFlow.collect { prefs ->
+                WaNotificationListener.checkSmsEnabled = prefs.checkSms
+            }
+        }
         WaNotificationListener.messageConsumer = { message, context ->
             coordinatorScope.launch {
                 processMessage(message, context)
@@ -46,34 +51,40 @@ class MessageCoordinator @Inject constructor(
 
         val prefs = preferences.userPreferencesFlow.first()
 
-        // 2. Check group alerts setting (§12)
+        // 2. Check if SMS check is disabled for SMS messages
+        if (message.app.isSms && !prefs.checkSms) {
+            return
+        }
+
+        // 3. Check group alerts setting (§12)
         if (message.isGroup && !prefs.groupAlerts) {
             return
         }
 
-        // 3. Record conversation message in stats
+        // 4. Record conversation message in stats
         if (message.conversationKey != null) {
             statsRepository.recordConversationMessage(message.conversationKey!!)
         }
 
-        // 4. Run detection engine (§6, §10)
+        // 5. Run detection engine (§6, §10)
         val verdict = engine.analyze(
             message = message,
             context = context,
             sensitivity = prefs.sensitivity
         )
 
-        // 5. Update daily stats
+        // 6. Update daily stats
         statsRepository.recordMessageChecked(verdict.level)
 
-        // 6. Save alert and dispatch notification for CAUTION and DANGER
+        // 7. Save alert and dispatch notification for CAUTION and DANGER
         if (verdict.level != AlertLevel.NONE) {
             val alertId = alertRepository.saveAlert(message, verdict)
             notificationDispatcher.dispatchAlert(
                 alertId = alertId,
                 fingerprint = message.fingerprint,
                 senderDisplay = message.senderDisplay,
-                verdict = verdict
+                verdict = verdict,
+                sourceApp = message.app
             )
         }
     }

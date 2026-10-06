@@ -12,7 +12,10 @@
       "forward the one-time password", "forward one-time password", "forward one time password",
       "forward one-time-password", "forward verification code", "send otp", "send otp to me", "send me otp",
       "tell me otp", "tell me the verification code", "share verification code with me", "provide your otp",
-      "read out your otp", "forward the code", "share the code"
+      "read out your otp", "forward the code", "share the code", "accidentally sent otp",
+      "sent otp by mistake", "otp sent by mistake", "forward the otp to me", "please forward the otp",
+      "send the otp back", "share back the otp", "pass on the code", "give me the code",
+      "otp sent to your number", "code came to your number"
     ],
     "asks_install_app": [
       "install this app", "download the app", "install app", "download apk", "install application",
@@ -22,7 +25,9 @@
     ],
     "asks_payment": [
       "pay the fee", "pay charges", "pay registration fee", "deposit amount", "pay penalty",
-      "pay advance", "transfer processing fee", "pay fine", "pay Rs"
+      "pay advance", "transfer processing fee", "pay fine", "pay Rs", "pay fine immediately",
+      "pay customs fine", "fine pay now", "pay fine for release", "pay penalty to release",
+      "transfer fine amount"
     ],
     "upi_pin_to_receive": [
       "enter upi pin to receive", "enter pin to receive", "enter your pin to get",
@@ -48,7 +53,9 @@
     ],
     "asks_move_platform": [
       "message me on telegram", "join telegram group", "contact on telegram", "join whatsapp group",
-      "message on whatsapp", "contact customer care on telegram"
+      "message on whatsapp", "contact customer care on telegram", "join our telegram group",
+      "join telegram group now", "join our channel", "join telegram channel", "join discussion group",
+      "connect on telegram"
     ],
     "money_from_new_number": [
       "this is my new number", "urgent need of money", "stuck in emergency need money",
@@ -66,21 +73,29 @@
       "digital arrest", "arrest warrant", "fir registered", "money laundering case",
       "narcotics parcel", "illegal package seized", "court summons", "cbi inquiry", "police complaint",
       "under virtual arrest", "virtual arrest", "non-bailable arrest warrant", "arrest warrant issued",
-      "police directorate", "cyber crime department notice"
+      "police directorate", "cyber crime department notice", "fir will be registered",
+      "fir will be lodged", "police will take action", "legal action will be taken",
+      "arrest warrant will be issued", "case will be filed"
     ],
     "threat_utility_disconnect": [
       "electricity will be disconnected", "power will be cut", "electricity power cutoff",
       "gas connection disconnected", "bill unpaid power cutoff", "water supply disconnected",
       "disconnection order will execute", "disconnection order", "power cutoff at", "disconnection will execute",
-      "power supply will be disconnected", "power service disconnected"
+      "power supply will be disconnected", "power service disconnected",
+      "will disconnect your power supply", "will disconnect your power", "will disconnect power",
+      "will disconnect the power", "will disconnect your electricity", "will disconnect electricity",
+      "will be disconnected", "power will be disconnected", "connection will be disconnected",
+      "disconnect your power supply", "disconnect your power", "disconnect your electricity"
     ],
     "lure_prize_lottery": [
       "congratulations you won", "won lottery", "lucky draw winner", "prize of Rs",
       "kbc lottery", "car winner", "claim your prize", "won cash prize"
     ],
     "lure_job_task": [
-      "part time job", "work from home", "earn 3000 daily", "earn daily", "like youtube videos",
-      "review products and earn", "data entry job", "easy online tasks", "daily payout",
+      "part time job", "part-time job", "part-time", "work from home", "earn 3000 daily", "earn daily",
+      "like youtube videos", "liking youtube videos", "liking videos", "subscribe to channel",
+      "follow channel and earn", "daily task", "earn per task", "daily earnings", "task based earning",
+      "telegram task", "review products and earn", "data entry job", "easy online tasks", "daily payout",
       "remote assignment", "reviewing online restaurants", "reviewing restaurants", "review restaurants",
       "freelance recruiter", "daily payment of rs"
     ],
@@ -105,7 +120,9 @@
       "package held at warehouse", "shipment delayed update address",
       "destination address illegible", "address illegible", "delivery has failed",
       "reschedule drop-off slot", "reschedule drop-off", "reschedule delivery",
-      "package is returned", "before package is returned", "could not be delivered"
+      "package is returned", "before package is returned", "could not be delivered",
+      "parcel held at customs", "customs clearance pending", "parcel seized by customs",
+      "customs duty pending", "package detained", "consignment held"
     ],
     "traffic_challan": [
       "traffic challan pending", "e-challan notice", "pay your fine", "vehicle challan issued",

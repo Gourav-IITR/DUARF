@@ -10,7 +10,8 @@ data class FusionResult(
     val ruleScore: Double,
     val modelProbability: Double?,
     val category: ScamCategory,
-    val topCombo: FiredCombo?
+    val topCombo: FiredCombo?,
+    val mPrime: Double = 0.0
 )
 
 object ScoreFusion {
@@ -21,7 +22,7 @@ object ScoreFusion {
     // High-risk link signals qualifying for Danger: L02, L03, L07, L09
     private val HIGH_RISK_LINK_SIGNALS = setOf("L02", "L03", "L07", "L09")
 
-    // Full set of signal IDs that permit DANGER (spec §10 product rule):
+    // Full set of signal IDs that permit DANGER (spec §10 product rule, Invariant 6):
     // L01: apk_file_or_link
     // L02: brand_domain_mismatch
     // L03: lookalike_domain
@@ -39,7 +40,8 @@ object ScoreFusion {
         dampeners: List<FiredDampener>,
         combos: List<FiredCombo>,
         modelProbability: Double?,
-        sensitivity: Sensitivity = Sensitivity.BALANCED
+        sensitivity: Sensitivity = Sensitivity.BALANCED,
+        isSms: Boolean = false
     ): FusionResult {
         // Effective weights: halved for context signals (§5.4, §10)
         var productOneMinusW = 1.0
@@ -63,10 +65,12 @@ object ScoreFusion {
 
         // Combo floor
         val hasB04 = dampeners.any { it.signalId == "B04" }
+        val hasB05 = dampeners.any { it.signalId == "B05" }
+        val hasB06 = dampeners.any { it.signalId == "B06" }
         val highestCombo = combos.maxByOrNull { it.floor }
         val comboFloor = if (highestCombo != null) {
-            if (hasB04 && !hasHardSignal) {
-                0.0 // Combo floors without hard signals ignored when B04 fired (§10)
+            if ((hasB04 || hasB05 || hasB06) && !hasHardSignal) {
+                0.0 // Combo floors without hard signals ignored when B04, B05, or B06 fired (§10)
             } else {
                 highestCombo.floor
             }
@@ -76,12 +80,19 @@ object ScoreFusion {
 
         val ruleScore = maxOf(r1, comboFloor)
 
-        // Model contribution
-        val mPrime = if (modelProbability != null) {
+        // Model contribution: capped to 0 when B05 or B06 is present
+        val baseMPrime = if (modelProbability != null && !hasB05 && !hasB06) {
             val clamped = ((modelProbability - 0.5) / 0.5).coerceIn(0.0, 1.0)
             0.8 * clamped
         } else {
             0.0
+        }
+
+        // Cap model influence for SMS (Caution at most without a rule signal)
+        val mPrime = if (isSms && ruleScore < 0.20) {
+            minOf(baseMPrime, 0.55)
+        } else {
+            baseMPrime
         }
 
         var score = 1.0 - (1.0 - ruleScore) * (1.0 - mPrime)
@@ -108,23 +119,25 @@ object ScoreFusion {
         val qualifiesForDanger = signals.any { it.signalId in DANGER_QUALIFYING_SIGNALS } ||
                 (highestCombo != null && comboFloor >= dangerThreshold)
 
-        if (!qualifiesForDanger && score >= dangerThreshold) {
-            score = dangerThreshold - 0.001
+        var roundedScore = Math.round(score * 1000.0) / 1000.0
+        if (!qualifiesForDanger && roundedScore >= dangerThreshold) {
+            roundedScore = Math.round((dangerThreshold - 0.001) * 1000.0) / 1000.0
         }
 
         val level = when {
-            score >= dangerThreshold -> AlertLevel.DANGER
-            score >= cautionThreshold -> AlertLevel.CAUTION
+            roundedScore >= dangerThreshold -> AlertLevel.DANGER
+            roundedScore >= cautionThreshold -> AlertLevel.CAUTION
             else -> AlertLevel.NONE
         }
 
         return FusionResult(
             level = level,
-            score = Math.round(score * 1000.0) / 1000.0, // round to 3 decimals
+            score = roundedScore,
             ruleScore = Math.round(ruleScore * 1000.0) / 1000.0,
             modelProbability = modelProbability,
             category = category,
-            topCombo = highestCombo
+            topCombo = highestCombo,
+            mPrime = mPrime
         )
     }
 }

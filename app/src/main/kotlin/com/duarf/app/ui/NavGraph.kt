@@ -99,6 +99,7 @@ fun DuarfNavGraph(
                 onUpdateSensitivity = { viewModel.updateSensitivity(it) },
                 onUpdateLanguage = { viewModel.updateLanguage(it) },
                 onUpdateRetention = { viewModel.updateRetentionDays(it) },
+                onUpdateCheckSms = { viewModel.updateCheckSms(it) },
                 onUpdateGroupAlerts = { viewModel.updateGroupAlerts(it) },
                 onNavigatePrivacyProof = { navController.navigate("privacy_proof") },
                 onNavigateAbout = { navController.navigate("about") },
@@ -111,7 +112,11 @@ fun DuarfNavGraph(
         }
 
         composable("about") {
-            AboutScreen(onBack = { navController.popBackStack() })
+            AboutScreen(
+                isModelLoaded = viewModel.isModelLoaded,
+                modelVersion = viewModel.modelVersion,
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }

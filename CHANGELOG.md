@@ -259,6 +259,188 @@ All decisions made where the spec was silent or flexible are recorded here.
   - Implemented `LazyScamEngine` in `:app`: packs and model are loaded off the main thread on `Dispatchers.IO`, keeping `Application.onCreate` non-blocking.
   - In the event of an initialization error or corruption, `LazyScamEngine` logs audited events (`SafeLog.EventCode.ERROR_ENGINE_INIT`) and degrades to a non-crashing fallback engine returning `AlertLevel.NONE`.
 
+## Manual Device Test Results & Engine Fixes (Post-M4 Hardening)
+
+### 1. Missing Intent Expansion & Scheme-less URL Parsing
+- **Scheme-less Domain & Path Parsing (`UrlParser.kt`)**:
+  - `UrlParser.isPotentialUrl` now extracts host candidate by stripping path and query components (`substringBefore('/').substringBefore('?')`) before checking TLD.
+  - Correctly captures scheme-less links with paths like `t.me/earn-daily-task`, `wa.me/919876543210` while preserving file name handling (e.g., `invoice.pdf.apk` is not mistaken for a URL).
+- **Broad Lexicon Additions (`packs/lang/en.json`, `packs/lang/hi-Latn.json`, `packs/lang/hi.json`)**:
+  - `A01` (`asks_otp_pin_cvv`): Added OTP forwarding pretext coverage across English, Hinglish, and Hindi ("bhej do", "forward kar do", "share kar do", "bata do", "galti se aa gaya", "गलती से आ गया", "sent by mistake", "wrongly sent").
+  - `P06` (`lure_job_task`), `L12` (`redirect_to_other_chat`), `A08` (`asks_move_platform`): Added YouTube like tasks, review tasks, daily earning lures, and platform migration phrases ("like youtube videos", "join our telegram group", "telegram channel", "task job", "लाइक करके पैसे कमाएं").
+  - `P03` (`threat_legal_arrest`), `P11` (`delivery_failed`), `A03` (`asks_payment`): Added customs parcel seizure, release fees, and FIR threats ("customs mein pakda gaya", "parcel held in customs", "customs clearance fee", "fir hogi", "fir darj", "कस्टम में पकड़ा गया", "एफआईआर होगी").
+
+### 2. P10 Impersonation Hardening & Awareness Suppression
+- **Explicit Impersonation Requirement (`SignalEngine.kt`)**:
+  - Institutional brand mention alone no longer triggers `P10`. The engine requires that the sender explicitly claims to be or act on behalf of the institution (e.g. "we are SBI", "from Mumbai Customs", "official notice", "हम एसबीआई से बोल रहे हैं").
+  - Evaluated against all extracted institutional brands (`extracted.brands`) rather than just the first item.
+- **Awareness & Advisory Suppression**:
+  - Legitimate security warnings and advisory messages ("beware of fake", "never install apps", "fraudsters are sending", "सावधान", "धोखेबाजों से बचें") suppress `P10` even when an institutional brand is mentioned.
+  - Added comprehensive positive and negative unit tests in `ImpersonationAndHighlightTest.kt`.
+
+### 3. Highlight Token Expansion & Featurizer Offset Fix
+- **Featurizer Placeholder Offset Mapping (`Featurizer.kt`)**:
+  - Fixed span coordinate drift where placeholder replacements shifted token spans relative to the original text. Added `placeholderToOrigMap` tracking original character offsets through entity substitutions.
+- **Whole-Token Expansion (`ExplanationEngine.kt`)**:
+  - Implemented `expandToWholeToken` and `mergeOverlappingSpans` so highlights cover full semantic units rather than isolated sub-tokens:
+    - Hyphenated words (e.g. `e-challan`, `part-time`).
+    - Currency symbols and formatted numbers (e.g. `₹3,000`, `Rs. 500`).
+    - Devanagari grapheme clusters (combining matras, virama/halant, anusvara).
+    - Emoji sequence surrogate pairs without index corruption.
+
+### 4. UI Polish & Sender Signal Scoping
+- **Safe / None Verdict Presentation (`CheckResultScreen.kt`)**:
+  - For `NONE` verdicts, replaced the empty/sender-only "Why this alert" card with "What we checked" (`label_checked`), suppressing sender-only signals (`S01`, `S03`) from displaying as scam reasons.
+- **S03 Suppression on User Paste/Share**:
+  - Suppressed `S03` (`first_contact`) when `source` is `SourceKind.PASTE` or `SourceKind.SHARE`. `S03` only fires on `SourceKind.NOTIFICATION` with an active `conversationKey`.
+
+### 5. Real-World Evaluation Harness & Dev Splits Verification
+- **Group-Scoped Context in `Main.kt`**:
+  - Scoped evaluation context messages strictly by `group_id` so context from earlier cases does not leak into subsequent distinct test messages.
+- **Dev Splits Evaluation (`dev`, `dev2`, `dev3`)**:
+  - `dev2.jsonl`: 3,200 rows | Danger Prec 1.0, Caution+ Rec 0.994, B$\to$Danger 0.0%, B$\to$Caution 0.1% [PASS].
+  - `dev3.jsonl`: 3,200 rows | Danger Prec 1.0, Caution+ Rec 0.973, B$\to$Danger 0.0%, B$\to$Caution 0.05% [PASS].
+  - Frozen test split kept untouched in accordance with Section 16.2 protocol.
+### 6. Model Status Visibility & Verification Diagnostics
+- **Engine Model Exposure (`ScamEngine.kt`, `DefaultScamEngine.kt`)**:
+  - Added `isModelLoaded: Boolean` and `modelVersion: Int?` properties to `ScamEngine`.
+  - `DefaultScamEngine` now constructs its version identifier dynamically (e.g. `1.0.0-model-v1` or `1.0.0-rules` in rules-only fallback).
+- **Startup SafeLog Event Codes (`SafeLog.kt`, `LazyScamEngine.kt`)**:
+  - Added `MODEL_LOADED = 302` and `MODEL_NOT_LOADED_RULES_ONLY = 303`.
+  - Asynchronous loader logs `MODEL_LOADED` with model version on success, or `MODEL_NOT_LOADED_RULES_ONLY` on fallback.
+  - Device log outputs strictly privacy-safe numeric counters: `Log.i("DuarfSafeLog", "event=302 count=1")`.
+- **UI Visibility (`AboutScreen.kt`)**:
+  - Added a visible "Model: loaded v1" (or "Model: not loaded (rules only)") status entry to the About screen.
+- **Automated Highlight Substring Tests (`ImpersonationAndHighlightTest.kt`)**:
+  - Added automated tests ensuring every highlight span across all test messages maps cleanly to `original.substring(start, end)` without out-of-bounds or character corruption, including whole-token coverage for hyphenated words, Devanagari grapheme clusters, currency symbols, and emoji surrogate pairs.
+- **Full CI Suite**:
+  - `./gradlew check` PASS (all lint, detekt, architecture purity, and unit tests pass).
+
+### 7. Scam-Awareness Dampening, Hard Negatives & Retraining
+- **Engine Dampener B05 (`SignalEngine.kt`)**:
+  - Implemented dampener `B05` (`awareness_or_advisory_context`, factor 0.60) triggering when scam awareness / security advisory context is detected (`isAwarenessOrAdvisory`) AND no hard signal (`L01`, `L10`, `L11`, `A01`, `A02`, `A04`) or L-link signal (`L01`..`L12`) fired.
+  - Refined `isAwarenessOrAdvisory` indicators to explicitly match scam awareness phrases (police advisories, bank notices, family warning forwards) while rejecting scammer intimidation tactics (e.g. "disconnection warning", "cyber police directorate virtual arrest").
+- **Score Fusion Hardening (`ScoreFusion.kt`)**:
+  - When `B05` is present: model contribution is capped to zero ($m' = 0$), soft combo floors are ignored, and rule score is dampened ($r_1 = r_0 \times 0.40$), landing pure awareness messages safely at `NONE`.
+  - When hard signals or L-link signals fire (e.g. scam wrapped in awareness pretext), dampeners are bypassed, model is uncapped, and the alert fires as `DANGER`.
+- **Dataset Hard Negatives (`train_templates.json`, `generate_dataset.py`)**:
+  - Added 24 multi-lingual scam-awareness and warning forward templates across `en`, `hi`, and `hi-Latn` under `benign_templates` (police advisories, bank OTP warnings, family-group forwards).
+  - Maintained frozen `test.jsonl` split. Re-generated and re-featurized `train.jsonl` (20,000 rows) and `dev.jsonl` (2,500 rows).
+- **Model Retraining & Calibration (`ml/train.py`)**:
+  - Retrained linear model using SAGA elasticnet solver (`C=2.0`, `l1_ratio=0.1`).
+  - Refit Platt scaling calibration ($A=1.3007$, $B=-0.6644$). Exported `model.bin` and `model.json`.
+  - Re-synchronized golden vectors in `packs/golden_vectors.json`.
+- **Bidirectional Adversarial Unit Tests (`AdversarialAwarenessWrapperTest.kt`)**:
+  - Added automated unit tests proving pure awareness warnings land at `NONE` ($s < 0.35$), while awareness-wrapped scams requesting OTP or delivering malicious APKs reliably land at `DANGER` ($s \ge 0.85$).
+### 8. Model Rollback, Awareness Template Audit, and B05 Rule Narrowing
+- **Model Rollback to HEAD (`packs/model/model.bin`, `packs/model/model.json`)**:
+  - Rolled back the model weights and calibration parameters to the previous stable model ($C=2.0$, $l1\_ratio=0.3$, Platt scaling $A=1.1666$, $B=-1.4757$).
+  - Avoided retraining: the retrained model had suffered severe false alarm regressions on `dev` (benign $\to$ Caution+ jumped from 3.07% to 10.93%, failing gate $\le 2\%$) and `dev2` (0.10% $\to$ 0.45%).
+- **Memorization vs Generalization Audit**:
+  - Audited `trn-ben-aware-en-01` in `ml/templates/train_templates.json` against test Message 4.
+  - Found that `trn-ben-aware-en-01` ("Cyber Police Advisory: Beware of fraudsters sending fake e-challan APK files on WhatsApp. Never install apps sent in chats...") was a near-verbatim copy of Message 4 ("Beware! Fraudsters are sending fake e-challan APK files on WhatsApp. Never install apps sent in chats.").
+  - The retrained model's 0.2% probability on Message 4 was direct n-gram memorization rather than generalization.
+  - Reverted `ml/templates/train_templates.json` and `ml/generate_dataset.py` to HEAD to prevent test case contamination.
+- **B05 Rule Narrowing & Soft Threat Hardening (`SignalEngine.kt`)**:
+  - Removed erroneous `isAwarenessOrAdvisory` guards from `threat_account_block` (P02), `threat_legal_arrest` (P03), and `threat_utility_disconnect` (P04) emitters. Threat evidence now always fires whenever matching phrases occur.
+  - Narrowed B05 dampener condition: B05 is blocked whenever ANY ask (`A*`), ANY link signal (`L*`), or ANY threat signal (`P02`, `P03`, `P04`) is present.
+  - Soft-signal awareness-wrapped scams (e.g. "Beware of fake callers. This is the real electricity office: your power will be cut tonight, call 98765xxxxx") now reliably fire `P04`, block B05, and alert as `CAUTION` (score 0.555) without being silenced.
+- **Highlight Alignment with Spec §11.4 (`DefaultScamEngine.kt`, `ScoreFusion.kt`)**:
+  - Added `mPrime` to `FusionResult`.
+  - In `DefaultScamEngine.kt`, model attribution highlights are only included when $m' > 0.2$ as mandated by Section 11, item 4 of `docs/ARCHITECTURE.md`.
+  - When B05 fires ($m'=0$), zero model highlights are emitted.
+- **Adversarial Unit Tests (`AdversarialAwarenessWrapperTest.kt`)**:
+  - Added tests for soft utility threats and digital arrest scams wrapped in awareness copy. All pass.
+- **Evaluation Across Splits**:
+### 9. Directed Threat Rules, Impersonation Generalization, Soft Caution Decision & Rule Freeze
+- **Directed-Threat Rule (`SignalEngine.kt`)**:
+  - `P02`, `P03`, and `P04` count as threats only when aimed at the reader (second-person markers: `you`/`your`, `aap`/`aapka`/`aapko`/`tum`/`tumhara`, `आप`/`आपका`/`आपको`/`तुम्हारा`, or imperative directives: `call`, `pay`, `transfer`, etc.) or when outside awareness framing.
+  - Third-person descriptions inside awareness context ("police warn against calls claiming digital arrest...", "fraudsters are...") do not fire `P02`, `P03`, or `P04`.
+  - Verified bidirectionally in `AdversarialAwarenessWrapperTest.kt`:
+    - `tst-ben-warning-01` style third-person advisory $\to$ `NONE` (score 0.076).
+    - "Beware… you are under digital arrest, pay fine" $\to$ `DANGER` (score 0.88).
+    - "Beware of fake callers… your power will be cut tonight, call…" $\to$ `CAUTION` (score 0.643).
+- **Contact Impersonation Diagnosis & Lexicon Broadening (`hi-Latn.json`, `hi.json`, `SignalEngine.kt`)**:
+  - Diagnosed `trn-scam-impers-03`: category is `IMPERSONATED_CONTACT` (friend/relative emergency money request from unknown number), intended for `A09` (`money_from_new_number`) and `A03` (`asks_payment`), not institutional impersonation (`P10`).
+  - Broadened lexicons with standard loan-word and inflection variants: `"yeh mera new number hai"`, `"mera new number"`, `"new number hai"`, `"emergency aa gayi hai"`, `"transfer kar do"`, `"rupaye transfer"`, `"paise transfer kar do"`, `"paise bhej do"`.
+  - Also broadened `hasImpersonationClaim` in `SignalEngine.kt` to cover general authority pretexts (`"this is your bank"`, `"main bank se bol raha hoon"`, `"<brand> customer care"`).
+- **Soft CAUTION Product Decision & UI Copy (`strings.xml`, `AlertDetailScreen.kt`, `CheckResultScreen.kt`)**:
+  - Formally confirmed product decision: unknown number + shortened link + delivery/promo text is CAUTION as designed.
+  - Added dedicated soft-caution advice string `advice_caution_soft`: *"This may be genuine, but verify on the official app or website before tapping the link."* (Hindi: *"यह संदेश असली हो सकता है, लेकिन लिंक पर टैप करने से पहले आधिकारिक ऐप या वेबसाइट पर जांच करें।"*).
+  - Rendered in `AlertDetailScreen` and `CheckResultScreen` for all soft CAUTION alerts lacking hard signals.
+- **Evaluation Reporting (`Main.kt`)**:
+  - Updated `engine-cli eval` to explicitly track and list intended caution rows separately (`intendedCautionCount`, `intendedCautionTemplates`) rather than silently relabelling them.
+- **Evaluation Across Splits (`dev`, `dev2`, `dev3`)**:
+  - `dev.jsonl`: 2,500 rows | Danger Prec 1.0, Caution+ Rec 0.999, B$\to$Danger 0.0%, B$\to$Caution 2.33% (Total) | 0.0% (Excl. intended, Target $\le 2.0\%$). Intended caution: 35 rows (`trn-ben-promo-05`). Tier 1 Status: [PASS]. Real-world: 5/5.
+  - `dev2.jsonl`: 3,200 rows | Danger Prec 1.0, Caution+ Rec 0.994, B$\to$Danger 0.0%, B$\to$Caution 0.1% (Excl. intended 0.1%, Target $\le 2.0\%$). Tier 1 Status: [PASS]. Real-world: 5/5.
+  - `dev3.jsonl`: 3,200 rows | Danger Prec 1.0, Caution+ Rec 0.973, B$\to$Danger 0.0%, B$\to$Caution 0.05% (Excl. intended 0.05%, Target $\le 2.0\%$). Tier 1 Status: [PASS]. Real-world: 5/5.
+- **Rules and Model Freeze**:
+  - All rules, lexicons, thresholds, and ML model weights are now frozen. No further heuristic or synthetic dataset tuning will be performed until fresh real-world test results are provided.
+
+### 10. SMS Scam Detection via Notifications (Zero Permissions, TRAI DLT, S04/S05/B06/C11)
+- **Zero Permissions Invariant**:
+  - Captured strictly via `NotificationListenerService` (`WaNotificationListener`).
+  - Monitored packages: Google Messages (`com.google.android.apps.messaging`) and Samsung Messages (`com.samsung.android.messaging`).
+  - No `READ_SMS`, `RECEIVE_SMS`, or default SMS app role added to `AndroidManifest.xml`. `verifyPermissions` CI task unmodified and passing.
+- **Settings & User Control**:
+  - Added user toggle "Check SMS" (`checkSms`, default `true`) in `DuarfPreferences`, `UserPreferencesRepository`, `DuarfViewModel`, and `SettingsScreen`.
+- **Sender Classification & TRAI DLT Parsing (`DltHeaderParser.kt`)**:
+  - Parses Indian SMS senders into `DLT_HEADER` (`^([A-Za-z]{2})-([A-Za-z0-9]{3,9})(?:-([PSTGpstg]))?$`), `PERSONAL_NUMBER`, `SHORT_CODE`, or `SAVED_CONTACT`.
+- **SMS Signals & Combos (`SignalEngine.kt`, `ComboEngine.kt`, `ScoreFusion.kt`)**:
+  - `S04` (`institution_claim_from_personal_number`, weight 0.50): Bank, gov, utility, courier, or telecom brand claimed by personal mobile number or bare number on SMS.
+  - `S05` (`header_claim_mismatch`, weight 0.55): Text brand doesn't match DLT header brand, or a promotional `-P` header asks for OTP/KYC/payment.
+  - `B06` (`verified_header_consistent`, factor 0.50): Suffix `-T`, `-S`, or `-G` matching the claimed brand with no links or asks. Dampens score and sets $m'=0$. Never applies on hard signals.
+  - `C11` Combo: `S04` + any ask (`A*`) or link (`L*`) $\implies$ Floor 0.82 (`DANGER`).
+  - SMS Model Influence Cap: When `isSms && ruleScore < 0.20`, $m' \le 0.55$ max, preventing model-only `DANGER` alerts on SMS.
+- **Deduplication (`Deduplicator.kt`)**:
+  - Added 5-minute sliding window cache on `(senderDisplay.lowercase() | text)` to deduplicate identical SMS notifications delivered across apps or RCS.
+- **UX & Copy**:
+  - Alert titles and details format SMS source: *"Likely scam SMS from <sender>"*, *"SMS from <sender>"*.
+  - Onboarding and settings copy: *"Checks WhatsApp and SMS notifications. Never reads your inbox."*
+- **Evaluation**:
+  - Created `ml/data/sms_dev.jsonl` with 49 diverse Indian SMS samples (DLT transactional/service/promo negatives, personal number scams, header mismatches).
+  - Evaluated on `sms_dev.jsonl`: 49 rows | Danger Prec 1.0, Caution+ Rec 1.0, B->Danger 0.0%, B->Caution 0.0%. Tier 1 Status: [PASS].
+  - Verified frozen WhatsApp splits remain 100% identical (`dev`, `dev2`, `dev3`).
+
+### 11. SMS Scam Refinements, Invariant 6 Safeguards, and Model Highlights Filtering
+- **Invariant 6 Safeguard (`ScoreFusion.kt`)**:
+  - Removed `S04` from `DANGER_QUALIFYING_SIGNALS`. An institution claim from a personal number (`S04`) combined only with model probability can now reach `CAUTION` at most (score capped below danger threshold `0.72`), strictly preventing the ML model alone from triggering `DANGER`.
+- **Combo C12 (`ComboEngine.kt`, `rules.json`)**:
+  - Added combo `C12`: `S04 and any(P01, P02, P03, P04)` $\implies$ Floor 0.82 (`DANGER`).
+  - Category dynamically assigned from the active threat (`P04` $\to$ `UTILITY_DISCONNECT`, `P03` $\to$ `AUTHORITY_DIGITAL_ARREST`, `P02` $\to$ `PHISHING_BANK_KYC`, else `S04.category`).
+- **P04 Lexicon Expansion (`en.json`, `hi.json`, `hi-Latn.json`)**:
+  - Broadened `threat_utility_disconnect` to cover active and passive voice constructions: *"will disconnect your power supply"*, *"will disconnect your power"*, *"will disconnect power"*, *"will be disconnected"*, *"bijli kaat di jayegi"*, *"bijli connection kat diya jayega"*, *"बिजली काट दी जाएगी"*, etc.
+- **Model Highlights Filtering (`Stopwords.kt`, `LinearClassifier.kt`)**:
+  - Implemented `Stopwords` object with comprehensive stopword sets for English, Hindi (Devanagari), and Hindi-Latin (Hinglish).
+  - Dropped internal placeholders (`__url__`, `__phone__`, etc.), tokens under 3 characters/codepoints, and stopwords from model attribution highlights.
+  - Highlights restricted to tokens with strictly positive scam attribution weights.
+  - Added unit test `ModelHighlightFilterTest.kt` validating stopword omission and token retention.
+- **SMS Parser Verification & Sender Logging (`NotificationParser.kt`, `NotificationRecorder.kt`)**:
+  - Marked SMS notification capture as "structure unverified" in `OPEN_QUESTIONS.md` pending physical recordings from Google Messages and Samsung Messages.
+  - Added debug-only decoupling hook `NotificationParser.debugSenderLogger` wired to `NotificationRecorder` to record the source field of the extracted sender (`MessagingStyle.person.name`, `EXTRA_TITLE`, `EXTRA_CONVERSATION_TITLE`).
+  - Added `SmsCaptureFixtureTest.kt` in `capture/src/test` marked "structure unverified".
+- **Product Copy Confirmation**:
+  - Aligned onboarding strings (`onboarding_desc_1`, `onboarding_desc_3`), privacy proof documentation, and `README.md` to state: *"Checks WhatsApp and SMS notifications. Never reads your inbox."*
+- **Evaluations & Baseline Invariance**:
+### 12. Danger Qualifying Signals CI Guardrail and Invariant 6 Property Testing
+- **Exact Set Alignment & Synchronisation**:
+  - `ScoreFusion.DANGER_QUALIFYING_SIGNALS` verified and pinned to exactly 10 signals: `L01, L02, L03, L07, L09, L10, L11, A01, A02, A04`.
+  - Added `"danger_qualifying_signals"` array in `packs/rules.json` and copied to assets (`:app:copyPacks`).
+  - Added `@SerialName("danger_qualifying_signals") val dangerQualifyingSignals: List<String>` in `RulesPack` (`PackData.kt`).
+  - Documented explicit line in `docs/ARCHITECTURE.md` (§10): `Danger qualifying signals (DANGER_QUALIFYING_SIGNALS): L01, L02, L03, L07, L09, L10, L11, A01, A02, A04.`
+- **CI Guardrails**:
+  - Added Gradle CI verification task `verifyDangerQualifyingSignals` in `tools/ci/ci-checks.gradle.kts` running automatically under `./gradlew check`.
+  - Created JUnit test `DangerQualifyingGuardrailTest.kt` asserting exact equality across `ScoreFusion.DANGER_QUALIFYING_SIGNALS`, `rules.json`, and `docs/ARCHITECTURE.md`. Any change to the set without simultaneously updating the doc, rules pack, and code will fail CI.
+- **Invariant 6 Property Test**:
+  - Implemented 10,000-trial randomized property test in `DangerQualifyingGuardrailTest.kt`:
+    - Generates random non-qualifying signal subsets, random weights (0.10..0.99), random context flags, real and mock combo evaluations ($< \text{dangerThreshold}$), random dampeners (B01..B06), across all sensitivities (LOW, BALANCED, HIGH), across both SMS and WhatsApp.
+    - Tests adversarial model probability 1.0 (in $\ge 50\%$ of trials) and random probabilities.
+    - Proves that the alert level is NEVER `AlertLevel.DANGER` and final score is strictly less than `dangerThreshold` for all 10,000 trials.
+  - Implemented positive control tests verifying that qualifying signals or combo floors $\ge \text{dangerThreshold}$ CAN produce `DANGER`.
+- **Score Clamping Refinement (`ScoreFusion.kt`)**:
+  - Clamped `roundedScore` directly to `Math.round((dangerThreshold - 0.001) * 1000.0) / 1000.0` when unqualified for Danger, ensuring floating point rounding never allows an unqualified score to reach or round up to `dangerThreshold`.
+
+
 
 
 

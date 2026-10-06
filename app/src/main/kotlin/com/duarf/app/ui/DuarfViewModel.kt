@@ -39,6 +39,9 @@ class DuarfViewModel @Inject constructor(
     private val _manualCheckResult = MutableStateFlow<Pair<String, Verdict>?>(null)
     val manualCheckResult: StateFlow<Pair<String, Verdict>?> = _manualCheckResult.asStateFlow()
 
+    val isModelLoaded: Boolean get() = scamEngine.isModelLoaded
+    val modelVersion: Int? get() = scamEngine.modelVersion
+
     private val _isChecking = MutableStateFlow(false)
     val isChecking: StateFlow<Boolean> = _isChecking.asStateFlow()
 
@@ -110,6 +113,12 @@ class DuarfViewModel @Inject constructor(
     fun updateRetentionDays(days: Int) {
         viewModelScope.launch {
             preferences.updateRetentionDays(days)
+        }
+    }
+
+    fun updateCheckSms(enabled: Boolean) {
+        viewModelScope.launch {
+            preferences.updateCheckSms(enabled)
         }
     }
 

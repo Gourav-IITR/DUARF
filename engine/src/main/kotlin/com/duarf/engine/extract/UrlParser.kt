@@ -70,8 +70,8 @@ object UrlParser {
         }
         // Bare domain: contains a dot or de-obfuscation marker, followed by a valid-looking TLD
         if (lower.contains(".") || lower.contains("[.]") || lower.contains("(dot)")) {
-            // Check if it has something like a TLD
-            val parts = lower.replace("[.]", ".").replace("(dot)", ".").split('.')
+            val beforeSlash = lower.replace("[.]", ".").replace("(dot)", ".").substringBefore('/').substringBefore('?')
+            val parts = beforeSlash.split('.')
             if (parts.size >= 2 && parts.last().length in 2..10 && parts.last().all { it in 'a'..'z' }) {
                 return true
             }

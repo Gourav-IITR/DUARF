@@ -10,19 +10,21 @@
 
     <string name="alert_danger_title">%1$s से संभावित स्कैम</string>
     <string name="alert_caution_title">%1$s के संदेश से सावधान रहें</string>
+    <string name="alert_danger_sms_title">%1$s से आया SMS: संभावित स्कैम</string>
+    <string name="alert_caution_sms_title">%1$s से आया SMS: संदिग्ध संदेश</string>
     <string name="alert_generic_summary">इस संदेश में संदिग्ध तत्व पाए गए हैं</string>
     <string name="action_see_why">कारण देखें</string>
     <string name="action_not_a_scam">स्कैम नहीं है</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_title_1">DUARF व्हाट्सएप स्कैम डिटेक्टर</string>
-    <string name="onboarding_desc_1">DUARF आपको व्हाट्सएप पर धोखाधड़ी, फर्जी लिंक, खतरनाक एपीके और ठगी से पूरी तरह सुरक्षित रखता है।</string>
+    <string name="onboarding_title_1">DUARF स्कैम डिटेक्टर</string>
+    <string name="onboarding_desc_1">व्हाट्सएप और एसएमएस नोटिफिकेशन की जांच करता है। आपका इनबॉक्स कभी नहीं पढ़ता। DUARF आपको धोखाधड़ी, फर्जी लिंक और खतरनाक एपीके से पूरी तरह सुरक्षित रखता है।</string>
 
     <string name="onboarding_title_2">100% सुरक्षित — इंटरनेट की कोई अनुमति नहीं</string>
-    <string name="onboarding_desc_2">DUARF के पास इंटरनेट अनुमति नहीं है। आपके संदेश कभी फोन से बाहर नहीं जाते।</string>
+    <string name="onboarding_desc_2">DUARF के पास इंटरनेट या एसएमएस इनबॉक्स अनुमति नहीं है। आपके संदेश कभी फोन से बाहर नहीं जाते।</string>
 
     <string name="onboarding_title_3">नोटिफिकेशन एक्सेस</string>
-    <string name="onboarding_desc_3">व्हाट्सएप संदेशों की तुरंत जांच करने के लिए DUARF को नोटिफिकेशन एक्सेस की आवश्यकता है।</string>
+    <string name="onboarding_desc_3">व्हाट्सएप और एसएमएस संदेशों की तुरंत जांच करने के लिए DUARF को नोटिफिकेशन एक्सेस की आवश्यकता है। आपका इनबॉक्स कभी नहीं पढ़ता।</string>
     <string name="btn_grant_notification_access">नोटिफिकेशन एक्सेस दें</string>
     <string name="access_granted">अनुमति मिल गई</string>
 
@@ -42,7 +44,7 @@
     <!-- Home Screen -->
     <string name="status_protected">सुरक्षित</string>
     <string name="status_action_needed">कार्रवाई आवश्यक</string>
-    <string name="status_listener_running">व्हाट्सएप संदेशों पर नजर रखी जा रही है</string>
+    <string name="status_listener_running">व्हाट्सएप और एसएमएस संदेशों पर नजर रखी जा रही है</string>
     <string name="status_listener_disabled">नोटिफिकेशन एक्सेस बंद है</string>
     <string name="card_weekly_stats">इस सप्ताह</string>
     <string name="stat_checked">जांचे गए</string>
@@ -64,7 +66,9 @@
     <string name="level_safe">सुरक्षित लग रहा है</string>
     <string name="label_message_content">संदेश सामग्री</string>
     <string name="label_reasons">चेतावनी के मुख्य कारण</string>
+    <string name="label_checked">जांचे गए बिंदु</string>
     <string name="label_advice">आपको क्या करना चाहिए</string>
+    <string name="advice_caution_soft">यह संदेश असली हो सकता है, लेकिन लिंक पर टैप करने से पहले आधिकारिक ऐप या वेबसाइट पर जांच करें।</string>
     <string name="advice_1">किसी भी लिंक पर क्लिक न करें, फाइल न खोलें और पैसे न भेजें।</string>
     <string name="advice_2">व्हाट्सएप में प्रेषक को तुरंत ब्लॉक और रिपोर्ट करें।</string>
     <string name="advice_3">यदि पैसे या ओटीपी साझा किए हैं, तो तुरंत साइबर हेल्पलाइन 1930 पर कॉल करें या cybercrime.gov.in पर जाएं।</string>
@@ -88,6 +92,8 @@
     <string name="sensitivity_low">कम (कम अलर्ट)</string>
     <string name="sensitivity_balanced">संतुलित (अनुशंसित)</string>
     <string name="sensitivity_high">उच्च (अधिकतम सुरक्षा)</string>
+    <string name="setting_check_sms">एसएमएस की जांच करें</string>
+    <string name="setting_check_sms_desc">इनकमिंग एसएमएस नोटिफिकेशन में धोखाधड़ी और फर्जी लिंक की जांच करें</string>
     <string name="setting_group_alerts">ग्रुप संदेशों पर अलर्ट करें</string>
     <string name="setting_retention">डेटा रखने की अवधि</string>
     <string name="retention_7_days">7 दिन</string>
@@ -192,6 +198,10 @@
     <string name="reason_s02_detail">भारत (+91) से बाहर के अंतरराष्ट्रीय देश कोड से भेजा गया।</string>
     <string name="reason_s03_title">इस प्रेषक का पहला संदेश</string>
     <string name="reason_s03_detail">इस नंबर से पहले कभी कोई संदेश नहीं आया था।</string>
+    <string name="reason_s04_title">व्यक्तिगत मोबाइल नंबर से संस्था का दावा</string>
+    <string name="reason_s04_detail">बैंक और सरकारी विभाग पंजीकृत TRAI हेडर से संदेश भेजते हैं, 10-अंकीय व्यक्तिगत मोबाइल नंबर से नहीं।</string>
+    <string name="reason_s05_title">हेडर और संस्था में विसंगति या प्रमोशनल हेडर से मांग</string>
+    <string name="reason_s05_detail">एसएमएस हेडर और संदेश में बताई गई संस्था अलग हैं, या प्रमोशनल हेडर से संवेदनशील जानकारी या भुगतान मांगा गया है।</string>
     <string name="reason_model_title">संदिग्ध स्कैम पैटर्न</string>
     <string name="reason_model_detail">संदेश की भाषा और संरचना ज्ञात धोखाधड़ी संदेशों से काफी मिलती है।</string>
 </resources>

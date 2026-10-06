@@ -31,13 +31,26 @@ class LazyScamEngine @Inject constructor(
     private val initJob: Job = scope.launch {
         val instance = try {
             val packSource = AssetPackSource(context)
-            DefaultScamEngine.fromPackSource(packSource)
+            val engine = DefaultScamEngine.fromPackSource(packSource)
+            if (engine.isModelLoaded) {
+                SafeLog.event(SafeLog.EventCode.MODEL_LOADED, (engine.modelVersion ?: 1).toLong())
+            } else {
+                SafeLog.event(SafeLog.EventCode.MODEL_NOT_LOADED_RULES_ONLY)
+            }
+            engine
         } catch (_: Throwable) {
             SafeLog.event(SafeLog.EventCode.ERROR_ENGINE_INIT)
+            SafeLog.event(SafeLog.EventCode.MODEL_NOT_LOADED_RULES_ONLY)
             createDegradedFallbackEngine()
         }
         engineRef.set(instance)
     }
+
+    override val isModelLoaded: Boolean
+        get() = getOrAwaitEngine().isModelLoaded
+
+    override val modelVersion: Int?
+        get() = getOrAwaitEngine().modelVersion
 
     override fun analyze(
         message: IncomingMessage,

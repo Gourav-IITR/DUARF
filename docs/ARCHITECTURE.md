@@ -154,8 +154,13 @@ pehredar/
 
 ```kotlin
 enum class SourceKind { NOTIFICATION, SHARE, PASTE }
-enum class SourceApp { WHATSAPP, WHATSAPP_BUSINESS, UNKNOWN }
-enum class SenderKind { NUMBER_ONLY, NAMED, UNKNOWN }
+enum class SourceApp {
+    WHATSAPP, WHATSAPP_BUSINESS,
+    SMS_GOOGLE_MESSAGES, SMS_SAMSUNG_MESSAGES, SMS_GENERIC,
+    UNKNOWN;
+    val isSms: Boolean get() = this in setOf(SMS_GOOGLE_MESSAGES, SMS_SAMSUNG_MESSAGES, SMS_GENERIC)
+}
+enum class SenderKind { NUMBER_ONLY, NAMED, UNKNOWN, DLT_HEADER, PERSONAL_NUMBER, SHORT_CODE, SAVED_CONTACT }
 
 data class IncomingMessage(
     val fingerprint: String,          // SHA-256, see 5.4
@@ -164,11 +169,14 @@ data class IncomingMessage(
     val conversationKey: String?,     // HMAC of a stable chat id; null for SHARE/PASTE
     val senderDisplay: String?,       // as shown in the notification; RAM only unless alert persists
     val senderKind: SenderKind,
-    val senderCountryCode: String?,   // "+91", "+92", ... when senderKind == NUMBER_ONLY
+    val senderCountryCode: String?,   // "+91", "+92", ... when senderKind == NUMBER_ONLY or PERSONAL_NUMBER
     val isGroup: Boolean,
     val text: String,
     val attachmentHint: String?,      // e.g. a document file name surfaced in the notification
     val receivedAtMillis: Long,
+    val dltHeaderPrefix: String? = null, // e.g. "AX", "VM"
+    val dltHeaderBrand: String? = null,  // e.g. "HDFCBK", "SBIBNK"
+    val dltHeaderSuffix: String? = null  // "P", "S", "T", "G"
 )
 
 interface MessageSource { val messages: Flow<IncomingMessage> }
@@ -180,13 +188,15 @@ Declare one `NotificationListenerService` (`WaNotificationListener`), protected 
 
 Processing rules in `onNotificationPosted`:
 
-1. Return immediately unless `sbn.packageName` is a monitored package (user-toggleable set, default both WhatsApp packages; in debug builds also the app's own package, for the fake poster in section 16).
+1. Return immediately unless `sbn.packageName` is a monitored package (user-toggleable set: default both WhatsApp packages, plus Google Messages `com.google.android.apps.messaging` and Samsung Messages `com.samsung.android.messaging` when "Check SMS" is enabled; in debug builds also the app's own package, for the fake poster in section 16).
 2. Skip if `FLAG_GROUP_SUMMARY` is set, if the notification category is `CATEGORY_CALL`, or if it is ongoing.
 3. Parse with `NotificationCompat.MessagingStyle.extractMessagingStyleFromNotification`. If that returns null, fall back to `EXTRA_TITLE` plus `EXTRA_BIG_TEXT`/`EXTRA_TEXT`, then `EXTRA_TEXT_LINES`.
 4. From a messaging style, emit one `IncomingMessage` per message whose sender is not the device user (a null sender `Person` means "self"). Use each message's own timestamp.
 5. Hand off to a single-threaded coroutine dispatcher through a bounded channel (capacity 64, drop oldest). `onNotificationPosted` runs on the main thread and must do no parsing work beyond step 1.
 
-WhatsApp re-posts a chat's notification with the accumulated unread messages every time a new one arrives, so the same message is seen repeatedly. Deduplication (5.4) handles this.
+**Zero SMS Permissions Constraint**: DUARF never requests `READ_SMS`, `RECEIVE_SMS`, or the default SMS app role (prohibited by Play policies and blocked by Play Protect). All SMS scam detection is performed exclusively by reading notifications posted by supported SMS apps.
+
+WhatsApp and SMS re-post notifications as new messages arrive. Deduplication (5.4) handles this.
 
 Implement `onListenerConnected` (optionally sweep `activeNotifications` once to catch up) and `onListenerDisconnected` (call `requestRebind`). Expose listener health (enabled, connected, time of last event, never content) to the home screen.
 
@@ -197,7 +207,8 @@ Derivations, all to be confirmed against real fixtures (section 19, item 1):
 | `conversationKey` | HMAC-SHA256(install key, first non-null of `notification.shortcutId`, `sbn.tag`, conversation title) |
 | `isGroup` | `EXTRA_IS_GROUP_CONVERSATION`, else messaging style's `isGroupConversation` |
 | `senderDisplay` | Message `Person.name`; for one-to-one chats falls back to the notification title |
-| `senderKind` | `NUMBER_ONLY` if the display matches a phone-number pattern (digits, spaces, `+`, `-`, brackets, 8+ digits), else `NAMED`. A name does not prove a saved contact, since business accounts show names too; verify how group participants not in contacts are displayed |
+| `senderKind` | For WhatsApp: `NUMBER_ONLY` if phone number, else `NAMED`. For SMS: parsed by `DltHeaderParser` into `DLT_HEADER`, `PERSONAL_NUMBER`, `SHORT_CODE`, or `SAVED_CONTACT`. |
+| `dltHeader*` | TRAI TCCCPR format `^([A-Za-z]{2})-([A-Za-z0-9]{3,9})(?:-([PSTGpstg]))?$`: operator prefix, brand entity, and suffix `-T` (transactional), `-S` (service), `-G` (gov), `-P` (promotional). |
 | `attachmentHint` | A file-name-looking token in the text (WhatsApp shows document names in notifications; verify) |
 
 Known platform behaviours to design around:
@@ -217,6 +228,7 @@ Known platform behaviours to design around:
 ### 5.4 Deduplication and short context
 
 - `fingerprint = SHA-256(conversationKey | senderDisplay | text | messageTimestamp)`. Keep an in-memory LRU of the last 500 fingerprints, plus a persisted table of fingerprints for alerted messages so an alert is never posted twice across process restarts.
+- For SMS, multi-app and RCS delivery duplicates are deduplicated via a 5-minute sliding window on `(senderDisplay.lowercase() | text)`.
 - Scammers often split a message ("Dear customer..." then the link). Keep a RAM-only buffer per `conversationKey` holding up to the last 3 messages from the same sender within 5 minutes, evicted after 10 minutes. The engine receives the current message plus this context; signals found only in context count at half weight (section 10).
 
 ---
@@ -340,6 +352,8 @@ Sender and context:
 | S01 | sender_number_only | Sender shows as a bare phone number | 0.10 |
 | S02 | sender_foreign_number | S01 and country code is not +91 | 0.15 |
 | S03 | first_contact | No earlier message seen from this conversation key | 0.10 |
+| S04 | institution_claim_from_personal_number | Bank, gov, utility, courier, or telecom brand claimed from a personal mobile number or bare number on SMS | 0.50 |
+| S05 | header_claim_mismatch | Claimed institutional brand does not match DLT header brand, or a promotional -P header asks for OTP/KYC/payment (SMS only) | 0.55 |
 
 Links and files:
 
@@ -405,6 +419,8 @@ Dampeners (reduce the score; never applied when L01, L10, L11, A01, A02 or A04 f
 | B02 | official_domains_only | Every URL's registrable domain is on a brand allow-list | 0.30 |
 | B03 | established_conversation | Named sender and 20+ earlier messages seen from this conversation key | 0.15 |
 | B04 | user_trusted_sender | User marked this conversation as trusted | 0.50 |
+| B05 | awareness_or_advisory_context | Message provides scam awareness, warnings, or advisory without hard signals, asks, threats, or payment | 0.60 |
+| B06 | verified_header_consistent | DLT header with -T, -S, or -G whose entity matches the claimed brand with no links or asks (SMS only) | 0.50 |
 
 ### 7.3 Combos
 
@@ -422,6 +438,8 @@ Combos set a *floor* on the rule score and choose the category. They capture the
 | C08 | P06 and any of A08, A03, L12 | 0.75 | JOB_TASK |
 | C09 | P07 and any of A08, L12, A03 | 0.75 | INVESTMENT_TRADING |
 | C10 | A02 (remote-access app) and any of P10, P02, P09 | 0.90 | REMOTE_ACCESS |
+| C11 | S04 and (any A* signal or any L* signal) | 0.82 | Category from S04 |
+| C12 | S04 and any of P01, P02, P03, P04 | 0.82 | UTILITY_DISCONNECT / category from threat or S04 |
 
 ### 7.4 Categories
 
@@ -555,9 +573,15 @@ m' = 0.8 * clamp((m - 0.5) / 0.5, 0, 1)         0 if the model is unavailable
 score = 1 - (1 - r) * (1 - m')
 ```
 
-Hard signals are L01, L10, L11, A01, A02 and A04.
+Hard signals are L01, L10, L11, A01, A02 and A04. High-risk link signals qualifying for Danger are L02, L03, L07, L09.
 
-A *concrete* signal is any fired `L*`, `A*`, `P*` or `T*` signal with weight 0.20 or more. If none fired, clamp `score` to just below the Danger threshold. This implements invariant 6.
+Danger qualifying signals (`DANGER_QUALIFYING_SIGNALS`): L01, L02, L03, L07, L09, L10, L11, A01, A02, A04.
+
+A qualifying Danger trigger is any hard signal, any high-risk link signal (L02, L03, L07, L09), or an active combo floor $\ge$ Danger threshold (e.g. C01-C07, C10-C12). Soft signals (S*, P*, etc.) plus the ML model can reach CAUTION at most. If neither fired, `score` is clamped to just below the Danger threshold (0.719), ensuring the model alone never causes DANGER. This implements invariant 6.
+
+When B05 (awareness) or B06 (verified consistent DLT header) fires, model contribution is completely suppressed ($m' = 0$) and combo floors without hard signals are ignored.
+
+For SMS messages (`app.isSms`): when `ruleScore < 0.20`, $m'$ is capped to 0.55 max so that ambiguous or high-probability model predictions cannot reach `DANGER` without a corroborating rule signal.
 
 In group chats the `S*` signals and P10 are disabled, because unknown numbers are normal there.
 
@@ -588,7 +612,7 @@ All weights, floors and thresholds live in `rules.json`, are versioned with the 
 | A04 | Says you must enter your PIN to receive money | You never need a PIN, QR scan or approval to receive money. |
 | Model only | Wording matches known scam messages | The highlighted phrases are common in scam messages. |
 
-4. Highlights are the evidence spans of the shown reasons plus, when the model contributed (`m' > 0.2`), up to five tokens with the highest positive attribution.
+4. Highlights are the evidence spans of the shown reasons plus, when the model contributed (`m' > 0.2`), up to five tokens with the highest positive attribution. Model attribution highlights filter out featurizer placeholders, tokens under 3 characters/codepoints, and stopwords across English, Hindi, and Hindi-Latin (`Stopwords.kt`), ensuring that only tokens with meaningful positive scam weight are highlighted.
 5. Copy rules: say what was observed and why it matters, name the specific domain or file, never state certainty ("Likely scam", not "This is a scam"), and keep reading level simple. Every string goes through `strings.xml`; no user-facing text is hard-coded in `:engine`.
 
 ---

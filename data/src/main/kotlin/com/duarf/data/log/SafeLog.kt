@@ -12,10 +12,16 @@ object SafeLog {
         CRYPTO_KEY_GENERATED(203),
         ERROR_CRYPTO(299),
         ERROR_ENGINE_INIT(300),
-        ERROR_ENGINE_ANALYSIS(301)
+        ERROR_ENGINE_ANALYSIS(301),
+        MODEL_LOADED(302),
+        MODEL_NOT_LOADED_RULES_ONLY(303)
     }
 
     fun event(event: EventCode, count: Long = 0) {
-        // Safe numeric logging only
+        try {
+            android.util.Log.i("DuarfSafeLog", "event=${event.code} count=$count")
+        } catch (_: Throwable) {
+            // JVM test environments without android.util.Log mock
+        }
     }
 }

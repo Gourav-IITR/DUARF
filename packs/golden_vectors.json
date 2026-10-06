@@ -16265,7 +16265,7 @@
         ],
         "l2Value": 0.09167,
         "expectedLevel": "DANGER",
-        "expectedScore": 0.995
+        "expectedScore": 0.994
     },
     {
         "id": "benign-0388",
@@ -21210,7 +21210,7 @@
         ],
         "l2Value": 0.074125,
         "expectedLevel": "DANGER",
-        "expectedScore": 0.997
+        "expectedScore": 0.996
     },
     {
         "id": "benign-0282",

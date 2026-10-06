@@ -37,7 +37,8 @@ class CanaryTest {
             alertId: Long,
             fingerprint: String,
             senderDisplay: String?,
-            verdict: Verdict
+            verdict: Verdict,
+            sourceApp: com.duarf.engine.model.SourceApp
         ) {
             dispatched.add(alertId)
         }

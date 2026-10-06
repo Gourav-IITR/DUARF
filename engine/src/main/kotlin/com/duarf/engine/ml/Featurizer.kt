@@ -68,9 +68,28 @@ class Featurizer(
         replacements.sortByDescending { it.first }
 
         var textWithPlaceholders = normalized.normalizedText
+        var placeholderToOrigMap = IntArray(textWithPlaceholders.length) { i ->
+            if (i in normalized.indexMap.indices) normalized.indexMap[i] else i
+        }
+
         for ((start, end, placeholder) in replacements) {
             if (start in 0..textWithPlaceholders.length && end in start..textWithPlaceholders.length) {
+                val origStart = if (start < placeholderToOrigMap.size) placeholderToOrigMap[start] else (if (placeholderToOrigMap.isNotEmpty()) placeholderToOrigMap.last() else 0)
+
+                val newLen = start + placeholder.length + (textWithPlaceholders.length - end)
+                val newMap = IntArray(newLen)
+                for (k in 0 until start) {
+                    newMap[k] = placeholderToOrigMap[k]
+                }
+                for (k in 0 until placeholder.length) {
+                    newMap[start + k] = origStart
+                }
+                for (k in end until textWithPlaceholders.length) {
+                    newMap[start + placeholder.length + (k - end)] = placeholderToOrigMap[k]
+                }
+
                 textWithPlaceholders = textWithPlaceholders.substring(0, start) + placeholder + textWithPlaceholders.substring(end)
+                placeholderToOrigMap = newMap
             }
         }
 
@@ -85,7 +104,11 @@ class Featurizer(
             } else {
                 tok
             }
-            tokens.add(Pair(truncated, TextSpan(matcher.start(), matcher.end())))
+            val matchStart = matcher.start()
+            val matchEnd = matcher.end()
+            val origStart = if (matchStart in placeholderToOrigMap.indices) placeholderToOrigMap[matchStart] else matchStart
+            val origEnd = if (matchEnd - 1 in placeholderToOrigMap.indices) placeholderToOrigMap[matchEnd - 1] + 1 else origStart + tok.length
+            tokens.add(Pair(truncated, TextSpan(origStart, maxOf(origStart, origEnd))))
         }
 
         // 3. Generate Features

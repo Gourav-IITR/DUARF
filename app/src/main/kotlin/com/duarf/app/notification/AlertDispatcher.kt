@@ -1,5 +1,6 @@
 package com.duarf.app.notification
 
+import com.duarf.engine.model.SourceApp
 import com.duarf.engine.model.Verdict
 
 interface AlertDispatcher {
@@ -7,6 +8,7 @@ interface AlertDispatcher {
         alertId: Long,
         fingerprint: String,
         senderDisplay: String?,
-        verdict: Verdict
+        verdict: Verdict,
+        sourceApp: SourceApp = SourceApp.WHATSAPP
     )
 }

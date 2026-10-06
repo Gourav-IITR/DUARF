@@ -27,8 +27,14 @@ object NotificationRecorder : NotificationDebugHook {
         record(context, sbn)
     }
 
+    @Volatile
+    private var lastSenderFieldByPkg = java.util.concurrent.ConcurrentHashMap<String, Pair<String, String>>()
+
     fun install() {
         WaNotificationListener.debugHook = this
+        com.duarf.capture.notification.NotificationParser.debugSenderLogger = { pkg, field, sender ->
+            lastSenderFieldByPkg[pkg] = Pair(field, sender)
+        }
     }
 
     private const val PREFS_NAME = "duarf_debug_recorder"
@@ -61,6 +67,12 @@ object NotificationRecorder : NotificationDebugHook {
         recordJson.put("tag", sbn.tag ?: JSONObject.NULL)
         recordJson.put("postTime", sbn.postTime)
         recordJson.put("shortcutId", notification.shortcutId ?: JSONObject.NULL)
+
+        val lastExtraction = lastSenderFieldByPkg[sbn.packageName]
+        if (lastExtraction != null) {
+            recordJson.put("parsedSenderField", lastExtraction.first)
+            recordJson.put("parsedSender", lastExtraction.second)
+        }
 
         // Extras summary
         val extrasJson = JSONObject()

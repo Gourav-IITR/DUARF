@@ -10,19 +10,21 @@
 
     <string name="alert_danger_title">Likely scam from %1$s</string>
     <string name="alert_caution_title">Be careful with message from %1$s</string>
+    <string name="alert_danger_sms_title">Likely scam SMS from %1$s</string>
+    <string name="alert_caution_sms_title">Suspicious SMS from %1$s</string>
     <string name="alert_generic_summary">Suspicious elements detected in this message</string>
     <string name="action_see_why">See why</string>
     <string name="action_not_a_scam">Not a scam</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_title_1">DUARF WhatsApp Scam Detector</string>
-    <string name="onboarding_desc_1">DUARF protects you from scams, phishing links, fake APKs, and fraud on WhatsApp completely on-device.</string>
+    <string name="onboarding_title_1">DUARF Scam Detector</string>
+    <string name="onboarding_desc_1">Checks WhatsApp and SMS notifications. Never reads your inbox. DUARF protects you from scams, phishing links, and fake APKs completely on-device.</string>
 
     <string name="onboarding_title_2">100% Private — Zero Network Access</string>
-    <string name="onboarding_desc_2">DUARF does not have internet permission. Your messages never leave your phone, and benign messages are never saved to disk.</string>
+    <string name="onboarding_desc_2">DUARF does not have internet or SMS inbox permissions. Your messages never leave your phone, and benign messages are never saved to disk.</string>
 
     <string name="onboarding_title_3">Notification Access</string>
-    <string name="onboarding_desc_3">DUARF needs notification access to analyze incoming WhatsApp messages as they arrive and alert you instantly.</string>
+    <string name="onboarding_desc_3">DUARF needs notification access to analyze incoming WhatsApp and SMS messages as they arrive and alert you instantly. Never reads your inbox.</string>
     <string name="btn_grant_notification_access">Grant Notification Access</string>
     <string name="access_granted">Access Granted</string>
 
@@ -42,7 +44,7 @@
     <!-- Home Screen -->
     <string name="status_protected">Protected</string>
     <string name="status_action_needed">Action Required</string>
-    <string name="status_listener_running">Listening for WhatsApp messages</string>
+    <string name="status_listener_running">Listening for WhatsApp and SMS messages</string>
     <string name="status_listener_disabled">Notification access is disabled</string>
     <string name="card_weekly_stats">This Week</string>
     <string name="stat_checked">Checked</string>
@@ -64,7 +66,9 @@
     <string name="level_safe">LOOKS SAFE — Stay Alert</string>
     <string name="label_message_content">Message Content</string>
     <string name="label_reasons">Why DUARF Flagged This</string>
+    <string name="label_checked">What We Checked</string>
     <string name="label_advice">What You Should Do</string>
+    <string name="advice_caution_soft">This may be genuine, but verify on the official app or website before tapping the link.</string>
     <string name="advice_1">Do not click any links, open files, or transfer money.</string>
     <string name="advice_2">Block and report the sender inside WhatsApp.</string>
     <string name="advice_3">If you shared money or OTP, immediately call national cyber helpline 1930 or visit cybercrime.gov.in.</string>
@@ -88,6 +92,8 @@
     <string name="sensitivity_low">Low (Fewer alerts)</string>
     <string name="sensitivity_balanced">Balanced (Recommended)</string>
     <string name="sensitivity_high">High (Maximum protection)</string>
+    <string name="setting_check_sms">Check SMS</string>
+    <string name="setting_check_sms_desc">Check incoming SMS notifications for scams and fraudulent links</string>
     <string name="setting_group_alerts">Alert on Group Messages</string>
     <string name="setting_retention">Data Retention Period</string>
     <string name="retention_7_days">7 Days</string>
@@ -192,6 +198,10 @@
     <string name="reason_s02_detail">Sent from an international number outside India.</string>
     <string name="reason_s03_title">First message from this sender</string>
     <string name="reason_s03_detail">You have never received messages from this number before.</string>
+    <string name="reason_s04_title">Institution claimed from personal number</string>
+    <string name="reason_s04_detail">Legitimate banks, government bodies, and utilities send messages via registered TRAI headers, never personal 10-digit mobile numbers.</string>
+    <string name="reason_s05_title">Header brand mismatch or promotional ask</string>
+    <string name="reason_s05_detail">The message content claims to represent an institution different from the sender header, or a promotional SMS requested sensitive payment or verification.</string>
     <string name="reason_model_title">Suspicious scam pattern</string>
     <string name="reason_model_detail">The overall pattern of phrasing closely matches known scam campaigns.</string>
 </resources>

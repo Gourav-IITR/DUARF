@@ -93,4 +93,58 @@ class DeduplicatorTest {
         assertThat(ctx).hasSize(1)
         assertThat(ctx.first().text).isEqualTo("Recent 1")
     }
+
+    @Test
+    fun `isDuplicateMessage deduplicates SMS across apps by sender and text within 5 minutes`() {
+        val sms1 = IncomingMessage(
+            fingerprint = "sms-fp-1",
+            source = SourceKind.NOTIFICATION,
+            app = SourceApp.SMS_GOOGLE_MESSAGES,
+            conversationKey = "conv-sms",
+            senderDisplay = "AX-HDFCBK-T",
+            senderKind = SenderKind.DLT_HEADER,
+            senderCountryCode = "+91",
+            isGroup = false,
+            text = "Your OTP is 123456",
+            attachmentHint = null,
+            receivedAtMillis = System.currentTimeMillis()
+        )
+
+        val smsDuplicateFromSamsung = IncomingMessage(
+            fingerprint = "sms-fp-2", // Different fingerprint because different timestamp/app
+            source = SourceKind.NOTIFICATION,
+            app = SourceApp.SMS_SAMSUNG_MESSAGES,
+            conversationKey = "conv-sms-2",
+            senderDisplay = "AX-HDFCBK-T",
+            senderKind = SenderKind.DLT_HEADER,
+            senderCountryCode = "+91",
+            isGroup = false,
+            text = "Your OTP is 123456",
+            attachmentHint = null,
+            receivedAtMillis = System.currentTimeMillis()
+        )
+
+        val differentSms = IncomingMessage(
+            fingerprint = "sms-fp-3",
+            source = SourceKind.NOTIFICATION,
+            app = SourceApp.SMS_GOOGLE_MESSAGES,
+            conversationKey = "conv-sms",
+            senderDisplay = "AX-HDFCBK-T",
+            senderKind = SenderKind.DLT_HEADER,
+            senderCountryCode = "+91",
+            isGroup = false,
+            text = "Your OTP is 654321",
+            attachmentHint = null,
+            receivedAtMillis = System.currentTimeMillis()
+        )
+
+        // First SMS: not duplicate
+        assertThat(deduplicator.isDuplicateMessage(sms1)).isFalse()
+
+        // Duplicate from Samsung Messages with same sender and text within 5 mins: DUPLICATE
+        assertThat(deduplicator.isDuplicateMessage(smsDuplicateFromSamsung)).isTrue()
+
+        // Different text: NOT duplicate
+        assertThat(deduplicator.isDuplicateMessage(differentSms)).isFalse()
+    }
 }

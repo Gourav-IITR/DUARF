@@ -1,6 +1,7 @@
 package com.duarf.engine.pack
 
 import com.duarf.engine.extract.BrandDefinition
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,6 +17,8 @@ data class LanguagePack(
 @Serializable
 data class RulesPack(
     val version: Int = 1,
+    @SerialName("danger_qualifying_signals")
+    val dangerQualifyingSignals: List<String> = emptyList(),
     val signals: List<RuleSignalDef> = emptyList(),
     val combos: List<RuleComboDef> = emptyList()
 )

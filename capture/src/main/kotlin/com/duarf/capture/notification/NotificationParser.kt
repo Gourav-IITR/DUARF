@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.service.notification.StatusBarNotification
 import androidx.core.app.NotificationCompat
 import com.duarf.capture.dedup.Deduplicator
+import com.duarf.engine.extract.DltHeaderParser
 import com.duarf.engine.model.IncomingMessage
 import com.duarf.engine.model.SenderKind
 import com.duarf.engine.model.SourceApp
@@ -37,6 +38,8 @@ class NotificationParser(
         val sourceApp = when (packageName) {
             "com.whatsapp" -> SourceApp.WHATSAPP
             "com.whatsapp.w4b" -> SourceApp.WHATSAPP_BUSINESS
+            "com.google.android.apps.messaging" -> SourceApp.SMS_GOOGLE_MESSAGES
+            "com.samsung.android.messaging" -> SourceApp.SMS_SAMSUNG_MESSAGES
             else -> SourceApp.UNKNOWN
         }
 
@@ -63,12 +66,19 @@ class NotificationParser(
                     continue
                 }
 
-                val senderName = person.name?.toString() ?: conversationTitle ?: ""
+                val (senderName, senderField) = when {
+                    !person.name.isNullOrEmpty() -> Pair(person.name.toString(), "MessagingStyle.person.name")
+                    extras.containsKey(Notification.EXTRA_CONVERSATION_TITLE) -> Pair(conversationTitle ?: "", "EXTRA_CONVERSATION_TITLE")
+                    extras.containsKey(Notification.EXTRA_TITLE) -> Pair(conversationTitle ?: "", "EXTRA_TITLE")
+                    else -> Pair(conversationTitle ?: "", "UNKNOWN")
+                }
+                debugSenderLogger?.invoke(packageName, senderField, senderName)
+
                 val text = m.text?.toString() ?: ""
                 if (text.isBlank()) continue
 
                 val timestamp = if (m.timestamp > 0) m.timestamp else sbn.postTime
-                val (senderKind, countryCode) = deriveSenderKind(senderName)
+                val senderInfo = extractSenderInfo(senderName, sourceApp.isSms)
                 val attachmentHint = extractAttachmentHint(text)
                 val fingerprint = Deduplicator.computeFingerprint(conversationKey, senderName, text, timestamp)
 
@@ -79,12 +89,15 @@ class NotificationParser(
                         app = sourceApp,
                         conversationKey = conversationKey,
                         senderDisplay = senderName,
-                        senderKind = senderKind,
-                        senderCountryCode = countryCode,
+                        senderKind = senderInfo.kind,
+                        senderCountryCode = senderInfo.countryCode,
                         isGroup = isGroup,
                         text = text,
                         attachmentHint = attachmentHint,
-                        receivedAtMillis = timestamp
+                        receivedAtMillis = timestamp,
+                        dltHeaderPrefix = senderInfo.dltPrefix,
+                        dltHeaderBrand = senderInfo.dltBrand,
+                        dltHeaderSuffix = senderInfo.dltSuffix
                     )
                 )
             }
@@ -102,7 +115,10 @@ class NotificationParser(
 
         if (text.isNotBlank()) {
             val isGroup = extras.getBoolean(NotificationCompat.EXTRA_IS_GROUP_CONVERSATION, false)
-            val (senderKind, countryCode) = deriveSenderKind(title)
+            val senderField = "EXTRA_TITLE"
+            debugSenderLogger?.invoke(packageName, senderField, title)
+
+            val senderInfo = extractSenderInfo(title, sourceApp.isSms)
             val attachmentHint = extractAttachmentHint(text)
             val timestamp = sbn.postTime
             val fingerprint = Deduplicator.computeFingerprint(conversationKey, title, text, timestamp)
@@ -114,12 +130,15 @@ class NotificationParser(
                     app = sourceApp,
                     conversationKey = conversationKey,
                     senderDisplay = title,
-                    senderKind = senderKind,
-                    senderCountryCode = countryCode,
+                    senderKind = senderInfo.kind,
+                    senderCountryCode = senderInfo.countryCode,
                     isGroup = isGroup,
                     text = text,
                     attachmentHint = attachmentHint,
-                    receivedAtMillis = timestamp
+                    receivedAtMillis = timestamp,
+                    dltHeaderPrefix = senderInfo.dltPrefix,
+                    dltHeaderBrand = senderInfo.dltBrand,
+                    dltHeaderSuffix = senderInfo.dltSuffix
                 )
             )
         }
@@ -129,7 +148,10 @@ class NotificationParser(
         if (lines != null && lines.isNotEmpty()) {
             val combinedText = lines.joinToString("\n") { it.toString() }
             val isGroup = extras.getBoolean(NotificationCompat.EXTRA_IS_GROUP_CONVERSATION, false)
-            val (senderKind, countryCode) = deriveSenderKind(title)
+            val senderField = "EXTRA_TITLE"
+            debugSenderLogger?.invoke(packageName, senderField, title)
+
+            val senderInfo = extractSenderInfo(title, sourceApp.isSms)
             val attachmentHint = extractAttachmentHint(combinedText)
             val timestamp = sbn.postTime
             val fingerprint = Deduplicator.computeFingerprint(conversationKey, title, combinedText, timestamp)
@@ -141,17 +163,47 @@ class NotificationParser(
                     app = sourceApp,
                     conversationKey = conversationKey,
                     senderDisplay = title,
-                    senderKind = senderKind,
-                    senderCountryCode = countryCode,
+                    senderKind = senderInfo.kind,
+                    senderCountryCode = senderInfo.countryCode,
                     isGroup = isGroup,
                     text = combinedText,
                     attachmentHint = attachmentHint,
-                    receivedAtMillis = timestamp
+                    receivedAtMillis = timestamp,
+                    dltHeaderPrefix = senderInfo.dltPrefix,
+                    dltHeaderBrand = senderInfo.dltBrand,
+                    dltHeaderSuffix = senderInfo.dltSuffix
                 )
             )
         }
 
         return emptyList()
+    }
+
+    private data class SenderInfo(
+        val kind: SenderKind,
+        val countryCode: String?,
+        val dltPrefix: String? = null,
+        val dltBrand: String? = null,
+        val dltSuffix: String? = null
+    )
+
+    private fun extractSenderInfo(display: String, isSms: Boolean): SenderInfo {
+        return if (isSms) {
+            val parsed = DltHeaderParser.parse(display)
+            SenderInfo(
+                kind = parsed.senderKind,
+                countryCode = parsed.countryCode ?: "+91",
+                dltPrefix = parsed.dltPrefix,
+                dltBrand = parsed.dltBrand,
+                dltSuffix = parsed.dltSuffix
+            )
+        } else {
+            val (kind, cc) = deriveSenderKind(display)
+            SenderInfo(
+                kind = kind,
+                countryCode = cc
+            )
+        }
     }
 
     private fun deriveSenderKind(display: String): Pair<SenderKind, String?> {
@@ -187,5 +239,11 @@ class NotificationParser(
         } catch (_: Exception) {
             value.hashCode().toString()
         }
+    }
+
+    companion object {
+        // Debug-only callback to log which field the sender was extracted from (§16.3, §19.1)
+        @Volatile
+        var debugSenderLogger: ((packageName: String, field: String, sender: String) -> Unit)? = null
     }
 }

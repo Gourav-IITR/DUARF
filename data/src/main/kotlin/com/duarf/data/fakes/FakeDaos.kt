@@ -139,6 +139,10 @@ class FakeUserPreferencesRepository(
         _prefs.update { it.copy(monitoredApps = apps) }
     }
 
+    override suspend fun updateCheckSms(enabled: Boolean) {
+        _prefs.update { it.copy(checkSms = enabled) }
+    }
+
     override suspend fun updateGroupAlerts(enabled: Boolean) {
         _prefs.update { it.copy(groupAlerts = enabled) }
     }

@@ -1,9 +1,23 @@
 {
   "version": 1,
+  "danger_qualifying_signals": [
+    "L01",
+    "L02",
+    "L03",
+    "L07",
+    "L09",
+    "L10",
+    "L11",
+    "A01",
+    "A02",
+    "A04"
+  ],
   "signals": [
     { "id": "S01", "name": "sender_number_only", "weight": 0.10, "category": "OTHER_SUSPICIOUS" },
     { "id": "S02", "name": "sender_foreign_number", "weight": 0.15, "category": "OTHER_SUSPICIOUS" },
     { "id": "S03", "name": "first_contact", "weight": 0.10, "category": "OTHER_SUSPICIOUS" },
+    { "id": "S04", "name": "institution_claim_from_personal_number", "weight": 0.50, "category": "PHISHING_BANK_KYC" },
+    { "id": "S05", "name": "header_claim_mismatch", "weight": 0.55, "category": "PHISHING_BANK_KYC" },
     { "id": "L01", "name": "apk_file_or_link", "weight": 0.55, "category": "MALICIOUS_APK" },
     { "id": "L02", "name": "brand_domain_mismatch", "weight": 0.50, "category": "PHISHING_BANK_KYC" },
     { "id": "L03", "name": "lookalike_domain", "weight": 0.60, "category": "PHISHING_BANK_KYC" },
@@ -51,6 +65,8 @@
     { "id": "C07", "condition": "(L02 or L03 or L09) and any(P02, A07, A05)", "floor": 0.88, "category": "PHISHING_BANK_KYC" },
     { "id": "C08", "condition": "P06 and any(A08, A03, L12)", "floor": 0.75, "category": "JOB_TASK" },
     { "id": "C09", "condition": "P07 and any(A08, L12, A03)", "floor": 0.75, "category": "INVESTMENT_TRADING" },
-    { "id": "C10", "condition": "A02(remote) and any(P10, P02, P09)", "floor": 0.90, "category": "REMOTE_ACCESS" }
+    { "id": "C10", "condition": "A02(remote) and any(P10, P02, P09)", "floor": 0.90, "category": "REMOTE_ACCESS" },
+    { "id": "C11", "condition": "S04 and (A-any or L-any)", "floor": 0.82, "category": "PHISHING_BANK_KYC" },
+    { "id": "C12", "condition": "S04 and any(P01, P02, P03, P04)", "floor": 0.82, "category": "UTILITY_DISCONNECT" }
   ]
 }

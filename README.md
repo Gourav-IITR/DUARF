@@ -1,17 +1,17 @@
 # Duarf
 
-On-device scam detection for WhatsApp on Android. The name is "fraud" spelled backwards.
+On-device scam detection for WhatsApp and SMS on Android. Checks WhatsApp and SMS notifications. Never reads your inbox. The name is "fraud" spelled backwards.
 
 > **Status**: Early development (milestone M4 of 6). Not on the Play Store yet. Not a substitute for user caution.
-> Notification monitoring and share-sheet checks are implemented but not yet verified on real devices; WhatsApp's notification format is still being confirmed.
-> What works today: local notification capture, share-sheet inspection, rule engine, ML featurizer and linear classifier, local Keystore encryption, and privacy CI enforcement.
+> Notification monitoring and share-sheet checks are implemented; WhatsApp and SMS notification formats are being evaluated against real recordings.
+> What works today: local WhatsApp and SMS notification capture, share-sheet inspection, rule engine, ML featurizer and linear classifier, local Keystore encryption, and privacy CI enforcement.
 > What does not work today: image/screenshot OCR, regional languages beyond English/Hindi, and automated background pack updates.
 
 ---
 
 ## What It Does
 
-Duarf runs entirely on your phone to identify fraud, phishing, and malicious attachments in incoming WhatsApp messages. It reads notification text locally, extracts indicators like APK filenames, suspicious links, and urgency claims, and displays an on-device notification with concrete reasons. Benign personal messages are analyzed in memory and immediately discarded.
+Duarf runs entirely on your phone to identify fraud, phishing, and malicious attachments in incoming messages. Checks WhatsApp and SMS notifications. Never reads your inbox. It reads notification text locally without requesting SMS inbox permissions (`READ_SMS` or `RECEIVE_SMS`), parses TRAI DLT headers (`-T`, `-S`, `-G`, `-P`), detects institutional claims from personal numbers (`S04`), catches header mismatches (`S05`), extracts indicators like APK filenames, suspicious links, and urgency claims, and displays an on-device notification with concrete reasons. Benign personal messages are analyzed in memory and immediately discarded.
 
 Example alert notification for an APK lure from an unknown number:
 ```text
@@ -31,9 +31,9 @@ Malicious or unexpected APK file
 
 ```mermaid
 flowchart TD
-    A["Incoming Message<br/>(Notification / Share / Paste)"] --> B["Text Normalizer<br/>(NFKC, homoglyphs, Indic scripts)"]
-    B --> C["Entity Extraction<br/>(URLs, phones, UPI, amounts, APKs, brands)"]
-    C --> D1["Rule Engine<br/>(Heuristics S/L/A/P, combos C01-C10)"]
+    A["Incoming Message<br/>(WhatsApp/SMS Notification / Share / Paste)"] --> B["Text Normalizer<br/>(NFKC, homoglyphs, Indic scripts)"]
+    B --> C["Entity Extraction<br/>(URLs, phones, DLT headers, UPI, amounts, APKs, brands)"]
+    C --> D1["Rule Engine<br/>(Heuristics S/L/A/P, combos C01-C11)"]
     C --> D2["ML Classifier<br/>(MurmurHash3, 2^18 buckets, Platt scaling)"]
     D1 --> E["Score Fusion & Invariant Gating"]
     D2 --> E
@@ -43,11 +43,11 @@ flowchart TD
     F -->|"Benign / No signals"| I["NONE (Discarded from RAM)"]
 ```
 
-1. **Capture**: Intercepts WhatsApp notification text via Android's `NotificationListenerService`, system text selection ("Check with DUARF"), or direct share sheet intent.
+1. **Capture**: Intercepts WhatsApp and SMS notification text via Android's `NotificationListenerService`, system text selection ("Check with DUARF"), or direct share sheet intent. Never requests `READ_SMS`, `RECEIVE_SMS`, or default SMS app role.
 2. **Normalization**: Standardizes Unicode via NFKC, preserves zero-width joiners for Indic scripts, folds Cyrillic/Greek homoglyphs, and maps Indic numerals.
-3. **Entity Extraction**: Identifies URLs (including obfuscated formats like `hxxp` and userinfo tricks), Indian mobile numbers, UPI handles, currency amounts, OTP codes, and APK extensions.
+3. **Entity Extraction**: Identifies URLs (including obfuscated formats like `hxxp` and userinfo tricks), Indian mobile numbers, TRAI DLT headers, UPI handles, currency amounts, OTP codes, and APK extensions.
 4. **Parallel Scoring**:
-   - **Rule Engine**: Evaluates link, sender, action, and urgency heuristics, applying combo floors (such as APK + unknown sender $\ge 0.85$).
+   - **Rule Engine**: Evaluates link, sender, action, and urgency heuristics, applying combo floors (such as APK + unknown sender $\ge 0.85$, personal number claiming institution + link/ask $\ge 0.82$).
    - **ML Classifier**: Featurizes text into $2^{18}$ MurmurHash3 buckets with an int8 quantized elastic-net model calibrated via Platt scaling.
 5. **Score Fusion**: Combines rule and model probabilities using a dampened noisy-OR formula.
 6. **Product Rule Gating (Section 10)**: A `DANGER` alert strictly requires a hard signal (`L01`, `L10`, `L11`, `A01`, `A02`, `A04`), an active combo floor, or a high-risk domain signal (`L02`, `L03`, `L07`, `L09`). The ML model and soft signals can reach `CAUTION` at most (the final score is capped at 0.719), guaranteeing that aggressive alerts always cite a concrete deterministic violation.
@@ -59,6 +59,7 @@ flowchart TD
 Duarf operates under strict architectural guarantees documented in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md):
 
 - **Zero Network Permissions**: The app does not request `android.permission.INTERNET`. It cannot communicate over the network.
+- **Zero SMS Inbox Permissions**: The app never requests `android.permission.READ_SMS`, `android.permission.RECEIVE_SMS`, or the default SMS role. Checks WhatsApp and SMS notifications. Never reads your inbox. It only reads incoming notifications via `NotificationListenerService`.
 - **No analytics, ads, crash-reporting or networking libraries**: No Google Analytics, Firebase, Crashlytics, Sentry, ads, or network client libraries are included in release builds.
 - **Benign Discard**: Benign messages are analyzed strictly in volatile memory; benign message text is never written to disk (only hashed counters).
 - **Local Encryption**: Flagged alerts are encrypted with AES-256-GCM authenticated encryption using keys stored in Android Keystore (hardware-backed where the device supports it). HMAC-SHA256 is used for hashing conversation identifiers, not integrity.

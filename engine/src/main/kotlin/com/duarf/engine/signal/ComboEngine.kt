@@ -78,6 +78,26 @@ object ComboEngine {
             firedCombos.add(FiredCombo("C10", 0.90, ScamCategory.REMOTE_ACCESS, matched))
         }
 
+        // C11: S04 and (any A* signal or any L* signal) -> Floor 0.82, Category from S04
+        val hasAnyA = firedSignalIds.any { it.startsWith("A") }
+        if (has("S04") && (hasAnyA || hasAnyL)) {
+            val matched = setOf("S04") + firedSignalIds.filter { it.startsWith("A") || it.startsWith("L") }
+            val s04Category = signals.firstOrNull { it.signalId == "S04" }?.category ?: ScamCategory.PHISHING_BANK_KYC
+            firedCombos.add(FiredCombo("C11", 0.82, s04Category, matched))
+        }
+
+        // C12: S04 and any of P01, P02, P03, P04 -> Floor 0.82, Category from specific threat or S04
+        if (has("S04") && hasAny("P01", "P02", "P03", "P04")) {
+            val matched = setOf("S04") + setOf("P01", "P02", "P03", "P04").filter { firedSignalIds.contains(it) }
+            val category = when {
+                firedSignalIds.contains("P04") -> ScamCategory.UTILITY_DISCONNECT
+                firedSignalIds.contains("P03") -> ScamCategory.AUTHORITY_DIGITAL_ARREST
+                firedSignalIds.contains("P02") -> ScamCategory.PHISHING_BANK_KYC
+                else -> signals.firstOrNull { it.signalId == "S04" }?.category ?: ScamCategory.PHISHING_BANK_KYC
+            }
+            firedCombos.add(FiredCombo("C12", 0.82, category, matched))
+        }
+
         return firedCombos
     }
 }

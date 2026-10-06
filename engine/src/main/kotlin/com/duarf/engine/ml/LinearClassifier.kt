@@ -46,6 +46,9 @@ class LinearClassifier(
         if (mPrime > 0.2 && featurized.tokenAttributions.isNotEmpty()) {
             val scoredTokens = ArrayList<Pair<TokenFeatureMapping, Double>>()
             for (mapping in featurized.tokenAttributions) {
+                if (!Stopwords.isMeaningfulModelToken(mapping.token)) {
+                    continue
+                }
                 var tokenScore = 0.0
                 for (bIdx in mapping.bucketIndices) {
                     if (bIdx in weights.indices) {

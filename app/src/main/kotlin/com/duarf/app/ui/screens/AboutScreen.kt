@@ -15,7 +15,11 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutScreen(onBack: () -> Unit) {
+fun AboutScreen(
+    isModelLoaded: Boolean = false,
+    modelVersion: Int? = null,
+    onBack: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -42,7 +46,12 @@ fun AboutScreen(onBack: () -> Unit) {
                     Spacer(Modifier.height(4.dp))
                     Text("Version 1.0.0 (Release Build)", style = MaterialTheme.typography.bodyMedium)
                     Spacer(Modifier.height(8.dp))
-                    Text("Engine: 1.0.0-rules (Aho-Corasick + Rule Fusion)", style = MaterialTheme.typography.bodySmall)
+                    Text("Engine: Aho-Corasick + Rule Fusion", style = MaterialTheme.typography.bodySmall)
+                    if (isModelLoaded) {
+                        Text("Model: loaded v${modelVersion ?: 1}", style = MaterialTheme.typography.bodySmall)
+                    } else {
+                        Text("Model: not loaded (rules only)", style = MaterialTheme.typography.bodySmall)
+                    }
                     Text("Packs: Rules v1, Tier 1 (en, hi, hi-Latn)", style = MaterialTheme.typography.bodySmall)
                     Text("Storage: Android Keystore AES-256-GCM + Room", style = MaterialTheme.typography.bodySmall)
                 }

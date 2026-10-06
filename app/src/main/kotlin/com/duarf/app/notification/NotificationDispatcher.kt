@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import com.duarf.app.MainActivity
 import com.duarf.app.R
 import com.duarf.engine.model.AlertLevel
+import com.duarf.engine.model.SourceApp
 import com.duarf.engine.model.Verdict
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -55,7 +56,8 @@ class NotificationDispatcher @Inject constructor(
         alertId: Long,
         fingerprint: String,
         senderDisplay: String?,
-        verdict: Verdict
+        verdict: Verdict,
+        sourceApp: SourceApp
     ) {
         if (verdict.level == AlertLevel.NONE) return
 
@@ -65,9 +67,17 @@ class NotificationDispatcher @Inject constructor(
 
         val senderName = senderDisplay ?: context.getString(R.string.unknown_sender)
         val title = if (isDanger) {
-            context.getString(R.string.alert_danger_title, senderName)
+            if (sourceApp.isSms) {
+                context.getString(R.string.alert_danger_sms_title, senderName)
+            } else {
+                context.getString(R.string.alert_danger_title, senderName)
+            }
         } else {
-            context.getString(R.string.alert_caution_title, senderName)
+            if (sourceApp.isSms) {
+                context.getString(R.string.alert_caution_sms_title, senderName)
+            } else {
+                context.getString(R.string.alert_caution_title, senderName)
+            }
         }
 
         // Top reason

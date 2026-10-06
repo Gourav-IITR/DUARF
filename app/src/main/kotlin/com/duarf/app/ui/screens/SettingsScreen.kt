@@ -27,6 +27,7 @@ fun SettingsScreen(
     onUpdateSensitivity: (Sensitivity) -> Unit,
     onUpdateLanguage: (String) -> Unit,
     onUpdateRetention: (Int) -> Unit,
+    onUpdateCheckSms: (Boolean) -> Unit,
     onUpdateGroupAlerts: (Boolean) -> Unit,
     onNavigatePrivacyProof: () -> Unit,
     onNavigateAbout: () -> Unit,
@@ -124,6 +125,32 @@ fun SettingsScreen(
                     title = stringResource(R.string.sensitivity_low),
                     selected = uiState.preferences.sensitivity == Sensitivity.LOW,
                     onSelect = { onUpdateSensitivity(Sensitivity.LOW) }
+                )
+            }
+
+            HorizontalDivider()
+
+            // Check SMS toggle
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.setting_check_sms),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = stringResource(R.string.setting_check_sms_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                Switch(
+                    checked = uiState.preferences.checkSms,
+                    onCheckedChange = onUpdateCheckSms
                 )
             }
 

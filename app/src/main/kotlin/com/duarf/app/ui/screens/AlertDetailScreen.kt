@@ -94,8 +94,13 @@ fun AlertDetailScreen(
             ) {
                 // Sender info
                 if (!alert.senderDisplay.isNullOrEmpty()) {
+                    val label = if (alert.app.isSms) {
+                        "SMS from ${alert.senderDisplay}"
+                    } else {
+                        "From: ${alert.senderDisplay}"
+                    }
                     Text(
-                        text = "From: ${alert.senderDisplay}",
+                        text = label,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -135,6 +140,8 @@ fun AlertDetailScreen(
                 }
 
                 // Actionable advice (§13.3)
+                val isSoftCaution = alert.level == AlertLevel.CAUTION &&
+                        alert.reasons.none { it.signalId in setOf("L01", "L10", "L11", "A01", "A02", "A04") }
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
@@ -148,11 +155,15 @@ fun AlertDetailScreen(
                             color = MaterialTheme.colorScheme.onSecondaryContainer
                         )
                         Spacer(Modifier.height(8.dp))
-                        Text("1. " + stringResource(R.string.advice_1), style = MaterialTheme.typography.bodySmall)
-                        Spacer(Modifier.height(4.dp))
-                        Text("2. " + stringResource(R.string.advice_2), style = MaterialTheme.typography.bodySmall)
-                        Spacer(Modifier.height(4.dp))
-                        Text("3. " + stringResource(R.string.advice_3), style = MaterialTheme.typography.bodySmall)
+                        if (isSoftCaution) {
+                            Text(stringResource(R.string.advice_caution_soft), style = MaterialTheme.typography.bodySmall)
+                        } else {
+                            Text("1. " + stringResource(R.string.advice_1), style = MaterialTheme.typography.bodySmall)
+                            Spacer(Modifier.height(4.dp))
+                            Text("2. " + stringResource(R.string.advice_2), style = MaterialTheme.typography.bodySmall)
+                            Spacer(Modifier.height(4.dp))
+                            Text("3. " + stringResource(R.string.advice_3), style = MaterialTheme.typography.bodySmall)
+                        }
                     }
                 }
 

@@ -14,6 +14,7 @@ class DuarfPreferences(private val context: Context) : UserPreferencesRepository
     private object PreferencesKeys {
         val SENSITIVITY = stringPreferencesKey("sensitivity")
         val MONITORED_APPS = stringSetPreferencesKey("monitored_apps")
+        val CHECK_SMS = booleanPreferencesKey("check_sms")
         val GROUP_ALERTS = booleanPreferencesKey("group_alerts")
         val RETENTION_DAYS = intPreferencesKey("retention_days")
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
@@ -24,6 +25,7 @@ class DuarfPreferences(private val context: Context) : UserPreferencesRepository
         val sensStr = prefs[PreferencesKeys.SENSITIVITY] ?: Sensitivity.BALANCED.name
         val sensitivity = try { Sensitivity.valueOf(sensStr) } catch (_: Exception) { Sensitivity.BALANCED }
         val apps = prefs[PreferencesKeys.MONITORED_APPS] ?: setOf("com.whatsapp", "com.whatsapp.w4b")
+        val checkSms = prefs[PreferencesKeys.CHECK_SMS] ?: true
         val group = prefs[PreferencesKeys.GROUP_ALERTS] ?: false
         val retention = prefs[PreferencesKeys.RETENTION_DAYS] ?: 30
         val onboarded = prefs[PreferencesKeys.ONBOARDING_COMPLETED] ?: false
@@ -32,6 +34,7 @@ class DuarfPreferences(private val context: Context) : UserPreferencesRepository
         UserPreferences(
             sensitivity = sensitivity,
             monitoredApps = apps,
+            checkSms = checkSms,
             groupAlerts = group,
             retentionDays = retention,
             onboardingCompleted = onboarded,
@@ -45,6 +48,10 @@ class DuarfPreferences(private val context: Context) : UserPreferencesRepository
 
     override suspend fun updateMonitoredApps(apps: Set<String>) {
         context.dataStore.edit { it[PreferencesKeys.MONITORED_APPS] = apps }
+    }
+
+    override suspend fun updateCheckSms(enabled: Boolean) {
+        context.dataStore.edit { it[PreferencesKeys.CHECK_SMS] = enabled }
     }
 
     override suspend fun updateGroupAlerts(enabled: Boolean) {

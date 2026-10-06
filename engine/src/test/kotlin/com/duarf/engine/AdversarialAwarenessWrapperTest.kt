@@ -72,7 +72,7 @@ class AdversarialAwarenessWrapperTest {
     @Test
     fun `genuine awareness advisory without hard scam signals results in NONE`() {
         val msg = createMessage(
-            text = "Security advisory forward: Cyber police warns against answering video calls claiming digital arrest or drug parcel charges. Please inform your parents.",
+            text = "Security advisory forward: Cyber police warns citizens against fake lottery claims and suspicious links. Please inform your parents.",
             sender = "Mom",
             senderKind = SenderKind.NAMED
         )
@@ -80,4 +80,148 @@ class AdversarialAwarenessWrapperTest {
 
         assertThat(verdict.level).isEqualTo(AlertLevel.NONE)
     }
+
+    @Test
+    fun `pure scam awareness message 4 from unknown number results in NONE`() {
+        val msg = createMessage(
+            text = "Beware! Fraudsters are sending fake e-challan APK files on WhatsApp. Never install apps sent in chats.",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.level).isEqualTo(AlertLevel.NONE)
+        assertThat(verdict.score).isLessThan(0.35)
+    }
+
+    @Test
+    fun `real scam wrapped in awareness text with OTP request results in DANGER`() {
+        val msg = createMessage(
+            text = "Beware of fraud! Send me the OTP to verify",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "A01" }).isTrue()
+        assertThat(verdict.level).isEqualTo(AlertLevel.DANGER)
+        assertThat(verdict.score).isAtLeast(0.72)
+    }
+
+    @Test
+    fun `bank never share OTP notice from unknown number results in NONE`() {
+        val msg = createMessage(
+            text = "Security Notice from SBI: Bank will never ask for your OTP, ATM PIN or netbanking password. Beware of fake calls and never share your security codes.",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.level).isEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun `Hindi police advisory forward from unknown number results in NONE`() {
+        val msg = createMessage(
+            text = "साइबर पुलिस चेतावनी: व्हाट्सएप पर भेजे जा रहे फर्जी ई-चालान और एपीके फाइलों से सावधान रहें। किसी भी चैट में भेजी गई ऐप को इंस्टॉल न करें।",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.level).isEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun `Hinglish family group warning forward from unknown number results in NONE`() {
+        val msg = createMessage(
+            text = "Forwarded for awareness: Dosto YouTube videos like karke daily paise kamane wale task scam se bachein. Telegram channel join mat karna.",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.level).isEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun `adversarial scam wrapped in awareness with APK download link results in DANGER`() {
+        val msg = createMessage(
+            text = "Police Advisory: Beware of fraudsters sending fake apps. Please download the verified safety update from http://police-safety-portal.xyz/secure.apk to scan your phone.",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "L01" }).isTrue()
+        assertThat(verdict.level).isEqualTo(AlertLevel.DANGER)
+    }
+
+    @Test
+    fun `awareness wrapped scam with soft utility disconnect threat fires P04 and alerts CAUTION`() {
+        val msg = createMessage(
+            text = "Beware of fake callers. This is the real electricity office: your power will be cut tonight, call 98765xxxxx",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "P04" }).isTrue()
+        assertThat(verdict.level).isNotEqualTo(AlertLevel.NONE)
+        assertThat(verdict.score).isAtLeast(0.45)
+    }
+
+    @Test
+    fun `awareness wrapped scam with digital arrest threat and payment ask results in DANGER`() {
+        val msg = createMessage(
+            text = "Public warning: Fraudsters are impersonating officers. You are under digital arrest by CBI, pay fine immediately to clear name.",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "P03" }).isTrue()
+        assertThat(verdict.reasons.any { it.signalId == "A03" }).isTrue()
+        assertThat(verdict.level).isEqualTo(AlertLevel.DANGER)
+    }
+
+    @Test
+    fun `tst-ben-warning-01 style third-person advisory results in NONE`() {
+        val msg = createMessage(
+            text = "Security advisory forward: Cyber police warns against answering video calls claiming digital arrest or drug parcel charges. Please inform your parents. Helpline: 1800-2462-2462",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "P03" }).isFalse()
+        assertThat(verdict.level).isEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun `directed threat with digital arrest and pay fine results in DANGER`() {
+        val msg = createMessage(
+            text = "Beware… you are under digital arrest, pay fine",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "P03" }).isTrue()
+        assertThat(verdict.level).isEqualTo(AlertLevel.DANGER)
+    }
+
+    @Test
+    fun `directed threat with power cut and call directive results in CAUTION or above`() {
+        val msg = createMessage(
+            text = "Beware of fake callers… your power will be cut tonight, call…",
+            sender = "+919876543210",
+            senderKind = SenderKind.NUMBER_ONLY
+        )
+        val verdict = engine.analyze(msg)
+
+        assertThat(verdict.reasons.any { it.signalId == "P04" }).isTrue()
+        assertThat(verdict.level).isIn(listOf(AlertLevel.CAUTION, AlertLevel.DANGER))
+    }
 }
+

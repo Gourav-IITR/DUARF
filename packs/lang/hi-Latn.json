@@ -9,7 +9,12 @@
       "otp batao", "otp bhejo", "otp share karo", "pin batao", "otp send karo",
       "cvv bata", "password bhejo", "code batao", "otp forward karo",
       "otp mujhe bhejo", "otp mujhe batao", "mujhe otp bhejo", "mujhe otp batao",
-      "hume otp bhejo", "officer ko otp batao", "agent ko otp do", "otp provide karo"
+      "hume otp bhejo", "officer ko otp batao", "agent ko otp do", "otp provide karo",
+      "galti se tumhare number pe otp", "galti se tumhare number pe otp aa gaya", "galti se otp chala gaya", "galti se otp bhej diya",
+      "bhai otp bhej do", "otp please mujhe bhej do", "otp mujhe bhej do jaldi", "otp aa gaya hai",
+      "otp aaya hoga", "otp forward kar do", "otp mujhe de do", "otp share kar do",
+      "otp bata do jaldi", "otp jaldi bhej do", "code pass on karo", "code forward karo",
+      "otp de dijiye", "galti se code gaya"
     ],
     "asks_install_app": [
       "app install karo", "apk download karo", "app download karein", "anydesk install karo",
@@ -17,7 +22,9 @@
     ],
     "asks_payment": [
       "fees jama karo", "paise transfer karo", "fine bharo", "advance bhejo",
-      "charges pay karo", "penalty bharo"
+      "charges pay karo", "penalty bharo", "fine abhi pay", "fine pay karein",
+      "release ke liye fine", "fine abhi bharein", "turant fine pay karo", "penalty abhi pay karo",
+      "transfer kar do", "rupaye transfer", "paise transfer kar do", "rupaye transfer kar do", "paise bhej do"
     ],
     "upi_pin_to_receive": [
       "paise lene ke liye pin dalo", "upi pin enter karo paise pane ke liye",
@@ -37,10 +44,13 @@
       "activate karein", "unblock karein", "click karke verify karein"
     ],
     "asks_move_platform": [
-      "telegram par message karo", "telegram group join karo", "whatsapp group se judo"
+      "telegram par message karo", "telegram group join karo", "whatsapp group se judo",
+      "telegram group join karein", "join our telegram group", "hamare telegram group se judo",
+      "telegram channel join karo", "telegram group se judo", "join telegram group"
     ],
     "money_from_new_number": [
-      "yeh mera naya number hai", "emergency hai paise bhejo", "hospital me hu paise chahiye"
+      "yeh mera naya number hai", "emergency hai paise bhejo", "hospital me hu paise chahiye",
+      "yeh mera new number hai", "mera new number", "new number hai", "emergency aa gayi hai"
     ],
     "urgency_deadline": [
       "turant", "abhi ke abhi", "aaj raat tak", "24 ghante me", "immediately karo"
@@ -53,18 +63,24 @@
     ],
     "threat_legal_arrest": [
       "digital arrest", "arrest warrant", "fir darj", "cbi inquiry",
-      "narcotics parcel pakda gaya", "police complaint"
+      "narcotics parcel pakda gaya", "police complaint", "warna fir hogi",
+      "fir hogi", "fir darj hogi", "police karvayi hogi", "police case ho jayega",
+      "giraftari hogi", "kanuni karvayi hogi"
     ],
     "threat_utility_disconnect": [
       "bijli kat jayegi", "bijli connection kaat diya jayega", "light cut jayegi",
-      "power cut ho jayega", "bill unpaid light cut"
+      "power cut ho jayega", "bill unpaid light cut",
+      "bijli kaat di jayegi", "bijli kaat denge", "bijli connection kat diya jayega",
+      "connection disconnect ho jayega", "power disconnect ho jayegi"
     ],
     "lure_prize_lottery": [
       "lottery jeeti hai", "lucky draw winner", "inam jeeta hai", "kbc lottery lagi hai"
     ],
     "lure_job_task": [
-      "part time job", "ghar baithe kamaye", "daily 3000 kamaye", "video like karke kamaye",
-      "online kamai"
+      "part time job", "part-time job", "part-time", "ghar baithe kamaye", "daily 3000 kamaye",
+      "video like karke kamaye", "online kamai", "liking youtube videos", "like youtube videos",
+      "liking videos", "youtube video like karke", "video like karke", "video like karo",
+      "channel subscribe karke", "daily task", "har task ke paise", "daily earning task", "earn daily"
     ],
     "lure_investment": [
       "guaranteed return", "paisa double", "stock market tips", "double munafa"
@@ -76,7 +92,9 @@
       "refund mil gaya", "cashback prapt kare", "reward points expire"
     ],
     "delivery_failed": [
-      "parcel delivery fail", "address update karo", "delivery ruki hai"
+      "parcel delivery fail", "address update karo", "delivery ruki hai",
+      "parcel customs mein pakda", "customs mein pakda", "customs me pakda",
+      "parcel customs", "customs clearance", "held at customs", "customs duty baki"
     ],
     "traffic_challan": [
       "traffic challan pending", "e-challan bharo", "challan pay karo"

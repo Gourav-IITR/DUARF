@@ -180,6 +180,50 @@ val verifyNoDebugToolsInRelease by tasks.registering {
     }
 }
 
+val verifyDangerQualifyingSignals by tasks.registering {
+    description = "Enforces that DANGER_QUALIFYING_SIGNALS matches between docs/ARCHITECTURE.md and packs/rules.json"
+    group = "verification"
+    doLast {
+        val expected = setOf("L01", "L02", "L03", "L07", "L09", "L10", "L11", "A01", "A02", "A04")
+
+        // 1. Verify packs/rules.json
+        val rulesFile = rootProject.file("packs/rules.json")
+        if (!rulesFile.exists()) {
+            throw GradleException("packs/rules.json does not exist!")
+        }
+        val rulesText = rulesFile.readText()
+        val jsonPattern = Regex(""""danger_qualifying_signals"\s*:\s*\[([^\]]+)\]""")
+        val matchRules = jsonPattern.find(rulesText)
+            ?: throw GradleException("Invariant 6 violation: 'danger_qualifying_signals' not found in packs/rules.json")
+        val rulesSignals = matchRules.groupValues[1]
+            .split(",")
+            .map { it.trim().removeSurrounding("\"") }
+            .filter { it.isNotEmpty() }
+            .toSet()
+        if (rulesSignals != expected) {
+            throw GradleException("Invariant 6 violation: packs/rules.json danger_qualifying_signals ($rulesSignals) does not match expected $expected")
+        }
+
+        // 2. Verify docs/ARCHITECTURE.md
+        val archFile = rootProject.file("docs/ARCHITECTURE.md")
+        if (!archFile.exists()) {
+            throw GradleException("docs/ARCHITECTURE.md does not exist!")
+        }
+        val archText = archFile.readText()
+        val docPattern = Regex("""Danger qualifying signals[^\n:]*:\s*([A-Za-z0-9,\s]+)""")
+        val matchDoc = docPattern.find(archText)
+            ?: throw GradleException("Invariant 6 violation: 'Danger qualifying signals' not found in docs/ARCHITECTURE.md")
+        val docSignals = matchDoc.groupValues[1]
+            .split(",")
+            .map { it.trim().trimEnd('.') }
+            .filter { it.isNotEmpty() }
+            .toSet()
+        if (docSignals != expected) {
+            throw GradleException("Invariant 6 violation: docs/ARCHITECTURE.md Danger qualifying signals ($docSignals) does not match expected $expected")
+        }
+    }
+}
+
 tasks.named("check") {
-    dependsOn(verifyDependencies, verifyPermissions, verifyExportedComponents, verifyNoContentLogging, verifyNoDebugToolsInRelease)
+    dependsOn(verifyDependencies, verifyPermissions, verifyExportedComponents, verifyNoContentLogging, verifyNoDebugToolsInRelease, verifyDangerQualifyingSignals)
 }

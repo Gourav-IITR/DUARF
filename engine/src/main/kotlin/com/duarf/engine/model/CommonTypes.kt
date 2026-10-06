@@ -13,14 +13,24 @@ enum class SourceKind {
 enum class SourceApp {
     WHATSAPP,
     WHATSAPP_BUSINESS,
-    UNKNOWN
+    SMS_GOOGLE_MESSAGES,
+    SMS_SAMSUNG_MESSAGES,
+    SMS_GENERIC,
+    UNKNOWN;
+
+    val isSms: Boolean
+        get() = this == SMS_GOOGLE_MESSAGES || this == SMS_SAMSUNG_MESSAGES || this == SMS_GENERIC
 }
 
 @Serializable
 enum class SenderKind {
     NUMBER_ONLY,
     NAMED,
-    UNKNOWN
+    UNKNOWN,
+    DLT_HEADER,
+    PERSONAL_NUMBER,
+    SHORT_CODE,
+    SAVED_CONTACT
 }
 
 @Serializable
@@ -31,11 +41,14 @@ data class IncomingMessage(
     val conversationKey: String?,     // HMAC of a stable chat id; null for SHARE/PASTE
     val senderDisplay: String?,       // as shown in the notification; RAM only unless alert persists
     val senderKind: SenderKind,
-    val senderCountryCode: String?,   // "+91", "+92", ... when senderKind == NUMBER_ONLY
+    val senderCountryCode: String?,   // "+91", "+92", ... when senderKind == NUMBER_ONLY or PERSONAL_NUMBER
     val isGroup: Boolean,
     val text: String,
     val attachmentHint: String?,      // e.g. document file name surfaced in notification
     val receivedAtMillis: Long,
+    val dltHeaderPrefix: String? = null, // e.g. "AX", "VM", "JD"
+    val dltHeaderBrand: String? = null,  // e.g. "HDFCBK", "SBIBNK"
+    val dltHeaderSuffix: String? = null  // "P", "S", "T", "G"
 )
 
 @Serializable
@@ -107,4 +120,7 @@ interface ScamEngine {
         context: List<IncomingMessage> = emptyList(),
         sensitivity: Sensitivity = Sensitivity.BALANCED
     ): Verdict
+
+    val isModelLoaded: Boolean get() = false
+    val modelVersion: Int? get() = null
 }

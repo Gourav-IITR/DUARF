@@ -22,3 +22,8 @@ Items marked "verify" and Section 19 human inputs are tracked here.
      3. **Normalizer improvements**: Enhance `TextNormalizer` to handle homoglyphs, spacing/delimiters, and mixed scripts across Indic/Latin.
      - *Evaluation protocol*: Evaluated exclusively on dev splits (`dev`, `dev2`, `dev3`). Frozen test split re-runs strictly deferred until the M6 checkpoint.
 8. **License**: Open-source license TBD.
+9. **SMS Notification Format Verification (§19)**:
+   - **Status**: **Structure unverified**. No real-device notification recordings yet.
+   - Google Messages (`com.google.android.apps.messaging`) and Samsung Messages (`com.samsung.android.messaging`) are monitored behind the "Check SMS" toggle. The parser extracts sender from `MessagingStyle.person.name` or `EXTRA_TITLE` and logs which field the sender originated from via `NotificationRecorder`. Real-world recordings from Google Messages and Samsung Messages will be provided to verify structure and extras key conventions.
+   - Other OEM SMS apps (Xiaomi `com.android.mms` / MIUI Messaging, OnePlus `com.oneplus.mms`, Oppo/Vivo `com.coloros.mms`, Transsion, etc.) are marked **verify**. Their `NotificationCompat.MessagingStyle`, extras key conventions (`EXTRA_TITLE`, `EXTRA_TEXT`, `EXTRA_BIG_TEXT`), and DLT header presentation must be captured with `NotificationRecorder` on real physical devices before adding their package names to `NotificationParser`.
+

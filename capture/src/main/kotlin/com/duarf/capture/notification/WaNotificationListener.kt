@@ -103,6 +103,9 @@ class WaNotificationListener : NotificationListenerService() {
         if (pkg == "com.whatsapp" || pkg == "com.whatsapp.w4b") {
             return true
         }
+        if (checkSmsEnabled && (pkg == "com.google.android.apps.messaging" || pkg == "com.samsung.android.messaging")) {
+            return true
+        }
         // In debug builds, allow app's own package for Fake WhatsApp tests (§5.2)
         return pkg == packageName
     }
@@ -118,7 +121,7 @@ class WaNotificationListener : NotificationListenerService() {
                     val messages = parser.parse(sbn)
                     for (msg in messages) {
                         // Deduplication (§5.4)
-                        if (deduplicator.isDuplicate(msg.fingerprint)) {
+                        if (deduplicator.isDuplicateMessage(msg)) {
                             continue
                         }
 
@@ -136,6 +139,9 @@ class WaNotificationListener : NotificationListenerService() {
     }
 
     companion object {
+        @Volatile
+        var checkSmsEnabled: Boolean = true
+
         private val _healthState = MutableStateFlow(ListenerHealth())
         val healthState: StateFlow<ListenerHealth> = _healthState.asStateFlow()
 

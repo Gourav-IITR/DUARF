@@ -18,6 +18,13 @@ class Deduplicator(
         }
     }
 
+    // SMS dedup cache: (sender + text) -> timestamp for 5-minute sliding window
+    private val smsDedupCache = object : LinkedHashMap<String, Long>(maxLruSize, 0.75f, true) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, Long>?): Boolean {
+            return size > maxLruSize
+        }
+    }
+
     // Short-term RAM-only context buffer per conversationKey (§5.4)
     private val contextBuffer = HashMap<String, MutableList<IncomingMessage>>()
 
@@ -28,6 +35,21 @@ class Deduplicator(
         }
         lruCache[fingerprint] = System.currentTimeMillis()
         return false
+    }
+
+    @Synchronized
+    fun isDuplicateMessage(message: IncomingMessage): Boolean {
+        if (message.app.isSms) {
+            val key = "${message.senderDisplay?.trim()?.lowercase() ?: ""}|${message.text.trim()}"
+            val now = System.currentTimeMillis()
+            val lastSeen = smsDedupCache[key]
+            if (lastSeen != null && (now - lastSeen) <= contextWindowMillis) {
+                return true
+            }
+            smsDedupCache[key] = now
+            return false
+        }
+        return isDuplicate(message.fingerprint)
     }
 
     @Synchronized
@@ -57,6 +79,7 @@ class Deduplicator(
     @Synchronized
     fun clear() {
         lruCache.clear()
+        smsDedupCache.clear()
         contextBuffer.clear()
     }
 

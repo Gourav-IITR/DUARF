@@ -57,6 +57,18 @@ class DefaultScamEngine(
         null
     }
 
+    override val isModelLoaded: Boolean
+        get() = classifier != null
+
+    override val modelVersion: Int?
+        get() = classifier?.formatVersion
+
+    val effectiveEngineVersion: String = if (classifier != null) {
+        "1.0.0-model-v${classifier.formatVersion}"
+    } else {
+        engineVersion
+    }
+
     override fun analyze(
         message: IncomingMessage,
         context: List<IncomingMessage>,
@@ -124,14 +136,17 @@ class DefaultScamEngine(
                 dampeners = dampeners,
                 combos = combos,
                 modelProbability = modelPrediction?.probability,
-                sensitivity = sensitivity
+                sensitivity = sensitivity,
+                isSms = message.app.isSms
             )
 
-            // 8. Explanations and highlights (§11)
+            // 8. Explanations and highlights (§11.4: model highlights added when m' > 0.2)
+            val modelHighlights = if (fusion.mPrime > 0.2) modelPrediction?.highlights ?: emptyList() else emptyList()
             val (reasons, highlights) = ExplanationEngine.generateReasonsAndHighlights(
                 signals = allSignals,
                 topCombo = fusion.topCombo,
-                modelHighlights = modelPrediction?.highlights ?: emptyList()
+                modelHighlights = modelHighlights,
+                originalText = message.text
             )
 
             Verdict(
@@ -142,7 +157,7 @@ class DefaultScamEngine(
                 category = fusion.category,
                 reasons = reasons,
                 highlights = highlights,
-                engineVersion = engineVersion
+                engineVersion = effectiveEngineVersion
             )
         } catch (_: Exception) {
             // Degrades gracefully to NONE verdict without throwing (§6)
@@ -154,7 +169,7 @@ class DefaultScamEngine(
                 category = ScamCategory.OTHER_SUSPICIOUS,
                 reasons = emptyList(),
                 highlights = emptyList(),
-                engineVersion = engineVersion
+                engineVersion = effectiveEngineVersion
             )
         }
     }
