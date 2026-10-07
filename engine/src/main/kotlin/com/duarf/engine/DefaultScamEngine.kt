@@ -148,13 +148,15 @@ class DefaultScamEngine(
             }
 
             // 7. Score fusion (§10)
+            val hasCallbackAsk = signalEngine.hasCallbackAsk(normalized, extracted)
             val fusion = ScoreFusion.fuse(
                 signals = allSignals,
                 dampeners = dampeners,
                 combos = combos,
                 modelProbability = modelPrediction?.probability,
                 sensitivity = sensitivity,
-                isSms = message.app.isSms
+                isSms = message.app.isSms,
+                hasCallbackAsk = hasCallbackAsk
             )
 
             // 8. Explanations and highlights (§11.4: model highlights added when m' > 0.2)

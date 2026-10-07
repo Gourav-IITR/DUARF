@@ -47,7 +47,7 @@ Items marked "verify" and Section 19 human inputs are tracked here.
      | OnePlus (OxygenOS) | `com.oneplus.mms` (legacy) / `com.google.android.apps.messaging` | Common in India | **UNVERIFIED**: Legacy package needs recording; modern devices default to Google Messages |
      | OPPO / Realme (ColorOS / Realme UI) | `com.coloros.mms`, `com.heytap.mms` | Substantial Indian market share | **UNVERIFIED**: Real physical notification capture required |
      | Vivo / iQOO (Funtouch OS) | `com.vivo.mms`, `com.android.mms` | Substantial Indian market share | **UNVERIFIED**: Real physical notification capture required |
-     | Transsion (Tecno / Infinix / Itel) | `com.transsion.phonemaster`, `com.android.mms` | Common budget tier in India | **UNVERIFIED**: Real physical notification capture required |
+     | Transsion (Tecno / Infinix / Itel) | `com.android.mms` | Common budget tier in India | **UNVERIFIED**: Real physical notification capture required |
    - **Enforcement Rule**: No candidate package may be added to active monitoring until a real physical notification recording is captured, verified, and committed as a sanitized test fixture (§19.1).
 10. **Known gap: Hindi government-scheme / loan-fee scams (rules frozen)**:
     - **Observed Behavior**: Messages matching templates like `new-scam-hi-05` (e.g. *"प्रधानमंत्री मुद्रा योजना के तहत ₹5,00,000 का ऋण 1% ब्याज पर स्वीकृत हुआ है। फाइल चार्ज ₹21015 इस लिंक http://... पर भेजें।"*) currently fire only `L06` (risky TLD) and `S01`/`S03` (unknown number), landing on borderline scores.

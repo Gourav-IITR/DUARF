@@ -943,6 +943,36 @@ class SignalEngine(
         }
     }
 
+    fun hasCallbackAsk(normalized: NormalizedText, extracted: ExtractionResult): Boolean {
+        if (extracted.phones.isEmpty()) return false
+        val text = normalized.normalizedText.lowercase()
+        val deob = normalized.deobfuscatedText.lowercase()
+        val callbackRegex = Regex(
+            """\b(call|dial|contact|whatsapp|whats\s*app|msg|message|ring|phone)\b|""" +
+            """(कॉल|डायल|संपर्क|व्हाट्सएप|मैसेज|फोन)"""
+        )
+        for (phone in extracted.phones) {
+            val pStart = phone.span.start
+            val pEnd = phone.span.end
+            for (src in listOf(text, deob)) {
+                val windowStart = (pStart - 60).coerceAtLeast(0)
+                val windowEnd = (pEnd + 60).coerceAtMost(src.length)
+                if (windowStart >= windowEnd) continue
+                val window = src.substring(windowStart, windowEnd)
+                for (match in callbackRegex.findAll(window)) {
+                    val sub = window.substring(0, match.range.first)
+                    val isNegated = sub.endsWith("do not ") || sub.endsWith("dont ") || sub.endsWith("don't ") ||
+                            sub.endsWith("never ") || sub.endsWith("mat ") || sub.endsWith("na ") ||
+                            sub.endsWith("मत ") || sub.endsWith("न ")
+                    if (!isNegated) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+
     private fun BrandKind.toCategory(): ScamCategory = when (this) {
         BrandKind.BANK -> ScamCategory.PHISHING_BANK_KYC
         BrandKind.GOVERNMENT, BrandKind.LAW_ENFORCEMENT -> ScamCategory.AUTHORITY_DIGITAL_ARREST
@@ -952,4 +982,5 @@ class SignalEngine(
         else -> ScamCategory.OTHER_SUSPICIOUS
     }
 }
+
 

@@ -601,6 +601,22 @@ All decisions made where the spec was silent or flexible are recorded here.
   - Re-evaluated `dev`, `dev2`, `dev3`, `sms_dev`, `dev_{bn,mr,te,ta,or}`, `dev_{gu,kn,ml,pa}` via `engine-cli eval`.
   - Verified 0 rows changed alert level across all dev splits vs baseline.
 - **OEM SMS Apps Candidate List (`OPEN_QUESTIONS.md`)**:
-  - Documented exhaustive OEM SMS package candidate list (Xiaomi `com.android.mms`, Samsung `com.samsung.android.messaging`, OnePlus `com.oneplus.mms`, OPPO/Realme `com.coloros.mms`, Vivo `com.vivo.mms`, Transsion) with status UNVERIFIED pending physical device recordings.
+  - Documented exhaustive OEM SMS package candidate list (Xiaomi `com.android.mms`, Samsung `com.samsung.android.messaging`, OnePlus `com.oneplus.mms`, OPPO/Realme `com.coloros.mms`, Vivo `com.vivo.mms`, Transsion `com.android.mms`) with status UNVERIFIED pending physical device recordings.
+  - Removed `com.transsion.phonemaster` as it is a utility app rather than an SMS app.
+- **S05 Cap Lift Refinement & Callback Ask Handling (§10 Spec Amendment)**:
+  - Spec rule: S05 cap is lifted when `P01` (`urgency_deadline`) fires, or when the message contains an instruction to call or WhatsApp a phone number (`hasCallbackAsk`), or when any `A*`, `L*`, `P02`–`P04` fires.
+  - Implemented `hasCallbackAsk` in `SignalEngine.kt` checking for call/WhatsApp imperatives in proximity to extracted phone numbers.
+  - Updated `ScoreFusion.kt` and `DefaultScamEngine.kt`.
+  - Added unit tests in `PoliceDltHeaderVerificationTest.kt`:
+    1. Police header + "case registered, call <number> immediately" $\to$ NOT capped (Caution or above).
+    2. Police header + pure advisory including "helpline 1930" $\to$ `NONE`.
+    3. Scam text with "1930" mention + OTP ask or link $\to$ unchanged level (`DANGER`).
+  - Re-run of all dev splits (`dev`, `dev2`, `dev3`, `sms_dev`, `dev_{bn,mr,te,ta,or}`, `dev_{gu,kn,ml,pa}`) confirmed 0 rows changed level.
+- **Pack Update Specification (`docs/PACK_UPDATE_SPEC.md`)**:
+  - Documented that pack and model updates occur strictly via signed app updates.
+  - Explicitly rejected SAF/external storage pack imports because malicious "update packs" would constitute an active scam vector.
+- **Play Store Compliance & Privacy Copy Alignment (`docs/PLAY_STORE_LISTING.md`)**:
+  - Documented official Play policy requirement of 12 testers opted in for 14 continuous days for personal accounts.
+  - Updated store and in-app privacy copy across `AboutScreen.kt` and `strings.xml` to accurately state: *"Messages that aren't flagged are analysed in memory and discarded. Flagged alerts are saved only on your phone, and you can delete them anytime."*
 
 

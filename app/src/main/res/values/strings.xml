@@ -20,8 +20,8 @@
     <string name="onboarding_title_1">DUARF Scam Detector</string>
     <string name="onboarding_desc_1">Checks WhatsApp and SMS notifications. Never reads your inbox. DUARF protects you from scams, phishing links, and fake APKs completely on-device.</string>
 
-    <string name="onboarding_title_2">100% Private — Zero Network Access</string>
-    <string name="onboarding_desc_2">DUARF does not have internet or SMS inbox permissions. Your messages never leave your phone, and benign messages are never saved to disk.</string>
+    <string name="onboarding_title_2">Private By Design — Zero Network Access</string>
+    <string name="onboarding_desc_2">DUARF does not declare internet permission. Messages that aren\'t flagged are analysed in memory and discarded. Flagged alerts are saved only on your phone, and you can delete them anytime.</string>
 
     <string name="onboarding_title_3">Notification Access</string>
     <string name="onboarding_desc_3">DUARF needs notification access to analyze incoming WhatsApp and SMS messages as they arrive and alert you instantly. Never reads your inbox.</string>

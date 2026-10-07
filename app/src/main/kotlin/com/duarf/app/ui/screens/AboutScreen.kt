@@ -65,7 +65,8 @@ fun AboutScreen(
                         "DUARF runs an entirely local scam detection engine on your phone. " +
                                 "Incoming WhatsApp notifications are analyzed within milliseconds for phishing URLs, " +
                                 "malicious APK files, digital arrest threats, electricity cutoff lures, and OTP asks. " +
-                                "All analysis happens in RAM, and benign messages are never stored.",
+                                "Messages that aren't flagged are analysed in memory and discarded. " +
+                                "Flagged alerts are saved only on your phone, and you can delete them anytime.",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }

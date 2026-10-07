@@ -176,4 +176,37 @@ class PoliceDltHeaderVerificationTest {
         val verdict = engine.analyze(msg)
         assertThat(verdict.level).isEqualTo(AlertLevel.DANGER)
     }
+
+    @Test
+    fun testPoliceHeader_caseRegisteredCallNumberImmediately_notCapped() {
+        // police-looking header + "case registered, call <number> immediately" -> NOT capped (Caution or above)
+        val msg = createSmsMessage(
+            senderDisplay = "DL-DLPOL-G",
+            text = "Delhi Police: Case registered against your number. Call +919876543210 immediately to avoid arrest."
+        )
+        val verdict = engine.analyze(msg)
+        assertThat(verdict.level).isAtLeast(AlertLevel.CAUTION)
+    }
+
+    @Test
+    fun testPoliceHeader_pureAdvisoryWithHelpline1930_none() {
+        // police-looking header + pure advisory incl. "helpline 1930" -> NONE
+        val msg = createSmsMessage(
+            senderDisplay = "DL-DLPOL-G",
+            text = "Delhi Police Cyber Cell: Cyber security advisory. Beware of suspicious APK files and loan offers. For reporting fraud, call national helpline 1930 or visit cybercrime.gov.in."
+        )
+        val verdict = engine.analyze(msg)
+        assertThat(verdict.level).isEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun testScamText_with1930MentionAndOtpAskOrLink_unchangedLevel() {
+        // scam text with "1930" mention + OTP ask or link -> unchanged level (awareness never suppresses A*/L*)
+        val msg = createSmsMessage(
+            senderDisplay = "VM-SBIBNK-T",
+            text = "SBI Alert: National Cyber Helpline 1930 received an unauthorized complaint on your account. Share OTP 123456 now to verify: http://sbi-verify.phish.com"
+        )
+        val verdict = engine.analyze(msg)
+        assertThat(verdict.level).isEqualTo(AlertLevel.DANGER)
+    }
 }

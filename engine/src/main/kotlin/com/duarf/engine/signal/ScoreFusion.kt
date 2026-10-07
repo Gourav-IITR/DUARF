@@ -41,7 +41,8 @@ object ScoreFusion {
         combos: List<FiredCombo>,
         modelProbability: Double?,
         sensitivity: Sensitivity = Sensitivity.BALANCED,
-        isSms: Boolean = false
+        isSms: Boolean = false,
+        hasCallbackAsk: Boolean = false
     ): FusionResult {
         // Effective weights: halved for context signals (§5.4, §10)
         var productOneMinusW = 1.0
@@ -87,11 +88,11 @@ object ScoreFusion {
 
         var ruleScore = maxOf(r1, comboFloor)
 
-        // Spec §10: S05 alone, with no A*, L*, P02–P04 fired, is capped below the Caution threshold.
+        // Spec §10: S05 alone, with no A*, L*, P01–P04 fired and no callback ask, is capped below the Caution threshold.
         // A sender mismatch with nothing asked, linked or threatened is not actionable.
         val hasActionOrLinkOrThreat = signals.any {
-            it.signalId.startsWith("A") || it.signalId.startsWith("L") || it.signalId in setOf("P02", "P03", "P04")
-        }
+            it.signalId.startsWith("A") || it.signalId.startsWith("L") || it.signalId in setOf("P01", "P02", "P03", "P04")
+        } || hasCallbackAsk
         val isS05Alone = signals.any { it.signalId == "S05" } && !hasActionOrLinkOrThreat
         if (isS05Alone) {
             val s05Cap = cautionThreshold - 0.001
