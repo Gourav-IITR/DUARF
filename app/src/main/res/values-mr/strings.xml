@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">हेडर ब्रँड आणि संदेशातील दावा जुळत नाही किंवा जाहिरात एसएमएसमध्ये संवेदनशील माहिती मागितली आहे.</string>
     <string name="reason_model_title">संशयास्पद स्कॅम पॅटर्न</string>
     <string name="reason_model_detail">मजकुराची एकूण रचना ज्ञात फसवणूक मोहिमांशी जुळते.</string>
+
+    <!-- Beta labelling strings (Marked for native-speaker review §19.3) -->
+    <string name="beta_label_badge">(बीटा)</string>
+    <string name="beta_disclaimer_testing">या भाषेतील स्कॅम ओळख सध्या बीटा स्वरूपात असून त्याची चाचणी सुरू आहे.</string>
+    <string name="beta_disclaimer_regional">प्रादेशिक भाषांमधील (बीटा) स्कॅम तपासणीची चाचणी अद्याप सुरू आहे.</string>
 </resources>

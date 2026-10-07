@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">హెడర్ మరియు సందేశంలోని బ్రాండ్ సరిపోలడం లేదు లేదా ప్రచార SMS సున్నితమైన చెల్లింపును అడిగింది.</string>
     <string name="reason_model_title">అనుమానాస్పద స్కామ్ నమూనా</string>
     <string name="reason_model_detail">సందేశంలోని పదాల అమరిక తెలిసిన స్కామ్ ప్రచారాలతో సరిపోలుతోంది.</string>
+
+    <!-- Beta labelling strings (Marked for native-speaker review §19.3) -->
+    <string name="beta_label_badge">(బీటా)</string>
+    <string name="beta_disclaimer_testing">ఈ భాషలో స్కామ్ గుర్తింపు ప్రస్తుతం బీటాలో ఉంది మరియు ఇంకా పరీక్షించబడుతోంది.</string>
+    <string name="beta_disclaimer_regional">ప్రాంతీయ భాషల్లో (బీటా) స్కామ్ గుర్తింపు ఇంకా పరీక్షించబడుతోంది.</string>
 </resources>

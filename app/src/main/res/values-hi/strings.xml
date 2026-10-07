@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">एसएमएस हेडर और संदेश में बताई गई संस्था अलग हैं, या प्रमोशनल हेडर से संवेदनशील जानकारी या भुगतान मांगा गया है।</string>
     <string name="reason_model_title">संदिग्ध स्कैम पैटर्न</string>
     <string name="reason_model_detail">संदेश की भाषा और संरचना ज्ञात धोखाधड़ी संदेशों से काफी मिलती है।</string>
+
+    <!-- Beta labelling strings (§19.3, M5) -->
+    <string name="beta_label_badge">(बीटा)</string>
+    <string name="beta_disclaimer_testing">इस भाषा में स्कैम पहचान अभी बीटा में है और इसका परीक्षण जारी है।</string>
+    <string name="beta_disclaimer_regional">क्षेत्रीय भाषाओं (बीटा) में स्कैम पहचान का परीक्षण अभी जारी है।</string>
 </resources>

@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">ஹெடரும் செய்தியும் பொருந்தவில்லை அல்லது விளம்பர SMS இல் பணம்/சரிபார்ப்பு கோரப்பட்டது.</string>
     <string name="reason_model_title">சந்தேகத்திற்கிடமான மோசடி முறை</string>
     <string name="reason_model_detail">சொற்றொடர்களின் ஒட்டுமொத்த முறை அறியப்பட்ட மோசடிப் பிரச்சாரங்களுடன் பொருந்துகிறது.</string>
+
+    <!-- Beta labelling strings (Marked for native-speaker review §19.3) -->
+    <string name="beta_label_badge">(பீட்டா)</string>
+    <string name="beta_disclaimer_testing">இந்த மொழியில் மோசடி கண்டறிதல் தற்போது பீட்டாவில் உள்ளது மற்றும் இன்னும் சோதிக்கப்பட்டு வருகிறது.</string>
+    <string name="beta_disclaimer_regional">பிராந்திய மொழிகளில் (பீட்டா) மோசடி கண்டறிதல் இன்னும் சோதிக்கப்பட்டு வருகிறது.</string>
 </resources>

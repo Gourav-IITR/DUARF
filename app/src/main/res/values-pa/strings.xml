@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">ਸੁਨੇਹੇ ਦੀ ਸਮੱਗਰੀ ਹੈਡਰ ਨਾਲੋਂ ਵੱਖਰੇ ਬ੍ਰਾਂਡ ਦਾ ਦਾਅਵਾ ਕਰਦੀ ਹੈ ਜਾਂ ਪ੍ਰਮੋਸ਼ਨਲ SMS ਸੰਵੇਦਨਸ਼ੀਲ ਭੁਗਤਾਨ ਦੀ ਮੰਗ ਕਰਦਾ ਹੈ।</string>
     <string name="reason_model_title">ਸ਼ੱਕੀ ਧੋਖਾਧੜੀ ਪੈਟਰਨ</string>
     <string name="reason_model_detail">ਸੁਨੇਹੇ ਦੀ ਸ਼ੈਲੀ ਜਾਣੀਆਂ-ਪਛਾਣੀਆਂ ਧੋਖਾਧੜੀ ਮੁਹਿੰਮਾਂ ਨਾਲ ਮਿਲਦੀ-ਜੁਲਦੀ ਹੈ।</string>
+
+    <!-- Beta labelling strings (Marked for native-speaker review §19.3) -->
+    <string name="beta_label_badge">(ਬੀਟਾ)</string>
+    <string name="beta_disclaimer_testing">ਇਸ ਭਾਸ਼ਾ ਵਿੱਚ ਧੋਖਾਧੜੀ ਦੀ ਪਛਾਣ ਫਿਲਹਾਲ ਬੀਟਾ ਵਿੱਚ ਹੈ ਅਤੇ ਅਜੇ ਵੀ ਟੈਸਟ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ।</string>
+    <string name="beta_disclaimer_regional">ਖੇਤਰੀ ਭਾਸ਼ਾਵਾਂ (ਬੀਟਾ) ਵਿੱਚ ਧੋਖਾਧੜੀ ਦੀ ਪਛਾਣ ਦੀ ਟੈਸਟਿੰਗ ਅਜੇ ਵੀ ਜਾਰੀ ਹੈ।</string>
 </resources>

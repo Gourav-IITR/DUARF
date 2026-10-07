@@ -583,6 +583,8 @@ When B05 (awareness) or B06 (verified consistent DLT header) fires, model contri
 
 For SMS messages (`app.isSms`): when `ruleScore < 0.20`, $m'$ is capped to 0.55 max so that ambiguous or high-probability model predictions cannot reach `DANGER` without a corroborating rule signal.
 
+S05 alone, with no `A*`, `L*`, or `P02`–`P04` fired, is capped below the Caution threshold (`cautionThreshold - 0.001`). A sender mismatch with nothing asked, linked or threatened is not actionable.
+
 In group chats the `S*` signals and P10 are disabled, because unknown numbers are normal there.
 
 Levels, by the user's sensitivity setting:

@@ -239,7 +239,7 @@ fun BetaLanguageFooter(text: String, modifier: Modifier = Modifier) {
                     color = MaterialTheme.colorScheme.tertiaryContainer
                 ) {
                     Text(
-                        text = "${langInfo.displayName} (Beta)",
+                        text = "${langInfo.displayName} " + stringResource(R.string.beta_label_badge),
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onTertiaryContainer,
@@ -247,7 +247,7 @@ fun BetaLanguageFooter(text: String, modifier: Modifier = Modifier) {
                     )
                 }
                 Text(
-                    text = "Scam detection in this language is currently in Beta and still being tested.",
+                    text = stringResource(R.string.beta_disclaimer_testing),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

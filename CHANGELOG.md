@@ -584,8 +584,23 @@ All decisions made where the spec was silent or flexible are recorded here.
 - **Unverified Regional Utility Brands (`packs/brands.json`)**:
   - Added stubs for 8 regional power distribution companies: DGVCL, MGVCL, PGVCL, GUVNL (Gujarat) and MESCOM, HESCOM, GESCOM, CESC (Karnataka / West Bengal).
   - Configured with native-script aliases, `isVerified = false`, and `officialDomains = []`. Logged domain sourcing in `OPEN_QUESTIONS.md`.
-- **Beta Labelling Across UI (Settings & Verdict Footers)**:
-  - Added "(Beta)" labelling for all 9 regional languages (`bn`, `mr`, `te`, `ta`, `or`, `gu`, `kn`, `ml`, `pa`) in `SettingsScreen.kt`, along with an active testing disclaimer note.
-  - Added beta language indicator and testing disclaimer footer on verdict screens (`AlertDetailScreen.kt` and `CheckResultScreen.kt`).
+### 20. Milestone M5 Closeout & M6 Groundwork
+- **Beta Labelling Localization & Review Tags (§19.3)**:
+  - Extracted all beta badges and disclaimer strings into `strings.xml` across all 12 supported locales (`values`, `values-hi`, `values-b+hi+Latn`, `values-bn`, `values-mr`, `values-te`, `values-ta`, `values-or`, `values-gu`, `values-kn`, `values-ml`, `values-pa`).
+  - Marked all regional translations with `<!-- Marked for native-speaker review §19.3 -->`.
+  - Updated `SettingsScreen.kt` to style the beta testing note with `MaterialTheme.colorScheme.onSurfaceVariant` instead of error color.
+- **Police Advisory False Positive Diagnosis & Regional Awareness**:
+  - Diagnosed police cyber safety advisory false positives: identified missing regional cyber security notice and helpline phrases in `isAwarenessOrAdvisory`.
+  - Added regional awareness keywords (`"সাইবার নিরাপত্তা"`, `"સાયબર સુરક્ષા"`, `"ಸೈಬರ್ ಸುರಕ್ಷತೆ"`, `"സൈബർ സുരക്ഷ"`, `"ਸਾਈਬਰ ਸੁਰੱਖਿਆ"`, `"helpline 1930"`) to `SignalEngine.kt`.
+- **S05 Alone Cap Rule (ARCHITECTURE.md §10 Spec Change & ScoreFusion.kt)**:
+  - Spec rule: A sender mismatch (`S05`) with nothing asked (`A*`), linked (`L*`), or threatened (`P02`–`P04`) is not actionable.
+  - Capped score strictly below the Caution threshold (`cautionThreshold - 0.001` $\to 0.449$ at Balanced sensitivity), yielding `AlertLevel.NONE`.
+  - If any ask, link, or urgency/threat signal fires alongside `S05`, normal score fusion applies.
+  - Added test coverage in `PoliceDltHeaderVerificationTest.kt` verifying unverified police header with no ask $\to$ `NONE`, and police header with ask/link $\to$ `CAUTION` / `DANGER`.
+- **Dev Splits Re-run (Tier 1, Tier 2, Tier 3)**:
+  - Re-evaluated `dev`, `dev2`, `dev3`, `sms_dev`, `dev_{bn,mr,te,ta,or}`, `dev_{gu,kn,ml,pa}` via `engine-cli eval`.
+  - Verified 0 rows changed alert level across all dev splits vs baseline.
+- **OEM SMS Apps Candidate List (`OPEN_QUESTIONS.md`)**:
+  - Documented exhaustive OEM SMS package candidate list (Xiaomi `com.android.mms`, Samsung `com.samsung.android.messaging`, OnePlus `com.oneplus.mms`, OPPO/Realme `com.coloros.mms`, Vivo `com.vivo.mms`, Transsion) with status UNVERIFIED pending physical device recordings.
 
 

@@ -101,62 +101,63 @@ fun SettingsScreen(
                         onClick = { onUpdateLanguage("hi") },
                         label = { Text("हिंदी (Hindi)") }
                     )
+                    val betaBadge = stringResource(R.string.beta_label_badge)
                     FilterChip(
                         selected = uiState.preferences.languageCode == "bn",
                         onClick = { onUpdateLanguage("bn") },
-                        label = { Text("বাংলা (Beta)") }
+                        label = { Text("বাংলা $betaBadge") }
                     )
                     FilterChip(
                         selected = uiState.preferences.languageCode == "mr",
                         onClick = { onUpdateLanguage("mr") },
-                        label = { Text("मराठी (Beta)") }
+                        label = { Text("मराठी $betaBadge") }
                     )
                     FilterChip(
                         selected = uiState.preferences.languageCode == "te",
                         onClick = { onUpdateLanguage("te") },
-                        label = { Text("తెలుగు (Beta)") }
+                        label = { Text("తెలుగు $betaBadge") }
                     )
                     FilterChip(
                         selected = uiState.preferences.languageCode == "ta",
                         onClick = { onUpdateLanguage("ta") },
-                        label = { Text("தமிழ் (Beta)") }
+                        label = { Text("தமிழ் $betaBadge") }
                     )
                     FilterChip(
                         selected = uiState.preferences.languageCode == "or",
                         onClick = { onUpdateLanguage("or") },
-                        label = { Text("ଓଡ଼ିଆ (Beta)") }
+                        label = { Text("ଓଡ଼ିଆ $betaBadge") }
                     )
                     FilterChip(
                         selected = uiState.preferences.languageCode == "gu",
                         onClick = { onUpdateLanguage("gu") },
-                        label = { Text("ગુજરાતી (Beta)") }
+                        label = { Text("ગુજરાતી $betaBadge") }
                     )
                     FilterChip(
                         selected = uiState.preferences.languageCode == "kn",
                         onClick = { onUpdateLanguage("kn") },
-                        label = { Text("ಕನ್ನಡ (Beta)") }
+                        label = { Text("ಕನ್ನಡ $betaBadge") }
                     )
                     FilterChip(
                         selected = uiState.preferences.languageCode == "ml",
                         onClick = { onUpdateLanguage("ml") },
-                        label = { Text("മലയാളം (Beta)") }
+                        label = { Text("മലയാളം $betaBadge") }
                     )
                     FilterChip(
                         selected = uiState.preferences.languageCode == "pa",
                         onClick = { onUpdateLanguage("pa") },
-                        label = { Text("ਪੰਜਾਬੀ (Beta)") }
+                        label = { Text("ਪੰਜਾਬੀ $betaBadge") }
                     )
                 }
                 Spacer(Modifier.height(8.dp))
                 if (com.duarf.engine.normalize.LanguageScriptDetector.isBetaLanguage(uiState.preferences.languageCode)) {
                     Text(
-                        text = "Scam detection in this language is currently in Beta and still being tested.",
+                        text = stringResource(R.string.beta_disclaimer_testing),
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 } else {
                     Text(
-                        text = "Scam detection in regional languages (Beta) is currently still being tested.",
+                        text = stringResource(R.string.beta_disclaimer_regional),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

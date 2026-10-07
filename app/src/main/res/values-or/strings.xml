@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">ହେଡର୍ ସହିତ ବାର୍ତ୍ତା ମେଳ ଖାଉନାହିଁ କିମ୍ବା ବିଜ୍ଞାପନ SMS ରେ ଟଙ୍କା/ଯାଞ୍ଚ ମଗାଯାଇଛି।</string>
     <string name="reason_model_title">ସନ୍ଦିଗ୍ଧ ସ୍କାମ ଢାଞ୍ଚା</string>
     <string name="reason_model_detail">ଶବ୍ଦଗୁଡ଼ିକର ସାମଗ୍ରିକ ଢାଞ୍ଚା ଜଣାଶୁଣା ସ୍କାମ ଅଭିଯାନ ସହିତ ମେଳ ଖାଉଛି।</string>
+
+    <!-- Beta labelling strings (Marked for native-speaker review §19.3) -->
+    <string name="beta_label_badge">(ବିଟା)</string>
+    <string name="beta_disclaimer_testing">ଏହି ଭାଷାରେ ସ୍କାମ ଚିହ୍ନଟ ବର୍ତ୍ତମାନ ବିଟାରେ ଅଛି ଏବଂ ଏହାର ପରୀକ୍ଷଣ ଚାଲିଛି।</string>
+    <string name="beta_disclaimer_regional">ଆଞ୍ଚଳିକ ଭାଷାରେ (ବିଟା) ସ୍କାମ ଚିହ୍ନଟର ପରୀକ୍ଷଣ ଏବେ ବି ଚାଲିଛି।</string>
 </resources>

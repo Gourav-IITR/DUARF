@@ -75,8 +75,20 @@ class PoliceDltHeaderVerificationTest {
         // Header claiming police without verified allowlist entry fires S05
         assertThat(signalIds).contains("S05")
 
+        // Spec §10: S05 alone with no ask, link, or threat is capped below Caution threshold -> NONE
         val verdict = engine.analyze(msg)
-        assertThat(verdict.level).isEqualTo(AlertLevel.CAUTION)
+        assertThat(verdict.level).isEqualTo(AlertLevel.NONE)
+    }
+
+    @Test
+    fun testUnverifiedPoliceHeader_withAskOrLink_notCapped() {
+        // S05 paired with an upfront payment ask (A03) is NOT capped -> AlertLevel.CAUTION or above
+        val msg = createSmsMessage(
+            senderDisplay = "DL-DLPOL-G",
+            text = "Delhi Police: Challan unpaid. Pay fine Rs 500 immediately to avoid arrest warrant."
+        )
+        val verdict = engine.analyze(msg)
+        assertThat(verdict.level).isAtLeast(AlertLevel.CAUTION)
     }
 
     @Test

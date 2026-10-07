@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">হেডারের সাথে বার্তার ব্র্যান্ড মিলছে না বা বিজ্ঞাপনী এসএমএস থেকে পেমেন্ট চাওয়া হয়েছে।</string>
     <string name="reason_model_title">সন্দেহজনক স্ক্যামের ধরন</string>
     <string name="reason_model_detail">বার্তার ভাষার ধরন পরিচিত প্রতারণামূলক প্রচারণার সাথে মিলে যাচ্ছে।</string>
+
+    <!-- Beta labelling strings (Marked for native-speaker review §19.3) -->
+    <string name="beta_label_badge">(বিটা)</string>
+    <string name="beta_disclaimer_testing">এই ভাষায় স্ক্যাম সনাক্তকরণ বর্তমানে বিটাতে রয়েছে এবং এখনও পরীক্ষা করা হচ্ছে।</string>
+    <string name="beta_disclaimer_regional">আঞ্চলিক ভাষায় (বিটা) স্ক্যাম সনাক্তকরণ এখনও পরীক্ষা করা হচ্ছে।</string>
 </resources>

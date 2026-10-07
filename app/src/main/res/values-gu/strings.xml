@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">સંદેશ સામગ્રી હેડર કરતાં અલગ બ્રાન્ડનો દાવો કરે છે અથવા પ્રમોશનલ SMS સંવેદનશીલ ચુકવણીની માંગણી કરે છે.</string>
     <string name="reason_model_title">શંકાસ્પદ સ્કેમ પેટર્ન</string>
     <string name="reason_model_detail">વાક્યરચનાની એકંદર શૈલી જાણીતા છેતરપિંડી અભિયાનો સાથે નજીકથી મેળ ખાય છે.</string>
+
+    <!-- Beta labelling strings (Marked for native-speaker review §19.3) -->
+    <string name="beta_label_badge">(બીટા)</string>
+    <string name="beta_disclaimer_testing">આ ભાષામાં સ્કેમ તપાસ હાલમાં બીટામાં છે અને તેનું પરીક્ષણ ચાલુ છે.</string>
+    <string name="beta_disclaimer_regional">પ્રાદેશિક ભાષાઓમાં (બીટા) સ્કેમ તપાસનું પરીક્ષણ હજુ ચાલુ છે.</string>
 </resources>

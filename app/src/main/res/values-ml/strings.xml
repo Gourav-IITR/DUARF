@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">സന്ദേശം ഹെഡറിൽ നിന്ന് വ്യത്യസ്തമായ ബ്രാൻഡിനെ അവകാശപ്പെടുന്നു അല്ലെങ്കിൽ പ്രമോഷണൽ SMS പണം ആവശ്യപ്പെടുന്നു.</string>
     <string name="reason_model_title">സംശയാസ്പദമായ തട്ടിപ്പ് ശൈലി</string>
     <string name="reason_model_detail">സന്ദേശത്തിന്റെ ശൈലി അറിയപ്പെടുന്ന തട്ടിപ്പ് പ്രചാരണങ്ങളുമായി വളരെ സാമ്യമുള്ളതാണ്.</string>
+
+    <!-- Beta labelling strings (Marked for native-speaker review §19.3) -->
+    <string name="beta_label_badge">(ബീറ്റ)</string>
+    <string name="beta_disclaimer_testing">ഈ ഭാഷയിലെ തട്ടിപ്പ് കണ്ടെത്തൽ നിലവിൽ ബീറ്റയിലാണ്, ഇപ്പോഴും പരീക്ഷിച്ചുകൊണ്ടിരിക്കുകയാണ്.</string>
+    <string name="beta_disclaimer_regional">പ്രാദേശിക ഭാഷകളിലെ (ബീറ്റ) തട്ടിപ്പ് കണ്ടെത്തൽ ഇപ്പോഴും പരീക്ഷിച്ചുകൊണ്ടിരിക്കുകയാണ്.</string>
 </resources>

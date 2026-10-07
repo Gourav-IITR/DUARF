@@ -38,7 +38,17 @@ Items marked "verify" and Section 19 human inputs are tracked here.
 9. **SMS Notification Format Verification (§19)**:
    - **Status**: **Structure unverified**. No real-device notification recordings yet.
    - Google Messages (`com.google.android.apps.messaging`) and Samsung Messages (`com.samsung.android.messaging`) are monitored behind the "Check SMS" toggle. The parser extracts sender from `MessagingStyle.person.name` or `EXTRA_TITLE` and logs which field the sender originated from via `NotificationRecorder`. Real-world recordings from Google Messages and Samsung Messages will be provided to verify structure and extras key conventions.
-   - Other OEM SMS apps (Xiaomi `com.android.mms` / MIUI Messaging, OnePlus `com.oneplus.mms`, Oppo/Vivo `com.coloros.mms`, Transsion, etc.) are marked **verify**. Their `NotificationCompat.MessagingStyle`, extras key conventions (`EXTRA_TITLE`, `EXTRA_TEXT`, `EXTRA_BIG_TEXT`), and DLT header presentation must be captured with `NotificationRecorder` on real physical devices before adding their package names to `NotificationParser`.
+   - **Candidate OEM SMS Apps (Unverified - Marked "verify")**:
+     | OEM / Skin | Default SMS Package | Market Share / Context | Verification Status & Criteria |
+     |---|---|---|---|
+     | Xiaomi / Redmi / POCO (MIUI / HyperOS) | `com.android.mms` | Substantial Indian market share | **UNVERIFIED**: Needs physical device recording via `NotificationRecorder`; verify `MessagingStyle`, `EXTRA_TITLE`, and DLT header presentation |
+     | Samsung (One UI) | `com.samsung.android.messaging` | Monitored in code | **UNVERIFIED**: Real physical notification capture required to verify extras key stability |
+     | Google Messages (Pixel, Motorola, Nothing) | `com.google.android.apps.messaging` | Monitored in code | **UNVERIFIED**: Real physical notification capture required |
+     | OnePlus (OxygenOS) | `com.oneplus.mms` (legacy) / `com.google.android.apps.messaging` | Common in India | **UNVERIFIED**: Legacy package needs recording; modern devices default to Google Messages |
+     | OPPO / Realme (ColorOS / Realme UI) | `com.coloros.mms`, `com.heytap.mms` | Substantial Indian market share | **UNVERIFIED**: Real physical notification capture required |
+     | Vivo / iQOO (Funtouch OS) | `com.vivo.mms`, `com.android.mms` | Substantial Indian market share | **UNVERIFIED**: Real physical notification capture required |
+     | Transsion (Tecno / Infinix / Itel) | `com.transsion.phonemaster`, `com.android.mms` | Common budget tier in India | **UNVERIFIED**: Real physical notification capture required |
+   - **Enforcement Rule**: No candidate package may be added to active monitoring until a real physical notification recording is captured, verified, and committed as a sanitized test fixture (§19.1).
 10. **Known gap: Hindi government-scheme / loan-fee scams (rules frozen)**:
     - **Observed Behavior**: Messages matching templates like `new-scam-hi-05` (e.g. *"प्रधानमंत्री मुद्रा योजना के तहत ₹5,00,000 का ऋण 1% ब्याज पर स्वीकृत हुआ है। फाइल चार्ज ₹21015 इस लिंक http://... पर भेजें।"*) currently fire only `L06` (risky TLD) and `S01`/`S03` (unknown number), landing on borderline scores.
     - **Missing Elements**:

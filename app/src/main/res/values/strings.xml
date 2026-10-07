@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">The message content claims to represent an institution different from the sender header, or a promotional SMS requested sensitive payment or verification.</string>
     <string name="reason_model_title">Suspicious scam pattern</string>
     <string name="reason_model_detail">The overall pattern of phrasing closely matches known scam campaigns.</string>
+
+    <!-- Beta labelling strings (§19.3, M5) -->
+    <string name="beta_label_badge">(Beta)</string>
+    <string name="beta_disclaimer_testing">Scam detection in this language is currently in Beta and still being tested.</string>
+    <string name="beta_disclaimer_regional">Scam detection in regional languages (Beta) is currently still being tested.</string>
 </resources>

@@ -1,0 +1,6 @@
+<resources>
+    <!-- Beta labelling strings (Marked for native-speaker review §19.3) -->
+    <string name="beta_label_badge">(Beta)</string>
+    <string name="beta_disclaimer_testing">Is bhasha mein scam detection abhi Beta mein hai aur testing jaari hai.</string>
+    <string name="beta_disclaimer_regional">Regional bhashaon (Beta) mein scam detection ki testing abhi jaari hai.</string>
+</resources>

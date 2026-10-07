@@ -78,7 +78,27 @@ object ScoreFusion {
             0.0
         }
 
-        val ruleScore = maxOf(r1, comboFloor)
+        // Sensitivity thresholds (§10)
+        val (cautionThreshold, dangerThreshold) = when (sensitivity) {
+            Sensitivity.LOW -> Pair(0.55, 0.80)
+            Sensitivity.BALANCED -> Pair(0.45, 0.72)
+            Sensitivity.HIGH -> Pair(0.35, 0.65)
+        }
+
+        var ruleScore = maxOf(r1, comboFloor)
+
+        // Spec §10: S05 alone, with no A*, L*, P02–P04 fired, is capped below the Caution threshold.
+        // A sender mismatch with nothing asked, linked or threatened is not actionable.
+        val hasActionOrLinkOrThreat = signals.any {
+            it.signalId.startsWith("A") || it.signalId.startsWith("L") || it.signalId in setOf("P02", "P03", "P04")
+        }
+        val isS05Alone = signals.any { it.signalId == "S05" } && !hasActionOrLinkOrThreat
+        if (isS05Alone) {
+            val s05Cap = cautionThreshold - 0.001
+            if (ruleScore > s05Cap) {
+                ruleScore = s05Cap
+            }
+        }
 
         // Model contribution: capped to 0 when B05 or B06 is present
         val baseMPrime = if (modelProbability != null && !hasB05 && !hasB06) {
@@ -96,6 +116,12 @@ object ScoreFusion {
         }
 
         var score = 1.0 - (1.0 - ruleScore) * (1.0 - mPrime)
+        if (isS05Alone) {
+            val s05Cap = cautionThreshold - 0.001
+            if (score > s05Cap) {
+                score = s05Cap
+            }
+        }
 
         // Category determination (§7.4):
         // If combo fired, it chooses the category; else highest weight positive signal; else OTHER_SUSPICIOUS
@@ -103,13 +129,6 @@ object ScoreFusion {
             highestCombo != null -> highestCombo.category
             signals.isNotEmpty() -> signals.maxByOrNull { it.weight }?.category ?: ScamCategory.OTHER_SUSPICIOUS
             else -> ScamCategory.OTHER_SUSPICIOUS
-        }
-
-        // Sensitivity thresholds (§10)
-        val (cautionThreshold, dangerThreshold) = when (sensitivity) {
-            Sensitivity.LOW -> Pair(0.55, 0.80)
-            Sensitivity.BALANCED -> Pair(0.45, 0.72)
-            Sensitivity.HIGH -> Pair(0.35, 0.65)
         }
 
         // General product rule (spec §10, Invariant 6):

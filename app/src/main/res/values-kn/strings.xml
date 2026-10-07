@@ -204,4 +204,9 @@
     <string name="reason_s05_detail">ಸಂದೇಶದ ವಿಷಯವು ಹೆಡರ್‌ಗಿಂತ ಬೇರೆ ಬ್ರ್ಯಾಂಡ್ ಅನ್ನು ಕ್ಲೈಮ್ ಮಾಡುತ್ತದೆ ಅಥವಾ ಪ್ರಚಾರದ SMS ಸೂಕ್ಷ್ಮ ಪಾವತಿಯನ್ನು ಕೇಳುತ್ತದೆ.</string>
     <string name="reason_model_title">ಅನುಮಾನಾಸ್ಪದ ಸ್ಕ್ಯಾಮ್ ಮಾದರಿ</string>
     <string name="reason_model_detail">ಸಂದೇಶದ ಶೈಲಿಯು ತಿಳಿದಿರುವ ವಂಚನೆ ಅಭಿಯಾನಗಳೊಂದಿಗೆ ನಿಕಟವಾಗಿ ಹೊಂದಾಣಿಕೆಯಾಗುತ್ತದೆ.</string>
+
+    <!-- Beta labelling strings (Marked for native-speaker review §19.3) -->
+    <string name="beta_label_badge">(ಬೀಟಾ)</string>
+    <string name="beta_disclaimer_testing">ಈ ಭಾಷೆಯಲ್ಲಿ ಸ್ಕ್ಯಾಮ್ ಪತ್ತೆ ಪ್ರಸ್ತುತ ಬೀಟಾದಲ್ಲಿದೆ ಮತ್ತು ಇನ್ನೂ ಪರೀಕ್ಷಿಸಲಾಗುತ್ತಿದೆ.</string>
+    <string name="beta_disclaimer_regional">ಪ್ರಾದೇಶಿಕ ಭಾಷೆಗಳಲ್ಲಿ (ಬೀಟಾ) ಸ್ಕ್ಯಾಮ್ ಪತ್ತೆ ಇನ್ನೂ ಪರೀಕ್ಷಿಸಲಾಗುತ್ತಿದೆ.</string>
 </resources>
