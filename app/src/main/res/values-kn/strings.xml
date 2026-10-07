@@ -1,0 +1,207 @@
+<resources>
+    <string name="app_name">DUARF</string>
+    <string name="unknown_sender">ಅಪರಿಚಿತ ಕಳುಹಿಸಿದವರು</string>
+
+    <!-- Notification channels and alerts -->
+    <string name="channel_danger_name">ಸ್ಕ್ಯಾಮ್ ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="channel_danger_desc">ಸಂಭಾವ್ಯ ಸ್ಕ್ಯಾಮ್ ಸಂದೇಶಗಳಿಗೆ ತಕ್ಷಣದ ಆದ್ಯತೆಯ ಎಚ್ಚರಿಕೆ</string>
+    <string name="channel_caution_name">ಎಚ್ಚರಿಕೆ</string>
+    <string name="channel_caution_desc">ಅನುಮಾನಾಸ್ಪದ ಸಂದೇಶಗಳಿಗೆ ಸೈಲೆಂಟ್ ಎಚ್ಚರಿಕೆ</string>
+
+    <string name="alert_danger_title">%1$s ಇಂದ ಸಂಭಾವ್ಯ ಸ್ಕ್ಯಾಮ್</string>
+    <string name="alert_caution_title">%1$s ಸಂದೇಶದ ಬಗ್ಗೆ ಎಚ್ಚರವಿರಲಿ</string>
+    <string name="alert_danger_sms_title">%1$s ಇಂದ ಬಂದ SMS: ಸಂಭಾವ್ಯ ಸ್ಕ್ಯಾಮ್</string>
+    <string name="alert_caution_sms_title">%1$s ಇಂದ ಬಂದ SMS: ಅನುಮಾನಾಸ್ಪದ ಸಂದೇಶ</string>
+    <string name="alert_generic_summary">ಈ ಸಂದೇಶದಲ್ಲಿ ಅನುಮಾನಾಸ್ಪದ ಅಂಶಗಳು ಕಂಡುಬಂದಿವೆ</string>
+    <string name="action_see_why">ಕಾರಣ ನೋಡಿ</string>
+    <string name="action_not_a_scam">ಸ್ಕ್ಯಾಮ್ ಅಲ್ಲ</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">DUARF ಸ್ಕ್ಯಾಮ್ ಡಿಟೆಕ್ಟರ್</string>
+    <string name="onboarding_desc_1">WhatsApp ಮತ್ತು SMS ಅಧಿಸೂಚನೆಗಳನ್ನು ಪರಿಶೀಲಿಸುತ್ತದೆ. ನಿಮ್ಮ ಇನ್‌ಬಾಕ್ಸ್ ಅನ್ನು ಎಂದಿಗೂ ಓದುವುದಿಲ್ಲ. DUARF ನಿಮ್ಮನ್ನು ವಂಚನೆಗಳು, ನಕಲಿ ಲಿಂಕ್‌ಗಳು ಮತ್ತು ಮಾಲ್‌ವೇರ್ APK ಗಳಿಂದ ಸಂಪೂರ್ಣವಾಗಿ ಸಾಧನದಲ್ಲೇ ರಕ್ಷಿಸುತ್ತದೆ.</string>
+
+    <string name="onboarding_title_2">100% ಖಾಸಗಿ — ಶೂನ್ಯ ಇಂಟರ್ನೆಟ್ ಪ್ರವೇಶ</string>
+    <string name="onboarding_desc_2">DUARF ಗೆ ಇಂಟರ್ನೆಟ್ ಅಥವಾ SMS ಇನ್‌ಬಾಕ್ಸ್ ಅನುಮತಿಗಳಿಲ್ಲ. ನಿಮ್ಮ ಸಂದೇಶಗಳು ನಿಮ್ಮ ಫೋನ್‌ನಿಂದ ಎಂದಿಗೂ ಹೊರಹೋಗುವುದಿಲ್ಲ ಮತ್ತು ಸುರಕ್ಷಿತ ಸಂದೇಶಗಳನ್ನು ಎಂದಿಗೂ ಸಂಗ್ರಹಿಸುವುದಿಲ್ಲ.</string>
+
+    <string name="onboarding_title_3">ಅಧಿಸೂಚನೆ ಪ್ರವೇಶ (Notification Access)</string>
+    <string name="onboarding_desc_3">ಬರುವ WhatsApp ಮತ್ತು SMS ಸಂದೇಶಗಳನ್ನು ತಕ್ಷಣವೇ ವಿಶ್ಲೇಷಿಸಿ ಎಚ್ಚರಿಸಲು DUARF ಗೆ ಅಧಿಸೂಚನೆ ಪ್ರವೇಶದ ಅಗತ್ಯವಿದೆ. ಇನ್‌ಬಾಕ್ಸ್ ಅನ್ನು ಎಂದಿಗೂ ಓದುವುದಿಲ್ಲ.</string>
+    <string name="btn_grant_notification_access">ಅಧಿಸೂಚನೆ ಪ್ರವೇಶ ನೀಡಿ</string>
+    <string name="access_granted">ಪ್ರವೇಶ ನೀಡಲಾಗಿದೆ</string>
+
+    <string name="onboarding_title_4">ಎಚ್ಚರಿಕೆ ಅಧಿಸೂಚನೆಗಳು</string>
+    <string name="onboarding_desc_4">ಅಪಾಯಕಾರಿ ಸಂದೇಶಗಳು ಬಂದಾಗ ಎಚ್ಚರಿಕೆಗಳನ್ನು ತೋರಿಸಲು ಅಧಿಸೂಚನೆಗಳನ್ನು ಅನುಮತಿಸಿ.</string>
+    <string name="btn_grant_post_notifications">ಅಧಿಸೂಚನೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
+
+    <string name="onboarding_title_5">ಹಿನ್ನೆಲೆ ಬ್ಯಾಟರಿ ಆಪ್ಟಿಮೈಸೇಶನ್</string>
+    <string name="onboarding_desc_5">ಕೆಲವು ಸಾಧನಗಳಲ್ಲಿ (Xiaomi, Samsung, Oppo), ರಕ್ಷಣೆ ನಿಲ್ಲದಂತೆ DUARF ಬ್ಯಾಟರಿ ಬಳಕೆಯನ್ನು Unrestricted ಎಂದು ಹೊಂದಿಸಿ.</string>
+    <string name="btn_battery_settings">ಬ್ಯಾಟರಿ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ</string>
+
+    <string name="onboarding_title_6">ಪರೀಕ್ಷಾ ಸ್ಕ್ಯಾಮ್ ಎಚ್ಚರಿಕೆ ಕಳುಹಿಸಿ</string>
+    <string name="onboarding_desc_6">ಅಣಕು ಸ್ಕ್ಯಾಮ್ ಸಂದೇಶವನ್ನು ಪರೀಕ್ಷಿಸುವ ಮೂಲಕ ನಿಮ್ಮ ರಕ್ಷಣೆಯನ್ನು ಈಗಲೇ ಪರಿಶೀಲಿಸಿ.</string>
+    <string name="btn_send_test_alert">ಟೆಸ್ಟ್ ಎಚ್ಚರಿಕೆ ಕಳುಹಿಸಿ</string>
+    <string name="btn_get_started">ಪ್ರಾರಂಭಿಸಿ</string>
+
+    <!-- Home Screen -->
+    <string name="status_protected">ರಕ್ಷಿಸಲಾಗಿದೆ</string>
+    <string name="status_action_needed">ಕ್ರಮ ಅಗತ್ಯವಿದೆ</string>
+    <string name="status_listener_running">WhatsApp ಮತ್ತು SMS ಸಂದೇಶಗಳನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
+    <string name="status_listener_disabled">ಅಧಿಸೂಚನೆ ಪ್ರವೇಶ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ</string>
+    <string name="card_weekly_stats">ಈ ವಾರ</string>
+    <string name="stat_checked">ಪರಿಶೀಲಿಸಲಾಗಿದೆ</string>
+    <string name="stat_cautions">ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="stat_dangers">ಅಪಾಯಗಳು</string>
+
+    <string name="card_check_message">ಸಂದೇಶವನ್ನು ಪರಿಶೀಲಿಸಿ</string>
+    <string name="hint_paste_message">ಯಾವುದೇ ಸಂದೇಶ ಅಥವಾ ಲಿಂಕ್ ಅನ್ನು ಇಲ್ಲಿ ಅಂಟಿಸಿ...</string>
+    <string name="btn_analyze">ವಿಶ್ಲೇಷಿಸಿ</string>
+    <string name="toggle_unknown_number">ಇದು ಅಪರಿಚಿತ ಸಂಖ್ಯೆಯಿಂದ ಬಂದಿದೆ</string>
+
+    <string name="title_recent_alerts">ಇತ್ತೀಚಿನ ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="no_recent_alerts">ಯಾವುದೇ ಸ್ಕ್ಯಾಮ್ ಎಚ್ಚರಿಕೆಗಳಿಲ್ಲ. ನೀವು ಸುರಕ್ಷಿತವಾಗಿದ್ದೀರಿ!</string>
+    <string name="view_all">ಎಲ್ಲವನ್ನೂ ವೀಕ್ಷಿಸಿ</string>
+
+    <!-- Alert Detail & Check Result -->
+    <string name="level_danger">ಅಪಾಯ — ಸಂಭಾವ್ಯ ವಂಚನೆ</string>
+    <string name="level_caution">ಎಚ್ಚರಿಕೆ — ಜಾಗರೂಕರಾಗಿರಿ</string>
+    <string name="level_safe">ಸುರಕ್ಷಿತವಾಗಿದೆ — ಜಾಗರೂಕರಾಗಿರಿ</string>
+    <string name="label_message_content">ಸಂದೇಶದ ವಿಷಯ</string>
+    <string name="label_reasons">DUARF ಇದನ್ನು ಏಕೆ ಫ್ಲ್ಯಾಗ್ ಮಾಡಿದೆ</string>
+    <string name="label_checked">ನಾವು ಏನು ಪರಿಶೀಲಿಸಿದ್ದೇವೆ</string>
+    <string name="label_advice">ನೀವು ಏನು ಮಾಡಬೇಕು</string>
+    <string name="advice_caution_soft">ಇದು ನೈಜವಾಗಿರಬಹುದು, ಆದರೆ ಲಿಂಕ್ ಟ್ಯಾಪ್ ಮಾಡುವ ಮೊದಲು ಅಧಿಕೃತ ಅಪ್ಲಿಕೇಶನ್ ಅಥವಾ ವೆಬ್‌ಸೈಟ್‌ನಲ್ಲಿ ಪರಿಶೀಲಿಸಿ.</string>
+    <string name="advice_1">ಯಾವುದೇ ಲಿಂಕ್ ಕ್ಲಿಕ್ ಮಾಡಬೇಡಿ, ಫೈಲ್‌ಗಳನ್ನು ತೆರೆಯಬೇಡಿ ಅಥವಾ ಹಣ ವರ್ಗಾಯಿಸಬೇಡಿ.</string>
+    <string name="advice_2">WhatsApp ನಲ್ಲಿ ಕಳುಹಿಸಿದವರನ್ನು ನಿರ್ಬಂಧಿಸಿ ಮತ್ತು ವರದಿ ಮಾಡಿ.</string>
+    <string name="advice_3">ನೀವು ಹಣ ಅಥವಾ OTP ಹಂಚಿಕೊಂಡಿದ್ದರೆ, ತಕ್ಷಣ ರಾಷ್ಟ್ರೀಯ ಸೈಬರ್ ಸಹಾಯವಾಣಿ 1930 ಗೆ ಕರೆ ಮಾಡಿ ಅಥವಾ cybercrime.gov.in ಗೆ ಭೇಟಿ ನೀಡಿ.</string>
+
+    <string name="btn_this_is_safe">ಇದು ಸುರಕ್ಷಿತವಾಗಿದೆ</string>
+    <string name="btn_this_is_scam">ಇದು ಸ್ಕ್ಯಾಮ್ ಆಗಿದೆ</string>
+    <string name="btn_trust_sender">ಕಳುಹಿಸಿದವರನ್ನು ನಂಬಿ</string>
+    <string name="btn_share_warning">ಈ ಎಚ್ಚರಿಕೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
+
+    <!-- History Screen -->
+    <string name="history_title">ಎಚ್ಚರಿಕೆ ಇತಿಹಾಸ</string>
+    <string name="filter_all">ಎಲ್ಲಾ</string>
+    <string name="filter_danger">ಅಪಾಯ</string>
+    <string name="filter_caution">ಎಚ್ಚರಿಕೆ</string>
+    <string name="no_history">ಇತಿಹಾಸದಲ್ಲಿ ಯಾವುದೇ ಎಚ್ಚರಿಕೆಗಳಿಲ್ಲ</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
+    <string name="setting_language">ಭಾಷೆ</string>
+    <string name="setting_sensitivity">ಪತ್ತೆ ಸಂವೇದನೆ</string>
+    <string name="sensitivity_low">ಕಡಿಮೆ (ಕಡಿಮೆ ಎಚ್ಚರಿಕೆಗಳು)</string>
+    <string name="sensitivity_balanced">ಸಮತೋಲಿತ (ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ)</string>
+    <string name="sensitivity_high">ಹೆಚ್ಚು (ಗರಿಷ್ಠ ರಕ್ಷಣೆ)</string>
+    <string name="setting_check_sms">SMS ಪರಿಶೀಲಿಸಿ</string>
+    <string name="setting_check_sms_desc">ವಂಚನೆಗಳು ಮತ್ತು ನಕಲಿ ಲಿಂಕ್‌ಗಳಿಗಾಗಿ ಒಳಬರುವ SMS ಅಧಿಸೂಚನೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ</string>
+    <string name="setting_group_alerts">ಗ್ರೂಪ್ ಸಂದೇಶಗಳಲ್ಲಿ ಎಚ್ಚರಿಕೆ ನೀಡಿ</string>
+    <string name="setting_retention">ಡೇಟಾ ಉಳಿಸಿಕೊಳ್ಳುವ ಅವಧಿ</string>
+    <string name="retention_7_days">7 ದಿನಗಳು</string>
+    <string name="retention_30_days">30 ದಿನಗಳು</string>
+    <string name="retention_90_days">90 ದಿನಗಳು</string>
+    <string name="setting_privacy_proof">ಗೌಪ್ಯತೆ ಪುರಾವೆ</string>
+    <string name="setting_about">ಕುರಿತು &amp; ಆವೃತ್ತಿಗಳು</string>
+    <string name="setting_delete_all">ಎಲ್ಲಾ ಡೇಟಾವನ್ನು ಅಳಿಸಿ</string>
+    <string name="dialog_delete_title">ಎಲ್ಲಾ ಡೇಟಾವನ್ನು ಅಳಿಸುವುದೇ?</string>
+    <string name="dialog_delete_desc">ಇದು ನಿಮ್ಮ ಸಾಧನದಿಂದ ಎಲ್ಲಾ ಎಚ್ಚರಿಕೆಗಳು, ಅಂಕಿಅಂಶಗಳು ಮತ್ತು ಎನ್‌ಕ್ರಿಪ್ಶನ್ ಕೀಗಳನ್ನು ಶಾಶ್ವತವಾಗಿ ಅಳಿಸುತ್ತದೆ. ಇದನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗುವುದಿಲ್ಲ.</string>
+    <string name="btn_delete">ಅಳಿಸಿ</string>
+    <string name="btn_cancel">ರದ್ದುಮಾಡಿ</string>
+
+    <!-- Privacy Proof Screen -->
+    <string name="privacy_proof_title">ಗೌಪ್ಯತೆ ಪುರಾವೆ</string>
+    <string name="privacy_no_internet_title">ಶೂನ್ಯ ಇಂಟರ್ನೆಟ್ ಸಾಮರ್ಥ್ಯ</string>
+    <string name="privacy_no_internet_desc">DUARF ಗೆ android.permission.INTERNET ಇಲ್ಲ. ಇದು ಯಾವುದೇ ನೆಟ್‌ವರ್ಕ್ ವಿನಂತಿಯನ್ನು ಮಾಡಲು ಅಥವಾ ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಯಾವುದೇ ಸರ್ವರ್‌ಗೆ ಕಳುಹಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.</string>
+    <string name="privacy_how_to_verify">Android ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ನೀವೇ ಪರಿಶೀಲಿಸುವುದು ಹೇಗೆ:</string>
+    <string name="privacy_step_1">1. ಸಾಧನ ಸೆಟ್ಟಿಂಗ್‌ಗಳು &gt; Apps &gt; DUARF ತೆರೆಯಿರಿ.</string>
+    <string name="privacy_step_2">2. ಅನುಮತಿಗಳನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಮತ್ತು \'ಇಂಟರ್ನೆಟ್\' ಅಥವಾ \'ನೆಟ್‌ವರ್ಕ್\' ಸಂಪೂರ್ಣವಾಗಿ ಇಲ್ಲದಿರುವುದನ್ನು ಗಮನಿಸಿ.</string>
+    <string name="privacy_step_3">3. ಮೊಬೈಲ್ ಡೇಟಾ ಮತ್ತು Wi-Fi ಟ್ಯಾಪ್ ಮಾಡಿ ಮತ್ತು 0 ಬೈಟ್‌ಗಳು ಬಳಸಲ್ಪಟ್ಟಿರುವುದನ್ನು ಗಮನಿಸಿ.</string>
+    <string name="label_declared_permissions">ಘೋಷಿತ ಅಪ್ಲಿಕೇಶನ್ ಅನುಮತಿಗಳು</string>
+
+    <!-- Reasons strings (§11) -->
+    <string name="reason_l01_title">ದುರುದ್ದೇಶಪೂರಿತ ಅಥವಾ ಅನಿರೀಕ್ಷಿತ APK ಫೈಲ್</string>
+    <string name="reason_l01_detail">ಸಂದೇಶವು Android ಅಪ್ಲಿಕೇಶನ್ ಪ್ಯಾಕೇಜ್ (.apk) ಅನ್ನು ತಲುಪಿಸುತ್ತದೆ ಅಥವಾ ಲಿಂಕ್ ಮಾಡುತ್ತದೆ. ಅಧಿಕೃತ ಸಂಸ್ಥೆಗಳು ಎಂದಿಗೂ WhatsApp ಮೂಲಕ ಅಪ್ಲಿಕೇಶನ್‌ಗಳನ್ನು ಕಳುಹಿಸುವುದಿಲ್ಲ.</string>
+    <string name="reason_l02_title">ಬ್ರ್ಯಾಂಡ್ ಮತ್ತು ವೆಬ್‌ಸೈಟ್ ಹೊಂದಾಣಿಕೆಯಾಗುತ್ತಿಲ್ಲ</string>
+    <string name="reason_l02_detail">ಸಂದೇಶವು ಪರಿಚಿತ ಬ್ರ್ಯಾಂಡ್ ಅನ್ನು ಉಲ್ಲೇಖಿಸುತ್ತದೆ ಆದರೆ ಪರಿಶೀಲಿಸದ ಡೊಮೇನ್‌ಗೆ ಲಿಂಕ್ ಮಾಡುತ್ತದೆ.</string>
+    <string name="reason_l03_title">ನಕಲಿ ಅಥವಾ ಹೋಲುವ ವೆಬ್ ಡೊಮೇನ್</string>
+    <string name="reason_l03_detail">ಡೊಮೇನ್ ಅಧಿಕೃತ ಸಂಸ್ಥೆಯಂತೆ ಕಾಣುತ್ತದೆ ಆದರೆ ವಂಚನೆಯಾಗಿದೆ.</string>
+    <string name="reason_l04_title">ಸಂಖ್ಯಾತ್ಮಕ IP ವಿಳಾಸ ಲಿಂಕ್</string>
+    <string name="reason_l04_detail">ಲಿಂಕ್ ಡೊಮೇನ್ ಹೆಸರಿನ ಬದಲು ನೇರ IP ವಿಳಾಸವನ್ನು ಬಳಸುತ್ತದೆ.</string>
+    <string name="reason_l05_title">ಸಂಕ್ಷಿಪ್ತ ವೆಬ್ ಲಿಂಕ್</string>
+    <string name="reason_l05_detail">ಲಿಂಕ್ ಶಾರ್ಟ್ನರ್ ಬಳಸಿ ತನ್ನ ನಿಜವಾದ ಗಮ್ಯಸ್ಥಾನವನ್ನು ಮರೆಮಾಡುತ್ತದೆ.</string>
+    <string name="reason_l06_title">ಅಪಾಯಕಾರಿ ವೆಬ್‌ಸೈಟ್ ವಿಸ್ತರಣೆ (Extension)</string>
+    <string name="reason_l06_detail">ವೆಬ್‌ಸೈಟ್ ಹೆಚ್ಚಾಗಿ ವಂಚನೆಗಳೊಂದಿಗೆ ಸಂಬಂಧಿಸಿದ ಡೊಮೇನ್ ವಿಸ್ತರಣೆಯನ್ನು ಬಳಸುತ್ತದೆ.</string>
+    <string name="reason_l07_title">ಲಿಂಕ್‌ನಲ್ಲಿ ಮೋಸಗೊಳಿಸುವ ಅಕ್ಷರಗಳು</string>
+    <string name="reason_l07_detail">ಲಿಂಕ್ ನಿಜವಾದ ಸೈಟ್ ಅನ್ನು ಅನುಕರಿಸಲು ವಿದೇಶಿ ಅಥವಾ ಹೋಲುವ ಅಕ್ಷರಗಳನ್ನು ಬಳಸುತ್ತದೆ.</string>
+    <string name="reason_l08_title">ಮರೆಮಾಚಲಾದ ವೆಬ್ ವಿಳಾಸ</string>
+    <string name="reason_l08_detail">ಭದ್ರತಾ ಫಿಲ್ಟರ್‌ಗಳಿಂದ ತಪ್ಪಿಸಿಕೊಳ್ಳಲು ಲಿಂಕ್ ಅನ್ನು ಉದ್ದೇಶಪೂರ್ವಕವಾಗಿ ತಿರುಚಲಾಗಿದೆ.</string>
+    <string name="reason_l09_title">ಅನಧಿಕೃತ ಸರ್ಕಾರಿ ಕ್ಲೈಮ್</string>
+    <string name="reason_l09_detail">ಸರ್ಕಾರ ಅಥವಾ ಪೊಲೀಸ್ ಎಂದು ಹೇಳಿಕೊಳ್ಳುತ್ತದೆ, ಆದರೆ ಅಧಿಕೃತ .gov.in ಅಥವಾ .nic.in ವಿಳಾಸವನ್ನು ಬಳಸುವುದಿಲ್ಲ.</string>
+    <string name="reason_l10_title">ಮೋಸದ ಲಿಂಕ್ ಗಮ್ಯಸ್ಥಾನ</string>
+    <string name="reason_l10_detail">ಲಿಂಕ್ ನಿಜವಾಗಿ ಎಲ್ಲಿಗೆ ಕರೆದೊಯ್ಯುತ್ತದೆ ಎಂಬುದನ್ನು ಮರೆಮಾಡಲು ತಂತ್ರವನ್ನು ಬಳಸುತ್ತದೆ.</string>
+    <string name="reason_l11_title">ತಿಳಿದಿರುವ ಸ್ಕ್ಯಾಮ್ ವೆಬ್‌ಸೈಟ್</string>
+    <string name="reason_l11_detail">ವೆಬ್‌ಸೈಟ್ ವಂಚನೆಯ ವಿಳಾಸಗಳ ಪರಿಶೀಲಿಸಿದ ಬ್ಲಾಕ್‌ಲಿಸ್ಟ್‌ನಲ್ಲಿದೆ.</string>
+    <string name="reason_l12_title">ಮತ್ತೊಂದು ಚಾಟ್‌ಗೆ ಮರುನಿರ್ದೇಶಿಸುತ್ತದೆ</string>
+    <string name="reason_l12_detail">ಕಳುಹಿಸಿದವರು ನಿಮ್ಮನ್ನು ಬೇರೆ ಪ್ಲಾಟ್‌ಫಾರ್ಮ್ ಅಥವಾ ಚಾಟ್‌ಗೆ ಕರೆದೊಯ್ಯಲು ಬಯಸುತ್ತಾರೆ.</string>
+
+    <string name="reason_a01_title">OTP, PIN ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್ ಕೇಳಲಾಗಿದೆ</string>
+    <string name="reason_a01_detail">ರಹಸ್ಯ ದೃಢೀಕರಣ ಕೋಡ್‌ಗಳನ್ನು ವಿನಂತಿಸುತ್ತದೆ. ಬ್ಯಾಂಕುಗಳು ಮತ್ತು ಸೇವೆಗಳು ಎಂದಿಗೂ ನಿಮ್ಮ OTP ಕೇಳುವುದಿಲ್ಲ.</string>
+    <string name="reason_a02_title">ಅಪ್ಲಿಕೇಶನ್ ಸ್ಥಾಪಿಸಲು ವಿನಂತಿ</string>
+    <string name="reason_a02_detail">ಅಪ್ಲಿಕೇಶನ್ ಅಥವಾ ರಿಮೋಟ್ ಕಂಟ್ರೋಲ್ ಟೂಲ್ ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ಸೂಚಿಸುತ್ತದೆ.</string>
+    <string name="reason_a03_title">ಪಾವತಿ ಅಥವಾ ಮುಂಗಡ ಶುಲ್ಕದ ಬೇಡಿಕೆ</string>
+    <string name="reason_a03_detail">ಮುಂಗಡ ಶುಲ್ಕ, ದಂಡ, ನೋಂದಣಿ ಶುಲ್ಕ ಅಥವಾ ಪೆನಾಲ್ಟಿಯನ್ನು ಕೇಳುತ್ತದೆ.</string>
+    <string name="reason_a04_title">ಹಣ ಪಡೆಯಲು UPI PIN ಬಲೆ</string>
+    <string name="reason_a04_detail">ಹಣ ಸ್ವೀಕರಿಸಲು UPI PIN ನಮೂದಿಸಬೇಕು ಅಥವಾ QR ಸ್ಕ್ಯಾನ್ ಮಾಡಬೇಕು ಎಂದು ಹೇಳುತ್ತದೆ. PIN ನಮೂದಿಸುವುದರಿಂದ ಯಾವಾಗಲೂ ಹಣ ಕಡಿತಗೊಳ್ಳುತ್ತದೆ, ಹಣ ಬರುವುದಿಲ್ಲ!</string>
+    <string name="reason_a05_title">ಆಧಾರ್, PAN ಅಥವಾ ಕಾರ್ಡ್ ವಿವರಗಳನ್ನು ಕೇಳಲಾಗಿದೆ</string>
+    <string name="reason_a05_detail">ವೈಯಕ್ತಿಕ ಅಥವಾ ಬ್ಯಾಂಕಿಂಗ್ ವಿವರಗಳನ್ನು ವಿನಂತಿಸುತ್ತದೆ.</string>
+    <string name="reason_a06_title">ರಹಸ್ಯ ಅಥವಾ ವೀಡಿಯೊ ಕರೆಯ ಬೇಡಿಕೆ</string>
+    <string name="reason_a06_detail">ಕುಟುಂಬ ಅಥವಾ ಪೊಲೀಸರಿಗೆ ತಿಳಿಸದಂತೆ ಅಥವಾ ನಿರಂತರವಾಗಿ ಕರೆಯಲ್ಲಿರುವಂತೆ ಆದೇಶಿಸುತ್ತದೆ.</string>
+    <string name="reason_a07_title">ಖಾತೆ ಪರಿಶೀಲಿಸಲು ಲಿಂಕ್ ಕ್ಲಿಕ್ ಮಾಡಿ</string>
+    <string name="reason_a07_detail">ಸೇವೆಗಳನ್ನು ನವೀಕರಿಸಲು ಅಥವಾ ಮರುಸಕ್ರಿಯಗೊಳಿಸಲು ಪರಿಶೀಲಿಸದ ಲಿಂಕ್ ಕ್ಲಿಕ್ ಮಾಡಲು ಸೂಚಿಸುತ್ತದೆ.</string>
+    <string name="reason_a08_title">ಟೆಲಿಗ್ರಾಂಗೆ ತೆರಳಲು ವಿನಂತಿ</string>
+    <string name="reason_a08_detail">WhatsApp ನಿಂದ Telegram ಗೆ ತೆರಳಲು ವಿನಂತಿಸುತ್ತದೆ.</string>
+    <string name="reason_a09_title">ಹೊಸ ಸಂಖ್ಯೆಯಿಂದ ಹಣದ ವಿನಂತಿ</string>
+    <string name="reason_a09_detail">ಹೊಸ ಸಂಖ್ಯೆಯಲ್ಲಿ ಪರಿಚಿತ ವ್ಯಕ್ತಿ ಎಂದು ಹೇಳಿಕೊಂಡು ತುರ್ತು ಹಣವನ್ನು ಕೇಳುತ್ತದೆ.</string>
+
+    <string name="reason_p01_title">ತುರ್ತು ಅಥವಾ ಕೃತಕ ಗಡುವು</string>
+    <string name="reason_p01_detail">ಯೋಚಿಸಲು ಸಮಯ ನೀಡದೆ ಗಂಟೆಗಳಲ್ಲಿ ಕ್ರಮ ಕೈಗೊಳ್ಳಲು ಒತ್ತಡ ಹೇರುತ್ತದೆ.</string>
+    <string name="reason_p02_title">ಖಾತೆ ಅಥವಾ ಸಿಮ್ ನಿರ್ಬಂಧಿಸುವ ಬೆದರಿಕೆ</string>
+    <string name="reason_p02_detail">ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಖಾತೆ, KYC ಅಥವಾ ಫೋನ್ ಸೇವೆ ಅಮಾನತುಗೊಳ್ಳುತ್ತದೆ ಎಂದು ಬೆದರಿಸುತ್ತದೆ.</string>
+    <string name="reason_p03_title">ಬಂಧನ ಅಥವಾ ಕಾನೂನು ಕ್ರಮದ ಬೆದರಿಕೆ</string>
+    <string name="reason_p03_detail">ಬಂಧನ ವಾರಂಟ್, ಪೊಲೀಸ್ FIR ಅಥವಾ ಡಿಜಿಟಲ್ ಅರೆಸ್ಟ್ ಎಂದು ಹೆದರಿಸುತ್ತದೆ.</string>
+    <string name="reason_p04_title">ವಿದ್ಯುತ್ ಸಂಪರ್ಕ ಕಡಿತದ ಬೆದರಿಕೆ</string>
+    <string name="reason_p04_detail">ಇಂದು ರಾತ್ರಿ ವಿದ್ಯುತ್ ಸಂಪರ್ಕವನ್ನು ಕಡಿತಗೊಳಿಸಲಾಗುವುದು ಎಂದು ಬೆದರಿಸುತ್ತದೆ.</string>
+    <string name="reason_p05_title">ಲಾಟರಿ ಅಥವಾ ಬಹುಮಾನದ ಆಮಿಷ</string>
+    <string name="reason_p05_detail">ದೊಡ್ಡ ನಗದು ಬಹುಮಾನಗಳು ಅಥವಾ ಲಕ್ಕಿ ಡ್ರಾ ಗೆದ್ದಿದ್ದೀರಿ ಎಂದು ಆಮಿಷ ಒಡ್ಡುತ್ತದೆ.</string>
+    <string name="reason_p06_title">ಮನೆಯಿಂದಲೇ ಕೆಲಸ / ಅರೆಕಾಲಿಕ ಉದ್ಯೋಗದ ಆಮಿಷ</string>
+    <string name="reason_p06_detail">ವೀಡಿಯೊ ಲೈಕ್ ಅಥವಾ ವಿಮರ್ಶೆಗಳಂತಹ ಸರಳ ಕೆಲಸಕ್ಕಾಗಿ ಅವಾಸ್ತವಿಕ ದೈನಂದಿನ ಗಳಿಕೆಯನ್ನು ನೀಡುತ್ತದೆ.</string>
+    <string name="reason_p07_title">ಹೆಚ್ಚಿನ ಅಥವಾ ಖಾತರಿಯ ಹೂಡಿಕೆ ಲಾಭ</string>
+    <string name="reason_p07_detail">ಹಣ ದ್ವಿಗುಣಗೊಳಿಸುವ ಅಥವಾ ಖಾತರಿಯ ಲಾಭದ ಭರವಸೆ ನೀಡುತ್ತದೆ.</string>
+    <string name="reason_p08_title">ದಾಖಲೆಗಳಿಲ್ಲದೆ ತ್ವರಿತ ಸಾಲ</string>
+    <string name="reason_p08_detail">ನಕಲಿ ಅಥವಾ ಅನುಮಾನಾಸ್ಪದ ತ್ವರಿತ ಸಾಲ ಅನುಮೋದನೆಯನ್ನು ಜಾಹೀರಾತು ಮಾಡುತ್ತದೆ.</string>
+    <string name="reason_p09_title">ಕ್ಯಾಶ್‌ಬ್ಯಾಕ್ ಅಥವಾ ಮರುಪಾವತಿಯ ಆಮಿಷ</string>
+    <string name="reason_p09_detail">ಬಾಕಿ ಇರುವ ರಿವಾರ್ಡ್‌ಗಳು ಅಥವಾ ಕ್ಯಾಶ್‌ಬ್ಯಾಕ್ ಲಭ್ಯವಿದೆ ಎಂದು ಹೇಳುತ್ತದೆ.</string>
+    <string name="reason_p10_title">ಸಂಸ್ಥೆಯ ನಕಲಿ ಗುರುತು</string>
+    <string name="reason_p10_detail">ಬ್ಯಾಂಕ್, ಸರ್ಕಾರ ಅಥವಾ ಕಂಪನಿಯನ್ನು ಪ್ರತಿನಿಧಿಸುವುದಾಗಿ ಹೇಳಿಕೊಂಡು ವೈಯಕ್ತಿಕ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯಿಂದ ಕಳುಹಿಸಲಾಗಿದೆ.</string>
+    <string name="reason_p11_title">ನಕಲಿ ಪಾರ್ಸಲ್ ವಿತರಣಾ ಸಮಸ್ಯೆ</string>
+    <string name="reason_p11_detail">ಅಪೂರ್ಣ ವಿಳಾಸದಿಂದಾಗಿ ಪಾರ್ಸಲ್ ತಡೆಹಿಡಿಯಲಾಗಿದೆ ಎಂದು ಹೇಳುತ್ತದೆ.</string>
+    <string name="reason_p12_title">ನಕಲಿ ಟ್ರಾಫಿಕ್ ಚಲನ್ ನೋಟಿಸ್</string>
+    <string name="reason_p12_detail">ವಾಹನ ಚಲನ್ ಪಾವತಿಗೆ ತಕ್ಷಣದ ಕ್ರಮ ಕೈಗೊಳ್ಳುವಂತೆ ಒತ್ತಾಯಿಸುತ್ತದೆ.</string>
+    <string name="reason_p13_title">ಮದುವೆ ಅಥವಾ ಆಮಂತ್ರಣದ ಆಮಿಷ</string>
+    <string name="reason_p13_detail">ಮಾಲ್‌ವೇರ್ ಕಳುಹಿಸಲು ಆಮಂತ್ರಣದ ಆಮಿಷವನ್ನು ಬಳಸುತ್ತದೆ.</string>
+    <string name="reason_p14_title">ಸಾಮಾನ್ಯ ಸಾಮೂಹಿಕ ಶುಭಾಶಯ</string>
+    <string name="reason_p14_detail">ವಂಚನೆ ಸಂದೇಶಗಳಲ್ಲಿ ಕಂಡುಬರುವ ಸಾಮಾನ್ಯ ಶುಭಾಶಯಗಳನ್ನು ಬಳಸುತ್ತದೆ.</string>
+    <string name="reason_t01_title">ಮರೆಮಾಚಲಾದ ಅಥವಾ ತಿರುಚಿದ ಪಠ್ಯ</string>
+    <string name="reason_t01_detail">ಪತ್ತೆಹಚ್ಚುವಿಕೆಯನ್ನು ತಪ್ಪಿಸಲು ಅದೃಶ್ಯ ಅಕ್ಷರಗಳು ಅಥವಾ ವಿದೇಶಿ ಅಕ್ಷರಗಳನ್ನು ಬಳಸುತ್ತದೆ.</string>
+    <string name="reason_s01_title">ಅಪರಿಚಿತ ಸಂಖ್ಯೆಯಿಂದ ಕಳುಹಿಸಲಾಗಿದೆ</string>
+    <string name="reason_s01_detail">ನಿಮ್ಮ ಸಂಪರ್ಕಗಳಲ್ಲಿ ಇಲ್ಲದ ಅಪರಿಚಿತ ಸಂಖ್ಯೆಯಿಂದ ಕಳುಹಿಸಲಾಗಿದೆ.</string>
+    <string name="reason_s02_title">ವಿದೇಶಿ ದೇಶದ ಕೋಡ್‌ನಿಂದ ಕಳುಹಿಸಲಾಗಿದೆ</string>
+    <string name="reason_s02_detail">ಭಾರತದ ಹೊರಗಿನ ಅಂತಾರಾಷ್ಟ್ರೀಯ ಸಂಖ್ಯೆಯಿಂದ ಕಳುಹಿಸಲಾಗಿದೆ.</string>
+    <string name="reason_s03_title">ಈ ಕಳುಹಿಸಿದವರಿಂದ ಮೊದಲ ಸಂದೇಶ</string>
+    <string name="reason_s03_detail">ನೀವು ಈ ಮೊದಲು ಈ ಸಂಖ್ಯೆಯಿಂದ ಯಾವುದೇ ಸಂದೇಶವನ್ನು ಸ್ವೀಕರಿಸಿಲ್ಲ.</string>
+    <string name="reason_s04_title">ವೈಯಕ್ತಿಕ ಸಂಖ್ಯೆಯಿಂದ ಸಂಸ್ಥೆಯ ಕ್ಲೈಮ್</string>
+    <string name="reason_s04_detail">ನಿಜವಾದ ಬ್ಯಾಂಕುಗಳು ಮತ್ತು ಸರ್ಕಾರಿ ಸಂಸ್ಥೆಗಳು ವೈಯಕ್ತಿಕ 10-ಅಂಕಿಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಗಳಿಂದ ಸಂದೇಶಗಳನ್ನು ಕಳುಹಿಸುವುದಿಲ್ಲ.</string>
+    <string name="reason_s05_title">ಹೆಡರ್ ಬ್ರ್ಯಾಂಡ್ ಹೊಂದಾಣಿಕೆಯಾಗುತ್ತಿಲ್ಲ ಅಥವಾ ಪ್ರಚಾರದ ಬೇಡಿಕೆ</string>
+    <string name="reason_s05_detail">ಸಂದೇಶದ ವಿಷಯವು ಹೆಡರ್‌ಗಿಂತ ಬೇರೆ ಬ್ರ್ಯಾಂಡ್ ಅನ್ನು ಕ್ಲೈಮ್ ಮಾಡುತ್ತದೆ ಅಥವಾ ಪ್ರಚಾರದ SMS ಸೂಕ್ಷ್ಮ ಪಾವತಿಯನ್ನು ಕೇಳುತ್ತದೆ.</string>
+    <string name="reason_model_title">ಅನುಮಾನಾಸ್ಪದ ಸ್ಕ್ಯಾಮ್ ಮಾದರಿ</string>
+    <string name="reason_model_detail">ಸಂದೇಶದ ಶೈಲಿಯು ತಿಳಿದಿರುವ ವಂಚನೆ ಅಭಿಯಾನಗಳೊಂದಿಗೆ ನಿಕಟವಾಗಿ ಹೊಂದಾಣಿಕೆಯಾಗುತ್ತದೆ.</string>
+</resources>

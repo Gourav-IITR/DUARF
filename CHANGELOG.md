@@ -539,3 +539,27 @@ All decisions made where the spec was silent or flexible are recorded here.
 - **Benign Evaluation Additions & Verification**:
   - Added genuine bank-style UPI safety notices as benign rows across dev splits in all active languages (`en`, `hi`, `hi-Latn`, `bn`, `mr`, `te`, `ta`, `or`). All evaluated to `NONE` (0.0% FP).
   - Added genuine bank loan notices with processing fees (DLT headers and official domains) as benign rows across dev splits in all active languages. All evaluated to `NONE` (0.0% FP).
+
+### 18. Milestone M5 Phase B Part 2: Tier 3 Regional Languages & Final M5 Validation
+- **Tier 3 Language Packs (`packs/lang/`)**:
+  - Added packs for Gujarati (`gu.json`), Kannada (`kn.json`), Malayalam (`ml.json`), and Punjabi (`pa.json`).
+  - Implemented all 23 standard lexicon categories per language: `asks_otp_pin_cvv`, `asks_install_app`, `asks_payment`, `upi_pin_to_receive`, `upi_pin_instruction`, `receive_money_lure`, `negation_upi_pin_receive`, `asks_identity_details`, `asks_secrecy_or_stay_on_call`, `asks_click_to_fix`, `asks_move_platform`, `money_from_new_number`, `urgency_deadline`, `threat_account_block`, `threat_legal_arrest`, `threat_utility_disconnect`, `lure_prize_lottery`, `lure_job_task`, `lure_instant_loan`, `lure_refund_cashback`, `delivery_failed`, `traffic_challan`, `generic_mass_greeting`.
+- **Brand Registry Expansion (`packs/brands.json`)**:
+  - Verified and registered regional utility brands: UGVCL (`ugvcl.com`), BESCOM (`bescom.karnataka.gov.in`), KSEB (`kseb.in`), PSPCL (`pspcl.in`), all marked `isVerified: true`.
+  - Added native script aliases for police, electricity, SBI, HDFC, ICICI, PNB, Axis, Kotak, Bank of Baroda, India Post, and Parivahan across Gujarati (`Gujr`), Kannada (`Knda`), Malayalam (`Mlym`), and Gurmukhi (`Guru`).
+- **Engine URL & Subdomain Matching Hardening**:
+  - Enhanced `isOfficial` in `SignalEngine.kt` to match `officialDomains` against `url.host` and subdomain suffixes (`url.host.endsWith(".$it")`) in addition to `url.registrableDomain`. Correctly recognizes official government/utility subdomains like `bescom.karnataka.gov.in` without triggering `L02` or `L03`.
+  - Updated `B02` (`official_domains_only`) dampener to check host and subdomain suffix matching.
+  - Added native-script UPI PIN negation regex patterns and regional awareness phrases in `SignalEngine.kt` for Gujarati, Kannada, Malayalam, and Punjabi.
+- **UI Localization**:
+  - Created complete string resources for all 4 languages in `app/src/main/res/values-{gu,kn,ml,pa}/strings.xml` (all 178 keys matching `values/strings.xml`, including reason strings and actionable advice).
+- **Dataset Generation & Evaluation**:
+  - Implemented `tools/eval/generate_tier3_datasets.py` with 15 scam templates and 22 benign templates per language (including genuine UPI safety advisories and pre-approved bank loans with processing fees).
+  - Generated `eval/dev_{gu,kn,ml,pa}.jsonl` (160 rows each, 60 scam / 100 benign = 62.5% benign) and froze `eval/test_{gu,kn,ml,pa}.jsonl` (disjoint held-out templates, untouched during development).
+  - Evaluated against Phase B quality gates:
+    - `dev_gu`: Danger Prec=1.0, Caution+ Rec=1.0, Benign $\to$ Danger=0.0%, Benign $\to$ Caution+=0.0% [PASS]
+    - `dev_kn`: Danger Prec=1.0, Caution+ Rec=1.0, Benign $\to$ Danger=0.0%, Benign $\to$ Caution+=0.0% [PASS]
+    - `dev_ml`: Danger Prec=1.0, Caution+ Rec=1.0, Benign $\to$ Danger=0.0%, Benign $\to$ Caution+=0.0% [PASS]
+    - `dev_pa`: Danger Prec=1.0, Caution+ Rec=1.0, Benign $\to$ Danger=0.0%, Benign $\to$ Caution+=0.0% [PASS]
+  - Full test suite and static analysis (`./gradlew check`) passed cleanly (218 actionable tasks).
+

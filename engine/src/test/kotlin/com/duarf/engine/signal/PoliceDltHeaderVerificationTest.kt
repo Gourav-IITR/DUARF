@@ -155,8 +155,8 @@ class PoliceDltHeaderVerificationTest {
         val signalIds = signals.map { it.signalId }.toSet()
         val dampenerIds = dampeners.map { it.signalId }.toSet()
 
-        // S05 must fire because claimed police authority does not match verified allowlist
-        assertThat(signalIds).contains("S05")
+        // S05, L02, L09, L06, P01 must fire
+        assertThat(signalIds).containsAtLeast("S05", "L02", "L09", "L06", "P01")
         // No B06
         assertThat(dampenerIds).doesNotContain("B06")
 

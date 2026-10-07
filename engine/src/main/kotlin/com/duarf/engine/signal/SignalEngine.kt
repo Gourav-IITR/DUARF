@@ -149,9 +149,12 @@ class SignalEngine(
         // Brand + URL checks (L02, L03, L09)
         for (brand in extracted.brands) {
             val officialDomains = brand.officialDomains
-
             for (url in extracted.urls) {
-                val isOfficial = officialDomains.any { it.equals(url.registrableDomain, ignoreCase = true) }
+                val isOfficial = officialDomains.any {
+                    it.equals(url.registrableDomain, ignoreCase = true) ||
+                    it.equals(url.host, ignoreCase = true) ||
+                    url.host.endsWith(".$it", ignoreCase = true)
+                }
 
                 // L02: Brand domain mismatch
                 if (brand.isVerified && !isOfficial && officialDomains.isNotEmpty()) {
@@ -468,7 +471,13 @@ class SignalEngine(
         // B02: Official domains only
         if (extracted.urls.isNotEmpty()) {
             val allUrlsOfficial = extracted.urls.all { url ->
-                extracted.brands.any { b -> b.isVerified && b.officialDomains.contains(url.registrableDomain) }
+                extracted.brands.any { b ->
+                    b.isVerified && b.officialDomains.any { off ->
+                        off.equals(url.registrableDomain, ignoreCase = true) ||
+                        off.equals(url.host, ignoreCase = true) ||
+                        url.host.endsWith(".$off", ignoreCase = true)
+                    }
+                }
             }
             if (allUrlsOfficial) {
                 dampeners.add(FiredDampener("B02", "official_domains_only", 0.30))
@@ -614,7 +623,11 @@ class SignalEngine(
                 Regex("""पिन.*(गरज नाही|आवश्यक नाही|लागत नाही|फक्त पैसे पाठवण्यासाठी)"""),
                 Regex("""పిన్.*(అవసరం లేదు|కేవలం డబ్బులు పంపడానికి)"""),
                 Regex("""பின்.*(தேவையில்லை|பணம் அனுப்ப மட்டுமே)"""),
-                Regex("""ପିନ୍.*(ଦରକାର ନାହିଁ|ପଠାଇବା ପାଇଁ)""")
+                Regex("""ପିନ୍.*(ଦରକାର ନାହିଁ|ପଠାଇବା ପାଇଁ)"""),
+                Regex("""પીન.*(જરૂર નથી|નાખવો પડતો નથી|માત્ર પૈસા મોકલવા|ફક્ત પૈસા મોકલવા)"""),
+                Regex("""ಪಿನ್.*(ಅಗತ್ಯವಿಲ್ಲ|ಹಾಕುವಂತಿಲ್ಲ|ಕೇವಲ ಹಣ ಕಳುಹಿಸಲು|ಮಾತ್ರ)"""),
+                Regex("""പിൻ.*(ആവശ്യമില്ല|അടിക്കേണ്ടതില്ല|പണം അയക്കാൻ മാത്രമാണ്)"""),
+                Regex("""ਪਿੰਨ.*(ਲੋੜ ਨਹੀਂ|ਨਹੀਂ ਲੱਗਦਾ|ਸਿਰਫ਼ ਪੈਸੇ ਭੇਜਣ)""")
             )
 
             return pinNegationPatterns.any { it.containsMatchIn(clause) }
@@ -721,7 +734,11 @@ class SignalEngine(
             "सतर्क राहा", "सावध राहा", "सुरक्षा संदेश", "बँक सुरक्षा",
             "అప్రమత్తంగా ఉండండి", "జాగ్రత్తగా ఉండండి", "హెచ్చరిక", "బ్యాంక్ భద్రతా",
             "விழிப்புடன் இருங்கள்", "எச்சரிக்கையாக இருங்கள்", "பாதுகாப்பு எச்சரிக்கை", "வங்கி பாதுகாப்பு",
-            "ସତର୍କ ରୁହନ୍ତୁ", "ସାବଧାନ ରୁହନ୍ତୁ", "ସୁରକ୍ଷା ଚେତାବନୀ", "ବ୍ୟାଙ୍କ ସୁରକ୍ଷା"
+            "ସତର୍କ ରୁହନ୍ତୁ", "ସାବଧାନ ରୁହନ୍ତୁ", "ସୁରକ୍ଷା ଚେତାବନୀ", "ବ୍ୟାଙ୍କ ସୁରକ୍ଷା",
+            "સાવચેત રહો", "સાવધાન રહો", "સુરક્ષા સલાહ", "બેંક સુરક્ષા",
+            "ಜಾಗರೂಕರಾಗಿರಿ", "ಎಚ್ಚರವಾಗಿರಿ", "ಸುರಕ್ಷತಾ ಎಚ್ಚರಿಕೆ", "ಬ್ಯಾಂಕ್ ಭದ್ರತೆ",
+            "ജാഗ്രത പാലിക്കുക", "ശ്രദ്ധിക്കുക", "സുരക്ഷാ മുന്നറിയിപ്പ്", "ബാങ്ക് സുരക്ഷ",
+            "ਸੁਚੇਤ ਰਹੋ", "ਸਾਵਧਾਨ ਰਹੋ", "ਸੁਰੱਖਿਆ ਸਲਾਹ", "ਬੈਂਕ ਸੁਰੱਖਿਆ"
         )
         if (globalIndicators.any { lower.contains(it) }) return true
 

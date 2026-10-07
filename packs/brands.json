@@ -2,8 +2,31 @@
   {
     "id": "sbi",
     "kind": "BANK",
-    "names": ["sbi", "state bank of india", "एसबीआई", "स्टेट बैंक", "এসবিআই", "স্টেট ব্যাংক", "एसबीआय", "स्टेट बँक", "ఎస్బీఐ", "స్టేట్ బ్యాంక్", "எஸ்பிஐ", "ஸ்டேட் பாங்க்", "ଏସବିଆଇ", "ଷ୍ଟେଟ ବ୍ୟାଙ୍କ"],
-    "officialDomains": ["sbi.co.in", "onlinesbi.sbi"],
+    "names": [
+      "sbi",
+      "state bank of india",
+      "एसबीआई",
+      "स्टेट बैंक",
+      "এসবিআই",
+      "স্টেট ব্যাংক",
+      "एसबीआय",
+      "स्टेट बँक",
+      "ఎస్బీఐ",
+      "స్టేట్ బ్యాంక్",
+      "எஸ்பிஐ",
+      "ஸ்டேட் பாங்க்",
+      "ଏସବିଆଇ",
+      "ଷ୍ଟେଟ ବ୍ୟାଙ୍କ",
+      "એસબીઆઈ",
+      "એસબીઆઇ",
+      "ಎಸ್‍ಬಿಐ",
+      "എസ്ബിഐ",
+      "ਐਸਬੀਆਈ"
+    ],
+    "officialDomains": [
+      "sbi.co.in",
+      "onlinesbi.sbi"
+    ],
     "source": "https://sbi.co.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -11,8 +34,23 @@
   {
     "id": "hdfc",
     "kind": "BANK",
-    "names": ["hdfc", "hdfc bank", "एचडीएफसी", "এইচডিএফসি", "एचडीएफसी बँक", "హెచ్‌డీఎఫ్‌సీ", "எச்டிஎப்சி", "ଏଚଡିଏଫସି"],
-    "officialDomains": ["hdfcbank.com"],
+    "names": [
+      "hdfc",
+      "hdfc bank",
+      "एचडीएफसी",
+      "এইচডিএফসি",
+      "एचडीएफसी बँक",
+      "హెచ్‌డీఎఫ్‌సీ",
+      "எச்டிஎப்சி",
+      "ଏଚଡିଏଫସି",
+      "એચડીએફસી",
+      "ಎಚ್‌ಡಿಎಫ್‌ಸಿ",
+      "എച്ച്ഡിഎഫ്സി",
+      "ਐਚਡੀਐਫਸੀ"
+    ],
+    "officialDomains": [
+      "hdfcbank.com"
+    ],
     "source": "https://hdfcbank.com",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -20,8 +58,23 @@
   {
     "id": "icici",
     "kind": "BANK",
-    "names": ["icici", "icici bank", "आईसीआईसीआई", "আইসিআইসিআই", "आयसीआयसीआय", "ఐసీఐసీఐ", "ஐசிஐசிஐ", "ଆଇସିଆଇସିଆଇ"],
-    "officialDomains": ["icicibank.com"],
+    "names": [
+      "icici",
+      "icici bank",
+      "आईसीआईसीआई",
+      "আইসিআইসিআই",
+      "आयसीआयसीआय",
+      "ఐసీఐసీఐ",
+      "ஐசிஐசிஐ",
+      "ଆଇସିଆଇସିଆଇ",
+      "આઈસીઆઈસીઆઈ",
+      "ಐಸಿಐಸಿಐ",
+      "ഐസിഐസിഐ",
+      "ਆਈਸੀਆਈਸੀਆਈ"
+    ],
+    "officialDomains": [
+      "icicibank.com"
+    ],
     "source": "https://icicibank.com",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -29,8 +82,23 @@
   {
     "id": "pnb",
     "kind": "BANK",
-    "names": ["pnb", "punjab national bank", "पीएनबी", "পিএনবি", "पीएनबी बँक", "పిఎన్‌బి", "பிஎன்பி", "ପିଏନବି"],
-    "officialDomains": ["pnbindia.in"],
+    "names": [
+      "pnb",
+      "punjab national bank",
+      "पीएनबी",
+      "পিএনবি",
+      "पीएनबी बँक",
+      "పిఎన్‌బి",
+      "பிஎன்பி",
+      "ପିଏନବି",
+      "પીએનબી",
+      "ಪಿಎನ್‌ಬಿ",
+      "പിഎൻബി",
+      "ਪੀਐਨਬੀ"
+    ],
+    "officialDomains": [
+      "pnbindia.in"
+    ],
     "source": "https://pnbindia.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -38,8 +106,23 @@
   {
     "id": "axis",
     "kind": "BANK",
-    "names": ["axis bank", "axis", "एक्सिस बैंक", "অ্যাক্সিস ব্যাংক", "अ‍ॅक्सिस बँक", "యాక్సిస్ బ్యాంక్", "ஆக்சிஸ் வங்கி", "ଆକ୍ସିସ ବ୍ୟାଙ୍କ"],
-    "officialDomains": ["axisbank.com"],
+    "names": [
+      "axis bank",
+      "axis",
+      "एक्सिस बैंक",
+      "অ্যাক্সিস ব্যাংক",
+      "अ‍ॅक्सिस बँक",
+      "యాక్సిస్ బ్యాంక్",
+      "ஆக்சிஸ் வங்கி",
+      "ଆକ୍ସିସ ବ୍ୟାଙ୍କ",
+      "એક્સિસ",
+      "ಆಕ್ಸಿಸ್",
+      "ആക്സിസ്",
+      "ਐਕਸਿਸ"
+    ],
+    "officialDomains": [
+      "axisbank.com"
+    ],
     "source": "https://axisbank.com",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -47,8 +130,23 @@
   {
     "id": "kotak",
     "kind": "BANK",
-    "names": ["kotak", "kotak mahindra bank", "कोटक", "কোটাক", "कोटक बँक", "కోటక్", "கோடக்", "କୋଟାକ"],
-    "officialDomains": ["kotak.com"],
+    "names": [
+      "kotak",
+      "kotak mahindra bank",
+      "कोटक",
+      "কোটাক",
+      "कोटक बँक",
+      "కోటక్",
+      "கோடக்",
+      "କୋଟାକ",
+      "કોટક",
+      "ಕೋಟಕ್",
+      "കൊട്ടക്",
+      "ਕੋਟਕ"
+    ],
+    "officialDomains": [
+      "kotak.com"
+    ],
     "source": "https://kotak.com",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -56,8 +154,23 @@
   {
     "id": "bob",
     "kind": "BANK",
-    "names": ["bank of baroda", "bob", "बैंक ऑफ बड़ौदा", "ব্যাংক অফ বরোদা", "बँक ऑफ बडोदा", "బ్యాంక్ ఆఫ్ బరోడా", "பாங்க் ஆப் பரோடா", "ବ୍ୟାଙ୍କ ଅଫ ବରୋଦା"],
-    "officialDomains": ["bankofbaroda.in"],
+    "names": [
+      "bank of baroda",
+      "bob",
+      "बैंक ऑफ बड़ौदा",
+      "ব্যাংক অফ বরোদা",
+      "बँक ऑफ बडोदा",
+      "బ్యాంక్ ఆఫ్ బరోడా",
+      "பாங்க் ஆப் பரோடா",
+      "ବ୍ୟାଙ୍କ ଅଫ ବରୋଦା",
+      "બેંક ઓફ બરોડા",
+      "ಬ್ಯಾಂಕ್ ಆಫ್ ಬರೋಡಾ",
+      "ബാങ്ക് ഓഫ് ബറോഡ",
+      "ਬੈਂਕ ਆਫ਼ ਬੜੌਦਾ"
+    ],
+    "officialDomains": [
+      "bankofbaroda.in"
+    ],
     "source": "https://bankofbaroda.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -65,8 +178,14 @@
   {
     "id": "gpay",
     "kind": "PAYMENTS",
-    "names": ["google pay", "gpay", "गूगल पे"],
-    "officialDomains": ["pay.google.com"],
+    "names": [
+      "google pay",
+      "gpay",
+      "गूगल पे"
+    ],
+    "officialDomains": [
+      "pay.google.com"
+    ],
     "source": "https://pay.google.com",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -74,8 +193,17 @@
   {
     "id": "phonepe",
     "kind": "PAYMENTS",
-    "names": ["phonepe", "फोनपे", "ফোনপে", "ఫోన్‌పే", "போன்பே", "ଫୋନପେ"],
-    "officialDomains": ["phonepe.com"],
+    "names": [
+      "phonepe",
+      "फोनपे",
+      "ফোনপে",
+      "ఫోన్‌పే",
+      "போன்பே",
+      "ଫୋନପେ"
+    ],
+    "officialDomains": [
+      "phonepe.com"
+    ],
     "source": "https://phonepe.com",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -83,8 +211,17 @@
   {
     "id": "paytm",
     "kind": "PAYMENTS",
-    "names": ["paytm", "पेटीएम", "পেটিএম", "పేటీఎం", "பேடிஎம்", "ପେଟିଏମ"],
-    "officialDomains": ["paytm.com"],
+    "names": [
+      "paytm",
+      "पेटीएम",
+      "পেটিএম",
+      "పేటీఎం",
+      "பேடிஎம்",
+      "ପେଟିଏମ"
+    ],
+    "officialDomains": [
+      "paytm.com"
+    ],
     "source": "https://paytm.com",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -92,8 +229,19 @@
   {
     "id": "jio",
     "kind": "TELECOM",
-    "names": ["jio", "reliance jio", "जियो", "জিও", "जिओ", "జియో", "ஜியோ", "ଜିଓ"],
-    "officialDomains": ["jio.com"],
+    "names": [
+      "jio",
+      "reliance jio",
+      "जियो",
+      "জিও",
+      "जिओ",
+      "జియో",
+      "ஜியோ",
+      "ଜିଓ"
+    ],
+    "officialDomains": [
+      "jio.com"
+    ],
     "source": "https://jio.com",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -101,8 +249,19 @@
   {
     "id": "airtel",
     "kind": "TELECOM",
-    "names": ["airtel", "bharti airtel", "एयरटेल", "এয়ারটেল", "एअरटेल", "ఎయిర్‌టెల్", "ஏர்டெல்", "ଏୟାରଟେଲ"],
-    "officialDomains": ["airtel.in"],
+    "names": [
+      "airtel",
+      "bharti airtel",
+      "एयरटेल",
+      "এয়ারটেল",
+      "एअरटेल",
+      "ఎయిర్‌టెల్",
+      "ஏர்டெல்",
+      "ଏୟାରଟେଲ"
+    ],
+    "officialDomains": [
+      "airtel.in"
+    ],
     "source": "https://airtel.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -110,8 +269,19 @@
   {
     "id": "incometax",
     "kind": "GOVERNMENT",
-    "names": ["income tax", "it department", "आयकर विभाग", "আয়কর বিভাগ", "आयकर", "ఆదాయపు పన్ను", "வருமான வரி", "ଆୟକର ବିଭାଗ"],
-    "officialDomains": ["incometax.gov.in"],
+    "names": [
+      "income tax",
+      "it department",
+      "आयकर विभाग",
+      "আয়কর বিভাগ",
+      "आयकर",
+      "ఆదాయపు పన్ను",
+      "வருமான வரி",
+      "ଆୟକର ବିଭାଗ"
+    ],
+    "officialDomains": [
+      "incometax.gov.in"
+    ],
     "source": "https://incometax.gov.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -119,8 +289,22 @@
   {
     "id": "uidai",
     "kind": "GOVERNMENT",
-    "names": ["uidai", "aadhaar", "आधार", "আধার", "ইউআইডিএআই", "ఆధార్", "యుఐడిఎఐ", "ஆதார்", "யுஐடிஏஐ", "ଆଧାର", "ୟୁଆଇଡିଏଆଇ"],
-    "officialDomains": ["uidai.gov.in"],
+    "names": [
+      "uidai",
+      "aadhaar",
+      "आधार",
+      "আধার",
+      "ইউআইডিএআই",
+      "ఆధార్",
+      "యుఐడిఎఐ",
+      "ஆதார்",
+      "யுஐடிஏஐ",
+      "ଆଧାର",
+      "ୟୁଆଇଡିଏଆଇ"
+    ],
+    "officialDomains": [
+      "uidai.gov.in"
+    ],
     "source": "https://uidai.gov.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -128,8 +312,18 @@
   {
     "id": "epfo",
     "kind": "GOVERNMENT",
-    "names": ["epfo", "epf", "ईपीएफओ", "ইপিএফও", "ఈపీఎఫ్‌ఓ", "இபிஎப்ஓ", "ଇପିଏଫଓ"],
-    "officialDomains": ["epfindia.gov.in"],
+    "names": [
+      "epfo",
+      "epf",
+      "ईपीएफओ",
+      "ইপিএফও",
+      "ఈపీఎఫ్‌ఓ",
+      "இபிஎப்ஓ",
+      "ଇପିଏଫଓ"
+    ],
+    "officialDomains": [
+      "epfindia.gov.in"
+    ],
     "source": "https://epfindia.gov.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -137,8 +331,24 @@
   {
     "id": "parivahan",
     "kind": "GOVERNMENT",
-    "names": ["parivahan", "echallan", "e-challan", "परिवहन", "পরিবহন", "పరివాహన్", "பரிவாஹன்", "ପରିବହନ"],
-    "officialDomains": ["parivahan.gov.in", "echallan.parivahan.gov.in"],
+    "names": [
+      "parivahan",
+      "echallan",
+      "e-challan",
+      "परिवहन",
+      "পরিবহন",
+      "పరివాహన్",
+      "பரிவாஹன்",
+      "ପରିବହନ",
+      "પરિવહન",
+      "ಪರಿವಾಹನ",
+      "പരീവാഹൻ",
+      "ਪਰਿਵਹਨ"
+    ],
+    "officialDomains": [
+      "parivahan.gov.in",
+      "echallan.parivahan.gov.in"
+    ],
     "source": "https://parivahan.gov.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -146,8 +356,22 @@
   {
     "id": "indiapost",
     "kind": "COURIER",
-    "names": ["india post", "भारतीय डाक", "ইন্ডিয়া পোস্ট", "भारतीय टपाल", "ఇండియా పోస్ట్", "இந்தியா போஸ்ட்", "ଇଣ୍ଡିଆ ପୋଷ୍ଟ"],
-    "officialDomains": ["indiapost.gov.in"],
+    "names": [
+      "india post",
+      "भारतीय डाक",
+      "ইন্ডিয়া পোস্ট",
+      "भारतीय टपाल",
+      "ఇండియా పోస్ట్",
+      "இந்தியா போஸ்ட்",
+      "ଇଣ୍ଡିଆ ପୋଷ୍ଟ",
+      "ઇન્ડિયા પોસ્ટ",
+      "ಇಂಡಿಯಾ ಪೋಸ್ಟ್",
+      "ഇന്ത്യ പോസ്റ്റ്",
+      "ਇੰਡੀਆ ਪੋਸਟ"
+    ],
+    "officialDomains": [
+      "indiapost.gov.in"
+    ],
     "source": "https://indiapost.gov.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -155,8 +379,27 @@
   {
     "id": "police",
     "kind": "LAW_ENFORCEMENT",
-    "names": ["cbi", "ed", "police", "cyber crime", "crime branch", "पुलिस", "পুলিশ", "पोलीस", "పోలీస్", "போலீஸ்", "ପୋଲିସ"],
-    "officialDomains": ["cbi.gov.in", "cybercrime.gov.in"],
+    "names": [
+      "cbi",
+      "ed",
+      "police",
+      "cyber crime",
+      "crime branch",
+      "पुलिस",
+      "পুলিশ",
+      "पोलीस",
+      "పోలీస్",
+      "போலீஸ்",
+      "ପୋଲିସ",
+      "પોલીસ",
+      "ಪೊಲೀಸ್",
+      "പോലീസ്",
+      "ਪੁਲਿਸ"
+    ],
+    "officialDomains": [
+      "cbi.gov.in",
+      "cybercrime.gov.in"
+    ],
     "source": "https://cybercrime.gov.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -164,7 +407,21 @@
   {
     "id": "electricity",
     "kind": "UTILITY",
-    "names": ["electricity board", "power corp", "bijli vibhag", "विद्युत विभाग", "বিদ্যুৎ বিভাগ", "महावितरण", "విద్యుత్ శాఖ", "மின்சார வாரியம்", "ବିଦ୍ୟୁତ୍ ବିଭାଗ"],
+    "names": [
+      "electricity board",
+      "power corp",
+      "bijli vibhag",
+      "विद्युत विभाग",
+      "বিদ্যুৎ বিভাগ",
+      "महावितरण",
+      "విద్యుత్ శాఖ",
+      "மின்சார வாரியம்",
+      "ବିଦ୍ୟୁତ୍ ବିଭାଗ",
+      "વીજળી વિભાગ",
+      "ವಿದ್ಯುತ್ ಇಲಾಖೆ",
+      "വൈദ്യുതി വകുപ്പ്",
+      "ਬਿਜਲੀ ਵਿਭਾਗ"
+    ],
     "officialDomains": [],
     "source": "https://example.com",
     "verifiedOn": "2026-10-06",
@@ -173,8 +430,15 @@
   {
     "id": "wbsedcl",
     "kind": "UTILITY",
-    "names": ["wbsedcl", "west bengal state electricity", "ডব্লিউবিএসইডিসিএল", "পশ্চিমবঙ্গ বিদ্যুৎ"],
-    "officialDomains": ["wbsedcl.in"],
+    "names": [
+      "wbsedcl",
+      "west bengal state electricity",
+      "ডব্লিউবিএসইডিসিএল",
+      "পশ্চিমবঙ্গ বিদ্যুৎ"
+    ],
+    "officialDomains": [
+      "wbsedcl.in"
+    ],
     "source": "https://www.wbsedcl.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -182,8 +446,15 @@
   {
     "id": "msedcl",
     "kind": "UTILITY",
-    "names": ["msedcl", "mahadiscom", "mahavitaran", "महावितरण वीज"],
-    "officialDomains": ["mahadiscom.in"],
+    "names": [
+      "msedcl",
+      "mahadiscom",
+      "mahavitaran",
+      "महावितरण वीज"
+    ],
+    "officialDomains": [
+      "mahadiscom.in"
+    ],
     "source": "https://www.mahadiscom.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -191,8 +462,15 @@
   {
     "id": "tpcodl",
     "kind": "UTILITY",
-    "names": ["tpcodl", "tp central odisha", "ଟିପିସିଓଡିଏଲ", "ଓଡ଼ିଶା ବିଦ୍ୟୁତ"],
-    "officialDomains": ["tpcentralodisha.com"],
+    "names": [
+      "tpcodl",
+      "tp central odisha",
+      "ଟିପିସିଓଡିଏଲ",
+      "ଓଡ଼ିଶା ବିଦ୍ୟୁତ"
+    ],
+    "officialDomains": [
+      "tpcentralodisha.com"
+    ],
     "source": "https://www.tpcentralodisha.com",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -200,8 +478,15 @@
   {
     "id": "apcpdcl",
     "kind": "UTILITY",
-    "names": ["apcpdcl", "ap southern power", "ఎపిసిపిడిసిఎల్", "ఆంధ్రప్రదేశ్ విద్యుత్"],
-    "officialDomains": ["apcpdcl.in"],
+    "names": [
+      "apcpdcl",
+      "ap southern power",
+      "ఎపిసిపిడిసిఎల్",
+      "ఆంధ్రప్రదేశ్ విద్యుత్"
+    ],
+    "officialDomains": [
+      "apcpdcl.in"
+    ],
     "source": "https://www.apcpdcl.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -209,8 +494,18 @@
   {
     "id": "tgspdcl",
     "kind": "UTILITY",
-    "names": ["tgspdcl", "tsspdcl", "telangana power", "తెలంగాణ విద్యుత్", "టిజిఎస్పిడిసిఎల్", "టిఎస్ఎస్పిడిసిఎల్"],
-    "officialDomains": ["tgspdcl.com", "tssouthernpower.com"],
+    "names": [
+      "tgspdcl",
+      "tsspdcl",
+      "telangana power",
+      "తెలంగాణ విద్యుత్",
+      "టిజిఎస్పిడిసిఎల్",
+      "టిఎస్ఎస్పిడిసిఎల్"
+    ],
+    "officialDomains": [
+      "tgspdcl.com",
+      "tssouthernpower.com"
+    ],
     "source": "https://tgspdcl.com",
     "verifiedOn": "2026-10-06",
     "isVerified": false
@@ -218,8 +513,17 @@
   {
     "id": "tangedco",
     "kind": "UTILITY",
-    "names": ["tangedco", "tneb", "தமிழ்நாடு மின்சார வாரியம்", "டான்ஜெட்கோ", "டிஎன்பி"],
-    "officialDomains": ["tnebltd.gov.in", "tangedco.gov.in"],
+    "names": [
+      "tangedco",
+      "tneb",
+      "தமிழ்நாடு மின்சார வாரியம்",
+      "டான்ஜெட்கோ",
+      "டிஎன்பி"
+    ],
+    "officialDomains": [
+      "tnebltd.gov.in",
+      "tangedco.gov.in"
+    ],
     "source": "https://tnebltd.gov.in",
     "verifiedOn": "2026-10-06",
     "isVerified": false
@@ -227,8 +531,20 @@
   {
     "id": "pm_mudra",
     "kind": "GOVERNMENT",
-    "names": ["pm mudra", "mudra yojana", "pm mudra yojana", "प्रधानमंत्री मुद्रा योजना", "मुद्रा योजना", "পিএম মুদ্রা", "పిఎం ముద్ర", "பிஎம் முத்ரா", "ପିଏମ ମୁଦ୍ରା"],
-    "officialDomains": ["mudra.org.in"],
+    "names": [
+      "pm mudra",
+      "mudra yojana",
+      "pm mudra yojana",
+      "प्रधानमंत्री मुद्रा योजना",
+      "मुद्रा योजना",
+      "পিএম মুদ্রা",
+      "పిఎం ముద్ర",
+      "பிஎம் முத்ரா",
+      "ପିଏମ ମୁଦ୍ରା"
+    ],
+    "officialDomains": [
+      "mudra.org.in"
+    ],
     "source": "https://www.mudra.org.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -236,8 +552,18 @@
   {
     "id": "pm_kisan",
     "kind": "GOVERNMENT",
-    "names": ["pm kisan", "pm kisan samman", "पीएम किसान", "প্রধানমন্ত্রী কিষাণ", "పిఎం కిసాన్", "பிஎம் கிசான்", "ପିଏମ କିଷାନ"],
-    "officialDomains": ["pmkisan.gov.in"],
+    "names": [
+      "pm kisan",
+      "pm kisan samman",
+      "पीएम किसान",
+      "প্রধানমন্ত্রী কিষাণ",
+      "పిఎం కిసాన్",
+      "பிஎம் கிசான்",
+      "ପିଏମ କିଷାନ"
+    ],
+    "officialDomains": [
+      "pmkisan.gov.in"
+    ],
     "source": "https://pmkisan.gov.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
@@ -245,9 +571,84 @@
   {
     "id": "ayushman_bharat",
     "kind": "GOVERNMENT",
-    "names": ["ayushman bharat", "pmjay", "आयुष्मान भारत", "পিএমজেএওয়াই", "ఆయుష్మాన్ భారత్", "ஆயுஷ்மான் பாரத்", "ଆୟୁଷ୍ମାନ ଭାରତ"],
-    "officialDomains": ["pmjay.gov.in", "nha.gov.in"],
+    "names": [
+      "ayushman bharat",
+      "pmjay",
+      "आयुष्मान भारत",
+      "পিএমজেএওয়াই",
+      "ఆయుష్మాన్ భారత్",
+      "ஆயுஷ்மான் பாரத்",
+      "ଆୟୁଷ୍ମାନ ଭାରତ"
+    ],
+    "officialDomains": [
+      "pmjay.gov.in",
+      "nha.gov.in"
+    ],
     "source": "https://pmjay.gov.in",
+    "verifiedOn": "2026-10-06",
+    "isVerified": true
+  },
+  {
+    "id": "ugvcl",
+    "kind": "UTILITY",
+    "names": [
+      "ugvcl",
+      "uttar gujarat vij",
+      "ઉત્તર ગુજરાત વીજ",
+      "યુજીવીસીએલ"
+    ],
+    "officialDomains": [
+      "ugvcl.com"
+    ],
+    "source": "https://www.ugvcl.com",
+    "verifiedOn": "2026-10-06",
+    "isVerified": true
+  },
+  {
+    "id": "bescom",
+    "kind": "UTILITY",
+    "names": [
+      "bescom",
+      "bangalore electricity",
+      "ಬೆಸ್ಕಾಂ",
+      "ಬೆಂಗಳೂರು ವಿದ್ಯುತ್"
+    ],
+    "officialDomains": [
+      "bescom.karnataka.gov.in"
+    ],
+    "source": "https://bescom.karnataka.gov.in",
+    "verifiedOn": "2026-10-06",
+    "isVerified": true
+  },
+  {
+    "id": "kseb",
+    "kind": "UTILITY",
+    "names": [
+      "kseb",
+      "kerala state electricity",
+      "കെഎസ്ഇബി",
+      "കേരള വൈദ്യുതി"
+    ],
+    "officialDomains": [
+      "kseb.in"
+    ],
+    "source": "https://www.kseb.in",
+    "verifiedOn": "2026-10-06",
+    "isVerified": true
+  },
+  {
+    "id": "pspcl",
+    "kind": "UTILITY",
+    "names": [
+      "pspcl",
+      "punjab state power",
+      "ਪੀਐਸਪੀਸੀਐਲ",
+      "ਪੰਜਾਬ ਬਿਜਲੀ"
+    ],
+    "officialDomains": [
+      "pspcl.in"
+    ],
+    "source": "https://www.pspcl.in",
     "verifiedOn": "2026-10-06",
     "isVerified": true
   }
