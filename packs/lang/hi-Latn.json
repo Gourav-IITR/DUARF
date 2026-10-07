@@ -39,7 +39,9 @@
     "receive_money_lure": [
       "paise aa jayenge", "paise milenge", "refund turant aa jayega", "refund aa jayega",
       "cashback mil jayega", "get your cashback", "paise pane ke liye", "paise lene ke liye",
-      "credit ho jayega", "khate me aayenge"
+      "credit ho jayega", "khate me aayenge",
+      "account me aa jayenge", "account me aayenge", "account me credit", "account me transfer",
+      "khate me aa jayenge", "khate me credit", "refund mila hai", "cashback mila hai"
     ],
     "negation_upi_pin_receive": [
       "kabhi bhi upi pin na dale", "kabhi upi pin na dale", "kabhi pin na dale", "kabhi pin mat dalo", "kabhi upi pin mat dalo",

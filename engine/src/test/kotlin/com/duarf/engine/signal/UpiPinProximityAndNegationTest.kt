@@ -100,6 +100,13 @@ class UpiPinProximityAndNegationTest {
         assertThat(signals).doesNotContain("A04")
     }
 
+    @Test
+    fun testMustNotFireA04_upiPinIsOnlyRequiredForSendingMoneyNotReceiving() {
+        // "only required for sending" directly governs PIN requirement -> MUST NOT fire A04
+        val signals = evaluateSignals("UPI PIN is only required for sending money, not receiving")
+        assertThat(signals).doesNotContain("A04")
+    }
+
     // Additional informational / safety advisories in regional languages
 
     @Test

@@ -26228,8 +26228,8 @@
             261680
         ],
         "l2Value": 0.077152,
-        "expectedLevel": "NONE",
-        "expectedScore": 0.19
+        "expectedLevel": "DANGER",
+        "expectedScore": 0.8
     },
     {
         "id": "benign-0046",
@@ -37798,8 +37798,8 @@
             261680
         ],
         "l2Value": 0.077152,
-        "expectedLevel": "NONE",
-        "expectedScore": 0.19
+        "expectedLevel": "DANGER",
+        "expectedScore": 0.8
     },
     {
         "id": "benign-0481",

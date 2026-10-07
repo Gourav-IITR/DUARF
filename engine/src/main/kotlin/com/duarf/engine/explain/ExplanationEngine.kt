@@ -33,6 +33,8 @@ object ExplanationEngine {
         }
 
         // 1. Sort fired signals: combo member signals first, then by effective weight descending
+        // 1. Sort fired signals: combo member signals first, then by effective weight descending,
+        // then by specificity ranking on ties (e.g. L09 over L02 for government/police claim)
         val comboMembers = topCombo?.memberSignalIds ?: emptySet()
         val sorted = signals.sortedWith { a, b ->
             val aInCombo = if (comboMembers.contains(a.signalId)) 1 else 0
@@ -40,7 +42,18 @@ object ExplanationEngine {
             if (aInCombo != bInCombo) {
                 bInCombo.compareTo(aInCombo)
             } else {
-                b.weight.compareTo(a.weight)
+                val weightCmp = b.weight.compareTo(a.weight)
+                if (weightCmp != 0) {
+                    weightCmp
+                } else {
+                    val specA = getSpecificityRank(a.signalId)
+                    val specB = getSpecificityRank(b.signalId)
+                    if (specA != specB) {
+                        specB.compareTo(specA)
+                    } else {
+                        a.signalId.compareTo(b.signalId)
+                    }
+                }
             }
         }
 
@@ -251,5 +264,15 @@ object ExplanationEngine {
         }
         merged.add(current)
         return merged
+    }
+
+    private fun getSpecificityRank(signalId: String): Int {
+        return when (signalId) {
+            "L09" -> 10 // Specific gov/police claim on non-gov domain over generic L02 brand domain mismatch
+            "L02" -> 5
+            "S05" -> 10 // Specific DLT header mismatch over generic S04
+            "S04" -> 5
+            else -> 0
+        }
     }
 }

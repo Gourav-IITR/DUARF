@@ -563,3 +563,19 @@ All decisions made where the spec was silent or flexible are recorded here.
     - `dev_pa`: Danger Prec=1.0, Caution+ Rec=1.0, Benign $\to$ Danger=0.0%, Benign $\to$ Caution+=0.0% [PASS]
   - Full test suite and static analysis (`./gradlew check`) passed cleanly (218 actionable tasks).
 
+### 19. Milestone M5 Phase B Finalization & Frozen Tier 3 Test Execution
+- **A04 Hinglish Receive Lexicon Resolution (`packs/lang/hi-Latn.json`)**:
+  - Expanded `receive_money_lure` in Hindi-Latin to include account-receive phrases (`account me aa jayenge`, `account me aayenge`, `account me credit`, `account me transfer`, `khate me aa jayenge`, `khate me credit`, `refund mila hai`, `cashback mila hai`) matching other language packs.
+  - Eliminated all 6 False Negatives in `scam-grp-33` (`scam-0034` etc.) on `corpus.jsonl`. Caution+ recall on corpus rose from 0.983 to 1.0 (Danger Precision: 1.0, FP: 0.0%).
+- **Explanation Specificity Tie-Breaker (`ExplanationEngine.kt`)**:
+  - Implemented specificity ranking (`getSpecificityRank`) when two signals in the same family tie on effective weight.
+  - Specifically prefers `L09` (`gov_claim_non_gov_domain`) over `L02` (`brand_domain_mismatch`) for government/police claims, and `S05` (`header_claim_mismatch`) over `S04` (`institution_claim_from_personal_number`).
+- **Additional Negation Test (`UpiPinProximityAndNegationTest.kt`)**:
+  - Added unit test verifying that informational/negated statement `"UPI PIN is only required for sending money, not receiving"` does not fire `A04`.
+- **Golden Vectors Updated (`packs/golden_vectors.json`)**:
+  - Regenerated golden vector entries reflecting the corrected `scam-grp-33` verdict (`DANGER` via `A04` + `C05`).
+- **Clean CI & Full Test Run**:
+  - Verified `./gradlew clean check --rerun-tasks` passes with 223 actionable tasks executed.
+- **Frozen Tier 3 Test Execution (`eval/test_{gu,kn,ml,pa}.jsonl`)**:
+  - Executed held-out evaluation sets once without any test tuning. Aggregates and gate reports compiled for M5 checkpoint report.
+
