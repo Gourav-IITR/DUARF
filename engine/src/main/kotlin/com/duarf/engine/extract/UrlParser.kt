@@ -72,7 +72,12 @@ object UrlParser {
         if (lower.contains(".") || lower.contains("[.]") || lower.contains("(dot)")) {
             val beforeSlash = lower.replace("[.]", ".").replace("(dot)", ".").substringBefore('/').substringBefore('?')
             val parts = beforeSlash.split('.')
-            if (parts.size >= 2 && parts.last().length in 2..10 && parts.last().all { it in 'a'..'z' }) {
+            val lastPart = parts.lastOrNull() ?: ""
+            // Executable and APK extensions without an explicit scheme are filenames, not domains
+            if (EXECUTABLE_EXTENSIONS.contains(lastPart)) {
+                return false
+            }
+            if (parts.size >= 2 && lastPart.length in 2..10 && lastPart.all { it in 'a'..'z' }) {
                 return true
             }
         }
@@ -135,6 +140,14 @@ object UrlParser {
 
             if (host.isNullOrEmpty() || !host.contains('.') && !isIp(host)) {
                 return null
+            }
+
+            // Bare tokens without scheme must not end with executable file extension
+            if (!hasScheme) {
+                val hostExt = host.substringAfterLast('.', "").lowercase()
+                if (EXECUTABLE_EXTENSIONS.contains(hostExt)) {
+                    return null
+                }
             }
 
             val registrable = psl.getRegistrableDomain(host)

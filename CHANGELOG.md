@@ -460,6 +460,82 @@ All decisions made where the spec was silent or flexible are recorded here.
   - Documented one-line developer setup (`git config core.hooksPath tools/ci/hooks`) in `README.md` under "Contributing".
 - **Test Fixture Redaction Policy**:
   - Added Core Rule 5 in `AGENTS.md` and updated `docs/ARCHITECTURE.md` (§14, §19): before converting real notification recordings into test fixtures, all names, numbers, amounts, and codes must be redacted first. Only redacted fixtures with synthetic placeholders may be committed.
-- **Repository History Audit**:
-  - Full git history scan (`git log -p --all`) across all 14 commits confirmed zero real numbers, zero account numbers, zero unredacted OTPs, zero unredacted UPI IDs, and zero unredacted email addresses committed in repo history (0 findings).
 
+### 14. Milestone M5 Phase A: Tier 2 Regional Languages
+- **Scope & Languages**:
+  - Implemented Phase A covering 5 Tier 2 regional languages: Bengali (`bn`), Marathi (`mr`), Telugu (`te`), Tamil (`ta`), Odia (`or`).
+  - Added language packs in `packs/lang/{bn,mr,te,ta,or}.json` with comprehensive lexicons covering all `A*` actions (`A01`–`A09`), `P*` pressure/context signals (`P01`–`P04`, `P08`, `P11`, `P12`), and regional brand aliases.
+- **Script Gating & Marathi/Hindi Discrimination (§8)**:
+  - Implemented `LanguageScriptDetector.isUntrainedScript` to detect predominant script; when predominant script is outside trained set `{LATIN, DEVANAGARI}`, the ML classifier is bypassed ($m'=0$) and SafeLog event 304 (`EVENT_MODEL_UNTRAINED_SCRIPT_RULES_ONLY`) is emitted.
+  - Implemented Devanagari language discriminator `LanguageScriptDetector.isMarathi` based on function-word ratio (`आहे`, `आणि`, `नाही`, `आहेत` vs `है`, `और`, `नहीं`, `हैं`), safely gating the model off ($m'=0$) for Marathi until Milestone M6 retraining.
+  - Unit tests added in `ScriptGatingTest.kt` and `MarathiHindiDiscriminatorTest.kt` verifying both gating directions.
+- **Brand Verification & Unverified Brand Handling**:
+  - Verified and added regional brands: West Bengal WBSEDCL (`wbsedcl.in`), Maharashtra MSEDCL (`mahadiscom.in`), Odisha TPCODL (`tpcentralodisha.com`), Andhra APCPDCL (`apcpdcl.in`), and regional state police DLT header mappings (`VK-KOLPOL-G`, `TN-CHNPOL-G`, etc.).
+  - Added `tgspdcl` (Telangana) and `tangedco` (Tamil Nadu) marked `isVerified: false` in `packs/brands.json`.
+  - Hardened `SignalEngine` so that unverified brands NEVER trigger `L02` (lookalike brand domain) or `L03` (brand mention with mismatched domain), and NEVER count toward `B02`/`B06` dampeners. Unit tested in `UnverifiedBrandSuppressionTest.kt`.
+- **UI Localization**:
+  - Created complete string resources for all 5 languages in `app/src/main/res/values-{bn,mr,te,ta,or}/strings.xml`.
+  - Updated `SettingsScreen.kt` with all 8 Indian languages supported by the application.
+- **Evaluation Splits & Quality Gates**:
+  - Generated 10 independent evaluation splits (`eval/dev_{bn,mr,te,ta,or}.jsonl` and `eval/test_{bn,mr,te,ta,or}.jsonl`), each with 160 rows (60 scam, 100 benign = 62.5% benign) across 15 scam templates and 20 benign templates (100% disjoint between dev and test).
+  - Evaluated against Section 16.2 Tier 2 quality gates:
+    - Danger Precision $\ge 0.95$ (achieved 1.0 across all languages).
+    - Caution+ Recall $\ge 0.80$ (achieved $0.80$ to $1.0$ across all languages).
+    - Benign $\to$ Danger $\le 0.5\%$ (achieved $0.0\%$ across all languages).
+    - Benign $\to$ Caution+ $\le 3.0\%$ (achieved $0.0\%$ across all languages).
+- **Tier 1 Non-Regression**:
+  - Verified complete non-regression across all Tier 1 datasets (`corpus.jsonl`, `dev.jsonl`, `dev2.jsonl`, `dev3.jsonl`, `sms_dev.jsonl`) with 0 regressions.
+### 15. Milestone M5 Phase A Review & Hardening
+- **L02 / L03 Disambiguation & Schemeless Executable Fix**:
+  - Clarified signal naming in `rules.json` and UI strings: `L02` is `brand_domain_mismatch` (unofficial/mismatched domain for claimed brand), while `L03` is `lookalike_domain` (typosquatting/levenshtein distance).
+  - Fixed root cause in `UrlParser.kt`: schemeless tokens ending in executable extensions (`.apk`, `.xapk`, `.exe`, etc., e.g., `wedding_card.pdf.apk`, `echallan_tn.apk`, `sbi-update.apk`) are rejected in `isPotentialUrl` and `parseCandidate`. They are strictly handled by `L01` (`apk_file_or_link`) and cannot produce spurious bare domain entities or trigger `L02`/`L03`.
+  - Added `LinkSignalsAndLabelsTest.kt` asserting:
+    1. Signal-ID to name mapping for every $L^*$ signal (L01–L12).
+    2. APK filename alone triggers L01 only with no L02/L03.
+    3. `sbi-update.apk` triggers L01 with no domain signals (L02–L12).
+- **Awareness vs Hard Signals Invariance**:
+  - Enforced that hard signals (`L01`, `L10`, `L11`, `A01`, `A02`, `A04`) and sensitive asks are NEVER suppressed by awareness context.
+  - Removed `isAwareness` suppression from `A06` (`asks_secrecy_or_stay_on_call`) in `SignalEngine.kt`.
+  - Purged generic confidentiality phrases (`keep this confidential`, `maintain secrecy`, `गोपनीय रखें`, `secret rakhna`, etc.) from language packs across all locales, retaining only true digital arrest / coercion directives.
+  - Added `AwarenessVsHardSignalsTest.kt` asserting that for every Tier 2 language (`bn`, `mr`, `te`, `ta`, `or`), awareness text followed by a direct OTP ask triggers `A01` and blocks `B05`, resulting in DANGER.
+- **Police DLT Header Allowlist**:
+  - Replaced broad regex (`POL`, `COP`, `CYBER`) matching with strict verified allowlist in `packs/lists/police_dlt_headers.txt`.
+  - Unlisted police-looking headers receive no `B06` dampener. If an unlisted police header claims police authority with an ask or link, `S05` (`header_claim_mismatch`) fires and combos apply.
+  - Added `PoliceDltHeaderVerificationTest.kt` testing listed headers, unlisted advisory headers, and unlisted headers claiming authority with malicious links.
+
+### 16. M5 Phase A Checkpoint Closure & Engine Hardening
+- **Police DLT Allowlist Strict Verification**:
+  - Web review of official portals (`delhipolice.gov.in`, `cybercrime.gov.in`, `keralapolice.gov.in`, `trai.gov.in`) confirmed that none publish official circulars literally showing the 6-character DLT header strings.
+  - In strict compliance with Section 19 and rule "homepage URLs are not sources", emptied `packs/lists/police_dlt_headers.txt`. All police-claiming headers are treated as unverified (`B06` suppressed, `S05` fired if claiming police authority).
+  - Updated `PoliceDltHeaderVerificationTest.kt` to assert empty allowlist behavior (unlisted headers do not earn B06; claiming police fires S05) and tested explicit allowlist functionality.
+- **EXECUTABLE_EXTENSIONS & Domain Handling Verification**:
+  - Confirmed `EXECUTABLE_EXTENSIONS` contains: `setOf("apk", "xapk", "apks", "apkm", "exe", "scr", "bat", "cmd", "msi", "vbs", "jar")`. Real TLDs `.zip`, `.mov`, `.app` are not in `EXECUTABLE_EXTENSIONS`.
+  - Added unit tests in `LinkSignalsAndLabelsTest.kt`:
+    1. Schemeless `.zip` and `.app` domains (`secure-login.zip`, `verify.app`) are parsed as domains and evaluate domain signals (e.g. `L02`).
+    2. URLs ending in executable files (`http://x-bank.com/update.apk`) evaluate `L01` AND host-based domain signals on `x-bank.com` (`L02`).
+    3. Bare APK filenames (`echallan_ts.apk`) fire `L01` only with no domain signals (`L02..L12`).
+- **Engine CLI Explain Row Parsing & Category Format**:
+  - Updated `runExplain` in `engine-cli/src/main/kotlin/com/duarf/engine/cli/Main.kt` to support `--row "<json>"`, `--text "<json>"`, or `--in <file> --id <id>`. Automatically populates `sender_display`, `sender_kind`, `app`, and `is_group` from dataset row by default.
+  - Fixed category presentation: when score is 0.0 and verdict is `NONE`, `Category` outputs `NONE` instead of `OTHER_SUSPICIOUS`.
+  - Ignored `label: "context_only"` rows in `runEval` main loop to avoid misclassifying preceding context rows as benign test cases.
+### 17. Milestone M5 Phase B Part 1: Engine Hardening & Gap Generalization
+- **Signal Deduplication Before Fusion**:
+  - Implemented `deduplicateSignals(signals)` in `SignalEngine.kt` called immediately before returning from `evaluate(...)`.
+  - Groups fired signals by `signalId`, selects the instance with the highest weight, preserves primary `evidenceSpan`, and consolidates all distinct evidence spans into `allEvidenceSpans`.
+  - Updated `ExplanationEngine.kt` to extract highlights across `allEvidenceSpans` for selected reason signals.
+  - Added `SignalDeduplicationTest.kt` asserting that repeated brand mentions or signal triggers produce exactly one signal instance in fusion while preserving all highlight spans.
+- **Awareness Guards on S04, P10, S05, and B05**:
+  - Enforced spec invariance: awareness context suppresses `S04` (awareness preamble), `P10` (brand impersonation without official domain), and `S05` (header claim mismatch) ONLY when NO qualifying ask (`A*`), link (`L*`), or threat (`P02`–`P04`) fires (`!hasHardOrAskOrLink`).
+  - Applied identical guard to dampener `B05` (`awareness_or_advisory_context`): blocked whenever any `A*`, `L*`, or `P02`–`P04` fires.
+  - Added unit tests in `AwarenessVsHardSignalsTest.kt` verifying that awareness preambles paired with `A03` or `A07` prevent `B05` application and fire appropriate scam alerts.
+- **A04 Proximity Rule & Scoped Negation Handling**:
+  - Upgraded `A04` (`asks_upi_pin_to_receive`) matcher: fires when an instruction to enter/share a PIN or scan a QR code occurs within $N \le 8$ tokens of a receive money / cashback lure.
+  - Implemented scoped negation handling in `SignalEngine.kt` (`isNegatedUpiPinAsk`): negation applies ONLY when it grammatically governs the PIN requirement/instruction itself (`never enter PIN`, `PIN is not needed`, `पिन की आवश्यकता नहीं`, `PIN sirf bhejne ke liye hai`).
+  - Generic negation and condition tokens (`mat`, `sirf`, `no`, `only`, `don't worry`) in preambles or unrelated clauses do NOT negate `A04`.
+  - Added unit test suite in `UpiPinProximityAndNegationTest.kt` covering all 6 mandatory user phrases, Hindi/Hinglish/regional phrasing, and mixed scam/warning messages.
+- **Gap #10 Generalization (Loan Fee Scam Combo C13)**:
+  - Added combo `C13` in `ComboEngine.kt`: Loan lure (`P08`) + upfront fee ask (`A03`) from unknown sender (`S01`) $\to$ CAUTION (floor 0.55, category `LOAN_CREDIT`).
+  - Invariant 6 preserved: `A03` is NOT added to danger-qualifying signals; `C13` does not produce DANGER without a qualifying link (`L09`, `L02`).
+- **Benign Evaluation Additions & Verification**:
+  - Added genuine bank-style UPI safety notices as benign rows across dev splits in all active languages (`en`, `hi`, `hi-Latn`, `bn`, `mr`, `te`, `ta`, `or`). All evaluated to `NONE` (0.0% FP).
+  - Added genuine bank loan notices with processing fees (DLT headers and official domains) as benign rows across dev splits in all active languages. All evaluated to `NONE` (0.0% FP).

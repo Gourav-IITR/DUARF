@@ -262,7 +262,8 @@ class EntityExtractor(
                                 brandId = brand.id,
                                 brandName = brand.names.first(),
                                 brandKind = brand.kind,
-                                officialDomains = brand.officialDomains
+                                officialDomains = brand.officialDomains,
+                                isVerified = brand.isVerified
                             )
                         )
                     }

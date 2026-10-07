@@ -87,10 +87,15 @@ object ExplanationEngine {
 
         // 4. Highlights are the evidence spans of shown reasons + model highlights
         val rawHighlights = ArrayList<TextSpan>()
+        val signalsById = signals.associateBy { it.signalId }
         for (r in selectedReasons) {
-            if (r.evidence != null && r.evidence.start < r.evidence.end) {
-                val span = if (originalText.isNotEmpty()) expandToWholeToken(originalText, r.evidence) else r.evidence
-                rawHighlights.add(span)
+            val signal = signalsById[r.signalId]
+            val spans = signal?.allEvidenceSpans?.ifEmpty { listOfNotNull(r.evidence) } ?: listOfNotNull(r.evidence)
+            for (evidence in spans) {
+                if (evidence.start < evidence.end) {
+                    val span = if (originalText.isNotEmpty()) expandToWholeToken(originalText, evidence) else evidence
+                    rawHighlights.add(span)
+                }
             }
         }
         for (span in modelHighlights) {

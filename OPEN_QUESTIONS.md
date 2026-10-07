@@ -5,7 +5,12 @@ Items marked "verify" and Section 19 human inputs are tracked here.
 1. **Real notification fixtures (§19.1)**: Debug `NotificationRecorder` implemented in `capture/src/debug` to record on-device WhatsApp notification extras. Real fixture for e-challan APK scam added in `EChallanApkCaptureFixtureTest.kt` (marked "structure unverified" pending WhatsApp recording verification).
 2. **Real messages for evaluation (§19.2)**: `eval/real_world.jsonl` created tracking real-world cases (`origin: real`). E-challan APK scam added with scored document row ("RTO E challan.apk") and unscored image context row ("Photo"). Post-MVP item added for on-device image OCR.
 3. **Native-speaker review of language packs (§19.3)**: Initial packs marked with `reviewedBy: null` ("beta" in UI).
-4. **Verified official domains in `brands.json` (§19.4)**: Unverified, needs human check against cited sources and verification dates.
+4. **Verified official domains in `brands.json` (§19.4)**:
+   - **Status**: Unverified brand domains are tracked and suppressed with `isVerified: false`.
+   - **Current Unverified Brands**:
+     1. `tgspdcl` / `tsspdcl`: Telangana Southern Power Distribution Company Ltd. Domains `tgspdcl.com` and `tssouthernpower.com` pending verification due to ongoing Telangana state renaming (TS to TG).
+     2. `tangedco`: Tamil Nadu Generation and Distribution Corporation. Domains `tangedco.gov.in` and `tnebltd.gov.in` pending human verification due to discom corporate restructuring under TNEB Ltd.
+   - **Engine Guardrail**: Brands with `isVerified == false` never fire `L02` or `L03`, and cannot satisfy `B02` or `B06` (verified by `UnverifiedBrandSuppressionTest.kt`).
 5. **Play developer account & signing keys (§19.5)**: Placeholder keystore and configuration used for release builds in local development.
 6. **Final branding assets (§19.6)**: Placeholder vector assets used in MVP.
 7. **Known gap after M4: obfuscated scams (adversarial recall 0.50; hi 0.886)**:
@@ -32,5 +37,15 @@ Items marked "verify" and Section 19 human inputs are tracked here.
       1. Hindi brand aliases for government schemes (PM Mudra / प्रधानमंत्री मुद्रा योजना, PM Kisan / पीएम किसान, Ayushman Bharat / आयुष्मान भारत, etc.) in `brands.json` so `L09` (`gov_claim_non_gov_domain`) can fire when paired with non-governmental links.
       2. `P08` Hindi loan lure lexicon (`ऋण स्वीकृत`, `लोन मंजूर`, `ब्याज पर स्वीकृत`).
       3. `A03` upfront fee phrasing (`फाइल चार्ज भेजें`, `प्रोसेसिंग फीस भेजें`, `फाइल चार्ज इस लिंक पर भेजें`).
-    - **Plan**: Address in the next lexicon/data round, verified on dev splits (`dev`, `dev2`, `dev3`). Detection rules remain frozen for the current release.
+    - **Status**: Partially addressed in M5 Phase A. `pm_mudra` brand added to `brands.json`, enabling `L02` and `L09` on PM Mudra scams paired with non-gov links. This resolved all 28 rows of `new-scam-hi-05` in `dev3.jsonl` (reducing dev3 FN from 32 to 4, lifting dev3 recall from 0.973 to 0.997). Remaining general `P08` and `A03` Hindi phrasing additions remain queued for M6.
+
+11. **Post-MVP candidate: Image check via share-to-check + on-device OCR (no media permission)**:
+    - User shares an image/screenshot to DUARF via the Android share sheet. On-device OCR extracts text and runs detection without requiring broad media or storage permissions.
+    - Canonical example: E-challan APK scam where violation notice text is embedded in an image sent alongside an APK.
+    - Distinguish from automatic background scanning of received images in messaging apps, which is a separate opt-in candidate idea.
+
+12. **Verified Police and Law Enforcement DLT SMS Headers (§19.4)**:
+    - **Status**: **Unverified**. No official government notice, TRAI circular, or police gazette notification literally publishing 3-6 character DLT entity header strings (e.g. `DLPOL`, `NCRP`, `KLPOL`) is available on official government portals (`delhipolice.gov.in`, `cybercrime.gov.in`, `keralapolice.gov.in`, `trai.gov.in`).
+    - Homepages are not sources and header strings cannot be inferred from naming patterns. `packs/lists/police_dlt_headers.txt` is kept empty until official circulars literally showing the header strings are obtained.
+    - **Engine Guardrail**: Unlisted police-claiming headers never receive `B06` (police advisory dampener), and if paired with an ask or link, fire `S05` (`header_claim_mismatch`). Tested in `PoliceDltHeaderVerificationTest.kt`.
 

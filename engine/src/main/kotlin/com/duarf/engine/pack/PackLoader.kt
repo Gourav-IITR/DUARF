@@ -64,6 +64,11 @@ object PackLoader {
             .filter { it.isNotEmpty() && !it.startsWith("#") }
             .toSet()
 
+        val policeDltHeaders = source.readLines("lists/police_dlt_headers.txt")
+            .map { it.trim().uppercase() }
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+            .toSet()
+
         val modelBytes = try {
             source.readBytes("model/model.bin")
         } catch (_: Exception) {
@@ -80,6 +85,7 @@ object PackLoader {
             remoteApps = remoteApps,
             pslLines = pslLines,
             blocklist = blocklist,
+            policeDltHeaders = policeDltHeaders,
             modelBytes = modelBytes
         )
     }

@@ -98,6 +98,12 @@ object ComboEngine {
             firedCombos.add(FiredCombo("C12", 0.82, category, matched))
         }
 
+        // C13: P08 and A03 and S01 -> Floor 0.55, Category LOAN_CREDIT
+        if (has("P08", "A03", "S01")) {
+            val matched = setOf("P08", "A03", "S01")
+            firedCombos.add(FiredCombo("C13", 0.55, ScamCategory.LOAN_CREDIT, matched))
+        }
+
         return firedCombos
     }
 }

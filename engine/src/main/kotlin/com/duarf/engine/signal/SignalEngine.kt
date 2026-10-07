@@ -11,7 +11,8 @@ data class FiredSignal(
     val category: ScamCategory,
     val evidenceSpan: TextSpan?,
     val args: Map<String, String> = emptyMap(),
-    val isFromContext: Boolean = false
+    val isFromContext: Boolean = false,
+    val allEvidenceSpans: List<TextSpan> = listOfNotNull(evidenceSpan)
 )
 
 data class FiredDampener(
@@ -25,7 +26,8 @@ class SignalEngine(
     private val shorteners: Set<String>,
     private val riskyTlds: Set<String>,
     private val remoteApps: Set<String>,
-    private val blocklist: Set<String>
+    private val blocklist: Set<String>,
+    private val policeDltHeaders: Set<String> = emptySet()
 ) {
 
     fun evaluate(
@@ -67,33 +69,6 @@ class SignalEngine(
             signals.add(
                 FiredSignal("S03", "first_contact", 0.10, ScamCategory.OTHER_SUSPICIOUS, null)
             )
-        }
-
-        // S04: institution_claim_from_personal_number (SMS only)
-        // Bank/gov/utility/courier/telecom brand claimed by PERSONAL_NUMBER or NUMBER_ONLY
-        val isSms = message.app.isSms
-        if (isSms && (message.senderKind == SenderKind.PERSONAL_NUMBER || message.senderKind == SenderKind.NUMBER_ONLY) && extracted.brands.isNotEmpty()) {
-            val textNorm = normalized.normalizedText
-            val textDeob = normalized.deobfuscatedText
-            val institutionalBrand = extracted.brands.firstOrNull { brand ->
-                brand.brandKind in setOf(
-                    BrandKind.BANK, BrandKind.GOVERNMENT, BrandKind.LAW_ENFORCEMENT,
-                    BrandKind.UTILITY, BrandKind.COURIER, BrandKind.TELECOM
-                )
-            }
-            if (institutionalBrand != null) {
-                val isAwareness = isAwarenessOrAdvisory(textNorm, institutionalBrand.span) ||
-                        isAwarenessOrAdvisory(textDeob, institutionalBrand.span)
-                if (!isAwareness) {
-                    signals.add(
-                        FiredSignal(
-                            "S04", "institution_claim_from_personal_number", 0.50,
-                            institutionalBrand.brandKind.toCategory(), institutionalBrand.span,
-                            mapOf("brand" to institutionalBrand.brandName)
-                        )
-                    )
-                }
-            }
         }
 
         // 2. Links and files (§7.2 L01..L12)
@@ -179,7 +154,7 @@ class SignalEngine(
                 val isOfficial = officialDomains.any { it.equals(url.registrableDomain, ignoreCase = true) }
 
                 // L02: Brand domain mismatch
-                if (!isOfficial && officialDomains.isNotEmpty()) {
+                if (brand.isVerified && !isOfficial && officialDomains.isNotEmpty()) {
                     signals.add(
                         FiredSignal(
                             "L02", "brand_domain_mismatch", 0.50, ScamCategory.PHISHING_BANK_KYC, url.span,
@@ -189,7 +164,7 @@ class SignalEngine(
                 }
 
                 // L03: Lookalike domain (Levenshtein distance <= 2 on domain label, or contains brand inside non-official domain)
-                if (!isOfficial) {
+                if (brand.isVerified && !isOfficial) {
                     val domainPrefix = url.registrableDomain.substringBefore('.')
                     val containsBrandName = brand.brandName.lowercase().length >= 3 && url.host.contains(brand.brandName.lowercase())
 
@@ -272,15 +247,16 @@ class SignalEngine(
                 "asks_payment" -> signals.add(
                     FiredSignal("A03", "asks_payment", 0.35, ScamCategory.UPI_PAYMENT_FRAUD, span)
                 )
-                "upi_pin_to_receive" -> signals.add(
-                    FiredSignal("A04", "upi_pin_to_receive", 0.65, ScamCategory.UPI_PAYMENT_FRAUD, span)
-                )
                 "asks_identity_details" -> signals.add(
                     FiredSignal("A05", "asks_identity_details", 0.35, ScamCategory.PHISHING_BANK_KYC, span)
                 )
-                "asks_secrecy_or_stay_on_call" -> signals.add(
-                    FiredSignal("A06", "asks_secrecy_or_stay_on_call", 0.45, ScamCategory.AUTHORITY_DIGITAL_ARREST, span)
-                )
+                "asks_secrecy_or_stay_on_call" -> {
+                    if (message.senderKind != SenderKind.DLT_HEADER) {
+                        signals.add(
+                            FiredSignal("A06", "asks_secrecy_or_stay_on_call", 0.45, ScamCategory.AUTHORITY_DIGITAL_ARREST, span)
+                        )
+                    }
+                }
                 "asks_click_to_fix" -> signals.add(
                     FiredSignal("A07", "asks_click_to_fix", 0.20, ScamCategory.PHISHING_BANK_KYC, span)
                 )
@@ -350,9 +326,51 @@ class SignalEngine(
             }
         }
 
+        // A04: upi_pin_to_receive with proximity rule (instruction + receive lure <= 8 tokens) and scoped negation
+        val a04Signal = evaluateA04(
+            normalized = normalized,
+            normMatches = normMatches,
+            deobMatches = deobMatches
+        )
+        if (a04Signal != null) {
+            signals.add(a04Signal)
+        }
+
+        // Guard condition: awareness context suppresses S04, P10, and S05 only when no A*, L*, P02-P04 fires
+        val hasHardOrAskOrLink = signals.any {
+            it.signalId.startsWith("A") || it.signalId.startsWith("L") || it.signalId in setOf("P02", "P03", "P04")
+        }
+
+        // S04: institution_claim_from_personal_number (SMS only)
+        // Bank/gov/utility/courier/telecom brand claimed by PERSONAL_NUMBER or NUMBER_ONLY
+        val isSms = message.app.isSms
+        if (isSms && (message.senderKind == SenderKind.PERSONAL_NUMBER || message.senderKind == SenderKind.NUMBER_ONLY) && extracted.brands.isNotEmpty()) {
+            val textNorm = normalized.normalizedText
+            val textDeob = normalized.deobfuscatedText
+            val institutionalBrand = extracted.brands.firstOrNull { brand ->
+                brand.brandKind in setOf(
+                    BrandKind.BANK, BrandKind.GOVERNMENT, BrandKind.LAW_ENFORCEMENT,
+                    BrandKind.UTILITY, BrandKind.COURIER, BrandKind.TELECOM
+                )
+            }
+            if (institutionalBrand != null) {
+                val isAwareness = (isAwarenessOrAdvisory(textNorm, institutionalBrand.span) ||
+                        isAwarenessOrAdvisory(textDeob, institutionalBrand.span)) && !hasHardOrAskOrLink
+                if (!isAwareness) {
+                    signals.add(
+                        FiredSignal(
+                            "S04", "institution_claim_from_personal_number", 0.50,
+                            institutionalBrand.brandKind.toCategory(), institutionalBrand.span,
+                            mapOf("brand" to institutionalBrand.brandName)
+                        )
+                    )
+                }
+            }
+        }
+
         // P10: Impersonates institution
         // A BANK, GOVERNMENT, LAW_ENFORCEMENT, TELECOM, COURIER or UTILITY brand named by a number-only sender (in non-group)
-        // Must require an actual impersonation claim and is suppressed by awareness/advisory context
+        // Must require an actual impersonation claim and is suppressed by awareness/advisory context only when no A*, L*, P02-P04 fires
         if (s01 && extracted.brands.isNotEmpty()) {
             val textNorm = normalized.normalizedText
             val textDeob = normalized.deobfuscatedText
@@ -361,8 +379,8 @@ class SignalEngine(
                         hasImpersonationClaim(textNorm, textDeob, brand, allMatches)
             }
             if (institutionalBrand != null) {
-                val isAwareness = isAwarenessOrAdvisory(textNorm, institutionalBrand.span) ||
-                        isAwarenessOrAdvisory(textDeob, institutionalBrand.span)
+                val isAwareness = (isAwarenessOrAdvisory(textNorm, institutionalBrand.span) ||
+                        isAwarenessOrAdvisory(textDeob, institutionalBrand.span)) && !hasHardOrAskOrLink
                 if (!isAwareness) {
                     signals.add(
                         FiredSignal(
@@ -381,7 +399,7 @@ class SignalEngine(
         if (isSms && message.senderKind == SenderKind.DLT_HEADER) {
             val textNorm = normalized.normalizedText
             val textDeob = normalized.deobfuscatedText
-            val isAwareness = isAwarenessOrAdvisory(textNorm) || isAwarenessOrAdvisory(textDeob)
+            val isAwareness = (isAwarenessOrAdvisory(textNorm) || isAwarenessOrAdvisory(textDeob)) && !hasHardOrAskOrLink
             if (!isAwareness) {
                 // Condition 1: Claimed brand doesn't match DLT header
                 val mismatchedBrand = extracted.brands.firstOrNull { brand ->
@@ -450,7 +468,7 @@ class SignalEngine(
         // B02: Official domains only
         if (extracted.urls.isNotEmpty()) {
             val allUrlsOfficial = extracted.urls.all { url ->
-                extracted.brands.any { b -> b.officialDomains.contains(url.registrableDomain) }
+                extracted.brands.any { b -> b.isVerified && b.officialDomains.contains(url.registrableDomain) }
             }
             if (allUrlsOfficial) {
                 dampeners.add(FiredDampener("B02", "official_domains_only", 0.30))
@@ -490,14 +508,139 @@ class SignalEngine(
                 brand.brandKind in setOf(
                     BrandKind.BANK, BrandKind.GOVERNMENT, BrandKind.LAW_ENFORCEMENT,
                     BrandKind.UTILITY, BrandKind.COURIER, BrandKind.TELECOM
-                ) && !matchesDltBrand(message.dltHeaderBrand, brand)
+                ) && (!matchesDltBrand(message.dltHeaderBrand, brand) || !brand.isVerified)
             }
-            if (!hasDisqualifyingForB06 && !hasMismatchedBrand) {
+            val hasUnverifiedBrand = extracted.brands.any { !it.isVerified }
+            if (!hasDisqualifyingForB06 && !hasMismatchedBrand && !hasUnverifiedBrand) {
                 dampeners.add(FiredDampener("B06", "verified_header_consistent", 0.50))
             }
         }
 
-        return Pair(signals, dampeners)
+        return Pair(deduplicateSignals(signals), dampeners)
+    }
+
+    private fun evaluateA04(
+        normalized: NormalizedText,
+        normMatches: List<LexiconMatch>,
+        deobMatches: List<LexiconMatch>
+    ): FiredSignal? {
+        val textNorm = normalized.normalizedText
+        val textDeob = normalized.deobfuscatedText
+
+        val allRawMatches = normMatches + deobMatches
+
+        // 1. Direct matches for upi_pin_to_receive
+        val directMatches = allRawMatches.filter { it.intent == "upi_pin_to_receive" }
+        for (m in directMatches) {
+            if (!isNegatedUpiPinAsk(textNorm, textDeob, m.start, m.end, allRawMatches)) {
+                val span = mapMatchToOriginalSpan(m, normalized)
+                return FiredSignal("A04", "upi_pin_to_receive", 0.65, ScamCategory.UPI_PAYMENT_FRAUD, span)
+            }
+        }
+
+        // 2. Proximity matches: instruction (upi_pin_instruction) + lure (receive_money_lure) <= 8 tokens
+        val instructions = allRawMatches.filter { it.intent == "upi_pin_instruction" }
+        val receiveLures = allRawMatches.filter { it.intent == "receive_money_lure" }
+
+        for (instr in instructions) {
+            if (isNegatedUpiPinAsk(textNorm, textDeob, instr.start, instr.end, allRawMatches)) {
+                continue
+            }
+
+            for (lure in receiveLures) {
+                val (first, second) = if (instr.start <= lure.start) Pair(instr, lure) else Pair(lure, instr)
+                val intermediate = textNorm.substring(
+                    first.end.coerceAtMost(textNorm.length),
+                    second.start.coerceAtMost(textNorm.length).coerceAtLeast(first.end)
+                )
+                val tokenCount = intermediate.trim().split(Regex("\\s+")).filter { it.isNotEmpty() }.size
+                if (tokenCount <= 8) {
+                    val combinedMatch = LexiconMatch(
+                        "upi_pin_to_receive",
+                        textNorm.substring(first.start, second.end.coerceAtMost(textNorm.length)),
+                        first.start,
+                        second.end.coerceAtMost(textNorm.length)
+                    )
+                    val span = mapMatchToOriginalSpan(combinedMatch, normalized)
+                    return FiredSignal("A04", "upi_pin_to_receive", 0.65, ScamCategory.UPI_PAYMENT_FRAUD, span)
+                }
+            }
+        }
+
+        return null
+    }
+
+    private fun isNegatedUpiPinAsk(
+        textNorm: String,
+        textDeob: String,
+        matchStart: Int,
+        matchEnd: Int,
+        allMatches: List<LexiconMatch>
+    ): Boolean {
+        // 1. Check if an explicit negation match (negation_upi_pin_receive) covers or is adjacent to this span
+        val negations = allMatches.filter { it.intent == "negation_upi_pin_receive" }
+        for (neg in negations) {
+            val overlaps = (neg.start <= matchEnd && neg.end >= matchStart)
+            val nearby = Math.abs(neg.start - matchStart) < 60 || Math.abs(neg.end - matchEnd) < 60
+            if (overlaps || nearby) {
+                val minStart = minOf(neg.start, matchStart)
+                val maxEnd = maxOf(neg.end, matchEnd)
+                val intermediate = textNorm.substring(minStart, maxEnd.coerceAtMost(textNorm.length))
+                if (!intermediate.contains('\n') && !intermediate.contains(';') && intermediate.count { it == '.' } <= 1) {
+                    return true
+                }
+            }
+        }
+
+        // 2. Scoped regex checks on the surrounding clause (within sentence or line bounds)
+        fun checkRegexOnText(text: String): Boolean {
+            val clauseStart = maxOf(0, text.lastIndexOfAny(charArrayOf('.', '\n', ';', '!'), (matchStart - 1).coerceAtLeast(0)) + 1)
+            val clauseEnd = text.indexOfAny(charArrayOf('.', '\n', ';', '!'), matchEnd).let { if (it == -1) text.length else it }
+            val clause = text.substring(clauseStart, clauseEnd).lowercase()
+
+            val pinNegationPatterns = listOf(
+                Regex("""\b(never|do\s+not|don'?t)\s+(ever\s+)?(need|enter|share|give|provide|use)\b.*?\bpin\b"""),
+                Regex("""\b(no|not)\b.*?\bpin\b.*?\b(needed|required)\b"""),
+                Regex("""\bpin\b.*?\b(is\s+)?(not|never)\b.*?\b(needed|required)\b"""),
+                Regex("""\b(never|do\s+not|don'?t)\s+need\b.*?\bpin\b"""),
+                Regex("""\bpin\b.*?\b(is\s+)?only\b.*?\b(send|sending)\b"""),
+                Regex("""\b(kabhi\s+bhi\s+|kabhi\s+)?(mat\s+daal|mat\s+dalo|na\s+dale|share\s+na\s+kare)\b.*?\bpin\b"""),
+                Regex("""\bpin\b.*?\b(mat\s+daal|mat\s+dalo|na\s+dale|share\s+na\s+kare)\b"""),
+                Regex("""\bpin\b.*?\b(ki\s+)?(zarurat|zaroorat|jarurat|aavashyakta|avashyakta)\s+nahi\b"""),
+                Regex("""\bpin\b.*?\b(sirf|keval)\b.*?\bbhejne\b"""),
+                Regex("""\bpin\b.*?\bnahi\s+(lagta|lagega|chahiye)\b"""),
+                Regex("""पिन.*(आवश्यकता नहीं|जरूरत नहीं|नहीं लगता|नहीं लगेगा|दर्ज न करें|साझा न करें|केवल भेजने|सिर्फ भेजने)"""),
+                Regex("""পিন.*(প্রয়োজন নেই|লাগে না|দেবেন না|শুধুমাত্র টাকা পাঠানোর জন্য)"""),
+                Regex("""पिन.*(गरज नाही|आवश्यक नाही|लागत नाही|फक्त पैसे पाठवण्यासाठी)"""),
+                Regex("""పిన్.*(అవసరం లేదు|కేవలం డబ్బులు పంపడానికి)"""),
+                Regex("""பின்.*(தேவையில்லை|பணம் அனுப்ப மட்டுமே)"""),
+                Regex("""ପିନ୍.*(ଦରକାର ନାହିଁ|ପଠାଇବା ପାଇଁ)""")
+            )
+
+            return pinNegationPatterns.any { it.containsMatchIn(clause) }
+        }
+
+        return checkRegexOnText(textNorm) || checkRegexOnText(textDeob)
+    }
+
+    private fun deduplicateSignals(signals: List<FiredSignal>): List<FiredSignal> {
+        if (signals.size <= 1) return signals
+        val grouped = LinkedHashMap<String, MutableList<FiredSignal>>()
+        for (s in signals) {
+            grouped.getOrPut(s.signalId) { mutableListOf() }.add(s)
+        }
+        val result = ArrayList<FiredSignal>(grouped.size)
+        for ((_, list) in grouped) {
+            if (list.size == 1) {
+                result.add(list[0])
+            } else {
+                val highest = list.maxByOrNull { it.weight } ?: list[0]
+                val primarySpan = highest.evidenceSpan ?: list.firstOrNull { it.evidenceSpan != null }?.evidenceSpan
+                val allSpans = list.flatMap { it.allEvidenceSpans.ifEmpty { listOfNotNull(it.evidenceSpan) } }.distinct()
+                result.add(highest.copy(evidenceSpan = primarySpan, allEvidenceSpans = allSpans))
+            }
+        }
+        return result
     }
 
     private fun isNegatedOtpAsk(text: String, match: LexiconMatch): Boolean {
@@ -548,7 +691,12 @@ class SignalEngine(
         val negationIndicators = listOf(
             "do not", "don't", "dont", "never", "not to share", "not share", "should not",
             "साझा न", "साझा मत", "न बताएं", "मत बताएं", "न दें", "मत दें", "नहीं दें", "किसी को न", "किसी के साथ न",
-            "share na", "mat bata", "mat dena", "mat share", "kisi ko mat", "kisi ke sath na", "kisi se share na"
+            "share na", "mat bata", "mat dena", "mat share", "kisi ko mat", "kisi ke sath na", "kisi se share na",
+            "শেয়ার করবেন না", "বলবেন না", "দেবেন না", "কারোর সাথে নয়",
+            "शेअर करू नका", "सांगू नका", "देऊ नका", "कोणालाही नाही", "कोणाशीही शेअर",
+            "పంచుకోవద్దు", "చెప్పవద్దు", "ఇవ్వవద్దు", "ఎవరితోనూ కాదు",
+            "பகிர வேண்டாம்", "சொல்ல வேண்டாம்", "கொடுக்க வேண்டாம்", "யாருடனும்",
+            "ସେୟାର କରନ୍ତୁ ନାହିଁ", "କୁହନ୍ତୁ ନାହିଁ", "ଦିଅନ୍ତୁ ନାହିଁ", "କାହା ସହିତ ନୁହେଁ"
         )
 
         return negationIndicators.any { targetSubClause.contains(it) }
@@ -559,14 +707,21 @@ class SignalEngine(
         val globalIndicators = listOf(
             "beware", "fraudster", "fraudsters", "security advisory", "cyber police warns",
             "police warns", "warns against", "warn against", "fraud alert", "scam alert",
-            "do not fall for", "never install", "never share",
+            "do not fall for", "never install", "never share", "never enter", "do not enter",
+            "bank alert", "bank advisory", "rbi kehta hai",
             "सावधान रहें", "सतर्क रहें", "satark rahe", "savdhan rahe", "fraud se bache", "scam se bache",
             "dhokhadhadi se bache", "scam awareness", "security alert", "public advisory",
             "police advisory", "cyber police advisory", "cyber cell warns", "cyber police alert",
             "forwarded for awareness", "forwarding for awareness", "awareness forward", "scam warning",
             "सुरक्षा चेतावनी", "साइबर पुलिस चेतावनी", "ठगों से सावधान", "धोखेबाजों से सावधान",
+            "सुरक्षा सलाह", "सुरक्षा सूचना", "बैंक सुरक्षा", "आरबीआई कहता है",
             "किसी को मत देना", "kisi ko mat dena", "bank never asks", "bank kabhi nahi", "bank will never ask",
-            "पुलिस एडवाइजरी", "एडवाइजरी", "चेतावनी संदेश"
+            "पुलिस एडवाइजरी", "एडवाइजरी", "चेतावनी संदेश",
+            "সতর্ক থাকুন", "সাবধান থাকুন", "সতর্কবার্তা", "ব্যাংক নিরাপত্তা",
+            "सतर्क राहा", "सावध राहा", "सुरक्षा संदेश", "बँक सुरक्षा",
+            "అప్రమత్తంగా ఉండండి", "జాగ్రత్తగా ఉండండి", "హెచ్చరిక", "బ్యాంక్ భద్రతా",
+            "விழிப்புடன் இருங்கள்", "எச்சரிக்கையாக இருங்கள்", "பாதுகாப்பு எச்சரிக்கை", "வங்கி பாதுகாப்பு",
+            "ସତର୍କ ରୁହନ୍ତୁ", "ସାବଧାନ ରୁହନ୍ତୁ", "ସୁରକ୍ଷା ଚେତାବନୀ", "ବ୍ୟାଙ୍କ ସୁରକ୍ଷା"
         )
         if (globalIndicators.any { lower.contains(it) }) return true
 
@@ -723,6 +878,11 @@ class SignalEngine(
         val bIdUpper = brand.brandId.uppercase()
         val bNameUpper = brand.brandName.uppercase()
 
+        // Police / law enforcement headers must be strictly verified against allowlist
+        if (brand.brandKind == BrandKind.LAW_ENFORCEMENT) {
+            return policeDltHeaders.contains(dltUpper)
+        }
+
         if (dltUpper.contains(bIdUpper) || bIdUpper.contains(dltUpper)) return true
         if (dltUpper.contains(bNameUpper) || bNameUpper.contains(dltUpper)) return true
 
@@ -742,6 +902,13 @@ class SignalEngine(
             "epfo" -> dltUpper.contains("EPFO")
             "parivahan" -> dltUpper.contains("PARIV") || dltUpper.contains("VAHAN") || dltUpper.contains("ECHAL") || dltUpper.contains("SARAT")
             "electricity" -> dltUpper.contains("BSES") || dltUpper.contains("MSEDCL") || dltUpper.contains("UPPCL") || dltUpper.contains("TATAPW") || dltUpper.contains("BESCOM") || dltUpper.contains("POWER") || dltUpper.contains("BIJLI") || dltUpper.contains("ELEC")
+            "police" -> policeDltHeaders.contains(dltUpper)
+            "wbsedcl" -> dltUpper.contains("WBSEDCL")
+            "msedcl" -> dltUpper.contains("MSEDCL")
+            "tpcodl" -> dltUpper.contains("TPCODL")
+            "apcpdcl" -> dltUpper.contains("APCPDC")
+            "tgspdcl" -> dltUpper.contains("TGSPDC") || dltUpper.contains("TSSPDC")
+            "tangedco" -> dltUpper.contains("TNEB") || dltUpper.contains("TANGEDCO")
             "phonepe" -> dltUpper.contains("PHNPE") || dltUpper.contains("PHONEPE")
             "paytm" -> dltUpper.contains("PAYTM")
             "gpay" -> dltUpper.contains("GPAY") || dltUpper.contains("GOOGLE")

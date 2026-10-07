@@ -19,7 +19,7 @@ import com.duarf.app.R
 import com.duarf.app.ui.UiState
 import com.duarf.engine.model.Sensitivity
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun SettingsScreen(
     uiState: UiState,
@@ -87,7 +87,10 @@ fun SettingsScreen(
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(Modifier.height(8.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
                     FilterChip(
                         selected = uiState.preferences.languageCode == "en",
                         onClick = { onUpdateLanguage("en") },
@@ -97,6 +100,31 @@ fun SettingsScreen(
                         selected = uiState.preferences.languageCode == "hi",
                         onClick = { onUpdateLanguage("hi") },
                         label = { Text("हिंदी (Hindi)") }
+                    )
+                    FilterChip(
+                        selected = uiState.preferences.languageCode == "bn",
+                        onClick = { onUpdateLanguage("bn") },
+                        label = { Text("বাংলা (Beta)") }
+                    )
+                    FilterChip(
+                        selected = uiState.preferences.languageCode == "mr",
+                        onClick = { onUpdateLanguage("mr") },
+                        label = { Text("मराठी (Beta)") }
+                    )
+                    FilterChip(
+                        selected = uiState.preferences.languageCode == "te",
+                        onClick = { onUpdateLanguage("te") },
+                        label = { Text("తెలుగు (Beta)") }
+                    )
+                    FilterChip(
+                        selected = uiState.preferences.languageCode == "ta",
+                        onClick = { onUpdateLanguage("ta") },
+                        label = { Text("தமிழ் (Beta)") }
+                    )
+                    FilterChip(
+                        selected = uiState.preferences.languageCode == "or",
+                        onClick = { onUpdateLanguage("or") },
+                        label = { Text("ଓଡ଼ିଆ (Beta)") }
                     )
                 }
             }

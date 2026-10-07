@@ -1,0 +1,5 @@
+# Official TRAI DLT Registered Police and Cybercrime SMS Headers
+# Format: 3-6 character header entity string (alphanumeric uppercase).
+# Every entry must have a verified official government/police notice, circular, or gazette source URL literally showing the header.
+# Unlisted police-looking headers are unverified and do not receive the B06 dampener.
+# Currently empty pending official circulars literally showing headers (homepage URLs are not sources).

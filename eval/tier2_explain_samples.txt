@@ -1,0 +1,1017 @@
+==================== BN EXPLAIN SAMPLES ====================
+--- [BN SCAM SAMPLE 1] ID=dev-bn-scam-003 Category=MALICIOUS_APK ---
+Text: আমাদের বিয়ের কার্ড দেখতে wedding_card.pdf.apk ডাউনলোড করুন এবং আশীর্বাদ করুন।
+================ VERDICT ================
+Level:       DANGER
+Score:       0.85
+Rule Score:  0.85
+Model Prob:  N/A
+Category:    MALICIOUS_APK
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [L01] reason_l01_title: reason_l01_detail (evidence: TextSpan(start=26, end=46))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[26..46]: "wedding_card.pdf.apk"
+=========================================
+
+--- [BN SCAM SAMPLE 2] ID=dev-bn-scam-013 Category=PHISHING_BANK_KYC ---
+Text: এইচডিএফসি সতর্কতা: আপনার কার্ড স্থগিত করা হয়েছে। অবিলম্বে ভেরিফাই করতে ক্লিক করুন: http://hdfc-update.xyz
+================ VERDICT ================
+Level:       DANGER
+Score:       0.991
+Rule Score:  0.991
+Model Prob:  N/A
+Category:    PHISHING_BANK_KYC
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     +919876543210
+Kind:        PERSONAL_NUMBER
+---------------- REASONS ----------------
+* [L03] reason_l03_title: reason_l03_detail (evidence: TextSpan(start=84, end=106))
+* [L03] reason_l03_title: reason_l03_detail (evidence: TextSpan(start=84, end=106))
+* [L02] reason_l02_title: reason_l02_detail (evidence: TextSpan(start=84, end=106))
+--------------- HIGHLIGHTS --------------
+[84..106]: "http://hdfc-update.xyz"
+=========================================
+
+--- [BN SCAM SAMPLE 3] ID=dev-bn-scam-037 Category=OTP_ACCOUNT_TAKEOVER ---
+Text: ব্যাংক ম্যানেজার বলছি, আপনার অ্যাকাউন্ট চালু রাখতে অবিলম্বে ওটিপি দিন।
+================ VERDICT ================
+Level:       DANGER
+Score:       0.85
+Rule Score:  0.85
+Model Prob:  N/A
+Category:    OTP_ACCOUNT_TAKEOVER
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [A01] reason_a01_title: reason_a01_detail (evidence: TextSpan(start=60, end=69))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [P01] reason_p01_title: reason_p01_detail (evidence: TextSpan(start=51, end=59))
+--------------- HIGHLIGHTS --------------
+[51..59]: "অবিলম্বে"
+[60..69]: "ওটিপি দিন"
+=========================================
+
+--- [BN SCAM SAMPLE 4] ID=dev-bn-scam-023 Category=REMOTE_ACCESS ---
+Text: বিদ্যুৎ বিভাগ: ভুল বিল সংশোধনের জন্য এখনই AnyDesk অ্যাপ ইনস্টল করুন।
+================ VERDICT ================
+Level:       DANGER
+Score:       0.9
+Rule Score:  0.9
+Model Prob:  N/A
+Category:    REMOTE_ACCESS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [A02] reason_a02_title: reason_a02_detail (evidence: TextSpan(start=50, end=67))
+* [P10] reason_p10_title: reason_p10_detail (evidence: TextSpan(start=0, end=13))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[0..13]: "বিদ্যুৎ বিভাগ"
+[50..67]: "অ্যাপ ইনস্টল করুন"
+=========================================
+
+--- [BN SCAM SAMPLE 5] ID=dev-bn-scam-054 Category=JOB_TASK ---
+Text: ঘরে বসে পার্ট টাইম কাজ করে প্রতিদিন ৩০০০ টাকা আয় করুন। ইউটিউব ভিডিও লাইক করতে টেলিগ্রাম গ্রুপে যোগ দিন: http://t.me/task123
+================ VERDICT ================
+Level:       DANGER
+Score:       0.75
+Rule Score:  0.75
+Model Prob:  N/A
+Category:    JOB_TASK
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [P06] reason_p06_title: reason_p06_detail (evidence: TextSpan(start=56, end=73))
+* [L12] reason_l12_title: reason_l12_detail (evidence: TextSpan(start=105, end=124))
+* [A08] reason_a08_title: reason_a08_detail (evidence: TextSpan(start=79, end=103))
+--------------- HIGHLIGHTS --------------
+[56..73]: "ইউটিউব ভিডিও লাইক"
+[79..103]: "টেলিগ্রাম গ্রুপে যোগ দিন"
+[105..124]: "http://t.me/task123"
+=========================================
+
+--- [BN BENIGN SAMPLE 1] ID=dev-bn-ben-007 Category=CHAT ---
+Text: শুভ শারদীয়ার প্রীতি ও শুভেচ্ছা! পরিবারের সবাইকে নিয়ে পুজো খুব ভালো কাটুক।
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Dipankar
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [BN BENIGN SAMPLE 2] ID=dev-bn-ben-002 Category=BANK ---
+Text: আপনার A/c XX4321 থেকে INR 450.00 ডেবিট হয়েছে 22-10-2026 তারিখে। হেল্পলাইন: 18002583838 - SBI
+================ VERDICT ================
+Level:       NONE
+Score:       0.0
+Rule Score:  0.0
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     VM-SBIBNK-T
+Kind:        DLT_HEADER
+DLT Header:  prefix=VM, brand=SBIBNK, suffix=T
+---------------- REASONS ----------------
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [BN BENIGN SAMPLE 3] ID=dev-bn-ben-040 Category=CHAT ---
+Text: আজ দুপুরে ইলিশ মাছের পাতুড়ি আর খিচুড়ি বানিয়েছি, খেয়ে খুব ভালো লাগল।
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Kakima
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [BN BENIGN SAMPLE 4] ID=dev-bn-ben-010 Category=CHAT ---
+Text: কালকের মিটিংয়ের জন্য প্রেজেন্টেশন স্লাইডগুলো রেডি করে রেখেছি। একবার দেখে নিস।
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Amit
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [BN BENIGN SAMPLE 5] ID=dev-bn-ben-098 Category=CHAT ---
+Text: মোহনবাগান আজকের ম্যাচটা দারুণ খেলল! তুই খেলাটা দেখলি?
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Debasish
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+==================== MR EXPLAIN SAMPLES ====================
+--- [MR SCAM SAMPLE 1] ID=dev-mr-scam-055 Category=LOAN_CREDIT ---
+Text: मुद्रा योजना: ₹५,००,००० कर्ज मंजूर झाले आहे. फाईल चार्ज म्हणून ₹२००० या लिंकवर पाठवा: http://mudra-loan.site
+================ VERDICT ================
+Level:       DANGER
+Score:       0.966
+Rule Score:  0.966
+Model Prob:  N/A
+Category:    AUTHORITY_DIGITAL_ARREST
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     +919876543210
+Kind:        PERSONAL_NUMBER
+---------------- REASONS ----------------
+* [S04] reason_s04_title: reason_s04_detail (evidence: TextSpan(start=0, end=12))
+* [L02] reason_l02_title: reason_l02_detail (evidence: TextSpan(start=86, end=108))
+* [L09] reason_l09_title: reason_l09_detail (evidence: TextSpan(start=86, end=108))
+--------------- HIGHLIGHTS --------------
+[0..12]: "मुद्रा योजना"
+[86..108]: "http://mudra-loan.site"
+=========================================
+
+--- [MR SCAM SAMPLE 2] ID=dev-mr-scam-051 Category=UPI_PAYMENT_FRAUD ---
+Text: अभिनंदन! ₹1,200 कॅशबॅक मंजूर. पैसे मिळवण्यासाठी पिन टाका.
+================ VERDICT ================
+Level:       DANGER
+Score:       0.802
+Rule Score:  0.802
+Model Prob:  0.2612517844977462
+Category:    UPI_PAYMENT_FRAUD
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [A04] reason_a04_title: reason_a04_detail (evidence: TextSpan(start=30, end=56))
+* [P09] reason_p09_title: reason_p09_detail (evidence: TextSpan(start=16, end=28))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[16..28]: "कॅशबॅक मंजूर"
+[30..56]: "पैसे मिळवण्यासाठी पिन टाका"
+=========================================
+
+--- [MR SCAM SAMPLE 3] ID=dev-mr-scam-002 Category=AUTHORITY_DIGITAL_ARREST ---
+Text: मुंबई पोलीस क्राईम ब्रांच: आपल्या आधार कार्डवर अमली पदार्थांचे पार्सल सापडले असून अटक वॉरंट जारी झाले आहे. व्हिडिओ कॉल डिस्कनेक्ट करू नका, कोणालाही सांगू नका.
+================ VERDICT ================
+Level:       DANGER
+Score:       0.88
+Rule Score:  0.88
+Model Prob:  N/A
+Category:    AUTHORITY_DIGITAL_ARREST
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [P03] reason_p03_title: reason_p03_detail (evidence: TextSpan(start=47, end=76))
+* [A06] reason_a06_title: reason_a06_detail (evidence: TextSpan(start=107, end=137))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[47..76]: "अमली पदार्थांचे पार्सल सापडले"
+[107..137]: "व्हिडिओ कॉल डिस्कनेक्ट करू नका"
+=========================================
+
+--- [MR SCAM SAMPLE 4] ID=dev-mr-scam-016 Category=UTILITY_DISCONNECT ---
+Text: प्रिय ग्राहक, आपले महावितरण वीज बिल थकल्यामुळे आज रात्री ९:३० वाजता वीज पुरवठा खंडित केला जाईल. अधिकाऱ्यांशी संपर्क साधा: +919876543210
+================ VERDICT ================
+Level:       CAUTION
+Score:       0.679
+Rule Score:  0.679
+Model Prob:  N/A
+Category:    UTILITY_DISCONNECT
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [P04] reason_p04_title: reason_p04_detail (evidence: TextSpan(start=68, end=94))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [P10] reason_p10_title: reason_p10_detail (evidence: TextSpan(start=19, end=27))
+--------------- HIGHLIGHTS --------------
+[19..27]: "महावितरण"
+[68..94]: "वीज पुरवठा खंडित केला जाईल"
+=========================================
+
+--- [MR SCAM SAMPLE 5] ID=dev-mr-scam-060 Category=UTILITY_DISCONNECT ---
+Text: महावितरण वीज: वीज तोडली जाईल त्वरित बिल भरा: http://msedcl-bill-pay.top
+================ VERDICT ================
+Level:       DANGER
+Score:       0.995
+Rule Score:  0.995
+Model Prob:  0.33728283324470565
+Category:    UTILITY_DISCONNECT
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     +919876543210
+Kind:        PERSONAL_NUMBER
+---------------- REASONS ----------------
+* [L03] reason_l03_title: reason_l03_detail (evidence: TextSpan(start=45, end=71))
+* [L03] reason_l03_title: reason_l03_detail (evidence: TextSpan(start=45, end=71))
+* [L02] reason_l02_title: reason_l02_detail (evidence: TextSpan(start=45, end=71))
+--------------- HIGHLIGHTS --------------
+[45..71]: "http://msedcl-bill-pay.top"
+=========================================
+
+--- [MR BENIGN SAMPLE 1] ID=dev-mr-ben-013 Category=CHAT ---
+Text: परीक्षेचा निकाल आज दुपारी जाहीर होणार आहे. खूप शुभेच्छा!
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Rohan
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [MR BENIGN SAMPLE 2] ID=dev-mr-ben-070 Category=CHAT ---
+Text: उद्याच्या ऑफिस प्रेझेंटेशनच्या स्लाईड्स पूर्ण झाल्या आहेत. एकदा तपासून घे.
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Sneha
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [MR BENIGN SAMPLE 3] ID=dev-mr-ben-073 Category=CHAT ---
+Text: परीक्षेचा निकाल आज दुपारी जाहीर होणार आहे. खूप शुभेच्छा!
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Rohan
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [MR BENIGN SAMPLE 4] ID=dev-mr-ben-037 Category=DELIVERY ---
+Text: Your Amazon package is out for delivery. Track at https://amazon.in
+================ VERDICT ================
+Level:       NONE
+Score:       0.0
+Rule Score:  0.0
+Model Prob:  0.0024831262697933374
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     AD-AMAZON-T
+Kind:        DLT_HEADER
+DLT Header:  prefix=AD, brand=AMAZON, suffix=T
+---------------- REASONS ----------------
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [MR BENIGN SAMPLE 5] ID=dev-mr-ben-021 Category=UTILITY ---
+Text: Dear Consumer, your MSEDCL bill for Cons No 019283746 is Rs 850. Pay via https://mahadiscom.in - MSEDCL
+================ VERDICT ================
+Level:       NONE
+Score:       0.0
+Rule Score:  0.0
+Model Prob:  0.09861958524732994
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     MH-MSEDCL-G
+Kind:        DLT_HEADER
+DLT Header:  prefix=MH, brand=MSEDCL, suffix=G
+---------------- REASONS ----------------
+--------------- HIGHLIGHTS --------------
+=========================================
+
+==================== TE EXPLAIN SAMPLES ====================
+--- [TE SCAM SAMPLE 1] ID=dev-te-scam-050 Category=MALICIOUS_APK ---
+Text: ట్రాఫిక్ చలాన్: మీ పెండింగ్ చలాన్ చెల్లించడానికి echallan_ts.apk ఇన్‌స్టాల్ చేయండి. రిఫరెన్స్: 970917
+================ VERDICT ================
+Level:       DANGER
+Score:       0.954
+Rule Score:  0.954
+Model Prob:  N/A
+Category:    MALICIOUS_APK
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     +919876543210
+Kind:        PERSONAL_NUMBER
+---------------- REASONS ----------------
+* [L01] reason_l01_title: reason_l01_detail (evidence: TextSpan(start=49, end=64))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S04] reason_s04_title: reason_s04_detail (evidence: TextSpan(start=49, end=57))
+--------------- HIGHLIGHTS --------------
+[49..64]: "echallan_ts.apk"
+=========================================
+
+--- [TE SCAM SAMPLE 2] ID=dev-te-scam-014 Category=LOTTERY_PRIZE ---
+Text: అభినందనలు మీరు లాటరీ గెలుచుకున్నారు రూ. 10 లక్షలు. రిజిస్ట్రేషన్ ఫీజు చెల్లించండి.
+================ VERDICT ================
+Level:       CAUTION
+Score:       0.684
+Rule Score:  0.684
+Model Prob:  N/A
+Category:    LOTTERY_PRIZE
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [P05] reason_p05_title: reason_p05_detail (evidence: TextSpan(start=0, end=35))
+* [A03] reason_a03_title: reason_a03_detail (evidence: TextSpan(start=51, end=81))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[0..35]: "అభినందనలు మీరు లాటరీ గెలుచుకున్నారు"
+[51..81]: "రిజిస్ట్రేషన్ ఫీజు చెల్లించండి"
+=========================================
+
+--- [TE SCAM SAMPLE 3] ID=dev-te-scam-006 Category=UPI_PAYMENT_FRAUD ---
+Text: అభినందనలు! ₹5,000 క్యాష్‌బ్యాక్ ఆమోదించబడింది. డబ్బు పొందడానికి పిన్ ఎంటర్ చేయండి.
+================ VERDICT ================
+Level:       DANGER
+Score:       0.802
+Rule Score:  0.802
+Model Prob:  N/A
+Category:    UPI_PAYMENT_FRAUD
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [A04] reason_a04_title: reason_a04_detail (evidence: TextSpan(start=47, end=81))
+* [P09] reason_p09_title: reason_p09_detail (evidence: TextSpan(start=18, end=45))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[18..45]: "క్యాష్‌బ్యాక్ ఆమోదించబడింది"
+[47..81]: "డబ్బు పొందడానికి పిన్ ఎంటర్ చేయండి"
+=========================================
+
+--- [TE SCAM SAMPLE 4] ID=dev-te-scam-057 Category=IMPERSONATED_CONTACT ---
+Text: ఇది నా కొత్త నంబర్, హాస్పిటల్‌లో ఉన్నాను డబ్బులు పంపండి అత్యవసరంగా.
+================ VERDICT ================
+Level:       CAUTION
+Score:       0.719
+Rule Score:  0.747
+Model Prob:  N/A
+Category:    IMPERSONATED_CONTACT
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [A09] reason_a09_title: reason_a09_detail (evidence: TextSpan(start=20, end=55))
+* [P01] reason_p01_title: reason_p01_detail (evidence: TextSpan(start=56, end=66))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[20..55]: "హాస్పిటల్‌లో ఉన్నాను డబ్బులు పంపండి"
+[56..66]: "అత్యవసరంగా"
+=========================================
+
+--- [TE SCAM SAMPLE 5] ID=dev-te-scam-017 Category=AUTHORITY_DIGITAL_ARREST ---
+Text: హైదరాబాద్ పోలీస్ క్రైమ్ బ్రాంచ్: మీ ఆధార్ నంబర్‌పై మాదకద్రవ్యాల పార్శిల్ పట్టుబడింది మరియు అరెస్ట్ వారెంట్ జారీ చేయబడింది. వీడియో కాల్ కట్ చేయవద్దు, ఎవరికీ చెప్పవద్దు.
+================ VERDICT ================
+Level:       DANGER
+Score:       0.88
+Rule Score:  0.88
+Model Prob:  N/A
+Category:    AUTHORITY_DIGITAL_ARREST
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [P03] reason_p03_title: reason_p03_detail (evidence: TextSpan(start=51, end=84))
+* [A06] reason_a06_title: reason_a06_detail (evidence: TextSpan(start=130, end=147))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[51..84]: "మాదకద్రవ్యాల పార్శిల్ పట్టుబడింది"
+[130..147]: "కాల్ కట్ చేయవద్దు"
+=========================================
+
+--- [TE BENIGN SAMPLE 1] ID=dev-te-ben-084 Category=OTP ---
+Text: 123456 మీ లాగిన్ ఓటీపీ. ఈ ఓటీపీని ఎవరితోనూ పంచుకోవద్దు. - SBI
+================ VERDICT ================
+Level:       NONE
+Score:       0.0
+Rule Score:  0.0
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     VM-SBIBNK-T
+Kind:        DLT_HEADER
+DLT Header:  prefix=VM, brand=SBIBNK, suffix=T
+---------------- REASONS ----------------
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [TE BENIGN SAMPLE 2] ID=dev-te-ben-072 Category=CHAT ---
+Text: డాక్టర్ అపాయింట్‌మెంట్ రేపు సాయంత్రం 5 గంటలకు ఉంది, రిపోర్టులు తీసుకురండి.
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Nanna
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [TE BENIGN SAMPLE 3] ID=dev-te-ben-075 Category=CHAT ---
+Text: హైదరాబాద్ బిర్యానీ చాలా బాగుంది, రెస్టారెంట్ అడ్రస్ పంపించాను.
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Chaitanya
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [TE BENIGN SAMPLE 4] ID=dev-te-ben-016 Category=CHAT ---
+Text: ఈరోజు హైదరాబాద్‌లో భారీ వర్షం పడుతోంది, గొడుగు మర్చిపోవద్దు.
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Swathi
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [TE BENIGN SAMPLE 5] ID=dev-te-ben-039 Category=CHAT ---
+Text: కాలేజీ మిత్రుల కలయిక వచ్చే ఆదివారం ప్లాన్ చేశాము. వస్తున్నావా?
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Naresh
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+==================== TA EXPLAIN SAMPLES ====================
+--- [TA SCAM SAMPLE 1] ID=dev-ta-scam-035 Category=MALICIOUS_APK ---
+Text: போக்குவரத்து காவல்: நிலுவையில் உள்ள அபராதத்தை செலுத்த echallan_tn.apk நிறுவவும். எண்: 577463
+================ VERDICT ================
+Level:       DANGER
+Score:       0.954
+Rule Score:  0.954
+Model Prob:  N/A
+Category:    MALICIOUS_APK
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     +919876543210
+Kind:        PERSONAL_NUMBER
+---------------- REASONS ----------------
+* [L01] reason_l01_title: reason_l01_detail (evidence: TextSpan(start=54, end=69))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S04] reason_s04_title: reason_s04_detail (evidence: TextSpan(start=54, end=62))
+--------------- HIGHLIGHTS --------------
+[54..69]: "echallan_tn.apk"
+=========================================
+
+--- [TA SCAM SAMPLE 2] ID=dev-ta-scam-027 Category=IMPERSONATED_CONTACT ---
+Text: இது எனது புதிய எண், மருத்துவமனையில் உள்ளேன் பணம் அனுப்புங்கள் அவசரமாக.
+================ VERDICT ================
+Level:       CAUTION
+Score:       0.719
+Rule Score:  0.747
+Model Prob:  N/A
+Category:    IMPERSONATED_CONTACT
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [A09] reason_a09_title: reason_a09_detail (evidence: TextSpan(start=20, end=61))
+* [P01] reason_p01_title: reason_p01_detail (evidence: TextSpan(start=62, end=69))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[20..61]: "மருத்துவமனையில் உள்ளேன் பணம் அனுப்புங்கள்"
+[62..69]: "அவசரமாக"
+=========================================
+
+--- [TA SCAM SAMPLE 3] ID=dev-ta-scam-052 Category=OTP_ACCOUNT_TAKEOVER ---
+Text: கணக்கை தொடர உங்கள் மொபைலுக்கு வந்த ஓடிபி சொல்லுங்கள்.
+================ VERDICT ================
+Level:       DANGER
+Score:       0.85
+Rule Score:  0.85
+Model Prob:  N/A
+Category:    OTP_ACCOUNT_TAKEOVER
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [A01] reason_a01_title: reason_a01_detail (evidence: TextSpan(start=35, end=52))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[35..52]: "ஓடிபி சொல்லுங்கள்"
+=========================================
+
+--- [TA SCAM SAMPLE 4] ID=dev-ta-scam-034 Category=PHISHING_BANK_KYC ---
+Text: இந்தியன் வங்கி: 24 மணி நேரத்திற்குள் கணக்கு முடக்கப்படும். கேஒய்சி புதுப்பிக்க கிளிக் செய்யவும்: http://indianbank-kyc.top
+================ VERDICT ================
+Level:       CAUTION
+Score:       0.642
+Rule Score:  0.642
+Model Prob:  N/A
+Category:    PHISHING_BANK_KYC
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     +919876543210
+Kind:        PERSONAL_NUMBER
+---------------- REASONS ----------------
+* [P02] reason_p02_title: reason_p02_detail (evidence: TextSpan(start=37, end=57))
+* [L06] reason_l06_title: reason_l06_detail (evidence: TextSpan(start=97, end=122))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[37..57]: "கணக்கு முடக்கப்படும்"
+[97..122]: "http://indianbank-kyc.top"
+=========================================
+
+--- [TA SCAM SAMPLE 5] ID=dev-ta-scam-028 Category=PHISHING_BANK_KYC ---
+Text: எச்டிஎப்சி வங்கி: பான் கார்டு இணைக்கப்படாததால் கணக்கு முடக்கப்படும். கிளிக் செய்யவும்: http://hdfc-pan-tn.xyz
+================ VERDICT ================
+Level:       DANGER
+Score:       0.991
+Rule Score:  0.991
+Model Prob:  N/A
+Category:    PHISHING_BANK_KYC
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     +919876543210
+Kind:        PERSONAL_NUMBER
+---------------- REASONS ----------------
+* [L03] reason_l03_title: reason_l03_detail (evidence: TextSpan(start=87, end=109))
+* [L03] reason_l03_title: reason_l03_detail (evidence: TextSpan(start=87, end=109))
+* [L02] reason_l02_title: reason_l02_detail (evidence: TextSpan(start=87, end=109))
+--------------- HIGHLIGHTS --------------
+[87..109]: "http://hdfc-pan-tn.xyz"
+=========================================
+
+--- [TA BENIGN SAMPLE 1] ID=dev-ta-ben-063 Category=BANK ---
+Text: Dear Customer, INR 35,000.00 credited to A/c XX9812 on 22-10-2026. Bal: INR 42,300.00. - SBI
+================ VERDICT ================
+Level:       NONE
+Score:       0.05
+Rule Score:  0.05
+Model Prob:  0.2811358888769577
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     VM-SBIBNK-T
+Kind:        DLT_HEADER
+DLT Header:  prefix=VM, brand=SBIBNK, suffix=T
+---------------- REASONS ----------------
+* [P14] reason_p14_title: reason_p14_detail (evidence: TextSpan(start=0, end=13))
+--------------- HIGHLIGHTS --------------
+[0..13]: "Dear Customer"
+=========================================
+
+--- [TA BENIGN SAMPLE 2] ID=dev-ta-ben-093 Category=CHAT ---
+Text: தேர்வு முடிவுகள் இன்று மதியம் வெளியாகும். வாழ்த்துகள்!
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Vignesh
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [TA BENIGN SAMPLE 3] ID=dev-ta-ben-018 Category=CHAT ---
+Text: இன்றைய கிரிக்கெட் போட்டியில் இந்தியா மிகச் சிறப்பாக விளையாடியது!
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Vijay
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [TA BENIGN SAMPLE 4] ID=dev-ta-ben-086 Category=GOVERNMENT ---
+Text: தமிழ்நாடு சைபர் கிரைம்: முன்பின் தெரியாத நபர்களுக்கு ஓடிபி அல்லது கடவுச்சொல்லை பகிராதீர்கள். விழிப்புடன் இருங்கள்.
+================ VERDICT ================
+Level:       NONE
+Score:       0.0
+Rule Score:  0.0
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     TN-CHNPOL-G
+Kind:        DLT_HEADER
+DLT Header:  prefix=TN, brand=CHNPOL, suffix=G
+---------------- REASONS ----------------
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [TA BENIGN SAMPLE 5] ID=dev-ta-ben-016 Category=CHAT ---
+Text: இன்று சென்னையில் பலத்த மழை பெய்கிறது, குடை எடுத்துச் செல்ல மறக்காதீர்கள்.
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Priya
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+==================== OR EXPLAIN SAMPLES ====================
+--- [OR SCAM SAMPLE 1] ID=dev-or-scam-010 Category=LOAN_CREDIT ---
+Text: ପିଏମ ମୁଦ୍ରା ଯୋଜନା: ସୁବିଧା କିସ୍ତିରେ ଋଣ ମଞ୍ଜୁର ହୋଇଛି। ଫାଇଲ୍ ଚାର୍ଜ ପଠାନ୍ତୁ: http://mudra-loan-od.xyz
+================ VERDICT ================
+Level:       DANGER
+Score:       0.958
+Rule Score:  0.958
+Model Prob:  N/A
+Category:    AUTHORITY_DIGITAL_ARREST
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     +919876543210
+Kind:        PERSONAL_NUMBER
+---------------- REASONS ----------------
+* [S04] reason_s04_title: reason_s04_detail (evidence: TextSpan(start=0, end=11))
+* [L02] reason_l02_title: reason_l02_detail (evidence: TextSpan(start=73, end=97))
+* [L09] reason_l09_title: reason_l09_detail (evidence: TextSpan(start=73, end=97))
+--------------- HIGHLIGHTS --------------
+[0..11]: "ପିଏମ ମୁଦ୍ରା"
+[73..97]: "http://mudra-loan-od.xyz"
+=========================================
+
+--- [OR SCAM SAMPLE 2] ID=dev-or-scam-022 Category=OTP_ACCOUNT_TAKEOVER ---
+Text: ଖାତା ଚାଲୁ ରଖିବା ପାଇଁ ଆପଣଙ୍କ ମୋବାଇଲକୁ ଆସିଥିବା ଓଟିପି ଦିଅନ୍ତୁ।
+================ VERDICT ================
+Level:       DANGER
+Score:       0.85
+Rule Score:  0.85
+Model Prob:  N/A
+Category:    OTP_ACCOUNT_TAKEOVER
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [A01] reason_a01_title: reason_a01_detail (evidence: TextSpan(start=45, end=58))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[45..58]: "ଓଟିପି ଦିଅନ୍ତୁ"
+=========================================
+
+--- [OR SCAM SAMPLE 3] ID=dev-or-scam-031 Category=UTILITY_DISCONNECT ---
+Text: ପ୍ରିୟ ଗ୍ରାହକ, ଆପଣଙ୍କ ବିଜୁଳି ବିଲ୍ ବାକି ଥିବାରୁ ଆଜି ରାତି ୯:୩୦ ରେ ବିଦ୍ୟୁତ୍ ସଂଯୋଗ ବିଚ୍ଛିନ୍ନ ହେବ। ବିଦ୍ୟୁତ୍ ଅଧିକାରୀଙ୍କ ସହ ଯୋଗାଯୋଗ କରନ୍ତୁ: +919876543210
+================ VERDICT ================
+Level:       CAUTION
+Score:       0.599
+Rule Score:  0.599
+Model Prob:  N/A
+Category:    UTILITY_DISCONNECT
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [P04] reason_p04_title: reason_p04_detail (evidence: TextSpan(start=62, end=90))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[62..90]: "ବିଦ୍ୟୁତ୍ ସଂଯୋଗ ବିଚ୍ଛିନ୍ନ ହେବ"
+=========================================
+
+--- [OR SCAM SAMPLE 4] ID=dev-or-scam-052 Category=OTP_ACCOUNT_TAKEOVER ---
+Text: ଖାତା ଚାଲୁ ରଖିବା ପାଇଁ ଆପଣଙ୍କ ମୋବାଇଲକୁ ଆସିଥିବା ଓଟିପି ଦିଅନ୍ତୁ।
+================ VERDICT ================
+Level:       DANGER
+Score:       0.85
+Rule Score:  0.85
+Model Prob:  N/A
+Category:    OTP_ACCOUNT_TAKEOVER
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [A01] reason_a01_title: reason_a01_detail (evidence: TextSpan(start=45, end=58))
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+[45..58]: "ଓଟିପି ଦିଅନ୍ତୁ"
+=========================================
+
+--- [OR SCAM SAMPLE 5] ID=dev-or-scam-024 Category=JOB_TASK ---
+Text: ଘରେ ବସି ପାର୍ଟ ଟାଇମ୍ କାମ କରି ଦୈନିକ ୩୦୦୦ ଟଙ୍କା ରୋଜଗାର କରନ୍ତୁ। ଟେଲିଗ୍ରାମ୍ ଗ୍ରୁପ୍‌ରେ ଯୋଗ ଦିଅନ୍ତୁ: http://t.me/earn_odia
+================ VERDICT ================
+Level:       DANGER
+Score:       0.75
+Rule Score:  0.75
+Model Prob:  N/A
+Category:    JOB_TASK
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     +919876543210
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [P06] reason_p06_title: reason_p06_detail (evidence: TextSpan(start=8, end=23))
+* [L12] reason_l12_title: reason_l12_detail (evidence: TextSpan(start=94, end=115))
+* [A08] reason_a08_title: reason_a08_detail (evidence: TextSpan(start=60, end=92))
+--------------- HIGHLIGHTS --------------
+[8..23]: "ପାର୍ଟ ଟାଇମ୍ କାମ"
+[60..92]: "ଟେଲିଗ୍ରାମ୍ ଗ୍ରୁପ୍‌ରେ ଯୋଗ ଦିଅନ୍ତୁ"
+[94..115]: "http://t.me/earn_odia"
+=========================================
+
+--- [OR BENIGN SAMPLE 1] ID=dev-or-ben-056 Category=CHAT ---
+Text: ଆଜି ଭୁବନେଶ୍ୱରରେ ପ୍ରବଳ ବର୍ଷା ହେଉଛି, ଛତା ସାଙ୍ଗରେ ନେବାକୁ ଭୁଲିବ ନାହିଁ।
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Smruti
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [OR BENIGN SAMPLE 2] ID=dev-or-ben-041 Category=UTILITY ---
+Text: Dear Consumer, TPCODL electricity bill of Rs 3,500 generated for Consumer No 081928374. Pay at https://tpcentralodisha.com - TPCODL
+================ VERDICT ================
+Level:       NONE
+Score:       0.0
+Rule Score:  0.0
+Model Prob:  0.016488299470582838
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         SMS_GOOGLE_MESSAGES
+Display:     OD-TPCODL-G
+Kind:        DLT_HEADER
+DLT Header:  prefix=OD, brand=TPCODL, suffix=G
+---------------- REASONS ----------------
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [OR BENIGN SAMPLE 3] ID=dev-or-ben-072 Category=CHAT ---
+Text: ଡାକ୍ତରଙ୍କ ଆପଏଣ୍ଟମେଣ୍ଟ ଆସନ୍ତାକାଲି ଅପରାହ୍ନ ୫ଟାରେ ଅଛି, ରିପୋର୍ଟ ସାଙ୍ଗରେ ନେବ।
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Bapa
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [OR BENIGN SAMPLE 4] ID=dev-or-ben-032 Category=CHAT ---
+Text: ଡାକ୍ତରଙ୍କ ଆପଏଣ୍ଟମେଣ୍ଟ ଆସନ୍ତାକାଲି ଅପରାହ୍ନ ୫ଟାରେ ଅଛି, ରିପୋର୍ଟ ସାଙ୍ଗରେ ନେବ।
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Bapa
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+
+--- [OR BENIGN SAMPLE 5] ID=dev-or-ben-078 Category=CHAT ---
+Text: ଆଜି ମ୍ୟାଚ୍‌ରେ ଭାରତ ବହୁତ ଭଲ ଖେଳିଲା!
+================ VERDICT ================
+Level:       NONE
+Score:       0.19
+Rule Score:  0.19
+Model Prob:  N/A
+Category:    OTHER_SUSPICIOUS
+Version:     1.0.0-model-v1
+---------------- SENDER -----------------
+App:         WHATSAPP
+Display:     Debashis
+Kind:        NUMBER_ONLY
+---------------- REASONS ----------------
+* [S01] reason_s01_title: reason_s01_detail (evidence: null)
+* [S03] reason_s03_title: reason_s03_detail (evidence: null)
+--------------- HIGHLIGHTS --------------
+=========================================
+

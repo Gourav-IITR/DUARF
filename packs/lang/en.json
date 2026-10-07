@@ -27,7 +27,7 @@
       "pay the fee", "pay charges", "pay registration fee", "deposit amount", "pay penalty",
       "pay advance", "transfer processing fee", "pay fine", "pay Rs", "pay fine immediately",
       "pay customs fine", "fine pay now", "pay fine for release", "pay penalty to release",
-      "transfer fine amount"
+      "transfer fine amount", "pay processing fee", "processing fee", "pay upfront fee", "upfront fee"
     ],
     "upi_pin_to_receive": [
       "enter upi pin to receive", "enter pin to receive", "enter your pin to get",
@@ -37,13 +37,39 @@
       "enter secret upi pin", "enter upi pin to collect", "authorize transaction with your upi pin",
       "enter pin to collect balance", "upi pin to collect"
     ],
+    "upi_pin_instruction": [
+      "enter upi pin", "enter your upi pin", "enter pin", "enter your pin",
+      "enter secret pin", "enter secret upi pin", "scan qr", "scan qr code",
+      "scan the qr", "scan this qr", "approve request", "approve collect request",
+      "authorize with upi pin", "authorize with your upi pin", "authorize transaction with your upi pin"
+    ],
+    "receive_money_lure": [
+      "to receive", "receive money", "receive your refund", "receive refund",
+      "receive payment", "receive balance", "receive cashback", "get your cashback",
+      "get cashback", "get your refund", "get refund", "to collect", "collect balance",
+      "credit to account", "credited to your account", "credit immediately"
+    ],
+    "negation_upi_pin_receive": [
+      "never enter your upi pin", "never enter upi pin", "never enter pin",
+      "do not enter upi pin", "do not enter your upi pin", "dont enter upi pin",
+      "don't enter upi pin", "never share upi pin", "never share your upi pin",
+      "never share pin", "do not share upi pin", "dont share upi pin",
+      "no pin required", "no upi pin required", "no pin needed", "no upi pin needed",
+      "pin is not needed", "pin not needed", "pin is not required", "pin not required",
+      "never need your upi pin", "never need upi pin", "never need pin",
+      "dont need upi pin", "don't need upi pin", "do not need upi pin",
+      "do not need a pin to receive", "not need upi pin to receive",
+      "pin is only for sending", "pin is only to send", "pin only for sending",
+      "pin only to send", "pin is only used to send", "upi pin is only for sending",
+      "upi pin is only to send", "upi pin only for sending", "upi pin only to send"
+    ],
     "asks_identity_details": [
       "send aadhaar card", "send pan card", "share aadhaar number", "share pan number",
       "send card details", "send bank account details", "verify your aadhaar", "verify your pan"
     ],
     "asks_secrecy_or_stay_on_call": [
       "do not disconnect", "do not hang up", "stay on the call", "stay on video call",
-      "do not tell anyone", "keep this confidential", "do not inform police", "maintain secrecy"
+      "do not tell anyone", "do not inform police"
     ],
     "asks_click_to_fix": [
       "click link to update", "click here to verify", "click here to update", "click link to reactivate",
@@ -109,7 +135,7 @@
       "pre-approved loan", "instant loan approved", "loan with zero documents",
       "personal loan without cibil", "instant cash loan approved",
       "zero documentation cash loan", "zero documentation loan", "loan disbursed straight to bank",
-      "cash loan disbursed", "instant financial assistance"
+      "cash loan disbursed", "instant financial assistance", "loan sanctioned", "personal loan approved", "loan is approved", "instant loan sanctioned"
     ],
     "lure_refund_cashback": [
       "refund approved", "cashback of Rs", "reward points expiring", "claim your cashback",

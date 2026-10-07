@@ -82,6 +82,7 @@ data class EvaluationMetrics(
     val intendedCautionTemplates: Map<String, Int> = emptyMap(),
     val benignRaisedToCautionExclIntendedPercent: Double = benignRaisedToCautionOrAbovePercent,
     val passedTier1Gates: Boolean,
+    val passedTier2Gates: Boolean = true,
     val perLanguage: List<LanguageMetrics> = emptyList(),
     val adversarialMetrics: AdversarialMetrics? = null,
     val adversarialRecall: Double? = null,
@@ -111,7 +112,7 @@ private fun printUsage() {
     println("""
         DUARF Engine CLI
         Usage:
-          engine-cli explain --text "<message text>" [--app <WHATSAPP|SMS>] [--sender <sender>] [--packs <path>]
+          engine-cli explain (--text "<message text>" | --row "<json row>" | --in <dataset.jsonl> --id <id>) [--app <WHATSAPP|SMS>] [--sender <sender>] [--sender-kind <kind>] [--packs <path>]
           engine-cli eval --in <corpus.jsonl> [--out <report.json>] [--packs <path>]
           engine-cli featurize --in <dataset.jsonl> --out <dataset.svm> [--packs <path>]
     """.trimIndent())
@@ -136,18 +137,58 @@ private fun resolvePacksDir(args: List<String>): File {
 }
 
 private fun runExplain(args: List<String>) {
+    val rowIdx = args.indexOf("--row")
+    val idIdx = args.indexOf("--id")
+    val inIdx = args.indexOf("--in")
     val textIdx = args.indexOf("--text")
-    if (textIdx < 0 || textIdx + 1 >= args.size) {
-        System.err.println("Error: --text parameter required")
-        exitProcess(1)
+
+    val json = Json { ignoreUnknownKeys = true; isLenient = true }
+    var parsedRow: CorpusRow? = null
+
+    if (rowIdx >= 0 && rowIdx + 1 < args.size) {
+        val rowStr = args[rowIdx + 1]
+        parsedRow = try { json.decodeFromString<CorpusRow>(rowStr) } catch (_: Exception) { null }
+    } else if (inIdx >= 0 && inIdx + 1 < args.size && idIdx >= 0 && idIdx + 1 < args.size) {
+        val inputFile = resolveFile(args[inIdx + 1])
+        val targetId = args[idIdx + 1]
+        if (inputFile.exists()) {
+            for (line in inputFile.readLines()) {
+                if (line.isBlank() || line.trim().startsWith("#")) continue
+                try {
+                    val r = json.decodeFromString<CorpusRow>(line)
+                    if (r.id == targetId) {
+                        parsedRow = r
+                        break
+                    }
+                } catch (_: Exception) {}
+            }
+        }
+    } else if (textIdx >= 0 && textIdx + 1 < args.size) {
+        val rawCandidate = args[textIdx + 1].trim()
+        if (rawCandidate.startsWith("{") && rawCandidate.endsWith("}") && rawCandidate.contains("\"text\"")) {
+            parsedRow = try { json.decodeFromString<CorpusRow>(rawCandidate) } catch (_: Exception) { null }
+        }
     }
-    val text = args[textIdx + 1]
+
+    val text = when {
+        textIdx >= 0 && textIdx + 1 < args.size && parsedRow == null -> args[textIdx + 1]
+        parsedRow != null -> parsedRow.text
+        textIdx >= 0 && textIdx + 1 < args.size -> args[textIdx + 1]
+        else -> {
+            System.err.println("Error: --text, --row, or --in + --id parameter required")
+            exitProcess(1)
+        }
+    }
     val packsDir = resolvePacksDir(args)
 
     val engine = DefaultScamEngine.fromPackSource(FilePackSource(packsDir))
 
     val appIdx = args.indexOf("--app")
-    val appStr = if (appIdx >= 0 && appIdx + 1 < args.size) args[appIdx + 1] else "WHATSAPP"
+    val appStr = when {
+        appIdx >= 0 && appIdx + 1 < args.size -> args[appIdx + 1]
+        parsedRow != null -> parsedRow.app
+        else -> "WHATSAPP"
+    }
     val sourceApp = when (appStr.uppercase()) {
         "SMS", "SMS_GOOGLE_MESSAGES" -> SourceApp.SMS_GOOGLE_MESSAGES
         "SMS_SAMSUNG_MESSAGES" -> SourceApp.SMS_SAMSUNG_MESSAGES
@@ -157,10 +198,20 @@ private fun runExplain(args: List<String>) {
     }
 
     val senderIdx = args.indexOf("--sender")
-    val senderArg = if (senderIdx >= 0 && senderIdx + 1 < args.size) args[senderIdx + 1] else null
+    val senderArg = when {
+        senderIdx >= 0 && senderIdx + 1 < args.size -> args[senderIdx + 1]
+        parsedRow?.sender_display != null -> parsedRow.sender_display
+        parsedRow?.sender_kind?.uppercase() == "DLT_HEADER" -> "VM-SBIBNK-T"
+        else -> null
+    }
 
     val skIdx = args.indexOf("--sender-kind")
-    val sKindArg = if (skIdx >= 0 && skIdx + 1 < args.size) args[skIdx + 1] else null
+    val sKindArg = when {
+        skIdx >= 0 && skIdx + 1 < args.size -> args[skIdx + 1]
+        parsedRow != null -> parsedRow.sender_kind
+        else -> null
+    }
+    val isGroup = parsedRow?.is_group ?: false
 
     val senderDisplay: String
     val sKind: SenderKind
@@ -201,14 +252,14 @@ private fun runExplain(args: List<String>) {
     }
 
     val msg = IncomingMessage(
-        fingerprint = "cli-explain",
+        fingerprint = parsedRow?.id?.ifEmpty { "cli-explain" } ?: "cli-explain",
         source = SourceKind.NOTIFICATION,
         app = sourceApp,
         conversationKey = "conv-cli",
         senderDisplay = senderDisplay,
         senderKind = sKind,
         senderCountryCode = senderCountryCode,
-        isGroup = false,
+        isGroup = isGroup,
         text = text,
         attachmentHint = null,
         receivedAtMillis = System.currentTimeMillis(),
@@ -219,12 +270,18 @@ private fun runExplain(args: List<String>) {
 
     val verdict = engine.analyze(msg)
 
+    val displayCategory = when {
+        verdict.score == 0.0 && verdict.level == AlertLevel.NONE -> "NONE"
+        verdict.level == AlertLevel.NONE && verdict.category == ScamCategory.OTHER_SUSPICIOUS -> "NONE"
+        else -> verdict.category.name
+    }
+
     println("================ VERDICT ================")
     println("Level:       ${verdict.level}")
     println("Score:       ${verdict.score}")
     println("Rule Score:  ${verdict.ruleScore}")
     println("Model Prob:  ${verdict.modelProbability ?: "N/A"}")
-    println("Category:    ${verdict.category}")
+    println("Category:    $displayCategory")
     println("Version:     ${verdict.engineVersion}")
     if (sourceApp.isSms || senderArg != null) {
         println("---------------- SENDER -----------------")
@@ -336,10 +393,16 @@ private fun runEval(args: List<String>) {
 
     val packsDir = resolvePacksDir(args)
     val loadedPacks = PackLoader.load(FilePackSource(packsDir))
-    val engine = DefaultScamEngine(loadedPacks)
+    val gateUntrainedIdx = args.indexOf("--gate-untrained-scripts")
+    val gateUntrained = if (gateUntrainedIdx >= 0 && gateUntrainedIdx + 1 < args.size) {
+        args[gateUntrainedIdx + 1].toBoolean()
+    } else {
+        true
+    }
+    val engine = DefaultScamEngine(loadedPacks, gateUntrainedScripts = gateUntrained)
 
     // Also build a rules-only engine for comparison
-    val rulesOnlyEngine = DefaultScamEngine(loadedPacks.copy(modelBytes = null))
+    val rulesOnlyEngine = DefaultScamEngine(loadedPacks.copy(modelBytes = null), gateUntrainedScripts = gateUntrained)
 
     val json = Json { ignoreUnknownKeys = true; isLenient = true; prettyPrint = true }
 
@@ -372,6 +435,8 @@ private fun runEval(args: List<String>) {
         } catch (_: Exception) {
             continue
         }
+
+        if (row.label.lowercase() == "context_only") continue
 
         val isScam = row.label.lowercase() == "scam"
         val lang = row.lang
@@ -504,13 +569,22 @@ private fun runEval(args: List<String>) {
 
     val (rulesPrec, rulesRec, _) = calcMetrics(rulesOnlyCounters)
 
-    // Tier 1 Gates (§16.2):
-    // Danger precision >= 0.97, Recall at Caution or above >= 0.90, Benign->Danger <= 0.3%, Benign->Caution <= 2.0%
-    // Product decision: Intended caution (unknown number + shortened link + delivery/promo) is CAUTION by design.
-    val overallPassed = dangerPrec >= 0.97 && recall >= 0.90 && bToDanger <= 0.3 && bToCautionExclIntended <= 2.0
-
     val tier1Langs = setOf("en", "hi", "hi-Latn")
+    val tier2Langs = setOf("bn", "mr", "te", "ta", "or")
+    val hasTier1 = perLangCounters.keys.any { tier1Langs.contains(it) }
+    val isTier2Only = perLangCounters.keys.isNotEmpty() && perLangCounters.keys.all { tier2Langs.contains(it) }
+
+    // Targets (§16.2):
+    // Tier 1: Danger precision >= 0.97, Caution+ recall >= 0.90, Benign->Danger <= 0.3%, Benign->Caution <= 2.0%
+    // Tier 2: Danger precision >= 0.95, Caution+ recall >= 0.80, Benign->Danger <= 0.5%, Benign->Caution <= 3.0%
+    val overallPassed = if (isTier2Only) {
+        dangerPrec >= 0.95 && recall >= 0.80 && bToDanger <= 0.5 && bToCautionExclIntended <= 3.0
+    } else {
+        dangerPrec >= 0.97 && recall >= 0.90 && bToDanger <= 0.3 && bToCautionExclIntended <= 2.0
+    }
+
     var anyTier1LangFailed = false
+    var anyTier2LangFailed = false
 
     val langList = ArrayList<LanguageMetrics>()
     for ((l, c) in perLangCounters.entries.sortedBy { it.key }) {
@@ -528,9 +602,18 @@ private fun runEval(args: List<String>) {
             if (c.benign > 0 && bDanger > 0.3) failures.add("Benign->Danger $bDanger% > 0.3%")
             if (c.benign > 0 && bCautionExcl > 2.0) failures.add("Benign->Caution (excl. intended) $bCautionExcl% > 2.0%")
         }
+        if (tier2Langs.contains(l)) {
+            if (c.scam > 0 && dPrec < 0.95) failures.add("Danger Precision $dPrec < 0.95")
+            if (c.scam > 0 && rec < 0.80) failures.add("Caution+ Recall $rec < 0.80")
+            if (c.benign > 0 && bDanger > 0.5) failures.add("Benign->Danger $bDanger% > 0.5%")
+            if (c.benign > 0 && bCautionExcl > 3.0) failures.add("Benign->Caution (excl. intended) $bCautionExcl% > 3.0%")
+        }
         val langPassed = failures.isEmpty()
         if (!langPassed && tier1Langs.contains(l)) {
             anyTier1LangFailed = true
+        }
+        if (!langPassed && tier2Langs.contains(l)) {
+            anyTier2LangFailed = true
         }
 
         langList.add(
@@ -551,7 +634,9 @@ private fun runEval(args: List<String>) {
         )
     }
 
-    val passedTier1 = overallPassed && !anyTier1LangFailed
+    val passedTier1 = if (hasTier1) (overallPassed && !anyTier1LangFailed) else true
+    val passedTier2 = if (isTier2Only) (overallPassed && !anyTier2LangFailed) else !anyTier2LangFailed
+    val allPassed = if (isTier2Only) passedTier2 else (passedTier1 && passedTier2)
 
     val advScamRec = if (advCounters.scam > 0) (advCounters.tpDanger + advCounters.tpCaution).toDouble() / advCounters.scam else null
     val advPrec = if (advCounters.tpDanger + advCounters.fpDanger > 0) advCounters.tpDanger.toDouble() / (advCounters.tpDanger + advCounters.fpDanger) else 1.0
@@ -596,7 +681,7 @@ private fun runEval(args: List<String>) {
     )
 
     println("""
-        ==================== EVALUATION REPORT (TIER 1 GATES) ====================
+        ==================== EVALUATION REPORT (${if (isTier2Only) "TIER 2 GATES" else "TIER 1 GATES"}) ====================
         Total Rows:           ${overall.total} (Scam: ${overall.scam}, Benign: ${overall.benign})
         -------------------------------------------------------------------------
         Scam - DANGER (TP):   ${overall.tpDanger}
@@ -608,11 +693,11 @@ private fun runEval(args: List<String>) {
         Benign - DANGER (FP): ${overall.fpDanger}
         -------------------------------------------------------------------------
         Overall Metrics:
-          Danger Precision:   ${evalMetrics.dangerPrecision} (Target: >= 0.97)
-          Caution+ Recall:    ${evalMetrics.cautionOrAboveRecall} (Target: >= 0.90)
-          Benign -> Danger:   ${evalMetrics.benignRaisedToDangerPercent}% (Target: <= 0.3%)
-          Benign -> Caution+: ${evalMetrics.benignRaisedToCautionOrAbovePercent}% (Total) | ${evalMetrics.benignRaisedToCautionExclIntendedPercent}% (Excl. intended, Target: <= 2.0%)
-          Tier 1 Gate Status: ${if (passedTier1) "[PASS]" else "[FAIL: " + (if (!overallPassed) "Overall metrics miss; " else "") + (if (anyTier1LangFailed) langList.filter { !it.passedGates }.joinToString("; ") { "${it.lang} ${it.failureReasons.joinToString(", ")}" } else "") + "]"}
+          Danger Precision:   ${evalMetrics.dangerPrecision} (Target: >= ${if (isTier2Only) "0.95" else "0.97"})
+          Caution+ Recall:    ${evalMetrics.cautionOrAboveRecall} (Target: >= ${if (isTier2Only) "0.80" else "0.90"})
+          Benign -> Danger:   ${evalMetrics.benignRaisedToDangerPercent}% (Target: <= ${if (isTier2Only) "0.5%" else "0.3%"})
+          Benign -> Caution+: ${evalMetrics.benignRaisedToCautionOrAbovePercent}% (Total) | ${evalMetrics.benignRaisedToCautionExclIntendedPercent}% (Excl. intended, Target: <= ${if (isTier2Only) "3.0%" else "2.0%"})
+          Gate Status:        ${if (allPassed) "[PASS]" else "[FAIL: " + (if (!overallPassed) "Overall metrics miss; " else "") + (if (anyTier1LangFailed || anyTier2LangFailed) langList.filter { !it.passedGates }.joinToString("; ") { "${it.lang} ${it.failureReasons.joinToString(", ")}" } else "") + "]"}
         -------------------------------------------------------------------------
         INTENDED CAUTION (BY PRODUCT DESIGN §Item 3):
           Unknown number + shortened link + delivery/promo text is CAUTION as designed.
@@ -745,7 +830,7 @@ private fun runEval(args: List<String>) {
         println("Report written to: ${outFile.absolutePath}")
     }
 
-    if (!passedTier1) {
+    if (!allPassed) {
         exitProcess(2)
     }
 }

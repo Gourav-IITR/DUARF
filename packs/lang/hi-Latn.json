@@ -24,11 +24,32 @@
       "fees jama karo", "paise transfer karo", "fine bharo", "advance bhejo",
       "charges pay karo", "penalty bharo", "fine abhi pay", "fine pay karein",
       "release ke liye fine", "fine abhi bharein", "turant fine pay karo", "penalty abhi pay karo",
-      "transfer kar do", "rupaye transfer", "paise transfer kar do", "rupaye transfer kar do", "paise bhej do"
+      "transfer kar do", "rupaye transfer", "paise transfer kar do", "rupaye transfer kar do", "paise bhej do",
+      "processing fee", "processing fees jama karo", "processing fee pay karo", "fee pay karo", "advance fee pay karo"
     ],
     "upi_pin_to_receive": [
       "paise lene ke liye pin dalo", "upi pin enter karo paise pane ke liye",
       "qr scan karke paise lo", "pin dalo aur credit ho jayega", "approve karo paise lene ke liye"
+    ],
+    "upi_pin_instruction": [
+      "pin dalo", "upi pin dalo", "pin daliye", "upi pin daliye", "pin enter karo",
+      "upi pin enter karo", "qr scan karo", "qr code scan karo", "scan qr", "scan the qr",
+      "approve request", "approve karo"
+    ],
+    "receive_money_lure": [
+      "paise aa jayenge", "paise milenge", "refund turant aa jayega", "refund aa jayega",
+      "cashback mil jayega", "get your cashback", "paise pane ke liye", "paise lene ke liye",
+      "credit ho jayega", "khate me aayenge"
+    ],
+    "negation_upi_pin_receive": [
+      "kabhi bhi upi pin na dale", "kabhi upi pin na dale", "kabhi pin na dale", "kabhi pin mat dalo", "kabhi upi pin mat dalo",
+      "pin ki zarurat nahi", "pin ki zaroorat nahi", "pin ki jarurat nahi", "upi pin ki zarurat nahi", "upi pin ki zaroorat nahi", "upi pin ki jarurat nahi",
+      "pin ki aavashyakta nahi", "upi pin ki aavashyakta nahi", "pin ki avashyakta nahi",
+      "pin nahi chahiye", "pin nahi lagta", "pin nahi lagega", "upi pin nahi lagta", "upi pin nahi lagega",
+      "pin sirf bhejne ke liye", "pin sirf bhejne ke liye hai", "upi pin sirf bhejne ke liye", "upi pin sirf bhejne ke liye hai",
+      "pin keval bhejne ke liye", "upi pin keval bhejne ke liye",
+      "paise pane ke liye upi pin ki zarurat nahi", "paise pane ke liye pin ki zarurat nahi", "paise lene ke liye pin ki zarurat nahi",
+      "paise pane ke liye upi pin ki zaroorat nahi hoti", "paise pane ke liye upi pin ki zarurat nahi hoti", "upi pin ki zarurat nahi hoti"
     ],
     "asks_identity_details": [
       "aadhaar card bhejo", "pan card bhejo", "aadhaar details share karo",
@@ -36,7 +57,7 @@
     ],
     "asks_secrecy_or_stay_on_call": [
       "call mat katna", "call pe bane raho", "video call disconnect mat karna",
-      "kisi ko mat batana", "secret rakhna", "police ko mat batana"
+      "kisi ko mat batana", "police ko mat batana"
     ],
     "asks_click_to_fix": [
       "link par click karo", "click karke update karo", "verify karne ke liye link khole",
@@ -86,7 +107,7 @@
       "guaranteed return", "paisa double", "stock market tips", "double munafa"
     ],
     "lure_instant_loan": [
-      "turant loan approved", "bina document loan", "pre-approved loan"
+      "turant loan approved", "bina document loan", "pre-approved loan", "loan sanction ho gaya", "loan pass ho gaya", "loan approved"
     ],
     "lure_refund_cashback": [
       "refund mil gaya", "cashback prapt kare", "reward points expire"

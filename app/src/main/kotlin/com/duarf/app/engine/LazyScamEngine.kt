@@ -31,7 +31,15 @@ class LazyScamEngine @Inject constructor(
     private val initJob: Job = scope.launch {
         val instance = try {
             val packSource = AssetPackSource(context)
-            val engine = DefaultScamEngine.fromPackSource(packSource)
+            val engine = DefaultScamEngine.fromPackSource(
+                packSource = packSource,
+                eventSink = { code ->
+                    when (code) {
+                        SafeLog.EventCode.MODEL_UNTRAINED_SCRIPT_RULES_ONLY.code ->
+                            SafeLog.event(SafeLog.EventCode.MODEL_UNTRAINED_SCRIPT_RULES_ONLY)
+                    }
+                }
+            )
             if (engine.isModelLoaded) {
                 SafeLog.event(SafeLog.EventCode.MODEL_LOADED, (engine.modelVersion ?: 1).toLong())
             } else {

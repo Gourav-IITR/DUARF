@@ -22,7 +22,8 @@ data class BrandDefinition(
     val names: List<String>,
     val officialDomains: List<String>,
     val source: String,
-    val verifiedOn: String
+    val verifiedOn: String,
+    val isVerified: Boolean = true
 )
 
 sealed class ExtractedEntity {
@@ -89,7 +90,8 @@ data class ExtractedBrand(
     val brandId: String,
     val brandName: String,
     val brandKind: BrandKind,
-    val officialDomains: List<String>
+    val officialDomains: List<String>,
+    val isVerified: Boolean = true
 ) : ExtractedEntity()
 
 data class ExtractionResult(

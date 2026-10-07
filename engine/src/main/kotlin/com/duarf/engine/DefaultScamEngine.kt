@@ -11,7 +11,9 @@ import com.duarf.engine.signal.*
 
 class DefaultScamEngine(
     private val packs: LoadedPacks,
-    private val engineVersion: String = "1.0.0-rules"
+    private val engineVersion: String = "1.0.0-rules",
+    val gateUntrainedScripts: Boolean = true,
+    private val eventSink: ((Int) -> Unit)? = null
 ) : ScamEngine {
 
     private val psl: PublicSuffixList = if (packs.pslLines.isNotEmpty()) {
@@ -20,14 +22,14 @@ class DefaultScamEngine(
         PublicSuffixList()
     }
 
-    private val entityExtractor: EntityExtractor = EntityExtractor(
+    internal val entityExtractor: EntityExtractor = EntityExtractor(
         psl = psl,
         brands = packs.brands,
         upiHandles = packs.upiHandles
     )
 
     private val ahoCorasick: AhoCorasick
-    private val signalEngine: SignalEngine
+    internal val signalEngine: SignalEngine
 
     init {
         // Compile all phrase lexicons from all language packs into a single Aho-Corasick automaton (§7.1)
@@ -46,7 +48,8 @@ class DefaultScamEngine(
             shorteners = packs.shorteners,
             riskyTlds = packs.riskyTlds,
             remoteApps = packs.remoteApps,
-            blocklist = packs.blocklist
+            blocklist = packs.blocklist,
+            policeDltHeaders = packs.policeDltHeaders
         )
     }
 
@@ -121,12 +124,26 @@ class DefaultScamEngine(
             val combos = ComboEngine.evaluateCombos(allSignals)
 
             // 6. ML model prediction (§9)
-            val modelPrediction = try {
-                classifier?.let { cls ->
-                    val featurized = featurizer.featurize(message, normalized, extracted)
-                    cls.predict(featurized)
+            // Script & Marathi gating (§8): gate model off (m' = 0) if predominant script is untrained or language is Marathi
+            val isUntrained = gateUntrainedScripts && (
+                com.duarf.engine.normalize.LanguageScriptDetector.isUntrainedScript(message.text) ||
+                com.duarf.engine.normalize.LanguageScriptDetector.isMarathi(message.text)
+            )
+
+            if (isUntrained) {
+                eventSink?.invoke(EVENT_MODEL_UNTRAINED_SCRIPT_RULES_ONLY)
+            }
+
+            val modelPrediction = if (!isUntrained) {
+                try {
+                    classifier?.let { cls ->
+                        val featurized = featurizer.featurize(message, normalized, extracted)
+                        cls.predict(featurized)
+                    }
+                } catch (_: Exception) {
+                    null
                 }
-            } catch (_: Exception) {
+            } else {
                 null
             }
 
@@ -175,9 +192,16 @@ class DefaultScamEngine(
     }
 
     companion object {
-        fun fromPackSource(packSource: PackSource, engineVersion: String = "1.0.0-rules"): DefaultScamEngine {
+        const val EVENT_MODEL_UNTRAINED_SCRIPT_RULES_ONLY = 304
+
+        fun fromPackSource(
+            packSource: PackSource,
+            engineVersion: String = "1.0.0-rules",
+            gateUntrainedScripts: Boolean = true,
+            eventSink: ((Int) -> Unit)? = null
+        ): DefaultScamEngine {
             val loadedPacks = PackLoader.load(packSource)
-            return DefaultScamEngine(loadedPacks, engineVersion)
+            return DefaultScamEngine(loadedPacks, engineVersion, gateUntrainedScripts, eventSink)
         }
     }
 }

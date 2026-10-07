@@ -1,0 +1,207 @@
+<resources>
+    <string name="app_name">DUARF</string>
+    <string name="unknown_sender">ଅଜଣା ପ୍ରେରକ</string>
+
+    <!-- Notification channels and alerts -->
+    <string name="channel_danger_name">ପ୍ରତାରଣା ଚେତାବନୀ</string>
+    <string name="channel_danger_desc">ସମ୍ଭାବ୍ୟ ସ୍କାମ ବାର୍ତ୍ତା ପାଇଁ ତୁରନ୍ତ ଆଲର୍ଟ</string>
+    <string name="channel_caution_name">ସତର୍କତା</string>
+    <string name="channel_caution_desc">ସନ୍ଦିଗ୍ଧ ବାର୍ତ୍ତା ପାଇଁ ନୀରବ ସୂଚନା</string>
+
+    <string name="alert_danger_title">%1$s ଠାରୁ ସମ୍ଭାବ୍ୟ ସ୍କାମ</string>
+    <string name="alert_caution_title">%1$s ର ବାର୍ତ୍ତା ପ୍ରତି ସାବଧାନ ରୁହନ୍ତୁ</string>
+    <string name="alert_danger_sms_title">%1$s ଠାରୁ ଆସିଥିବା SMS: ସମ୍ଭାବ୍ୟ ସ୍କାମ</string>
+    <string name="alert_caution_sms_title">%1$s ଠାରୁ ଆସିଥିବା SMS: ସନ୍ଦିଗ୍ଧ ବାର୍ତ୍ତା</string>
+    <string name="alert_generic_summary">ଏହି ବାର୍ତ୍ତାରେ ସନ୍ଦିଗ୍ଧ ଉପାଦାନ ଚିହ୍ନଟ ହୋଇଛି</string>
+    <string name="action_see_why">କାରଣ ଦେଖନ୍ତୁ</string>
+    <string name="action_not_a_scam">ସ୍କାମ ନୁହେଁ</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">DUARF ସ୍କାମ ଡିଟେକ୍ଟର</string>
+    <string name="onboarding_desc_1">ହ୍ୱାଟ୍ସଆପ୍ ଏବଂ ଏସଏମଏସ ବିଜ୍ଞପ୍ତି ଯାଞ୍ଚ କରେ। ଆପଣଙ୍କ ଇନବକ୍ସ କେବେ ପଢ଼େ ନାହିଁ। DUARF ଆପଣଙ୍କୁ ଠକେଇ, ନକଲି ଲିଙ୍କ୍ ଏବଂ ବିପଜ୍ଜନକ ଏପିକେରୁ ସମ୍ପୂର୍ଣ୍ଣ ଭାବେ ଡିଭାଇସରେ ସୁରକ୍ଷିତ ରଖେ।</string>
+
+    <string name="onboarding_title_2">୧୦୦% ବ୍ୟକ୍ତିଗତ — କୌଣସି ଇଣ୍ଟରନେଟ୍ ଅନୁମତି ନାହିଁ</string>
+    <string name="onboarding_desc_2">DUARF ପାଖରେ ଇଣ୍ଟରନେଟ୍ କିମ୍ବା ଏସଏମଏସ ଇନବକ୍ସ ପଢ଼ିବା ଅନୁମତି ନାହିଁ। ଆପଣଙ୍କ ବାର୍ତ୍ତା କେବେ ବି ଆପଣଙ୍କ ଫୋନ ବାହାରକୁ ଯାଏ ନାହିଁ।</string>
+
+    <string name="onboarding_title_3">ବିଜ୍ଞପ୍ତି ପ୍ରବେଶ (Notification Access)</string>
+    <string name="onboarding_desc_3">ହ୍ୱାଟ୍ସଆପ୍ ଏବଂ ଏସଏମଏସ ବାର୍ତ୍ତା ଆସିବା ମାତ୍ରେ ଯାଞ୍ଚ କରି ତୁରନ୍ତ ସତର୍କ କରିବାକୁ DUARF କୁ ନୋଟିଫିକେସନ୍ ଆକ୍ସେସ୍ ଆବଶ୍ୟକ। ଇନବକ୍ସ କେବେ ପଢ଼େ ନାହିଁ।</string>
+    <string name="btn_grant_notification_access">ବିଜ୍ଞପ୍ତି ପ୍ରବେଶ ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <string name="access_granted">ଅନୁମତି ମିଳିଲା</string>
+
+    <string name="onboarding_title_4">ଆଲର୍ଟ ବିଜ୍ଞପ୍ତି</string>
+    <string name="onboarding_desc_4">ବିପଜ୍ଜନକ ବାର୍ତ୍ତା ଚିହ୍ନଟ ହେଲେ ଆଲର୍ଟ ଦେଖାଇବା ପାଇଁ ବିଜ୍ଞପ୍ତି ଅନୁମତି ଦିଅନ୍ତୁ।</string>
+    <string name="btn_grant_post_notifications">ବିଜ୍ଞପ୍ତି ସକ୍ଷମ କରନ୍ତୁ</string>
+
+    <string name="onboarding_title_5">ବ୍ୟାଟେରୀ ଅପ୍ଟିମାଇଜେସନ୍</string>
+    <string name="onboarding_desc_5">କେତେକ ଡିଭାଇସରେ (Xiaomi, Samsung, Oppo), DUARF ବ୍ୟାଟେରୀ ବ୍ୟବହାରକୁ Unrestricted ଭାବେ ସେଟ୍ କରନ୍ତୁ ଯାହାଦ୍ୱାରା ସୁରକ୍ଷା ବନ୍ଦ ହେବ ନାହିଁ।</string>
+    <string name="btn_battery_settings">ବ୍ୟାଟେରୀ ସେଟିଂସ ଖୋଲନ୍ତୁ</string>
+
+    <string name="onboarding_title_6">ଏକ ପରୀକ୍ଷାମୂଳକ ସ୍କାମ ଆଲର୍ଟ ପଠାନ୍ତୁ</string>
+    <string name="onboarding_desc_6">ଏକ ନକଲି ସ୍କାମ ବାର୍ତ୍ତା ଚଳାଇ ଏବେ ହିଁ ଆପଣଙ୍କ ସୁରକ୍ଷା ଯାଞ୍ଚ କରନ୍ତୁ।</string>
+    <string name="btn_send_test_alert">ଟେଷ୍ଟ ଆଲର୍ଟ ପଠାନ୍ତୁ</string>
+    <string name="btn_get_started">ଆରମ୍ଭ କରନ୍ତୁ</string>
+
+    <!-- Home Screen -->
+    <string name="status_protected">ସୁରକ୍ଷିତ</string>
+    <string name="status_action_needed">କାର୍ଯ୍ୟାନୁଷ୍ଠାନ ଆବଶ୍ୟକ</string>
+    <string name="status_listener_running">ହ୍ୱାଟ୍ସଆପ୍ ଏବଂ ଏସଏମଏସ ବାର୍ତ୍ତା ଉପରେ ନଜର ରଖାଯାଇଛି</string>
+    <string name="status_listener_disabled">ବିଜ୍ଞପ୍ତି ପ୍ରବେଶ ନିଷ୍କ୍ରିୟ ଅଛି</string>
+    <string name="card_weekly_stats">ଏହି ସପ୍ତାହ</string>
+    <string name="stat_checked">ଯାଞ୍ଚ ହୋଇଛି</string>
+    <string name="stat_cautions">ସତର୍କତା</string>
+    <string name="stat_dangers">ବିପଦ</string>
+
+    <string name="card_check_message">ବାର୍ତ୍ତା ଯାଞ୍ଚ କରନ୍ତୁ</string>
+    <string name="hint_paste_message">କୌଣସି ବାର୍ତ୍ତା କିମ୍ବା ଲିଙ୍କ୍ ଏଠାରେ ପେଷ୍ଟ କରନ୍ତୁ...</string>
+    <string name="btn_analyze">ବିଶ୍ଳେଷଣ କରନ୍ତୁ</string>
+    <string name="toggle_unknown_number">ଏହା ଏକ ଅଜଣା ନମ୍ବରରୁ ଆସିଛି</string>
+
+    <string name="title_recent_alerts">ସାମ୍ପ୍ରତିକ ଆଲର୍ଟ</string>
+    <string name="no_recent_alerts">କୌଣସି ସ୍କାମ ଆଲର୍ଟ ନାହିଁ। ଆପଣ ସମ୍ପୂର୍ଣ୍ଣ ସୁରକ୍ଷିତ!</string>
+    <string name="view_all">ସବୁ ଦେଖନ୍ତୁ</string>
+
+    <!-- Alert Detail & Check Result -->
+    <string name="level_danger">ବିପଦ — ସମ୍ଭାବ୍ୟ ସ୍କାମ</string>
+    <string name="level_caution">ସତର୍କତା — ସାବଧାନ ରୁହନ୍ତୁ</string>
+    <string name="level_safe">ସୁରକ୍ଷିତ ଦେଖାଯାଉଛି — ସତର୍କ ରୁହନ୍ତୁ</string>
+    <string name="label_message_content">ବାର୍ତ୍ତା ବିବରଣୀ</string>
+    <string name="label_reasons">DUARF ଏହାକୁ କାହିଁକି ଚିହ୍ନିତ କଲା</string>
+    <string name="label_checked">ଆମେ କ’ଣ ଯାଞ୍ଚ କଲୁ</string>
+    <string name="label_advice">ଆପଣ କ’ଣ କରିବା ଉଚିତ</string>
+    <string name="advice_caution_soft">ଏହା ପ୍ରକୃତ ହୋଇପାରେ, କିନ୍ତୁ ଲିଙ୍କ୍ ଖୋଲିବା ପୂର୍ବରୁ ଅଫିସିଆଲ୍ ଆପ୍ କିମ୍ବା ୱେବସାଇଟରେ ଯାଞ୍ଚ କରନ୍ତୁ।</string>
+    <string name="advice_1">କୌଣସି ଲିଙ୍କ୍ କ୍ଲିକ୍ କରନ୍ତୁ ନାହିଁ, ଫାଇଲ୍ ଖୋଲନ୍ତୁ ନାହିଁ କିମ୍ବା ଟଙ୍କା ପଠାନ୍ତୁ ନାହିଁ।</string>
+    <string name="advice_2">ହ୍ୱାଟ୍ସଆପ୍‌ରେ ପ୍ରେରକଙ୍କୁ ବ୍ଲକ୍ ଏବଂ ରିପୋର୍ଟ କରନ୍ତୁ।</string>
+    <string name="advice_3">ଯଦି ଆପଣ ଟଙ୍କା କିମ୍ବା ଓଟିପି ସେୟାର କରିଛନ୍ତି, ତେବେ ତୁରନ୍ତ ଜାତୀୟ ସାଇବର ହେଲ୍ପଲାଇନ 1930 କୁ କଲ୍ କରନ୍ତୁ କିମ୍ବା cybercrime.gov.in କୁ ଯାଆନ୍ତୁ।</string>
+
+    <string name="btn_this_is_safe">ଏହା ସୁରକ୍ଷିତ</string>
+    <string name="btn_this_is_scam">ଏହା ଏକ ସ୍କାମ</string>
+    <string name="btn_trust_sender">ଏହି ପ୍ରେରକଙ୍କୁ ବିଶ୍ୱାସ କରନ୍ତୁ</string>
+    <string name="btn_share_warning">ଏହି ଚେତାବନୀ ସେୟାର କରନ୍ତୁ</string>
+
+    <!-- History Screen -->
+    <string name="history_title">ଆଲର୍ଟ ଇତିହାସ</string>
+    <string name="filter_all">ସବୁ</string>
+    <string name="filter_danger">ବିପଦ</string>
+    <string name="filter_caution">ସତର୍କତା</string>
+    <string name="no_history">ଇତିହାସରେ କୌଣସି ଆଲର୍ଟ ନାହିଁ</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">ସେଟିଂସ</string>
+    <string name="setting_language">ଭାଷା</string>
+    <string name="setting_sensitivity">ଚିହ୍ନଟ ସମ୍ବେଦନଶୀଳତା</string>
+    <string name="sensitivity_low">କମ୍ (କମ୍ ଆଲର୍ଟ)</string>
+    <string name="sensitivity_balanced">ସନ୍ତୁଳିତ (ପରାମର୍ଶିତ)</string>
+    <string name="sensitivity_high">ଉଚ୍ଚ (ସର୍ବାଧିକ ସୁରକ୍ଷା)</string>
+    <string name="setting_check_sms">ଏସଏମଏସ ଯାଞ୍ଚ କରନ୍ତୁ</string>
+    <string name="setting_check_sms_desc">ପ୍ରତାରଣାମୂଳକ ଲିଙ୍କ୍ ଏବଂ ସ୍କାମ ପାଇଁ ଆସୁଥିବା ଏସଏମଏସ ଯାଞ୍ଚ କରନ୍ତୁ</string>
+    <string name="setting_group_alerts">ଗ୍ରୁପ୍ ବାର୍ତ୍ତାରେ ଆଲର୍ଟ ଦିଅନ୍ତୁ</string>
+    <string name="setting_retention">ଡାଟା ସଂରକ୍ଷଣ ଅବଧି</string>
+    <string name="retention_7_days">୭ ଦିନ</string>
+    <string name="retention_30_days">୩୦ ଦିନ</string>
+    <string name="retention_90_days">୯୦ ଦିନ</string>
+    <string name="setting_privacy_proof">ଗୋପନୀୟତାର ପ୍ରମାଣ</string>
+    <string name="setting_about">ବିବରଣୀ ଓ ସଂସ୍କରଣ</string>
+    <string name="setting_delete_all">ସମସ୍ତ ଡାଟା ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="dialog_delete_title">ସମସ୍ତ ଡାଟା ଡିଲିଟ୍ କରିବେ?</string>
+    <string name="dialog_delete_desc">ଏହା ଆପଣଙ୍କ ଡିଭାଇସରୁ ସମସ୍ତ ଆଲର୍ଟ, ପରିସଂଖ୍ୟାନ ଏବଂ ଏନକ୍ରିପସନ୍ କୀ ସ୍ଥାୟୀ ଭାବରେ ଡିଲିଟ୍ କରିଦେବ। ଏହା ପୁନରୁଦ୍ଧାର ହୋଇପାରିବ ନାହିଁ।</string>
+    <string name="btn_delete">ଡିଲିଟ୍</string>
+    <string name="btn_cancel">ବାତିଲ</string>
+
+    <!-- Privacy Proof Screen -->
+    <string name="privacy_proof_title">ଗୋପନୀୟତାର ପ୍ରମାଣ</string>
+    <string name="privacy_no_internet_title">ଶୂନ ଇଣ୍ଟରନେଟ୍ ସୁବିଧା</string>
+    <string name="privacy_no_internet_desc">DUARF ପାଖରେ android.permission.INTERNET ଅନୁମତି ନାହିଁ। ଏହା କୌଣସି ନେଟୱାର୍କ ଅନୁରୋଧ କରିପାରିବ ନାହିଁ କିମ୍ବା ଡାଟା ପଠାଇପାରିବ ନାହିଁ।</string>
+    <string name="privacy_how_to_verify">ଆଣ୍ଡ୍ରଏଡ୍ ସେଟିଂସରେ ନିଜେ କିପରି ଯାଞ୍ଚ କରିବେ:</string>
+    <string name="privacy_step_1">୧. ଡିଭାଇସ୍ ସେଟିଂସ &gt; ଆପ୍ସ &gt; DUARF ଖୋଲନ୍ତୁ।</string>
+    <string name="privacy_step_2">୨. Permissions ଟ୍ୟାପ୍ କରନ୍ତୁ ଏବଂ ଲକ୍ଷ୍ୟ କରନ୍ତୁ \'ଇଣ୍ଟରନେଟ୍\' କିମ୍ବା \'ନେଟୱାର୍କ\' ସମ୍ପୂର୍ଣ୍ଣ ଅନୁପସ୍ଥିତ।</string>
+    <string name="privacy_step_3">୩. Mobile Data &amp; Wi-Fi ଦେଖନ୍ତୁ, ସେଠାରେ ୦ ବାଇଟ୍ ବ୍ୟବହୃତ ହୋଇଛି।</string>
+    <string name="label_declared_permissions">ଘୋଷିତ ଆପ୍ ଅନୁମତି</string>
+
+    <!-- Reasons strings (§11) -->
+    <string name="reason_l01_title">କ୍ଷତିକାରକ କିମ୍ବା ଅପ୍ରତ୍ୟାଶିତ APK ଫାଇଲ୍</string>
+    <string name="reason_l01_detail">ବାର୍ତ୍ତାରେ ଏକ ଆଣ୍ଡ୍ରଏଡ୍ ଆପ୍ ପ୍ୟାକେଜ୍ (.apk) ପଠାଯାଇଛି କିମ୍ବା ଲିଙ୍କ୍ କରାଯାଇଛି। କୌଣସି ପ୍ରତିଷ୍ଠିତ ସଂସ୍ଥା ହ୍ୱାଟ୍ସଆପ୍‌ରେ ଆପ୍ ପଠାନ୍ତି ନାହିଁ।</string>
+    <string name="reason_l02_title">ବ୍ରାଣ୍ଡ ଏବଂ ୱେବସାଇଟ୍ ଅମେଳ</string>
+    <string name="reason_l02_detail">ବାର୍ତ୍ତାରେ ଏକ ଜଣାଶୁଣା ବ୍ରାଣ୍ଡର ଉଲ୍ଲେଖ ଅଛି କିନ୍ତୁ ଲିଙ୍କ୍ ଏକ ଅଣ-ଯାଞ୍ଚିତ ଡୋମେନର।</string>
+    <string name="reason_l03_title">ନକଲି କିମ୍ବା ସମାନ ଦେଖାଯାଉଥିବା ଡୋମେନ୍</string>
+    <string name="reason_l03_detail">ଡୋମେନଟି ସରକାରୀ ବା ଅଫିସିଆଲ୍ ସଂସ୍ଥା ପରି ଦେଖାଯାଉଛି କିନ୍ତୁ ଏହା ପ୍ରତାରଣାମୂଳକ।</string>
+    <string name="reason_l04_title">ସଂଖ୍ୟାତ୍ମକ IP ଠିକଣା ଲିଙ୍କ୍</string>
+    <string name="reason_l04_detail">ଲିଙ୍କ୍ ଡୋମେନ୍ ନାମ ପରିବର୍ତ୍ତେ ସିଧାସଳଖ IP ଠିକଣା ବ୍ୟବହାର କରୁଛି।</string>
+    <string name="reason_l05_title">ସଂକ୍ଷିପ୍ତ ୱେବ୍ ଲିଙ୍କ୍</string>
+    <string name="reason_l05_detail">ଲିଙ୍କ୍ ସର୍ଟନର୍ ବ୍ୟବହାର କରି ଏହାର ପ୍ରକୃତ ଠିକଣା ଲୁଚାଇ ରଖିଛି।</string>
+    <string name="reason_l06_title">ବିପଜ୍ଜନକ ଡୋମେନ୍ ଏକ୍ସଟେନସନ୍</string>
+    <string name="reason_l06_detail">ୱେବସାଇଟ୍ ଏପରି ଏକ ଡୋମେନ୍ ଏକ୍ସଟେନସନ୍ ବ୍ୟବହାର କରୁଛି ଯାହା ପ୍ରାୟତଃ ସ୍କାମ ସହିତ ଜଡ଼ିତ।</string>
+    <string name="reason_l07_title">ଲିଙ୍କ୍‌ରେ ବିଭ୍ରାନ୍ତିକର ଅକ୍ଷର</string>
+    <string name="reason_l07_detail">ପ୍ରକୃତ ସାଇଟ୍ ପରି ଦେଖାଇବା ପାଇଁ ଲିଙ୍କ୍‌ରେ ବିଦେଶୀ କିମ୍ବା ସମାନ ଅକ୍ଷର ବ୍ୟବହାର ହୋଇଛି।</string>
+    <string name="reason_l08_title">ଲୁକ୍କାୟିତ ୱେବ୍ ଠିକଣା</string>
+    <string name="reason_l08_detail">ସୁରକ୍ଷା ଫିଲ୍ଟର୍ ଏଡ଼ାଇବା ପାଇଁ ଲିଙ୍କ୍ ଇଚ୍ଛାକୃତ ଭାବେ ବିକୃତ କରାଯାଇଛି।</string>
+    <string name="reason_l09_title">ଅଣ-ଅଧିକୃତ ସରକାରୀ ଦାବି</string>
+    <string name="reason_l09_detail">ସରକାର କିମ୍ବା ପୋଲିସ ବୋଲି ଦାବି କରୁଛି କିନ୍ତୁ ଅଫିସିଆଲ୍ .gov.in କିମ୍ବା .nic.in ଠିକଣା ବ୍ୟବହାର କରୁନାହିଁ।</string>
+    <string name="reason_l10_title">ବିଭ୍ରାନ୍ତିକର ଲିଙ୍କ୍ ଗନ୍ତବ୍ୟ</string>
+    <string name="reason_l10_detail">ଲିଙ୍କ୍ କେଉଁଠାକୁ ଯାଉଛି ତାହା ଲୁଚାଇବା ପାଇଁ ଏକ ଚତୁର କୌଶଳ ବ୍ୟବହାର କରିଛି।</string>
+    <string name="reason_l11_title">ଜଣାଶୁଣା ସ୍କାମ ୱେବସାଇଟ୍</string>
+    <string name="reason_l11_detail">ୱେବସାଇଟ୍ ପ୍ରମାଣିତ ପ୍ରତାରଣାମୂଳକ ଠିକଣା ବ୍ଲକଲିଷ୍ଟରେ ଅଛି।</string>
+    <string name="reason_l12_title">ଅନ୍ୟ ଚାଟ୍‌କୁ ଯିବାକୁ ଅନୁରୋଧ</string>
+    <string name="reason_l12_detail">ପ୍ରେରକ ଆପଣଙ୍କୁ ଅନ୍ୟ ଏକ ପ୍ଲାଟଫର୍ମ କିମ୍ବା ଚାଟ୍‌କୁ ନେବାକୁ ଚାହୁଁଛନ୍ତି।</string>
+
+    <string name="reason_a01_title">ଓଟିପି, ପିନ୍ କିମ୍ବା ପାସୱାର୍ଡ ମଗାଯାଇଛି</string>
+    <string name="reason_a01_detail">ଗୋପନୀୟ ପ୍ରାମାଣିକିକରଣ କୋଡ୍ ମଗାଯାଉଛି। ବ୍ୟାଙ୍କ କେବେ ବି ଆପଣଙ୍କ ଓଟିପି ମାଗେ ନାହିଁ।</string>
+    <string name="reason_a02_title">ଆପ୍ ଇନଷ୍ଟଲ୍ କରିବାକୁ ଅନୁରୋଧ</string>
+    <string name="reason_a02_detail">ଏକ ଅଜଣା ଆପ୍ କିମ୍ବା ରିମୋଟ୍ କଣ୍ଟ୍ରୋଲ୍ ଟୁଲ୍ ଡାଉନଲୋଡ୍ କରିବାକୁ ନିର୍ଦ୍ଦେଶ ଦିଆଯାଉଛି।</string>
+    <string name="reason_a03_title">ଟଙ୍କା କିମ୍ବା ଅଗ୍ରିମ ଫି ଦାବି</string>
+    <string name="reason_a03_detail">ଅଗ୍ରିମ ଶୁଳ୍କ, ଜୋରିମାନା, ପଞ୍ଜୀକରଣ ଫି କିମ୍ବା ଫାଇଲ୍ ଚାର୍ଜ ମଗାଯାଉଛି।</string>
+    <string name="reason_a04_title">ଟଙ୍କା ପାଇବା ନାମରେ UPI ପିନ୍ ଫାନ୍ଦ</string>
+    <string name="reason_a04_detail">ଟଙ୍କା ପାଇବା ପାଇଁ UPI ପିନ୍ ଦେବାକୁ କୁହାଯାଉଛି। ପିନ୍ ଦେଲେ ଟଙ୍କା କଟିଯାଏ, କେବେ ମିଳେ ନାହିଁ!</string>
+    <string name="reason_a05_title">ଆଧାର, ପାନ୍ କିମ୍ବା କାର୍ଡ ବିବରଣୀ ମଗାଯାଇଛି</string>
+    <string name="reason_a05_detail">ବ୍ୟକ୍ତିଗତ କିମ୍ବା ବ୍ୟାଙ୍କିଙ୍ଗ୍ ତଥ୍ୟ ମଗାଯାଉଛି।</string>
+    <string name="reason_a06_title">ଗୋପନୀୟତା କିମ୍ବା ଭିଡିଓ କଲ୍ ଦାବି</string>
+    <string name="reason_a06_detail">ପରିବାର କିମ୍ବା ପୋଲିସକୁ ନ କହିବାକୁ ନିର୍ଦ୍ଦେଶ ଦିଆଯାଉଛି କିମ୍ବା କ୍ରମାଗତ ଭାବେ କଲ୍‌ରେ ରହିବାକୁ ବାଧ୍ୟ କରାଯାଉଛି।</string>
+    <string name="reason_a07_title">ଖାତା ଯାଞ୍ଚ ପାଇଁ ଲିଙ୍କ୍ କ୍ଲିକ୍ କରନ୍ତୁ</string>
+    <string name="reason_a07_detail">ସେବା ପୁନରୁଦ୍ଧାର ପାଇଁ ଅଣ-ଯାଞ୍ଚିତ ଲିଙ୍କ୍ କ୍ଲିକ୍ କରିବାକୁ ନିର୍ଦ୍ଦେଶ ଦିଆଯାଉଛି।</string>
+    <string name="reason_a08_title">ଟେଲିଗ୍ରାମକୁ ଯିବାକୁ ଅନୁରୋଧ</string>
+    <string name="reason_a08_detail">ହ୍ୱାଟ୍ସଆପ୍‌ରୁ ଟେଲିଗ୍ରାମକୁ ଯିବାକୁ କୁହାଯାଉଛି।</string>
+    <string name="reason_a09_title">ନୂଆ ନମ୍ବରରୁ ଟଙ୍କା ଅନୁରୋଧ</string>
+    <string name="reason_a09_detail">ପରିଚିତ ବ୍ୟକ୍ତି ବୋଲି ଦାବି କରି ନୂଆ ନମ୍ବରରୁ ଜରୁରୀ ଟଙ୍କା ମଗାଯାଉଛି।</string>
+
+    <string name="reason_p01_title">ଜରୁରୀ କିମ୍ବା କୃତ୍ରିମ ସମୟସୀମା</string>
+    <string name="reason_p01_detail">ଚିନ୍ତା କରିବାକୁ ସମୟ ନ ଦେଇ କିଛି ଘଣ୍ଟା ମଧ୍ୟରେ କାର୍ଯ୍ୟ କରିବାକୁ ଚାପ ପ୍ରୟୋଗ କରାଯାଉଛି।</string>
+    <string name="reason_p02_title">ଖାତା କିମ୍ବା ସିମ୍ ବନ୍ଦର ଧମକ</string>
+    <string name="reason_p02_detail">ଆପଣଙ୍କ ବ୍ୟାଙ୍କ ଖାତା, କେୱାଇସି କିମ୍ବା ସିମ୍ ବ୍ଲକ୍ ହୋଇଯିବ ବୋଲି ଧମକ ଦିଆଯାଉଛି।</string>
+    <string name="reason_p03_title">ଗିରଫ କିମ୍ବା ଆଇନଗତ କାର୍ଯ୍ୟାନୁଷ୍ଠାନର ଧମକ</string>
+    <string name="reason_p03_detail">ଗିରଫ ପରୱାନା, ପୋଲିସ ଏଫଆଇଆର କିମ୍ବା ଡିଜିଟାଲ୍ ଗିରଫର ଭୟ ଦେଖାଯାଉଛି।</string>
+    <string name="reason_p04_title">ବିଦ୍ୟୁତ୍ ସଂଯୋଗ ବିଚ୍ଛିନ୍ନ କରିବାର ଧମକ</string>
+    <string name="reason_p04_detail">ଆଜି ରାତିରେ ବିଦ୍ୟୁତ୍ କାଟି ଦିଆଯିବ ବୋଲି ଧମକ ଦିଆଯାଉଛି।</string>
+    <string name="reason_p05_title">ଲଟେରୀ କିମ୍ବା ପୁରସ୍କାରର ପ୍ରଲୋଭନ</string>
+    <string name="reason_p05_detail">ଭାଗ ନେଇ ନ ଥିବା ଲଟେରୀରେ ବଡ଼ ପୁରସ୍କାର ଜିତିଛନ୍ତି ବୋଲି ପ୍ରଲୋଭନ ଦେଖାଯାଉଛି।</string>
+    <string name="reason_p06_title">ଘରେ ବସି କାମ / ପାର୍ଟ ଟାଇମ୍ ଚାକିରି ପ୍ରଲୋଭନ</string>
+    <string name="reason_p06_detail">ଭିଡିଓ ଲାଇକ୍ କରିବା ପାଇଁ ଅତ୍ୟଧିକ ଦୈନିକ ରୋଜଗାରର ମିଥ୍ୟା ଆଶା ଦିଆଯାଉଛି।</string>
+    <string name="reason_p07_title">ନିଶ୍ଚିତ ନିବେଶ ଲାଭ</string>
+    <string name="reason_p07_detail">ଟଙ୍କା ଦୁଇଗୁଣ କରିବା କିମ୍ବା ସେୟାର ବଜାରରେ ନିଶ୍ଚିତ ଲାଭର ମିଥ୍ୟା ପ୍ରତିଶ୍ରୁତି।</string>
+    <string name="reason_p08_title">ବିନା କାଗଜପତ୍ରରେ ତୁରନ୍ତ ଋଣ</string>
+    <string name="reason_p08_detail">ପ୍ରତାରଣାମୂଳକ ତୁରନ୍ତ ଋଣ ମଞ୍ଜୁରୀର ବିଜ୍ଞାପନ।</string>
+    <string name="reason_p09_title">କ୍ୟାସବ୍ୟାକ୍ କିମ୍ବା ରିଫଣ୍ଡ ପ୍ରଲୋଭନ</string>
+    <string name="reason_p09_detail">ଅନାଦାୟୀ ପୁରସ୍କାର କିମ୍ବା କ୍ୟାସବ୍ୟାକ୍ ଅପେକ୍ଷା କରିଛି ବୋଲି ଦାବି କରାଯାଉଛି।</string>
+    <string name="reason_p10_title">ସଂସ୍ଥାର ଛଦ୍ମବେଶ ଧାରଣ</string>
+    <string name="reason_p10_detail">ବ୍ୟକ୍ତିଗତ ମୋବାଇଲ୍ ନମ୍ବରରୁ ବ୍ୟାଙ୍କ କିମ୍ବା ସରକାରୀ ସଂସ୍ଥା ନାମରେ ପଠାଯାଇଛି।</string>
+    <string name="reason_p11_title">ନକଲି ପାର୍ସଲ ବିତରଣ ସମସ୍ୟା</string>
+    <string name="reason_p11_detail">ଠିକଣା ଅସମ୍ପୂର୍ଣ୍ଣ ଥିବାରୁ ପାର୍ସଲ ଅଟକି ରହିଛି ବୋଲି ଦାବି କରାଯାଉଛି।</string>
+    <string name="reason_p12_title">ନକଲି ଟ୍ରାଫିକ୍ ଚାଲାଣ ନୋଟିସ୍</string>
+    <string name="reason_p12_detail">ଗାଡ଼ି ଚାଲାଣ ପାଇଁ ତୁରନ୍ତ ଟଙ୍କା ପୈଠ କରିବାକୁ ଚାପ ଦିଆଯାଉଛି।</string>
+    <string name="reason_p13_title">ବିବାହ ନିମନ୍ତ୍ରଣ ପ୍ରଲୋଭନ</string>
+    <string name="reason_p13_detail">ନିମନ୍ତ୍ରଣ ପତ୍ର ନାମରେ ବିପଜ୍ଜନକ ଫାଇଲ୍ ପଠାଯାଇଛି।</string>
+    <string name="reason_p14_title">ସାଧାରଣ ଗଣ-ସମ୍ବୋଧନ</string>
+    <string name="reason_p14_detail">ପ୍ରତାରଣାମୂଳକ ବାର୍ତ୍ତାରେ ବ୍ୟବହୃତ ସାଧାରଣ ଅଭିବାଦନ ବ୍ୟବହାର ହୋଇଛି।</string>
+    <string name="reason_t01_title">ଲୁକ୍କାୟିତ କିମ୍ବା ବିକୃତ ଲେଖା</string>
+    <string name="reason_t01_detail">ଚିହ୍ନଟ ଏଡ଼ାଇବା ପାଇଁ ଅଦୃଶ୍ୟ କିମ୍ବା ଭ୍ରମାତ୍ମକ ଅକ୍ଷର ବ୍ୟବହାର କରାଯାଇଛି।</string>
+    <string name="reason_s01_title">ଅଜଣା ନମ୍ବରରୁ ପଠାଯାଇଛି</string>
+    <string name="reason_s01_detail">ଆପଣଙ୍କ କଣ୍ଟାକ୍ଟରେ ନ ଥିବା ନମ୍ବରରୁ ଆସିଛି।</string>
+    <string name="reason_s02_title">ବିଦେଶୀ କଣ୍ଟ୍ରି କୋଡ୍‌ରୁ ପଠାଯାଇଛି</string>
+    <string name="reason_s02_detail">ଭାରତ ବାହାରେ ଥିବା ଆନ୍ତର୍ଜାତୀୟ ନମ୍ବରରୁ ପଠାଯାଇଛି।</string>
+    <string name="reason_s03_title">ଏହି ପ୍ରେରକଙ୍କ ଠାରୁ ପ୍ରଥମ ବାର୍ତ୍ତା</string>
+    <string name="reason_s03_detail">ଆପଣ ପୂର୍ବରୁ ଏହି ନମ୍ବରରୁ କୌଣସି ବାର୍ତ୍ତା ପାଇନାହାଁନ୍ତି।</string>
+    <string name="reason_s04_title">ବ୍ୟକ୍ତିଗତ ନମ୍ବରରୁ ସଂସ୍ଥାର ଦାବି</string>
+    <string name="reason_s04_detail">ଅଫିସିଆଲ୍ ସଂସ୍ଥା ପଞ୍ଜୀକୃତ ହେଡର୍ ମାଧ୍ୟମରେ ପଠାନ୍ତି, ବ୍ୟକ୍ତିଗତ ୧୦-ଅଙ୍କ ବିଶିଷ୍ଟ ନମ୍ବରରୁ ନୁହେଁ।</string>
+    <string name="reason_s05_title">ହେଡର୍ ବ୍ରାଣ୍ଡ ଅମେଳ କିମ୍ବା ପ୍ରଚାର ବାର୍ତ୍ତାରେ ଦାବି</string>
+    <string name="reason_s05_detail">ହେଡର୍ ସହିତ ବାର୍ତ୍ତା ମେଳ ଖାଉନାହିଁ କିମ୍ବା ବିଜ୍ଞାପନ SMS ରେ ଟଙ୍କା/ଯାଞ୍ଚ ମଗାଯାଇଛି।</string>
+    <string name="reason_model_title">ସନ୍ଦିଗ୍ଧ ସ୍କାମ ଢାଞ୍ଚା</string>
+    <string name="reason_model_detail">ଶବ୍ଦଗୁଡ଼ିକର ସାମଗ୍ରିକ ଢାଞ୍ଚା ଜଣାଶୁଣା ସ୍କାମ ଅଭିଯାନ ସହିତ ମେଳ ଖାଉଛି।</string>
+</resources>

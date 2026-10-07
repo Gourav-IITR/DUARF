@@ -14,7 +14,8 @@ object SafeLog {
         ERROR_ENGINE_INIT(300),
         ERROR_ENGINE_ANALYSIS(301),
         MODEL_LOADED(302),
-        MODEL_NOT_LOADED_RULES_ONLY(303)
+        MODEL_NOT_LOADED_RULES_ONLY(303),
+        MODEL_UNTRAINED_SCRIPT_RULES_ONLY(304)
     }
 
     fun event(event: EventCode, count: Long = 0) {

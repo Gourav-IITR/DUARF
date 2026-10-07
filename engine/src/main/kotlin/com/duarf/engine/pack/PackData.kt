@@ -51,5 +51,6 @@ data class LoadedPacks(
     val remoteApps: Set<String>,
     val pslLines: List<String>,
     val blocklist: Set<String>,
+    val policeDltHeaders: Set<String> = emptySet(),
     val modelBytes: ByteArray? = null
 )
