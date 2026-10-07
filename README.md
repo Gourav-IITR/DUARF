@@ -2,10 +2,9 @@
 
 On-device scam detection for WhatsApp and SMS on Android. Checks WhatsApp and SMS notifications. Never reads your inbox. The name is "fraud" spelled backwards.
 
-> **Status**: Early development (milestone M4 of 6). Not on the Play Store yet. Not a substitute for user caution.
-> Notification monitoring and share-sheet checks are implemented; WhatsApp and SMS notification formats are being evaluated against real recordings.
-> What works today: local WhatsApp and SMS notification capture, share-sheet inspection, rule engine, ML featurizer and linear classifier, local Keystore encryption, and privacy CI enforcement.
-> What does not work today: image/screenshot OCR, regional languages beyond English/Hindi, and automated background pack updates.
+> **Status**: Milestone M6 Complete (Release Hardening, Evaluation & Packaging). Ready for 12-tester closed testing.
+> Real-time notification monitoring, share-sheet checks, and in-app paste analysis across 12 Indian languages (English, Hindi, Bengali, Gujarati, Kannada, Malayalam, Marathi, Odia, Punjabi, Tamil, Telugu, and Hinglish).
+> Fully offline on-device protection with AES-256-GCM encryption, OEM battery optimization guides, listener health monitoring, zero internet permissions, and audited numeric logging.
 
 ---
 

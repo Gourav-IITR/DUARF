@@ -1,5 +1,7 @@
 package com.duarf.app.ui.screens
 
+import android.content.Intent
+import android.provider.Settings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -55,10 +58,16 @@ fun HomeScreen(
                 },
                 actions = {
                     IconButton(onClick = onNavigatePrivacyProof) {
-                        Icon(Icons.Default.Lock, contentDescription = "Privacy Proof")
+                        Icon(
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = stringResource(R.string.setting_privacy_proof)
+                        )
                     }
                     IconButton(onClick = onNavigateSettings) {
-                        Icon(Icons.Default.Settings, contentDescription = "Settings")
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = stringResource(R.string.settings_title)
+                        )
                     }
                 }
             )
@@ -189,12 +198,28 @@ fun ProtectionStatusCard(
     isConnected: Boolean,
     lastEventMillis: Long
 ) {
+    val context = LocalContext.current
     val isProtected = isEnabled && isConnected
     val cardColor = if (isProtected) Color(0xFFE8F5E9) else Color(0xFFFFEBEE)
     val contentColor = if (isProtected) Color(0xFF2E7D32) else Color(0xFFC62828)
 
+    val cardModifier = if (!isProtected) {
+        Modifier
+            .fillMaxWidth()
+            .clickable {
+                try {
+                    val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    context.startActivity(intent)
+                } catch (_: Exception) {}
+            }
+    } else {
+        Modifier.fillMaxWidth()
+    }
+
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = cardModifier,
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor)
     ) {
@@ -209,9 +234,13 @@ fun ProtectionStatusCard(
                 modifier = Modifier.size(40.dp)
             )
             Spacer(Modifier.width(16.dp))
-            Column {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = if (isProtected) stringResource(R.string.status_protected) else stringResource(R.string.status_action_needed),
+                    text = if (isProtected) {
+                        stringResource(R.string.status_protected)
+                    } else {
+                        stringResource(R.string.status_action_needed)
+                    },
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = contentColor
@@ -223,10 +252,23 @@ fun ProtectionStatusCard(
                             " • Last event $timeStr"
                         } else ""
                         stringResource(R.string.status_listener_running) + lastCheckStr
-                    } else stringResource(R.string.status_listener_disabled),
+                    } else if (!isEnabled) {
+                        stringResource(R.string.status_listener_disabled)
+                    } else {
+                        stringResource(R.string.status_listener_paused)
+                    },
                     style = MaterialTheme.typography.bodySmall,
                     color = contentColor
                 )
+                if (!isProtected) {
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        text = stringResource(R.string.status_tap_to_enable),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = contentColor
+                    )
+                }
             }
         }
     }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -47,7 +48,10 @@ fun AlertDetailScreen(
                 title = { Text(alert.category.name.replace("_", " ")) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.btn_back)
+                        )
                     }
                 },
                 actions = {
@@ -73,13 +77,21 @@ fun AlertDetailScreen(
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
         ) {
-            // Level banner (§13.3)
-            Box(
+            // Level banner with icon and text badge (§13.3)
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(bannerBg)
-                    .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .padding(vertical = 12.dp, horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
+                Icon(
+                    imageVector = if (isDanger) Icons.Default.Warning else Icons.Default.Info,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(Modifier.width(8.dp))
                 Text(
                     text = bannerText,
                     color = Color.White,

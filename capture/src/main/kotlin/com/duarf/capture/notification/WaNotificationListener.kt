@@ -1,11 +1,18 @@
 package com.duarf.capture.notification
 
 import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.provider.Settings
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.duarf.capture.dedup.Deduplicator
 import com.duarf.capture.log.SafeLog
 import com.duarf.engine.model.IncomingMessage
@@ -19,7 +26,8 @@ import kotlinx.coroutines.flow.asStateFlow
 data class ListenerHealth(
     val isEnabled: Boolean = false,
     val isConnected: Boolean = false,
-    val lastEventMillis: Long = 0L
+    val lastEventMillis: Long = 0L,
+    val lastConnectedMillis: Long = 0L
 )
 
 class WaNotificationListener : NotificationListenerService() {
@@ -48,12 +56,16 @@ class WaNotificationListener : NotificationListenerService() {
 
     override fun onListenerConnected() {
         super.onListenerConnected()
+        val now = System.currentTimeMillis()
+        saveLastConnectedTimestamp(this, now)
         _healthState.value = _healthState.value.copy(
             isEnabled = true,
             isConnected = true,
-            lastEventMillis = System.currentTimeMillis()
+            lastEventMillis = now,
+            lastConnectedMillis = now
         )
         SafeLog.event(SafeLog.EventCode.LISTENER_CONNECTED)
+        cancelProtectionPausedNotification(this)
     }
 
     override fun onListenerDisconnected() {
@@ -62,6 +74,7 @@ class WaNotificationListener : NotificationListenerService() {
         SafeLog.event(SafeLog.EventCode.LISTENER_DISCONNECTED)
         // Request rebind (§5.2)
         requestRebind(ComponentName(this, WaNotificationListener::class.java))
+        postProtectionPausedNotification()
     }
 
     /**
@@ -138,7 +151,59 @@ class WaNotificationListener : NotificationListenerService() {
         }
     }
 
+    private fun postProtectionPausedNotification() {
+        try {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+                ?: return
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val channel = NotificationChannel(
+                    CHANNEL_PROTECTION_STATUS,
+                    "Protection Status",
+                    NotificationManager.IMPORTANCE_HIGH
+                ).apply {
+                    description = "Notifications about DUARF protection and listener service status"
+                }
+                notificationManager.createNotificationChannel(channel)
+            }
+
+            val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            val pendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            val icon = applicationInfo.icon.takeIf { it != 0 } ?: android.R.drawable.ic_dialog_alert
+
+            val notification = NotificationCompat.Builder(this, CHANNEL_PROTECTION_STATUS)
+                .setSmallIcon(icon)
+                .setContentTitle("DUARF Protection Paused")
+                .setContentText("Notification access was disconnected. Tap to re-enable protection.")
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .bigText("Notification access was disconnected by the system. Tap to re-enable DUARF in Notification Access settings to stay protected.")
+                )
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build()
+
+            notificationManager.notify(NOTIFICATION_ID_PROTECTION_PAUSED, notification)
+        } catch (_: Exception) {
+            SafeLog.event(SafeLog.EventCode.ERROR_DEGRADED)
+        }
+    }
+
     companion object {
+        const val NOTIFICATION_ID_PROTECTION_PAUSED = 19301
+        const val CHANNEL_PROTECTION_STATUS = "duarf_protection_status"
+        private const val PREFS_NAME = "duarf_listener_prefs"
+        private const val KEY_LAST_CONNECTED_TIMESTAMP = "last_connected_timestamp"
+
         @Volatile
         var checkSmsEnabled: Boolean = true
 
@@ -152,6 +217,29 @@ class WaNotificationListener : NotificationListenerService() {
         // Callback hook for engine consumption
         var messageConsumer: ((IncomingMessage, List<IncomingMessage>) -> Unit)? = null
 
+        fun getLastConnectedTimestamp(context: Context): Long {
+            return try {
+                val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                prefs.getLong(KEY_LAST_CONNECTED_TIMESTAMP, 0L)
+            } catch (_: Exception) {
+                0L
+            }
+        }
+
+        fun saveLastConnectedTimestamp(context: Context, timestamp: Long) {
+            try {
+                val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                prefs.edit().putLong(KEY_LAST_CONNECTED_TIMESTAMP, timestamp).apply()
+            } catch (_: Exception) {}
+        }
+
+        fun cancelProtectionPausedNotification(context: Context) {
+            try {
+                val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+                notificationManager?.cancel(NOTIFICATION_ID_PROTECTION_PAUSED)
+            } catch (_: Exception) {}
+        }
+
         fun isNotificationServiceEnabled(context: Context): Boolean {
             val enabledListeners = Settings.Secure.getString(
                 context.contentResolver,
@@ -159,6 +247,30 @@ class WaNotificationListener : NotificationListenerService() {
             ) ?: return false
             val myComponent = ComponentName(context, WaNotificationListener::class.java).flattenToString()
             return enabledListeners.contains(myComponent)
+        }
+
+        fun isListenerAccessGranted(context: Context): Boolean {
+            return try {
+                val enabledPackages = NotificationManagerCompat.getEnabledListenerPackages(context)
+                if (enabledPackages.contains(context.packageName)) {
+                    true
+                } else {
+                    isNotificationServiceEnabled(context)
+                }
+            } catch (_: Exception) {
+                isNotificationServiceEnabled(context)
+            }
+        }
+
+        fun refreshHealth(context: Context) {
+            val isEnabled = isListenerAccessGranted(context)
+            val lastConnected = getLastConnectedTimestamp(context)
+            val isCurrentlyConnected = _healthState.value.isConnected
+            _healthState.value = _healthState.value.copy(
+                isEnabled = isEnabled,
+                isConnected = if (isEnabled) isCurrentlyConnected else false,
+                lastConnectedMillis = lastConnected
+            )
         }
     }
 }

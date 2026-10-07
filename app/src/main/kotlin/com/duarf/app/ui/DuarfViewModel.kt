@@ -98,6 +98,10 @@ class DuarfViewModel @Inject constructor(
         }
     }
 
+    fun refreshListenerHealth(context: android.content.Context) {
+        WaNotificationListener.refreshHealth(context)
+    }
+
     fun updateSensitivity(sensitivity: Sensitivity) {
         viewModelScope.launch {
             preferences.updateSensitivity(sensitivity)

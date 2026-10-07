@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -27,7 +28,8 @@ import com.duarf.capture.notification.WaNotificationListener
 @Composable
 fun OnboardingScreen(
     onFinished: () -> Unit,
-    onSendTestAlert: () -> Unit
+    onSendTestAlert: () -> Unit,
+    onNavigateBatteryGuide: () -> Unit = {}
 ) {
     val context = LocalContext.current
     var currentStep by remember { mutableStateOf(0) }
@@ -152,11 +154,19 @@ fun OnboardingScreen(
                     title = stringResource(R.string.onboarding_title_5),
                     desc = stringResource(R.string.onboarding_desc_5),
                     actionButton = {
-                        OutlinedButton(onClick = {
-                            val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
-                            try { context.startActivity(intent) } catch (_: Exception) {}
-                        }) {
-                            Text(stringResource(R.string.btn_battery_settings))
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Button(onClick = onNavigateBatteryGuide) {
+                                Text(stringResource(R.string.btn_view_device_guide))
+                            }
+                            OutlinedButton(onClick = {
+                                val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                                try { context.startActivity(intent) } catch (_: Exception) {}
+                            }) {
+                                Text(stringResource(R.string.btn_battery_settings))
+                            }
                         }
                     }
                 )
@@ -166,7 +176,7 @@ fun OnboardingScreen(
                     desc = stringResource(R.string.onboarding_desc_6),
                     actionButton = {
                         Button(onClick = onSendTestAlert) {
-                            Icon(Icons.Default.Send, contentDescription = null)
+                            Icon(Icons.AutoMirrored.Filled.Send, contentDescription = null)
                             Spacer(Modifier.width(8.dp))
                             Text(stringResource(R.string.btn_send_test_alert))
                         }

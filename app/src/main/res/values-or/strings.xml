@@ -209,4 +209,30 @@
     <string name="beta_label_badge">(ବିଟା)</string>
     <string name="beta_disclaimer_testing">ଏହି ଭାଷାରେ ସ୍କାମ ଚିହ୍ନଟ ବର୍ତ୍ତମାନ ବିଟାରେ ଅଛି ଏବଂ ଏହାର ପରୀକ୍ଷଣ ଚାଲିଛି।</string>
     <string name="beta_disclaimer_regional">ଆଞ୍ଚଳିକ ଭାଷାରେ (ବିଟା) ସ୍କାମ ଚିହ୍ନଟର ପରୀକ୍ଷଣ ଏବେ ବି ଚାଲିଛି।</string>
+
+    <!-- Battery guide & listener health strings (§13.3, §19.3) -->
+    <!-- Marked for native-speaker review §19.3 -->
+    <string name="btn_back">ପଛକୁ ଯାଆନ୍ତୁ</string>
+    <string name="status_tap_to_enable">ସେଟିଂସରେ ବିଜ୍ଞପ୍ତି ଅନୁମତି ସକ୍ଷମ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="status_listener_paused">ସୁରକ୍ଷା ସିଷ୍ଟମ୍ ଦ୍ୱାରା ବନ୍ଦ ହୋଇଛି। ପୁନଃ ସକ୍ଷମ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ।</string>
+    <string name="btn_view_device_guide">ଡିଭାଇସ୍ ମାର୍ଗଦର୍ଶିକା ଦେଖନ୍ତୁ</string>
+    <string name="setting_battery_guide">ପୃଷ୍ଠଭୂମି ସୁରକ୍ଷା ମାର୍ଗଦର୍ଶିକା</string>
+    <string name="setting_battery_guide_desc">Xiaomi, Samsung ଏବଂ ଅନ୍ୟାନ୍ୟ ଡିଭାଇସରେ ସୁରକ୍ଷା ସକ୍ରିୟ ରଖନ୍ତୁ</string>
+    <string name="battery_guide_title">ପୃଷ୍ଠଭୂମି ସୁରକ୍ଷା ମାର୍ଗଦର୍ଶିକା</string>
+    <string name="battery_guide_disclaimer">ଡିଭାଇସ୍ ମଡେଲ୍ ଏବଂ ଓଏସ୍ ସଂସ୍କରଣ ଉପରେ ଆଧାର କରି ବିକଳ୍ପଗୁଡ଼ିକ ଭିନ୍ନ ହୋଇପାରେ।</string>
+    <string name="battery_guide_summary">କେତେକ ଫୋନରେ ବ୍ୟାଟେରୀ ସେଭର୍ DUARF କୁ ବାର୍ତ୍ତା ଯାଞ୍ଚ କରିବାରୁ ରୋକିପାରେ। ନିମ୍ନଲିଖିତ ପଦକ୍ଷେପଗୁଡ଼ିକ ଅନୁସରଣ କରନ୍ତୁ।</string>
+    <string name="battery_oem_xiaomi">Xiaomi / Redmi / POCO (MIUI / HyperOS)</string>
+    <string name="battery_oem_xiaomi_steps">୧. Settings &gt; Apps &gt; Manage Apps &gt; DUARF ଖୋଲନ୍ତୁ
+୨. \'Autostart\' ସକ୍ଷମ କରନ୍ତୁ
+୩. Battery saver ରେ \'No restrictions\' ଚୟନ କରନ୍ତୁ</string>
+    <string name="battery_oem_samsung">Samsung (One UI)</string>
+    <string name="battery_oem_samsung_steps">୧. Settings &gt; Battery &gt; Background usage limits &gt; \'Never sleeping apps\' ରେ DUARF ଯୋଡ଼ନ୍ତୁ
+୨. Settings &gt; Apps &gt; DUARF &gt; Battery ରେ \'Unrestricted\' ବାଛନ୍ତୁ</string>
+    <string name="battery_oem_bbk">OnePlus / OPPO / Realme (ColorOS / OxygenOS)</string>
+    <string name="battery_oem_bbk_steps">୧. Settings &gt; Apps &gt; App Management &gt; DUARF &gt; Battery usage ଖୋଲନ୍ତୁ
+୨. \'Allow background activity\' ଏବଂ \'Allow auto-launch\' ଅନ୍ କରନ୍ତୁ</string>
+    <string name="battery_oem_vivo">Vivo / iQOO (Funtouch OS)</string>
+    <string name="battery_oem_vivo_steps">୧. Settings &gt; Battery &gt; Background power consumption management ଖୋଲନ୍ତୁ
+୨. DUARF ଚୟନ କରନ୍ତୁ ଏବଂ \'High background power usage\' ସେଟ୍ କରନ୍ତୁ</string>
 </resources>
+

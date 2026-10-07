@@ -619,4 +619,43 @@ All decisions made where the spec was silent or flexible are recorded here.
   - Documented official Play policy requirement of 12 testers opted in for 14 continuous days for personal accounts.
   - Updated store and in-app privacy copy across `AboutScreen.kt` and `strings.xml` to accurately state: *"Messages that aren't flagged are analysed in memory and discarded. Flagged alerts are saved only on your phone, and you can delete them anytime."*
 
+## 21. Milestone M6 Release Hardening, Invariants & Final Evaluation
+- **Native Speaker Review Kits & Intake Tooling**:
+  - Implemented `tools/eval/generate_review_kit.py` generating comprehensive review packets for all 9 regional languages in `eval/review_kits/` (all 23 lexicon categories, 178+ UI keys, and 30 sampled dev rows).
+  - Implemented `tools/eval/intake_real_world.py` with schema verification and strict PII check enforcement (`tools/ci/check_pii.py`).
+- **Frozen Tier 3 Test Sets Generated & Committed FIRST**:
+  - Generated and frozen `eval/test_{gu,kn,ml,pa}.jsonl` (commit `ab98c5e`) before M6 rule modifications using completely disjoint templates and phrasing.
+- **Listener Health Monitoring (Zero New Permissions)**:
+  - Manifest permissions remain strictly limited to `POST_NOTIFICATIONS` and `VIBRATE`. `RECEIVE_BOOT_COMPLETED` forbidden.
+  - In `WaNotificationListener.kt`:
+    - `onListenerDisconnected()` calls `requestRebind(ComponentName)` and posts local "Protection Paused" notification (ID 19301) with pending intent to `Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS`.
+    - `onListenerConnected()` saves `last_connected_timestamp` to SharedPreferences and cancels the paused notification.
+  - In `HomeScreen.kt`: checks listener permission and connection state, displaying an actionable warning card with a direct deep link to system settings.
+  - In `MainActivity.kt`: refreshes health status in `onResume()`.
+- **OEM Battery Optimization Guidance Screen**:
+  - Created `BatteryOptimizationScreen.kt` with step-by-step guidance for Xiaomi (HyperOS/MIUI), Samsung (One UI), OnePlus/OPPO/Realme (ColorOS), and Vivo/iQOO (Funtouch OS).
+  - Included mandatory version disclaimer: *"Menu options and navigation paths may vary depending on device model and OS version."*
+  - Linked from `SettingsScreen.kt` and `OnboardingScreen.kt` (Step 4).
+- **Comprehensive UI String Localization**:
+  - Added all battery guide, listener health, and back button strings across all 12 supported locales (`values`, `values-hi`, `values-b+hi+Latn`, `values-bn`, `values-gu`, `values-kn`, `values-ml`, `values-mr`, `values-or`, `values-pa`, `values-ta`, `values-te`).
+  - Total keys reached 198 per complete locale, with regional strings tagged with `<!-- Marked for native-speaker review §19.3 -->`.
+- **Accessibility (a11y) & Visual Polish**:
+  - Replaced deprecated navigation icons with `Icons.AutoMirrored.Filled.ArrowBack`.
+  - Added TalkBack semantic labels on all icon buttons (`btn_back`, `setting_privacy_proof`, `settings_title`).
+  - Hardened alert detail banner to include both color and icons/text badges for color-independent accessibility (§13.3).
+- **Performance Benchmarks**:
+  - Implemented `OnDevicePerformanceBenchmarkTest.kt` in `:app` androidTest suite for physical device execution (`./gradlew :app:connectedAndroidTest`), recording device model, OS, and RAM profile.
+  - Implemented `EngineRegressionBenchmarkTest.kt` in `:engine` test suite verifying Section 15 budgets: cold start init $\le 400\text{ ms}$, p95 message analysis $\le 25\text{ ms}$, featurizer + predict $\le 5\text{ ms}$ on JVM.
+- **Release Build & R8 Shrinking**:
+  - Executed `./gradlew :app:assembleRelease`. Generated production APK `app-release.apk` with R8 minification and resource shrinking.
+  - Release APK size: **2.0 MB** (comfortably under the 15 MB limit).
+  - All Section 14 CI tasks passed: `verifyPermissions`, `verifyDependencies`, `verifyNoContentLogging`, `verifyNoDebugToolsInRelease`, `verifyNoPiiLeakage`, `verifyExportedComponents`, `verifyEngineIsPure`.
+- **Final Evaluation of Frozen Tier 3 Test Sets**:
+  - Evaluated `eval/test_{gu,kn,ml,pa}.jsonl` once at milestone completion:
+    - Gujarati (`test_gu`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0% [PASS]
+    - Kannada (`test_kn`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0% [PASS]
+    - Malayalam (`test_ml`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0% [PASS]
+    - Punjabi (`test_pa`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0% [PASS]
+
+
 

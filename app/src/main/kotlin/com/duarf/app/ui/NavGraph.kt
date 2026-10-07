@@ -31,6 +31,9 @@ fun DuarfNavGraph(
                 },
                 onSendTestAlert = {
                     viewModel.sendTestAlert()
+                },
+                onNavigateBatteryGuide = {
+                    navController.navigate("battery_guide")
                 }
             )
         }
@@ -102,9 +105,14 @@ fun DuarfNavGraph(
                 onUpdateCheckSms = { viewModel.updateCheckSms(it) },
                 onUpdateGroupAlerts = { viewModel.updateGroupAlerts(it) },
                 onNavigatePrivacyProof = { navController.navigate("privacy_proof") },
+                onNavigateBatteryGuide = { navController.navigate("battery_guide") },
                 onNavigateAbout = { navController.navigate("about") },
                 onDeleteAllData = { viewModel.deleteAllData() }
             )
+        }
+
+        composable("battery_guide") {
+            BatteryOptimizationScreen(onBack = { navController.popBackStack() })
         }
 
         composable("privacy_proof") {

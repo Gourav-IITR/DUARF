@@ -209,4 +209,29 @@
     <string name="beta_label_badge">(Beta)</string>
     <string name="beta_disclaimer_testing">Scam detection in this language is currently in Beta and still being tested.</string>
     <string name="beta_disclaimer_regional">Scam detection in regional languages (Beta) is currently still being tested.</string>
+
+    <!-- Battery guide & listener health strings (§13.3, §19.3) -->
+    <string name="btn_back">Back</string>
+    <string name="status_tap_to_enable">Tap to enable notification access in settings</string>
+    <string name="status_listener_paused">Protection paused by system. Tap to re-enable.</string>
+    <string name="btn_view_device_guide">View Device Guide</string>
+    <string name="setting_battery_guide">Background Protection Guide</string>
+    <string name="setting_battery_guide_desc">Keep background protection active on Xiaomi, Samsung, and other devices</string>
+    <string name="battery_guide_title">Background Protection Guide</string>
+    <string name="battery_guide_disclaimer">Menu options and navigation paths may vary depending on device model and OS version.</string>
+    <string name="battery_guide_summary">Aggressive battery optimization on some devices may stop DUARF from checking incoming notifications. Follow the steps below for your device brand.</string>
+    <string name="battery_oem_xiaomi">Xiaomi / Redmi / POCO (MIUI / HyperOS)</string>
+    <string name="battery_oem_xiaomi_steps">1. Open device Settings &gt; Apps &gt; Manage Apps &gt; DUARF
+2. Enable \'Autostart\' (or Background Autostart)
+3. Under Battery saver, select \'No restrictions\'</string>
+    <string name="battery_oem_samsung">Samsung (One UI)</string>
+    <string name="battery_oem_samsung_steps">1. Open device Settings &gt; Battery &gt; Background usage limits &gt; \'Never sleeping apps\' and add DUARF
+2. Open Settings &gt; Apps &gt; DUARF &gt; Battery and choose \'Unrestricted\'</string>
+    <string name="battery_oem_bbk">OnePlus / OPPO / Realme (ColorOS / OxygenOS)</string>
+    <string name="battery_oem_bbk_steps">1. Open device Settings &gt; Apps &gt; App Management &gt; DUARF &gt; Battery usage
+2. Turn on \'Allow background activity\' and \'Allow auto-launch\'</string>
+    <string name="battery_oem_vivo">Vivo / iQOO (Funtouch OS)</string>
+    <string name="battery_oem_vivo_steps">1. Open device Settings &gt; Battery &gt; Background power consumption management
+2. Select DUARF and choose \'High background power usage\'</string>
 </resources>
+

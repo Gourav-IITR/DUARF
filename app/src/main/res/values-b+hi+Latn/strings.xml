@@ -3,4 +3,29 @@
     <string name="beta_label_badge">(Beta)</string>
     <string name="beta_disclaimer_testing">Is bhasha mein scam detection abhi Beta mein hai aur testing jaari hai.</string>
     <string name="beta_disclaimer_regional">Regional bhashaon (Beta) mein scam detection ki testing abhi jaari hai.</string>
+
+    <!-- Battery guide & listener health strings (§13.3, §19.3) -->
+    <string name="btn_back">Peeche jayein</string>
+    <string name="status_tap_to_enable">Settings me notification permission on karne ke liye tap karein</string>
+    <string name="status_listener_paused">Protection system dwara pause ho gayi. Re-enable karne ke liye tap karein.</string>
+    <string name="btn_view_device_guide">Device Guide Dekhein</string>
+    <string name="setting_battery_guide">Background Protection Guide</string>
+    <string name="setting_battery_guide_desc">Xiaomi, Samsung aur doosre phones par background protection active rakhein</string>
+    <string name="battery_guide_title">Background Protection Guide</string>
+    <string name="battery_guide_disclaimer">Device model aur OS version ke mutabiq settings alag ho sakti hain.</string>
+    <string name="battery_guide_summary">Kuch phones me battery saver DUARF ko messages check karne se rok deta hai. Apne brand ke hisaab se steps follow karein.</string>
+    <string name="battery_oem_xiaomi">Xiaomi / Redmi / POCO (MIUI / HyperOS)</string>
+    <string name="battery_oem_xiaomi_steps">1. Settings &gt; Apps &gt; Manage Apps &gt; DUARF kholein
+2. \'Autostart\' enable karein
+3. Battery saver me \'No restrictions\' select karein</string>
+    <string name="battery_oem_samsung">Samsung (One UI)</string>
+    <string name="battery_oem_samsung_steps">1. Settings &gt; Battery &gt; Background usage limits &gt; \'Never sleeping apps\' me DUARF add karein
+2. Settings &gt; Apps &gt; DUARF &gt; Battery me \'Unrestricted\' select karein</string>
+    <string name="battery_oem_bbk">OnePlus / OPPO / Realme (ColorOS / OxygenOS)</string>
+    <string name="battery_oem_bbk_steps">1. Settings &gt; Apps &gt; App Management &gt; DUARF &gt; Battery usage kholein
+2. \'Allow background activity\' aur \'Allow auto-launch\' on karein</string>
+    <string name="battery_oem_vivo">Vivo / iQOO (Funtouch OS)</string>
+    <string name="battery_oem_vivo_steps">1. Settings &gt; Battery &gt; Background power consumption management kholein
+2. DUARF select karke \'High background power usage\' choose karein</string>
 </resources>
+

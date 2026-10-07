@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -30,6 +30,7 @@ fun SettingsScreen(
     onUpdateCheckSms: (Boolean) -> Unit,
     onUpdateGroupAlerts: (Boolean) -> Unit,
     onNavigatePrivacyProof: () -> Unit,
+    onNavigateBatteryGuide: () -> Unit,
     onNavigateAbout: () -> Unit,
     onDeleteAllData: () -> Unit
 ) {
@@ -65,7 +66,10 @@ fun SettingsScreen(
                 title = { Text(stringResource(R.string.settings_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.btn_back)
+                        )
                     }
                 }
             )
@@ -274,11 +278,18 @@ fun SettingsScreen(
 
             HorizontalDivider()
 
-            // Navigation links: Proof of Privacy and About (§13.3)
+            // Navigation links: Proof of Privacy, Battery Guide, and About (§13.3)
             ListItem(
                 headlineContent = { Text(stringResource(R.string.setting_privacy_proof)) },
                 trailingContent = { Icon(Icons.Default.ChevronRight, contentDescription = null) },
                 modifier = Modifier.clickable(onClick = onNavigatePrivacyProof)
+            )
+
+            ListItem(
+                headlineContent = { Text(stringResource(R.string.setting_battery_guide)) },
+                supportingContent = { Text(stringResource(R.string.setting_battery_guide_desc)) },
+                trailingContent = { Icon(Icons.Default.ChevronRight, contentDescription = null) },
+                modifier = Modifier.clickable(onClick = onNavigateBatteryGuide)
             )
 
             ListItem(
