@@ -126,6 +126,40 @@ fun SettingsScreen(
                         onClick = { onUpdateLanguage("or") },
                         label = { Text("ଓଡ଼ିଆ (Beta)") }
                     )
+                    FilterChip(
+                        selected = uiState.preferences.languageCode == "gu",
+                        onClick = { onUpdateLanguage("gu") },
+                        label = { Text("ગુજરાતી (Beta)") }
+                    )
+                    FilterChip(
+                        selected = uiState.preferences.languageCode == "kn",
+                        onClick = { onUpdateLanguage("kn") },
+                        label = { Text("ಕನ್ನಡ (Beta)") }
+                    )
+                    FilterChip(
+                        selected = uiState.preferences.languageCode == "ml",
+                        onClick = { onUpdateLanguage("ml") },
+                        label = { Text("മലയാളം (Beta)") }
+                    )
+                    FilterChip(
+                        selected = uiState.preferences.languageCode == "pa",
+                        onClick = { onUpdateLanguage("pa") },
+                        label = { Text("ਪੰਜਾਬੀ (Beta)") }
+                    )
+                }
+                Spacer(Modifier.height(8.dp))
+                if (com.duarf.engine.normalize.LanguageScriptDetector.isBetaLanguage(uiState.preferences.languageCode)) {
+                    Text(
+                        text = "Scam detection in this language is currently in Beta and still being tested.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                } else {
+                    Text(
+                        text = "Scam detection in regional languages (Beta) is currently still being tested.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             }
 

@@ -146,6 +146,9 @@ fun CheckResultScreen(
                         }
                     }
                 }
+
+                // Beta language disclaimer footer (§19, M5 done-when)
+                BetaLanguageFooter(text = messageText)
             }
         }
     }

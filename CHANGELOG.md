@@ -578,4 +578,14 @@ All decisions made where the spec was silent or flexible are recorded here.
   - Verified `./gradlew clean check --rerun-tasks` passes with 223 actionable tasks executed.
 - **Frozen Tier 3 Test Execution (`eval/test_{gu,kn,ml,pa}.jsonl`)**:
   - Executed held-out evaluation sets once without any test tuning. Aggregates and gate reports compiled for M5 checkpoint report.
+- **Corpus A04 Cleanliness & Tier 1 Recall Report Correction**:
+  - Note that `corpus.jsonl` A04 rows are no longer a clean blind check, since the Hinglish receive-lure fix used phrases taken from them.
+  - Corrected M5 report metrics: actual Tier 1 Caution+ recall across dev splits is 0.999 (`dev`), 0.994 (`dev2`), and 0.997 (`dev3`) (not 1.0).
+- **Unverified Regional Utility Brands (`packs/brands.json`)**:
+  - Added stubs for 8 regional power distribution companies: DGVCL, MGVCL, PGVCL, GUVNL (Gujarat) and MESCOM, HESCOM, GESCOM, CESC (Karnataka / West Bengal).
+  - Configured with native-script aliases, `isVerified = false`, and `officialDomains = []`. Logged domain sourcing in `OPEN_QUESTIONS.md`.
+- **Beta Labelling Across UI (Settings & Verdict Footers)**:
+  - Added "(Beta)" labelling for all 9 regional languages (`bn`, `mr`, `te`, `ta`, `or`, `gu`, `kn`, `ml`, `pa`) in `SettingsScreen.kt`, along with an active testing disclaimer note.
+  - Added beta language indicator and testing disclaimer footer on verdict screens (`AlertDetailScreen.kt` and `CheckResultScreen.kt`).
+
 

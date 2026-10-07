@@ -10,6 +10,14 @@ Items marked "verify" and Section 19 human inputs are tracked here.
    - **Current Unverified Brands**:
      1. `tgspdcl` / `tsspdcl`: Telangana Southern Power Distribution Company Ltd. Domains `tgspdcl.com` and `tssouthernpower.com` pending verification due to ongoing Telangana state renaming (TS to TG).
      2. `tangedco`: Tamil Nadu Generation and Distribution Corporation. Domains `tangedco.gov.in` and `tnebltd.gov.in` pending human verification due to discom corporate restructuring under TNEB Ltd.
+     3. `dgvcl`: Dakshin Gujarat Vij Company Limited. Added with empty `officialDomains` (`[]`); official domains need sourcing and verification.
+     4. `mgvcl`: Madhya Gujarat Vij Company Limited. Added with empty `officialDomains` (`[]`); official domains need sourcing and verification.
+     5. `pgvcl`: Paschim Gujarat Vij Company Limited. Added with empty `officialDomains` (`[]`); official domains need sourcing and verification.
+     6. `guvnl`: Gujarat Urja Vikas Nigam Limited. Added with empty `officialDomains` (`[]`); official domains need sourcing and verification.
+     7. `mescom`: Mangalore Electricity Supply Company Limited. Added with empty `officialDomains` (`[]`); official domains need sourcing and verification.
+     8. `hescom`: Hubli Electricity Supply Company Limited. Added with empty `officialDomains` (`[]`); official domains need sourcing and verification.
+     9. `gescom`: Gulbarga Electricity Supply Company Limited. Added with empty `officialDomains` (`[]`); official domains need sourcing and verification.
+     10. `cesc`: Chamundeshwari Electricity Supply Corporation (Karnataka) / Calcutta Electric Supply Corporation. Added with empty `officialDomains` (`[]`); official domains need sourcing and verification.
    - **Engine Guardrail**: Brands with `isVerified == false` never fire `L02` or `L03`, and cannot satisfy `B02` or `B06` (verified by `UnverifiedBrandSuppressionTest.kt`).
 5. **Play developer account & signing keys (§19.5)**: Placeholder keystore and configuration used for release builds in local development.
 6. **Final branding assets (§19.6)**: Placeholder vector assets used in MVP.
@@ -48,4 +56,17 @@ Items marked "verify" and Section 19 human inputs are tracked here.
     - **Status**: **Unverified**. No official government notice, TRAI circular, or police gazette notification literally publishing 3-6 character DLT entity header strings (e.g. `DLPOL`, `NCRP`, `KLPOL`) is available on official government portals (`delhipolice.gov.in`, `cybercrime.gov.in`, `keralapolice.gov.in`, `trai.gov.in`).
     - Homepages are not sources and header strings cannot be inferred from naming patterns. `packs/lists/police_dlt_headers.txt` is kept empty until official circulars literally showing the header strings are obtained.
     - **Engine Guardrail**: Unlisted police-claiming headers never receive `B06` (police advisory dampener), and if paired with an ask or link, fire `S05` (`header_claim_mismatch`). Tested in `PoliceDltHeaderVerificationTest.kt`.
+
+13. **Tier 3 Regional Language Test Split Retirement (§19.2, §19.3)**:
+    - **Observed Metrics on Held-out Tier 3 Test Splits (`eval/test_{gu,kn,ml,pa}.jsonl`)**:
+      - Caution+ Recall was 0.667–0.800 across splits:
+        - Gujarati (`gu`): 0.667 (20 FN / 60)
+        - Kannada (`kn`): 0.800 (12 FN / 60)
+        - Malayalam (`ml`): 0.667 (20 FN / 60)
+        - Punjabi (`pa`): 0.733 (16 FN / 60)
+      - Benign → Caution: 5.0% across all 4 languages (5 rows per language in template family `test-<lang>-ben-tpl-06`, genuine cyber safety notice from state police DLT header with `S05`).
+      - Danger Precision: 1.0 (0.0% FP to Danger).
+    - **Failing Categories**: `AUTHORITY_DIGITAL_ARREST`, `JOB_TASK`, `LOTTERY_PRIZE`.
+    - **Spent Test Sets**: The existing Tier 3 test splits are now spent and unblinded. No tuning or fixes may be made against these rows. Any M6 fixes will need a new frozen test split generated from disjoint templates.
+
 

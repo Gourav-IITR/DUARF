@@ -210,6 +210,47 @@ fun AlertDetailScreen(
                 ) {
                     Text(stringResource(R.string.btn_trust_sender))
                 }
+
+                // Beta language disclaimer footer (§19, M5 done-when)
+                BetaLanguageFooter(text = alert.text)
+            }
+        }
+    }
+}
+
+@Composable
+fun BetaLanguageFooter(text: String, modifier: Modifier = Modifier) {
+    val langInfo = remember(text) {
+        com.duarf.engine.normalize.LanguageScriptDetector.detectLanguageInfo(text)
+    }
+    if (langInfo != null && langInfo.isBeta) {
+        Surface(
+            modifier = modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Surface(
+                    shape = RoundedCornerShape(4.dp),
+                    color = MaterialTheme.colorScheme.tertiaryContainer
+                ) {
+                    Text(
+                        text = "${langInfo.displayName} (Beta)",
+                        style = MaterialTheme.typography.labelSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                    )
+                }
+                Text(
+                    text = "Scam detection in this language is currently in Beta and still being tested.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }

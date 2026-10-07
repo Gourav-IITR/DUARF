@@ -63,4 +63,66 @@ object LanguageScriptDetector {
 
         return mrCount > hiCount && mrCount >= 1
     }
+
+    data class DetectedLanguageInfo(
+        val code: String,
+        val displayName: String,
+        val isBeta: Boolean
+    )
+
+    private val BETA_LANGUAGE_CODES = setOf("bn", "mr", "te", "ta", "or", "gu", "kn", "ml", "pa")
+
+    fun isBetaLanguage(code: String?): Boolean = code != null && code in BETA_LANGUAGE_CODES
+
+    fun getLanguageInfo(code: String): DetectedLanguageInfo? = when (code) {
+        "en" -> DetectedLanguageInfo("en", "English", isBeta = false)
+        "hi" -> DetectedLanguageInfo("hi", "हिंदी", isBeta = false)
+        "bn" -> DetectedLanguageInfo("bn", "বাংলা", isBeta = true)
+        "mr" -> DetectedLanguageInfo("mr", "मराठी", isBeta = true)
+        "te" -> DetectedLanguageInfo("te", "తెలుగు", isBeta = true)
+        "ta" -> DetectedLanguageInfo("ta", "தமிழ்", isBeta = true)
+        "or" -> DetectedLanguageInfo("or", "ଓଡ଼ିଆ", isBeta = true)
+        "gu" -> DetectedLanguageInfo("gu", "ગુજરાતી", isBeta = true)
+        "kn" -> DetectedLanguageInfo("kn", "ಕನ್ನಡ", isBeta = true)
+        "ml" -> DetectedLanguageInfo("ml", "മലയാളം", isBeta = true)
+        "pa" -> DetectedLanguageInfo("pa", "ਪੰਜਾਬੀ", isBeta = true)
+        else -> null
+    }
+
+    /**
+     * Detects language and beta status based on predominant script and language discrimination.
+     */
+    fun detectLanguageInfo(text: String): DetectedLanguageInfo? {
+        val scriptCounts = HashMap<UnicodeScript, Int>()
+        for (cp in text.codePoints()) {
+            if (Character.isLetter(cp)) {
+                val script = UnicodeScript.of(cp)
+                if (script != UnicodeScript.COMMON && script != UnicodeScript.INHERITED && script != UnicodeScript.UNKNOWN) {
+                    scriptCounts[script] = (scriptCounts[script] ?: 0) + 1
+                }
+            }
+        }
+        if (scriptCounts.isEmpty()) return null
+        val predominant = scriptCounts.maxByOrNull { it.value }?.key ?: return null
+
+        return when (predominant) {
+            UnicodeScript.BENGALI -> DetectedLanguageInfo("bn", "বাংলা", isBeta = true)
+            UnicodeScript.TELUGU -> DetectedLanguageInfo("te", "తెలుగు", isBeta = true)
+            UnicodeScript.TAMIL -> DetectedLanguageInfo("ta", "தமிழ்", isBeta = true)
+            UnicodeScript.ORIYA -> DetectedLanguageInfo("or", "ଓଡ଼ିଆ", isBeta = true)
+            UnicodeScript.GUJARATI -> DetectedLanguageInfo("gu", "ગુજરાતી", isBeta = true)
+            UnicodeScript.KANNADA -> DetectedLanguageInfo("kn", "ಕನ್ನಡ", isBeta = true)
+            UnicodeScript.MALAYALAM -> DetectedLanguageInfo("ml", "മലയാളം", isBeta = true)
+            UnicodeScript.GURMUKHI -> DetectedLanguageInfo("pa", "ਪੰਜਾਬੀ", isBeta = true)
+            UnicodeScript.DEVANAGARI -> {
+                if (isMarathi(text)) {
+                    DetectedLanguageInfo("mr", "मराठी", isBeta = true)
+                } else {
+                    DetectedLanguageInfo("hi", "हिंदी", isBeta = false)
+                }
+            }
+            UnicodeScript.LATIN -> DetectedLanguageInfo("en", "English", isBeta = false)
+            else -> null
+        }
+    }
 }

@@ -529,6 +529,120 @@
     "isVerified": false
   },
   {
+    "id": "dgvcl",
+    "kind": "UTILITY",
+    "names": [
+      "dgvcl",
+      "dakshin gujarat vij",
+      "દક્ષિણ ગુજરાત વીજ",
+      "ડીજીવીસીએલ"
+    ],
+    "officialDomains": [],
+    "source": "pending_verification",
+    "verifiedOn": "2026-10-07",
+    "isVerified": false
+  },
+  {
+    "id": "mgvcl",
+    "kind": "UTILITY",
+    "names": [
+      "mgvcl",
+      "madhya gujarat vij",
+      "મધ્ય ગુજરાત વીજ",
+      "એમજીવીસીએલ"
+    ],
+    "officialDomains": [],
+    "source": "pending_verification",
+    "verifiedOn": "2026-10-07",
+    "isVerified": false
+  },
+  {
+    "id": "pgvcl",
+    "kind": "UTILITY",
+    "names": [
+      "pgvcl",
+      "paschim gujarat vij",
+      "પશ્ચિમ ગુજરાત વીજ",
+      "પીજીવીસીએલ"
+    ],
+    "officialDomains": [],
+    "source": "pending_verification",
+    "verifiedOn": "2026-10-07",
+    "isVerified": false
+  },
+  {
+    "id": "guvnl",
+    "kind": "UTILITY",
+    "names": [
+      "guvnl",
+      "gujarat urja vikas",
+      "ગુજરાત ઉર્જા વિકાસ",
+      "જીયુવીએનએલ"
+    ],
+    "officialDomains": [],
+    "source": "pending_verification",
+    "verifiedOn": "2026-10-07",
+    "isVerified": false
+  },
+  {
+    "id": "mescom",
+    "kind": "UTILITY",
+    "names": [
+      "mescom",
+      "mangalore electricity",
+      "ಮೆಸ್ಕಾಂ",
+      "ಮಂಗಳೂರು ವಿದ್ಯುತ್"
+    ],
+    "officialDomains": [],
+    "source": "pending_verification",
+    "verifiedOn": "2026-10-07",
+    "isVerified": false
+  },
+  {
+    "id": "hescom",
+    "kind": "UTILITY",
+    "names": [
+      "hescom",
+      "hubli electricity",
+      "ಹೆಸ್ಕಾಂ",
+      "ಹುಬ್ಬಳ್ಳಿ ವಿದ್ಯುತ್"
+    ],
+    "officialDomains": [],
+    "source": "pending_verification",
+    "verifiedOn": "2026-10-07",
+    "isVerified": false
+  },
+  {
+    "id": "gescom",
+    "kind": "UTILITY",
+    "names": [
+      "gescom",
+      "gulbarga electricity",
+      "ಜೆಸ್ಕಾಂ",
+      "ಗುಲ್ಬರ್ಗಾ ವಿದ್ಯುತ್"
+    ],
+    "officialDomains": [],
+    "source": "pending_verification",
+    "verifiedOn": "2026-10-07",
+    "isVerified": false
+  },
+  {
+    "id": "cesc",
+    "kind": "UTILITY",
+    "names": [
+      "cesc",
+      "chamundeshwari electricity",
+      "calcutta electric supply",
+      "ಸೆಸ್ಕ್",
+      "ಚಾಮುಂಡೇಶ್ವರಿ ವಿದ್ಯುತ್",
+      "সিইএসসি"
+    ],
+    "officialDomains": [],
+    "source": "pending_verification",
+    "verifiedOn": "2026-10-07",
+    "isVerified": false
+  },
+  {
     "id": "pm_mudra",
     "kind": "GOVERNMENT",
     "names": [
