@@ -1,5 +1,6 @@
 package com.duarf.app
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.duarf.app.locale.AppLanguage
 import com.duarf.app.notification.NotificationDispatcher
 import com.duarf.app.ui.DuarfNavGraph
 import com.duarf.app.ui.DuarfViewModel
@@ -22,6 +24,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: DuarfViewModel by viewModels()
+
+    // Android 8–12 have no per-app language; apply the chosen one here (no-op on 13+).
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(AppLanguage.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

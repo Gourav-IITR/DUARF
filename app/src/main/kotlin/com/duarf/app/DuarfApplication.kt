@@ -1,6 +1,7 @@
 package com.duarf.app
 
 import android.app.Application
+import com.duarf.app.locale.AppLanguage
 import com.duarf.app.service.MessageCoordinator
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
@@ -13,6 +14,7 @@ class DuarfApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        AppLanguage.ensureDefault(this)
         messageCoordinator.initialize()
     }
 }

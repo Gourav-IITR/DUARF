@@ -16,9 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.duarf.app.R
+import com.duarf.app.locale.AppLanguage
 import com.duarf.app.ui.UiState
 import com.duarf.data.repo.DecryptedAlert
 import com.duarf.engine.model.AlertLevel
@@ -33,6 +36,7 @@ fun HomeScreen(
     onNavigateSettings: () -> Unit,
     onNavigateHistory: () -> Unit,
     onNavigatePrivacyProof: () -> Unit,
+    onNavigateLanguage: () -> Unit,
     onAlertClick: (Long) -> Unit,
     onCheckMessage: (String, Boolean) -> Unit
 ) {
@@ -57,6 +61,17 @@ fun HomeScreen(
                     }
                 },
                 actions = {
+                    // Language switcher, always visible: shows the current language in its own script.
+                    val currentLanguage = AppLanguage.find(AppLanguage.current(LocalContext.current))
+                    val languageDescription = stringResource(R.string.setting_language) + ": " + currentLanguage.nativeName
+                    TextButton(
+                        onClick = onNavigateLanguage,
+                        modifier = Modifier.semantics { contentDescription = languageDescription }
+                    ) {
+                        Icon(Icons.Default.Translate, contentDescription = null, modifier = Modifier.size(20.dp))
+                        Spacer(Modifier.width(6.dp))
+                        Text(currentLanguage.nativeName)
+                    }
                     IconButton(onClick = onNavigatePrivacyProof) {
                         Icon(
                             imageVector = Icons.Default.Lock,

@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.duarf.app.MainActivity
 import com.duarf.app.R
+import com.duarf.app.locale.AppLanguage
 import com.duarf.engine.model.AlertLevel
 import com.duarf.engine.model.SourceApp
 import com.duarf.engine.model.Verdict
@@ -28,22 +29,23 @@ class NotificationDispatcher @Inject constructor(
     }
 
     private fun createChannels() {
+        val localized = AppLanguage.wrap(context)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val dangerChannel = NotificationChannel(
                 CHANNEL_DANGER,
-                context.getString(R.string.channel_danger_name),
+                localized.getString(R.string.channel_danger_name),
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = context.getString(R.string.channel_danger_desc)
+                description = localized.getString(R.string.channel_danger_desc)
                 enableVibration(true)
             }
 
             val cautionChannel = NotificationChannel(
                 CHANNEL_CAUTION,
-                context.getString(R.string.channel_caution_name),
+                localized.getString(R.string.channel_caution_name),
                 NotificationManager.IMPORTANCE_LOW
             ).apply {
-                description = context.getString(R.string.channel_caution_desc)
+                description = localized.getString(R.string.channel_caution_desc)
                 enableVibration(false)
             }
 
@@ -61,28 +63,31 @@ class NotificationDispatcher @Inject constructor(
     ) {
         if (verdict.level == AlertLevel.NONE) return
 
+        // Text in the app's chosen language (English by default), not the phone's.
+        val localized = AppLanguage.wrap(context)
+
         val isDanger = verdict.level == AlertLevel.DANGER
         val channelId = if (isDanger) CHANNEL_DANGER else CHANNEL_CAUTION
         val notificationId = (alertId % 100000).toInt() + 1000
 
-        val senderName = senderDisplay ?: context.getString(R.string.unknown_sender)
+        val senderName = senderDisplay ?: localized.getString(R.string.unknown_sender)
         val title = if (isDanger) {
             if (sourceApp.isSms) {
-                context.getString(R.string.alert_danger_sms_title, senderName)
+                localized.getString(R.string.alert_danger_sms_title, senderName)
             } else {
-                context.getString(R.string.alert_danger_title, senderName)
+                localized.getString(R.string.alert_danger_title, senderName)
             }
         } else {
             if (sourceApp.isSms) {
-                context.getString(R.string.alert_caution_sms_title, senderName)
+                localized.getString(R.string.alert_caution_sms_title, senderName)
             } else {
-                context.getString(R.string.alert_caution_title, senderName)
+                localized.getString(R.string.alert_caution_title, senderName)
             }
         }
 
         // Top reason
         val topReason = verdict.reasons.firstOrNull()
-        val summaryText = topReason?.let { formatReason(it) } ?: context.getString(R.string.alert_generic_summary)
+        val summaryText = topReason?.let { formatReason(localized, it) } ?: localized.getString(R.string.alert_generic_summary)
 
         // Expanded view: up to 3 reasons (§13.2)
         val bigText = buildString {
@@ -90,7 +95,7 @@ class NotificationDispatcher @Inject constructor(
             if (verdict.reasons.size > 1) {
                 append("\n\n")
                 verdict.reasons.take(3).forEach { r ->
-                    append("• ").append(formatReason(r)).append("\n")
+                    append("• ").append(formatReason(localized, r)).append("\n")
                 }
             }
         }
@@ -128,14 +133,14 @@ class NotificationDispatcher @Inject constructor(
             .setPriority(if (isDanger) NotificationCompat.PRIORITY_HIGH else NotificationCompat.PRIORITY_LOW)
             .setContentIntent(detailPendingIntent)
             .setAutoCancel(true)
-            .addAction(0, context.getString(R.string.action_see_why), detailPendingIntent)
-            .addAction(0, context.getString(R.string.action_not_a_scam), suppressPendingIntent)
+            .addAction(0, localized.getString(R.string.action_see_why), detailPendingIntent)
+            .addAction(0, localized.getString(R.string.action_not_a_scam), suppressPendingIntent)
             .build()
 
         notificationManager.notify(notificationId, notification)
     }
 
-    private fun formatReason(reason: com.duarf.engine.model.Reason): String {
+    private fun formatReason(context: Context, reason: com.duarf.engine.model.Reason): String {
         val resId = context.resources.getIdentifier(reason.titleKey, "string", context.packageName)
         return if (resId != 0) {
             context.getString(resId)

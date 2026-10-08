@@ -21,6 +21,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // The in-app language picker can switch to any UI language, so every language ships in the
+    // base APK. Play's on-demand language download (Play Core) is a forbidden dependency (§14).
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true

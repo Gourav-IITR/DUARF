@@ -234,5 +234,12 @@
     <string name="battery_oem_vivo">Vivo / iQOO (Funtouch OS)</string>
     <string name="battery_oem_vivo_steps">1. Settings &gt; Battery &gt; Background power consumption management തുറക്കുക
 2. DUARF തിരഞ്ഞെടുത്ത് \'High background power usage\' നൽകുക</string>
+
+    <!-- UI language picker (onboarding step 0, Home, Settings) -->
+    <!-- Marked for native-speaker review §19.3 -->
+    <string name="onboarding_title_language">നിങ്ങളുടെ ഭാഷ തിരഞ്ഞെടുക്കുക</string>
+    <string name="onboarding_desc_language">ഇത് എപ്പോൾ വേണമെങ്കിലും ക്രമീകരണങ്ങളിൽ മാറ്റാം.</string>
+    <string name="language_detection_note">നിങ്ങൾ ഏത് ഭാഷ തിരഞ്ഞെടുത്താലും, പിന്തുണയുള്ള എല്ലാ ഭാഷകളിലെയും സന്ദേശങ്ങൾ DUARF പരിശോധിക്കും.</string>
+    <string name="btn_next">അടുത്തത്</string>
 </resources>
 

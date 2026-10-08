@@ -14,6 +14,7 @@ import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -29,10 +30,14 @@ import com.duarf.capture.notification.WaNotificationListener
 fun OnboardingScreen(
     onFinished: () -> Unit,
     onSendTestAlert: () -> Unit,
+    selectedLanguage: String,
+    onSelectLanguage: (String) -> Unit,
     onNavigateBatteryGuide: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    var currentStep by remember { mutableStateOf(0) }
+    // Saveable: choosing a language recreates the activity, and the user should stay on that step.
+    var currentStep by rememberSaveable { mutableStateOf(0) }
+    val lastStep = 6
     var hasPostNotificationPermission by remember {
         mutableStateOf(
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -48,7 +53,7 @@ fun OnboardingScreen(
         contract = ActivityResultContracts.RequestPermission()
     ) { granted ->
         hasPostNotificationPermission = granted
-        if (granted && currentStep < 5) currentStep++
+        if (granted && currentStep < lastStep) currentStep++
     }
 
     val isListenerEnabled = remember(currentStep) {
@@ -66,7 +71,7 @@ fun OnboardingScreen(
             ) {
                 // Page indicator dots
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    for (i in 0..5) {
+                    for (i in 0..lastStep) {
                         Box(
                             modifier = Modifier
                                 .size(if (i == currentStep) 10.dp else 8.dp)
@@ -79,9 +84,9 @@ fun OnboardingScreen(
                     }
                 }
 
-                if (currentStep < 5) {
+                if (currentStep < lastStep) {
                     Button(onClick = { currentStep++ }) {
-                        Text("Next")
+                        Text(stringResource(R.string.btn_next))
                     }
                 } else {
                     Button(onClick = onFinished) {
@@ -99,17 +104,25 @@ fun OnboardingScreen(
             contentAlignment = Alignment.Center
         ) {
             when (currentStep) {
-                0 -> StepContent(
+                // Step 0: language first, so every later step is read in it (English unless changed).
+                0 -> LanguageChooser(
+                    selectedTag = selectedLanguage,
+                    onSelect = onSelectLanguage,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 24.dp)
+                )
+                1 -> StepContent(
                     icon = Icons.Default.Shield,
                     title = stringResource(R.string.onboarding_title_1),
                     desc = stringResource(R.string.onboarding_desc_1)
                 )
-                1 -> StepContent(
+                2 -> StepContent(
                     icon = Icons.Default.Lock,
                     title = stringResource(R.string.onboarding_title_2),
                     desc = stringResource(R.string.onboarding_desc_2)
                 )
-                2 -> StepContent(
+                3 -> StepContent(
                     icon = Icons.Default.NotificationsActive,
                     title = stringResource(R.string.onboarding_title_3),
                     desc = stringResource(R.string.onboarding_desc_3),
@@ -129,7 +142,7 @@ fun OnboardingScreen(
                         }
                     }
                 )
-                3 -> StepContent(
+                4 -> StepContent(
                     icon = Icons.Default.NotificationAdd,
                     title = stringResource(R.string.onboarding_title_4),
                     desc = stringResource(R.string.onboarding_desc_4),
@@ -149,7 +162,7 @@ fun OnboardingScreen(
                         }
                     }
                 )
-                4 -> StepContent(
+                5 -> StepContent(
                     icon = Icons.Default.BatteryChargingFull,
                     title = stringResource(R.string.onboarding_title_5),
                     desc = stringResource(R.string.onboarding_desc_5),
@@ -170,7 +183,7 @@ fun OnboardingScreen(
                         }
                     }
                 )
-                5 -> StepContent(
+                6 -> StepContent(
                     icon = Icons.Default.VerifiedUser,
                     title = stringResource(R.string.onboarding_title_6),
                     desc = stringResource(R.string.onboarding_desc_6),

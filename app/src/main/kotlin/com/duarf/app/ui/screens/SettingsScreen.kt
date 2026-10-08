@@ -12,20 +12,22 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.duarf.app.R
+import com.duarf.app.locale.AppLanguage
 import com.duarf.app.ui.UiState
 import com.duarf.engine.model.Sensitivity
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     uiState: UiState,
     onBack: () -> Unit,
     onUpdateSensitivity: (Sensitivity) -> Unit,
-    onUpdateLanguage: (String) -> Unit,
+    onNavigateLanguage: () -> Unit,
     onUpdateRetention: (Int) -> Unit,
     onUpdateCheckSms: (Boolean) -> Unit,
     onUpdateGroupAlerts: (Boolean) -> Unit,
@@ -83,89 +85,31 @@ fun SettingsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            // Language selection (§8, §13.3)
-            Column {
-                Text(
-                    text = stringResource(R.string.setting_language),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold
+            // Language (§13.3). Only changes the app's own text; detection always covers every language.
+            val currentLanguage = AppLanguage.find(AppLanguage.current(LocalContext.current))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable(onClick = onNavigateLanguage),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.setting_language),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = currentLanguage.nativeName,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.outline
                 )
-                Spacer(Modifier.height(8.dp))
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "en",
-                        onClick = { onUpdateLanguage("en") },
-                        label = { Text("English") }
-                    )
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "hi",
-                        onClick = { onUpdateLanguage("hi") },
-                        label = { Text("हिंदी (Hindi)") }
-                    )
-                    val betaBadge = stringResource(R.string.beta_label_badge)
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "bn",
-                        onClick = { onUpdateLanguage("bn") },
-                        label = { Text("বাংলা $betaBadge") }
-                    )
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "mr",
-                        onClick = { onUpdateLanguage("mr") },
-                        label = { Text("मराठी $betaBadge") }
-                    )
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "te",
-                        onClick = { onUpdateLanguage("te") },
-                        label = { Text("తెలుగు $betaBadge") }
-                    )
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "ta",
-                        onClick = { onUpdateLanguage("ta") },
-                        label = { Text("தமிழ் $betaBadge") }
-                    )
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "or",
-                        onClick = { onUpdateLanguage("or") },
-                        label = { Text("ଓଡ଼ିଆ $betaBadge") }
-                    )
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "gu",
-                        onClick = { onUpdateLanguage("gu") },
-                        label = { Text("ગુજરાતી $betaBadge") }
-                    )
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "kn",
-                        onClick = { onUpdateLanguage("kn") },
-                        label = { Text("ಕನ್ನಡ $betaBadge") }
-                    )
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "ml",
-                        onClick = { onUpdateLanguage("ml") },
-                        label = { Text("മലയാളം $betaBadge") }
-                    )
-                    FilterChip(
-                        selected = uiState.preferences.languageCode == "pa",
-                        onClick = { onUpdateLanguage("pa") },
-                        label = { Text("ਪੰਜਾਬੀ $betaBadge") }
-                    )
-                }
-                Spacer(Modifier.height(8.dp))
-                if (com.duarf.engine.normalize.LanguageScriptDetector.isBetaLanguage(uiState.preferences.languageCode)) {
-                    Text(
-                        text = stringResource(R.string.beta_disclaimer_testing),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                } else {
-                    Text(
-                        text = stringResource(R.string.beta_disclaimer_regional),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
             }
 
             HorizontalDivider()

@@ -1,11 +1,13 @@
 package com.duarf.app.ui
 
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.duarf.app.locale.AppLanguage
 import com.duarf.app.ui.screens.*
 
 @Composable
@@ -16,6 +18,16 @@ fun DuarfNavGraph(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val manualResult by viewModel.manualCheckResult.collectAsState()
+
+    // UI language only. Applying it recreates the activity, so this is re-read afterwards.
+    val context = LocalContext.current
+    val uiLanguage = remember { AppLanguage.current(context) }
+    val selectLanguage: (String) -> Unit = { tag ->
+        if (tag != uiLanguage) {
+            viewModel.updateLanguage(tag)
+            AppLanguage.set(context, tag)
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -32,6 +44,8 @@ fun DuarfNavGraph(
                 onSendTestAlert = {
                     viewModel.sendTestAlert()
                 },
+                selectedLanguage = uiLanguage,
+                onSelectLanguage = selectLanguage,
                 onNavigateBatteryGuide = {
                     navController.navigate("battery_guide")
                 }
@@ -44,6 +58,7 @@ fun DuarfNavGraph(
                 onNavigateSettings = { navController.navigate("settings") },
                 onNavigateHistory = { navController.navigate("history") },
                 onNavigatePrivacyProof = { navController.navigate("privacy_proof") },
+                onNavigateLanguage = { navController.navigate("language") },
                 onAlertClick = { alertId -> navController.navigate("alert_detail/$alertId") },
                 onCheckMessage = { text, isUnknown ->
                     viewModel.analyzeMessage(text, isUnknown)
@@ -100,7 +115,7 @@ fun DuarfNavGraph(
                 uiState = uiState,
                 onBack = { navController.popBackStack() },
                 onUpdateSensitivity = { viewModel.updateSensitivity(it) },
-                onUpdateLanguage = { viewModel.updateLanguage(it) },
+                onNavigateLanguage = { navController.navigate("language") },
                 onUpdateRetention = { viewModel.updateRetentionDays(it) },
                 onUpdateCheckSms = { viewModel.updateCheckSms(it) },
                 onUpdateGroupAlerts = { viewModel.updateGroupAlerts(it) },
@@ -108,6 +123,14 @@ fun DuarfNavGraph(
                 onNavigateBatteryGuide = { navController.navigate("battery_guide") },
                 onNavigateAbout = { navController.navigate("about") },
                 onDeleteAllData = { viewModel.deleteAllData() }
+            )
+        }
+
+        composable("language") {
+            LanguageScreen(
+                selectedTag = uiLanguage,
+                onSelect = selectLanguage,
+                onBack = { navController.popBackStack() }
             )
         }
 
