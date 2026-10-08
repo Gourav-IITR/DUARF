@@ -40,6 +40,7 @@ class LazyScamEngine @Inject constructor(
                     }
                 }
             )
+            SafeLog.event(SafeLog.EventCode.PACKS_LOADED, engine.languagePackCount.toLong())
             if (engine.isModelLoaded) {
                 SafeLog.event(SafeLog.EventCode.MODEL_LOADED, (engine.modelVersion ?: 1).toLong())
             } else {

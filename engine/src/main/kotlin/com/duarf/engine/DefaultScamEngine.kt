@@ -66,6 +66,9 @@ class DefaultScamEngine(
     override val modelVersion: Int?
         get() = classifier?.formatVersion
 
+    val languagePackCount: Int
+        get() = packs.languages.size
+
     val effectiveEngineVersion: String = if (classifier != null) {
         "1.0.0-model-v${classifier.formatVersion}"
     } else {

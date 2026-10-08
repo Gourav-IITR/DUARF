@@ -29,6 +29,13 @@ When you receive a notification from supported messaging apps (such as WhatsApp 
 
 When an alert is flagged, DUARF delivers a clear warning with plain-language explanations and safe next steps.
 
+LANGUAGE SUPPORT & DETECTION COVERAGE
+DUARF's scam detection engine operates at different maturity tiers depending on language:
+• Full Detection Support: English, Hindi (Devanagari), and Hinglish (Latin-script Hindi).
+• Beta Support: Bengali (বাংলা), Marathi (मराठी), Telugu (తెలుగు), Tamil (தமிழ்), Odia (ଓଡ଼ିଆ). Detection is functional and being validated.
+• Early Preview (Detection Limited): Gujarati (ગુજરાતી), Kannada (ಕನ್ನಡ), Malayalam (മലയാളം), Punjabi (ਪੰਜਾਬੀ). Detection capabilities are currently limited in these languages.
+(Note: While the app interface supports 12 regional languages, scam detection coverage adheres to the tiers above.)
+
 PROMINENT DISCLOSURE & REQUIRED PERMISSIONS
 DUARF requires Android's Notification Access permission (NotificationListenerService) to detect scam messages.
 • Purpose: Only used to read incoming message text from monitored messaging apps (WhatsApp and SMS) to check for fraud indicators.

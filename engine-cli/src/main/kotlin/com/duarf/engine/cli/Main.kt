@@ -571,16 +571,19 @@ private fun runEval(args: List<String>) {
 
     val tier1Langs = setOf("en", "hi", "hi-Latn")
     val tier2Langs = setOf("bn", "mr", "te", "ta", "or")
+    val tier3Langs = setOf("gu", "kn", "ml", "pa")
     val hasTier1 = perLangCounters.keys.any { tier1Langs.contains(it) }
     val isTier2Only = perLangCounters.keys.isNotEmpty() && perLangCounters.keys.all { tier2Langs.contains(it) }
+    val isTier3Only = perLangCounters.keys.isNotEmpty() && perLangCounters.keys.all { tier3Langs.contains(it) }
 
     // Targets (§16.2):
     // Tier 1: Danger precision >= 0.97, Caution+ recall >= 0.90, Benign->Danger <= 0.3%, Benign->Caution <= 2.0%
     // Tier 2: Danger precision >= 0.95, Caution+ recall >= 0.80, Benign->Danger <= 0.5%, Benign->Caution <= 3.0%
-    val overallPassed = if (isTier2Only) {
-        dangerPrec >= 0.95 && recall >= 0.80 && bToDanger <= 0.5 && bToCautionExclIntended <= 3.0
-    } else {
-        dangerPrec >= 0.97 && recall >= 0.90 && bToDanger <= 0.3 && bToCautionExclIntended <= 2.0
+    // Tier 3: Ungated / Reported only
+    val overallPassed = when {
+        isTier3Only -> true
+        isTier2Only -> dangerPrec >= 0.95 && recall >= 0.80 && bToDanger <= 0.5 && bToCautionExclIntended <= 3.0
+        else -> dangerPrec >= 0.97 && recall >= 0.90 && bToDanger <= 0.3 && bToCautionExclIntended <= 2.0
     }
 
     var anyTier1LangFailed = false
@@ -680,8 +683,19 @@ private fun runEval(args: List<String>) {
         rulesPlusMlRecall = Math.round(recall * 1000.0) / 1000.0
     )
 
+    val reportHeader = when {
+        isTier3Only -> "TIER 3 EVALUATION (UNGATED)"
+        isTier2Only -> "TIER 2 GATES"
+        else -> "TIER 1 GATES"
+    }
+    val gateStatusDisplay = when {
+        isTier3Only -> "[REPORTED (ungated)]"
+        allPassed -> "[PASS]"
+        else -> "[FAIL: " + (if (!overallPassed) "Overall metrics miss; " else "") + (if (anyTier1LangFailed || anyTier2LangFailed) langList.filter { !it.passedGates && !tier3Langs.contains(it.lang) }.joinToString("; ") { "${it.lang} ${it.failureReasons.joinToString(", ")}" } else "") + "]"
+    }
+
     println("""
-        ==================== EVALUATION REPORT (${if (isTier2Only) "TIER 2 GATES" else "TIER 1 GATES"}) ====================
+        ==================== EVALUATION REPORT ($reportHeader) ====================
         Total Rows:           ${overall.total} (Scam: ${overall.scam}, Benign: ${overall.benign})
         -------------------------------------------------------------------------
         Scam - DANGER (TP):   ${overall.tpDanger}
@@ -693,22 +707,28 @@ private fun runEval(args: List<String>) {
         Benign - DANGER (FP): ${overall.fpDanger}
         -------------------------------------------------------------------------
         Overall Metrics:
-          Danger Precision:   ${evalMetrics.dangerPrecision} (Target: >= ${if (isTier2Only) "0.95" else "0.97"})
-          Caution+ Recall:    ${evalMetrics.cautionOrAboveRecall} (Target: >= ${if (isTier2Only) "0.80" else "0.90"})
-          Benign -> Danger:   ${evalMetrics.benignRaisedToDangerPercent}% (Target: <= ${if (isTier2Only) "0.5%" else "0.3%"})
-          Benign -> Caution+: ${evalMetrics.benignRaisedToCautionOrAbovePercent}% (Total) | ${evalMetrics.benignRaisedToCautionExclIntendedPercent}% (Excl. intended, Target: <= ${if (isTier2Only) "3.0%" else "2.0%"})
-          Gate Status:        ${if (allPassed) "[PASS]" else "[FAIL: " + (if (!overallPassed) "Overall metrics miss; " else "") + (if (anyTier1LangFailed || anyTier2LangFailed) langList.filter { !it.passedGates }.joinToString("; ") { "${it.lang} ${it.failureReasons.joinToString(", ")}" } else "") + "]"}
+          Danger Precision:   ${evalMetrics.dangerPrecision} (Target: >= ${if (isTier2Only) "0.95" else if (isTier3Only) "N/A" else "0.97"})
+          Caution+ Recall:    ${evalMetrics.cautionOrAboveRecall} (Target: >= ${if (isTier2Only) "0.80" else if (isTier3Only) "N/A" else "0.90"})
+          Benign -> Danger:   ${evalMetrics.benignRaisedToDangerPercent}% (Target: <= ${if (isTier2Only) "0.5%" else if (isTier3Only) "N/A" else "0.3%"})
+          Benign -> Caution+: ${evalMetrics.benignRaisedToCautionOrAbovePercent}% (Total) | ${evalMetrics.benignRaisedToCautionExclIntendedPercent}% (Excl. intended, Target: <= ${if (isTier2Only) "3.0%" else if (isTier3Only) "N/A" else "2.0%"})
+          Gate Status:        $gateStatusDisplay
         -------------------------------------------------------------------------
         INTENDED CAUTION (BY PRODUCT DESIGN §Item 3):
           Unknown number + shortened link + delivery/promo text is CAUTION as designed.
           Intended Caution Rows: ${overall.intendedCaution} / ${overall.benign}
           Intended Caution Templates: $intendedCautionGroupIds
         -------------------------------------------------------------------------
-        PER-LANGUAGE BREAKDOWN (§16.2 Tier 1 Gates):
+        PER-LANGUAGE BREAKDOWN (§16.2 Gates):
     """.trimIndent())
 
     for (lm in langList) {
-        val status = if (lm.passedGates) "[PASS]" else "[FAIL: ${lm.failureReasons.joinToString(", ")}]"
+        val status = if (tier3Langs.contains(lm.lang)) {
+            "[REPORTED (ungated)]"
+        } else if (lm.passedGates) {
+            "[PASS]"
+        } else {
+            "[FAIL: ${lm.failureReasons.joinToString(", ")}]"
+        }
         println("  Language [${lm.lang.padEnd(7)}]: Total=${lm.total}, Scam=${lm.scam}, Benign=${lm.benign} | Prec=${lm.dangerPrecision}, Rec=${lm.recall}, B->Danger=${lm.benignToDangerPct}%, B->Caution=${lm.benignToCautionPct}% (Excl. Intended: ${lm.benignToCautionExclIntendedPct}%, Intended: ${lm.intendedCautionCount}) $status")
     }
 
@@ -730,13 +750,19 @@ private fun runEval(args: List<String>) {
         """.trimIndent())
     }
 
+    val finalGateLine = when {
+        isTier3Only -> "TIER 3 GATES:         REPORTED (ungated)"
+        isTier2Only -> "TIER 2 GATES PASSED:  ${if (passedTier2) "YES [PASS]" else "NO [FAIL]"}"
+        else -> "TIER 1 GATES PASSED:  ${if (passedTier1) "YES [PASS]" else "NO [FAIL]"}"
+    }
+
     println("""
         -------------------------------------------------------------------------
         RECALL COMPARISON:
           Rules-only Recall:  ${evalMetrics.rulesOnlyRecall} (Danger Prec: ${Math.round(rulesPrec * 1000.0) / 1000.0})
           Rules + ML Recall:  ${evalMetrics.rulesPlusMlRecall} (Danger Prec: ${evalMetrics.dangerPrecision})
         -------------------------------------------------------------------------
-        TIER 1 GATES PASSED:  ${if (passedTier1) "YES [PASS]" else "NO [FAIL]"}
+        $finalGateLine
         =========================================================================
     """.trimIndent())
 

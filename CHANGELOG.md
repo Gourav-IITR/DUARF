@@ -650,12 +650,20 @@ All decisions made where the spec was silent or flexible are recorded here.
   - Executed `./gradlew :app:assembleRelease`. Generated production APK `app-release.apk` with R8 minification and resource shrinking.
   - Release APK size: **2.0 MB** (comfortably under the 15 MB limit).
   - All Section 14 CI tasks passed: `verifyPermissions`, `verifyDependencies`, `verifyNoContentLogging`, `verifyNoDebugToolsInRelease`, `verifyNoPiiLeakage`, `verifyExportedComponents`, `verifyEngineIsPure`.
-- **Final Evaluation of Frozen Tier 3 Test Sets**:
-  - Evaluated `eval/test_{gu,kn,ml,pa}.jsonl` once at milestone completion:
-    - Gujarati (`test_gu`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0% [PASS]
-    - Kannada (`test_kn`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0% [PASS]
-    - Malayalam (`test_ml`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0% [PASS]
-    - Punjabi (`test_pa`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0% [PASS]
+- **Evaluation of Frozen Tier 3 Test Sets & Marking Ungated**:
+  - Evaluated `eval/test_{gu,kn,ml,pa}.jsonl` once with zero fixes applied to test rows:
+    - Gujarati (`test_gu`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0%, Recall = 0.333 [REPORTED (ungated)]
+    - Kannada (`test_kn`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0%, Recall = 0.600 [REPORTED (ungated)]
+    - Malayalam (`test_ml`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0%, Recall = 0.667 [REPORTED (ungated)]
+    - Punjabi (`test_pa`): Danger Precision = 1.0 (100%), Benign $\to$ Danger = 0.0%, Benign $\to$ Caution+ = 0.0%, Recall = 0.733 [REPORTED (ungated)]
+  - Updated `engine-cli` evaluation formatter to explicitly mark Tier 3 results as `[REPORTED (ungated)]`, reflecting that Tier 3 languages are in early preview and not subject to Tier 1/2 gates.
+  - Aggregated Tier 3 false negative categories: Utility disconnection notices in native script (12 per language), UPI PIN money receipt lures (12 per language), 6-digit security code / OTP asks (12 per language), and localized authority/job/lottery lures.
+- **Merged Release Permissions Audit**:
+  - Merged release manifest permissions verified via `apkanalyzer` and `aapt2`: `android.permission.POST_NOTIFICATIONS`, `android.permission.VIBRATE`, and `com.duarf.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`.
+  - Added clarifying comment in `tools/ci/ci-checks.gradle.kts` explaining that `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` is auto-injected by AndroidX Core for non-exported dynamic receivers on API 33+. Documented in `README.md` audit guide.
+- **Store Listing & Privacy Policy**:
+  - Updated `docs/PLAY_STORE_LISTING.md` to clearly delineate language tiers (full support for English/Hindi/Hinglish, Beta for bn/mr/te/ta/or, early preview for gu/kn/ml/pa) and avoid claiming 12-language scam detection.
+  - Drafted `docs/PRIVACY_POLICY.md` specifying zero network permissions, benign discard, local AES-256-GCM encryption, and complete user data deletion.
 
 
 

@@ -54,6 +54,9 @@ val verifyPermissions by tasks.registering {
         val allowedPermissions = setOf(
             "android.permission.POST_NOTIFICATIONS",
             "android.permission.VIBRATE",
+            // Injected by androidx.core for secure non-exported dynamic broadcast receivers
+            // on Android 13+ (API 33+). Ensures only the app itself can send broadcasts to
+            // dynamically registered receivers that specify RECEIVER_NOT_EXPORTED.
             "com.duarf.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         )
 
