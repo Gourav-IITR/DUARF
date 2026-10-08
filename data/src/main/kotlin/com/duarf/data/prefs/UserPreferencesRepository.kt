@@ -10,7 +10,9 @@ data class UserPreferences(
     val groupAlerts: Boolean = false,
     val retentionDays: Int = 30,
     val onboardingCompleted: Boolean = false,
-    val languageCode: String = "en"
+    val languageCode: String = "en",
+    /** Base64 AES-GCM ciphertext of the family contact; never stored in clear (§12). */
+    val familyContactCipher: String? = null
 )
 
 interface UserPreferencesRepository {
@@ -22,5 +24,6 @@ interface UserPreferencesRepository {
     suspend fun updateRetentionDays(days: Int)
     suspend fun setOnboardingCompleted(completed: Boolean)
     suspend fun updateLanguageCode(langCode: String)
+    suspend fun updateFamilyContactCipher(cipher: String?)
     suspend fun clearAll()
 }

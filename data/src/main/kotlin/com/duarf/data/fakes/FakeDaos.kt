@@ -159,6 +159,10 @@ class FakeUserPreferencesRepository(
         _prefs.update { it.copy(languageCode = langCode) }
     }
 
+    override suspend fun updateFamilyContactCipher(cipher: String?) {
+        _prefs.update { it.copy(familyContactCipher = cipher) }
+    }
+
     override suspend fun clearAll() {
         _prefs.value = UserPreferences()
     }

@@ -19,6 +19,7 @@ class DuarfPreferences(private val context: Context) : UserPreferencesRepository
         val RETENTION_DAYS = intPreferencesKey("retention_days")
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
         val LANGUAGE_CODE = stringPreferencesKey("language_code")
+        val FAMILY_CONTACT_CIPHER = stringPreferencesKey("family_contact_cipher")
     }
 
     override val userPreferencesFlow: Flow<UserPreferences> = context.dataStore.data.map { prefs ->
@@ -38,7 +39,8 @@ class DuarfPreferences(private val context: Context) : UserPreferencesRepository
             groupAlerts = group,
             retentionDays = retention,
             onboardingCompleted = onboarded,
-            languageCode = lang
+            languageCode = lang,
+            familyContactCipher = prefs[PreferencesKeys.FAMILY_CONTACT_CIPHER]
         )
     }
 
@@ -68,6 +70,13 @@ class DuarfPreferences(private val context: Context) : UserPreferencesRepository
 
     override suspend fun updateLanguageCode(langCode: String) {
         context.dataStore.edit { it[PreferencesKeys.LANGUAGE_CODE] = langCode }
+    }
+
+    override suspend fun updateFamilyContactCipher(cipher: String?) {
+        context.dataStore.edit {
+            if (cipher == null) it.remove(PreferencesKeys.FAMILY_CONTACT_CIPHER)
+            else it[PreferencesKeys.FAMILY_CONTACT_CIPHER] = cipher
+        }
     }
 
     override suspend fun clearAll() {

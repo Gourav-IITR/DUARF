@@ -41,6 +41,11 @@ DUARF requires Android's Notification Access permission to monitor incoming noti
 - **Encryption at Rest:** All flagged alert records (including sender and message snippet) are stored in an encrypted database using **AES-256-GCM authenticated encryption**.
 - **Hardware-Backed Key Protection:** Cryptographic keys are generated and protected using the Android Keystore system (backed by hardware security modules / StrongBox on supported devices). Keys never leave your device.
 
+### 3.4 Optional Family Contact
+- You may save one name and phone number of someone you trust, so warnings can offer a "Call" button. It is optional and typed in by you; DUARF does not read your contacts.
+- It is stored only on your device, encrypted with the same AES-256-GCM Keystore key as alerts, and is used only to open your phone's dialer when you tap that button. Nothing is dialled automatically and nothing else is passed to the dialer.
+- You can remove it at any time in **Settings > Family contact**; deleting all data removes it too.
+
 ---
 
 ## 4. User Control & Data Deletion
