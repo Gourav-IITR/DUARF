@@ -20,7 +20,7 @@ Items marked "verify" and Section 19 human inputs are tracked here.
      10. `cesc`: Chamundeshwari Electricity Supply Corporation (Karnataka) / Calcutta Electric Supply Corporation. Added with empty `officialDomains` (`[]`); official domains need sourcing and verification.
    - **Engine Guardrail**: Brands with `isVerified == false` never fire `L02` or `L03`, and cannot satisfy `B02` or `B06` (verified by `UnverifiedBrandSuppressionTest.kt`).
 5. **Play developer account & signing keys (§19.5)**: Placeholder keystore and configuration used for release builds in local development.
-6. **Final branding assets (§19.6)**: Placeholder vector assets used in MVP.
+6. **Final branding assets (§19.6)**: App icon chosen 2026-10-08: "Abhaya shield" (raised palm inside a shield, indigo #2F3A8F). Masters in `docs/brand/`; Android layers in `app/src/main/res/drawable/ic_launcher_*.xml` and `ic_stat_duarf.xml`. Still open: final app name (DUARF is a working name) and whether the icon needs a trademark check before the Play listing.
 7. **Known gap after M4: obfuscated scams (adversarial recall 0.50; hi 0.886)**:
    - Evaluated on frozen test split: Devanagari Hindi recall was 0.886 < 0.90, failing the Tier 1 per-language gate due to 47 misses on adversarial template `fresh-scam-adv-02`. Overall adversarial recall was 0.50.
    - **Obfuscation technique in `fresh-scam-adv-02` (by type only)**:

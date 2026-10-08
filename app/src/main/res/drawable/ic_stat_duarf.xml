@@ -1,0 +1,34 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Notification small icon: the palm alone, so it stays legible at status-bar size.
+         Android draws it white in the status bar and inside the setColor() circle in the shade. -->
+    <group
+        android:pivotX="52.4"
+        android:pivotY="53.5"
+        android:scaleX="2.3"
+        android:scaleY="2.3"
+        android:translateX="1.6"
+        android:translateY="0.5">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M45,40.4 A2.4,2.4 0 0 1 49.8,40.4 V54.5 H45 Z"/>
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M51.4,37.4 A2.4,2.4 0 0 1 56.2,37.4 V54.5 H51.4 Z"/>
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M57.8,39.4 A2.4,2.4 0 0 1 62.6,39.4 V54.5 H57.8 Z"/>
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M64.2,43.1 A2.1,2.1 0 0 1 68.4,43.1 V54.5 H64.2 Z"/>
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M45,50.5 H68.4 V65 A7,7 0 0 1 61.4,72 H52 A7,7 0 0 1 45,65 Z"/>
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M48.394,62.647 L41.894,51.147 A2.75,2.75 0 0 0 37.106,53.853 L43.606,65.353 A2.75,2.75 0 0 0 48.394,62.647 Z"/>
+    </group>
+</vector>

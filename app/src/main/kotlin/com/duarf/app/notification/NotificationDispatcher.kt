@@ -121,7 +121,7 @@ class NotificationDispatcher @Inject constructor(
         )
 
         val notification = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_stat_duarf)
             .setContentTitle(title)
             .setContentText(summaryText)
             .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))

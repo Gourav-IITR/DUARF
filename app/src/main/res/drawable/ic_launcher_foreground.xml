@@ -3,7 +3,27 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- "Abhaya shield": a raised open palm (stop / do not fear) inside a shield.
+         Everything sits inside the 66dp safe circle. Source: docs/brand/duarf-icon.svg -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M54,20L24,34v20c0,18.5 12.8,35.8 30,40c17.2,-4.2 30,-21.5 30,-40V34L54,20z M50,66l-14,-14l4.2,-4.2l9.8,9.8l21.8,-21.8l4.2,4.2L50,66z"/>
+        android:pathData="M54,24 L76,31.5 Q78,32.2 78,34.3 V52 C78,68 68,79 54,85 C40,79 30,68 30,52 V34.3 Q30,32.2 32,31.5 Z"/>
+    <path
+        android:fillColor="#2F3A8F"
+        android:pathData="M45,40.4 A2.4,2.4 0 0 1 49.8,40.4 V54.5 H45 Z"/>
+    <path
+        android:fillColor="#2F3A8F"
+        android:pathData="M51.4,37.4 A2.4,2.4 0 0 1 56.2,37.4 V54.5 H51.4 Z"/>
+    <path
+        android:fillColor="#2F3A8F"
+        android:pathData="M57.8,39.4 A2.4,2.4 0 0 1 62.6,39.4 V54.5 H57.8 Z"/>
+    <path
+        android:fillColor="#2F3A8F"
+        android:pathData="M64.2,43.1 A2.1,2.1 0 0 1 68.4,43.1 V54.5 H64.2 Z"/>
+    <path
+        android:fillColor="#2F3A8F"
+        android:pathData="M45,50.5 H68.4 V65 A7,7 0 0 1 61.4,72 H52 A7,7 0 0 1 45,65 Z"/>
+    <path
+        android:fillColor="#2F3A8F"
+        android:pathData="M48.394,62.647 L41.894,51.147 A2.75,2.75 0 0 0 37.106,53.853 L43.606,65.353 A2.75,2.75 0 0 0 48.394,62.647 Z"/>
 </vector>

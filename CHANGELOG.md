@@ -667,3 +667,11 @@ All decisions made where the spec was silent or flexible are recorded here.
 
 
 
+
+## UI design: app icon (2026-10-08)
+- **App icon "Abhaya shield"** replaces the placeholder shield-check. A raised open palm (the abhaya mudra: "stop" and "do not fear") inside a white shield on indigo `#2F3A8F`. Chosen for older and less technical users: one bold shape that reads as "stop" at 48dp, no eye motif (which reads as surveillance), and no speech bubble or green that could be confused with WhatsApp's marks (invariant 5).
+  - `drawable/ic_launcher_foreground.xml`, `ic_launcher_background.xml`: adaptive layers, artwork kept inside the 66dp safe circle.
+  - `drawable/ic_launcher_monochrome.xml` + `<monochrome>` in both `mipmap-anydpi-v26` icons: Android 13+ themed icon (shield outline with a solid palm).
+  - `drawable/ic_stat_duarf.xml`: notification small icon. The palm alone, since the shield's detail is lost at status-bar size. `NotificationDispatcher` now uses it instead of `ic_launcher_foreground` (a 108dp adaptive layer that rendered small and padded in the status bar).
+  - `docs/brand/duarf-icon.svg` (master), `duarf-icon-play-512.svg` and `duarf-icon-play-512.png` (Play listing icon).
+- Not yet built on a device: no JDK on the design machine, so the drawables were validated as XML only. Run `./gradlew :app:assembleDebug` and check the launcher, themed and status-bar icons on a phone.

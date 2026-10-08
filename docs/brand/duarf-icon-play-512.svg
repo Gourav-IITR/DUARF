@@ -1,0 +1,13 @@
+<!-- Google Play listing icon (512x512, full-bleed square; Play applies its own corner mask). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 12 84 84" width="512" height="512">
+  <rect x="0" y="0" width="108" height="108" fill="#2F3A8F"/>
+  <path fill="#FFFFFF" d="M54,24 L76,31.5 Q78,32.2 78,34.3 V52 C78,68 68,79 54,85 C40,79 30,68 30,52 V34.3 Q30,32.2 32,31.5 Z"/>
+  <g fill="#2F3A8F">
+    <path d="M45,40.4 A2.4,2.4 0 0 1 49.8,40.4 V54.5 H45 Z"/>
+    <path d="M51.4,37.4 A2.4,2.4 0 0 1 56.2,37.4 V54.5 H51.4 Z"/>
+    <path d="M57.8,39.4 A2.4,2.4 0 0 1 62.6,39.4 V54.5 H57.8 Z"/>
+    <path d="M64.2,43.1 A2.1,2.1 0 0 1 68.4,43.1 V54.5 H64.2 Z"/>
+    <path d="M45,50.5 H68.4 V65 A7,7 0 0 1 61.4,72 H52 A7,7 0 0 1 45,65 Z"/>
+    <path d="M48.394,62.647 L41.894,51.147 A2.75,2.75 0 0 0 37.106,53.853 L43.606,65.353 A2.75,2.75 0 0 0 48.394,62.647 Z"/>
+  </g>
+</svg>
