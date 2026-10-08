@@ -6,7 +6,6 @@
 
     <!-- Battery guide & listener health strings (§13.3, §19.3) -->
     <string name="btn_back">Peeche jayein</string>
-    <string name="status_tap_to_enable">Settings me notification permission on karne ke liye tap karein</string>
     <string name="status_listener_paused">Protection system dwara pause ho gayi. Re-enable karne ke liye tap karein.</string>
     <string name="btn_view_device_guide">Device Guide Dekhein</string>
     <string name="setting_battery_guide">Background Protection Guide</string>
@@ -34,5 +33,49 @@
     <string name="onboarding_desc_language">Aap ise kabhi bhi Settings mein badal sakte hain.</string>
     <string name="language_detection_note">Aap koi bhi bhasha chunein, DUARF har supported bhasha ke messages check karta hai.</string>
     <string name="btn_next">Aage</string>
+
+    <!-- Calm Guardian UI: clearer warnings, Stop screen, family contact -->
+    <!-- Marked for native-speaker review §19.3 -->
+    <string name="warn_action_link">Link mat kholiye</string>
+    <string name="warn_action_file">File install mat kijiye</string>
+    <string name="warn_action_code">Koi code ya PIN mat bataiye</string>
+    <string name="warn_action_money">Paise mat bhejiye</string>
+    <string name="warn_action_generic">Jawab mat dijiye, paise mat bhejiye</string>
+    <string name="notif_danger_title">%1$s — sambhavit scam</string>
+    <string name="notif_public_title">Sambhavit scam message</string>
+    <string name="notif_public_text">Wajah dekhne ke liye phone unlock kijiye. Tab tak koi link mat kholiye.</string>
+    <string name="action_call_contact">%1$s ko call karein</string>
+    <string name="level_danger_short">Sambhavit scam</string>
+    <string name="level_caution_short">Saavdhan rahein</string>
+    <string name="level_safe_short">Surakshit lagta hai</string>
+    <string name="level_safe_sub">Koi chetavani ka sanket nahi mila. Phir bhi satark rahein: scam badalte rehte hain.</string>
+    <string name="reason_link_goes_to">Link yahan jaata hai</string>
+    <string name="reason_real_site">%1$s ki asli site</string>
+    <string name="advice_paid_title">Paise ya OTP de diye hain?</string>
+    <string name="advice_paid_body">Turant national cyber helpline par call karein.</string>
+    <string name="btn_call_1930">1930 par call karein</string>
+    <string name="detail_feedback_title">Kya yeh chetavani sahi thi?</string>
+    <string name="detail_footer_private">Jaanch isi phone par hui. Kuch bhi kahin nahi bheja gaya.</string>
+    <string name="share_warning_text">DUARF chetavani: mujhe mila ek message scam lagta hai (%1$s). Iske link mat kholiye aur koi OTP mat bataiye.</string>
+    <string name="btn_share">Share karein</string>
+    <string name="home_privacy_line">Internet ki permission nahi. Kuch bhi is phone se bahar nahi jaata.</string>
+    <string name="status_last_checked">Aakhri jaanch %1$s</string>
+    <string name="status_turn_on">Suraksha phir se chalu karein</string>
+    <string name="stop_title">Rukiye!</string>
+    <string name="stop_why">Kyon?</string>
+    <string name="stop_call_contact_sub">Kuch bhi karne se pehle pooch lijiye</string>
+    <string name="stop_call_1930_sub">Agar paise ya OTP de diye hain</string>
+    <string name="stop_ok">Theek hai, samajh gaye</string>
+    <string name="stop_details">Poori jaankari dekhein</string>
+    <string name="family_title">Parivaar ka contact</string>
+    <string name="family_desc">Koi bharosemand vyakti, jise chetavani par kuch karne se pehle call karein. Sirf isi phone par, encrypt karke save hota hai.</string>
+    <string name="family_name_label">Naam (jaise: Beta)</string>
+    <string name="family_number_label">Phone number</string>
+    <string name="btn_save">Save karein</string>
+    <string name="btn_remove">Hatayein</string>
+    <string name="family_not_set">Set nahi hai</string>
+    <string name="family_number_invalid">10 se 15 ankon ka phone number daalein</string>
+    <string name="family_saved">Save ho gaya</string>
+    <string name="check_result_title">Jaanch ka nateeja</string>
 </resources>
 

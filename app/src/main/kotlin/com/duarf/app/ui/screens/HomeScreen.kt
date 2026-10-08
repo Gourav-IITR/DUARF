@@ -2,10 +2,13 @@ package com.duarf.app.ui.screens
 
 import android.content.Intent
 import android.provider.Settings
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -14,20 +17,26 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.duarf.app.R
 import com.duarf.app.locale.AppLanguage
 import com.duarf.app.ui.UiState
+import com.duarf.app.ui.components.DuarfMark
+import com.duarf.app.ui.components.LevelTile
+import com.duarf.app.ui.components.formatAlertTime
+import com.duarf.app.ui.components.levelShortLabel
+import com.duarf.app.ui.theme.DuarfColors
+import com.duarf.app.ui.theme.style
 import com.duarf.data.repo.DecryptedAlert
 import com.duarf.engine.model.AlertLevel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,16 +57,9 @@ fun HomeScreen(
             TopAppBar(
                 title = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.Shield,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(Modifier.width(8.dp))
-                        Text(
-                            text = "DUARF",
-                            fontWeight = FontWeight.Bold
-                        )
+                        DuarfMark()
+                        Spacer(Modifier.width(10.dp))
+                        Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
                     }
                 },
                 actions = {
@@ -73,16 +75,10 @@ fun HomeScreen(
                         Text(currentLanguage.nativeName)
                     }
                     IconButton(onClick = onNavigatePrivacyProof) {
-                        Icon(
-                            imageVector = Icons.Default.Lock,
-                            contentDescription = stringResource(R.string.setting_privacy_proof)
-                        )
+                        Icon(Icons.Default.Lock, contentDescription = stringResource(R.string.setting_privacy_proof))
                     }
                     IconButton(onClick = onNavigateSettings) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = stringResource(R.string.settings_title)
-                        )
+                        Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.settings_title))
                     }
                 }
             )
@@ -91,89 +87,35 @@ fun HomeScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(paddingValues),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            // 1. Protection status card (§13.3)
             item {
                 ProtectionStatusCard(
                     isEnabled = uiState.listenerHealth.isEnabled,
                     isConnected = uiState.listenerHealth.isConnected,
-                    lastEventMillis = uiState.listenerHealth.lastEventMillis
+                    lastEventMillis = uiState.listenerHealth.lastEventMillis,
+                    onPrivacyClick = onNavigatePrivacyProof
                 )
             }
-
-            // 2. Weekly statistics card (§13.3)
+            item { WeeklyStatsCard(uiState = uiState) }
             item {
-                WeeklyStatsCard(uiState = uiState)
+                CheckMessageCard(
+                    text = pasteText,
+                    onTextChange = { pasteText = it },
+                    isUnknownNumber = isUnknownNumber,
+                    onUnknownChange = { isUnknownNumber = it },
+                    onCheck = { onCheckMessage(pasteText, isUnknownNumber) }
+                )
             }
-
-            // 3. "Check a message" in-app paste box (§13.3)
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = stringResource(R.string.card_check_message),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = pasteText,
-                            onValueChange = { pasteText = it },
-                            placeholder = { Text(stringResource(R.string.hint_paste_message)) },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .heightIn(min = 90.dp),
-                            maxLines = 5
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Checkbox(
-                                checked = isUnknownNumber,
-                                onCheckedChange = { isUnknownNumber = it }
-                            )
-                            Text(
-                                text = stringResource(R.string.toggle_unknown_number),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-                        Spacer(Modifier.height(8.dp))
-                        Button(
-                            onClick = {
-                                onCheckMessage(pasteText, isUnknownNumber)
-                            },
-                            enabled = pasteText.isNotBlank(),
-                            modifier = Modifier.align(Alignment.End)
-                        ) {
-                            Icon(Icons.Default.Search, contentDescription = null)
-                            Spacer(Modifier.width(8.dp))
-                            Text(stringResource(R.string.btn_analyze))
-                        }
-                    }
-                }
-            }
-
-            // 4. Recent Alerts (§13.3)
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = stringResource(R.string.title_recent_alerts),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Text(text = stringResource(R.string.title_recent_alerts), style = MaterialTheme.typography.titleMedium)
                     if (uiState.recentAlerts.isNotEmpty()) {
                         TextButton(onClick = onNavigateHistory) {
                             Text(stringResource(R.string.view_all))
@@ -181,28 +123,20 @@ fun HomeScreen(
                     }
                 }
             }
-
             if (uiState.recentAlerts.isEmpty()) {
                 item {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 24.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = stringResource(R.string.no_recent_alerts),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+                    Text(
+                        text = stringResource(R.string.no_recent_alerts),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(vertical = 16.dp)
+                    )
                 }
             } else {
-                items(uiState.recentAlerts.take(5)) { alert ->
+                items(uiState.recentAlerts.take(5), key = { it.id }) { alert ->
                     AlertItemRow(alert = alert, onClick = { onAlertClick(alert.id) })
                 }
             }
-
-            item { Spacer(Modifier.height(16.dp)) }
         }
     }
 }
@@ -211,78 +145,82 @@ fun HomeScreen(
 fun ProtectionStatusCard(
     isEnabled: Boolean,
     isConnected: Boolean,
-    lastEventMillis: Long
+    lastEventMillis: Long,
+    onPrivacyClick: () -> Unit
 ) {
     val context = LocalContext.current
     val isProtected = isEnabled && isConnected
-    val cardColor = if (isProtected) Color(0xFFE8F5E9) else Color(0xFFFFEBEE)
-    val contentColor = if (isProtected) Color(0xFF2E7D32) else Color(0xFFC62828)
+    val level = if (isProtected) AlertLevel.NONE else AlertLevel.DANGER
+    val style = level.style()
 
-    val cardModifier = if (!isProtected) {
-        Modifier
-            .fillMaxWidth()
-            .clickable {
-                try {
-                    val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    }
-                    context.startActivity(intent)
-                } catch (_: Exception) {}
-            }
-    } else {
-        Modifier.fillMaxWidth()
-    }
-
-    Card(
-        modifier = cardModifier,
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = cardColor)
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = if (isProtected) Icons.Default.CheckCircle else Icons.Default.Warning,
-                contentDescription = null,
-                tint = contentColor,
-                modifier = Modifier.size(40.dp)
-            )
-            Spacer(Modifier.width(16.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = if (isProtected) {
-                        stringResource(R.string.status_protected)
-                    } else {
-                        stringResource(R.string.status_action_needed)
-                    },
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = contentColor
-                )
-                Text(
-                    text = if (isProtected) {
-                        val lastCheckStr = if (lastEventMillis > 0) {
-                            val timeStr = SimpleDateFormat("h:mm a", Locale.getDefault()).format(Date(lastEventMillis))
-                            " • Last event $timeStr"
-                        } else ""
-                        stringResource(R.string.status_listener_running) + lastCheckStr
-                    } else if (!isEnabled) {
-                        stringResource(R.string.status_listener_disabled)
-                    } else {
-                        stringResource(R.string.status_listener_paused)
-                    },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = contentColor
-                )
-                if (!isProtected) {
-                    Spacer(Modifier.height(6.dp))
-                    Text(
-                        text = stringResource(R.string.status_tap_to_enable),
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = contentColor
+    Surface(color = style.soft, shape = RoundedCornerShape(20.dp), modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                Box(
+                    modifier = Modifier.size(52.dp).background(style.strong, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = if (isProtected) Icons.Default.VerifiedUser else Icons.Default.Warning,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(28.dp)
                     )
+                }
+                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Text(
+                        text = stringResource(if (isProtected) R.string.status_protected else R.string.status_action_needed),
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = style.onSoft
+                    )
+                    val detail = when {
+                        isProtected && lastEventMillis > 0 -> stringResource(R.string.status_listener_running) + ". " +
+                            stringResource(R.string.status_last_checked, formatAlertTime(context, lastEventMillis))
+                        isProtected -> stringResource(R.string.status_listener_running)
+                        !isEnabled -> stringResource(R.string.status_listener_disabled)
+                        else -> stringResource(R.string.status_listener_paused)
+                    }
+                    Text(text = detail, style = MaterialTheme.typography.bodyMedium, color = style.onSoft)
+                }
+            }
+            if (isProtected) {
+                // The privacy promise sits on the status card, one tap from the proof (§13.3).
+                Surface(
+                    color = MaterialTheme.colorScheme.surfaceContainer,
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 48.dp)
+                        .clickable(onClick = onPrivacyClick)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Icon(Icons.Default.WifiOff, contentDescription = null, tint = DuarfColors.Safe, modifier = Modifier.size(20.dp))
+                        Text(
+                            text = stringResource(R.string.home_privacy_line),
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(Icons.Default.ChevronRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
+            } else {
+                Button(
+                    onClick = {
+                        try {
+                            context.startActivity(
+                                Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            )
+                        } catch (_: Exception) {
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = style.strong)
+                ) {
+                    Text(stringResource(R.string.status_turn_on))
                 }
             }
         }
@@ -295,96 +233,115 @@ fun WeeklyStatsCard(uiState: UiState) {
     val totalCautions = uiState.weeklyStats.sumOf { it.cautions }
     val totalDangers = uiState.weeklyStats.sumOf { it.dangers }
 
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = stringResource(R.string.card_weekly_stats),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                StatCounter(count = totalChecked, label = stringResource(R.string.stat_checked), color = MaterialTheme.colorScheme.primary)
-                StatCounter(count = totalCautions, label = stringResource(R.string.stat_cautions), color = Color(0xFFF57C00))
-                StatCounter(count = totalDangers, label = stringResource(R.string.stat_dangers), color = Color(0xFFD32F2F))
+    Surface(color = MaterialTheme.colorScheme.surfaceContainer, shape = RoundedCornerShape(20.dp), modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(horizontal = 18.dp, vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text(text = stringResource(R.string.card_weekly_stats), style = MaterialTheme.typography.titleMedium)
+            Row(modifier = Modifier.fillMaxWidth()) {
+                StatCounter(totalChecked, stringResource(R.string.stat_checked), null, MaterialTheme.colorScheme.onSurface, Modifier.weight(1f))
+                StatCounter(totalCautions, stringResource(R.string.stat_cautions), AlertLevel.CAUTION.style().icon, DuarfColors.Caution, Modifier.weight(1f))
+                StatCounter(totalDangers, stringResource(R.string.stat_dangers), AlertLevel.DANGER.style().icon, DuarfColors.Danger, Modifier.weight(1f))
             }
         }
     }
 }
 
 @Composable
-private fun StatCounter(count: Int, label: String, color: Color) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = count.toString(),
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-            color = color
-        )
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+private fun StatCounter(count: Int, label: String, icon: ImageVector?, color: Color, modifier: Modifier) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            if (icon != null) Icon(icon, contentDescription = null, tint = color, modifier = Modifier.size(22.dp))
+            Text(text = "%,d".format(count), style = MaterialTheme.typography.headlineSmall, color = color)
+        }
+        Text(text = label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
+@Composable
+private fun CheckMessageCard(
+    text: String,
+    onTextChange: (String) -> Unit,
+    isUnknownNumber: Boolean,
+    onUnknownChange: (Boolean) -> Unit,
+    onCheck: () -> Unit
+) {
+    Surface(color = MaterialTheme.colorScheme.surfaceContainer, shape = RoundedCornerShape(20.dp), modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(horizontal = 18.dp, vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(text = stringResource(R.string.card_check_message), style = MaterialTheme.typography.titleMedium)
+            OutlinedTextField(
+                value = text,
+                onValueChange = onTextChange,
+                placeholder = { Text(stringResource(R.string.hint_paste_message)) },
+                modifier = Modifier.fillMaxWidth().heightIn(min = 96.dp),
+                shape = RoundedCornerShape(12.dp),
+                maxLines = 5
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 48.dp)
+                    .toggleable(value = isUnknownNumber, onValueChange = onUnknownChange, role = Role.Checkbox),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(checked = isUnknownNumber, onCheckedChange = null)
+                Spacer(Modifier.width(10.dp))
+                Text(text = stringResource(R.string.toggle_unknown_number), style = MaterialTheme.typography.bodyMedium)
+            }
+            Button(
+                onClick = onCheck,
+                enabled = text.isNotBlank(),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Icon(Icons.Default.Search, contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text(stringResource(R.string.btn_analyze))
+            }
+        }
+    }
+}
+
+/** One alert in a list: level icon and word, time, sender and the start of the message. */
 @Composable
 fun AlertItemRow(
     alert: DecryptedAlert,
     onClick: () -> Unit
 ) {
-    val isDanger = alert.level == AlertLevel.DANGER
-    val badgeColor = if (isDanger) Color(0xFFFFCDD2) else Color(0xFFFFE0B2)
-    val badgeTextColor = if (isDanger) Color(0xFFB71C1C) else Color(0xFFE65100)
-
-    Card(
+    val context = LocalContext.current
+    Surface(
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        shape = RoundedCornerShape(16.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(12.dp)
+            .clickable(onClick = onClick)
     ) {
         Row(
-            modifier = Modifier.padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Surface(
-                shape = RoundedCornerShape(6.dp),
-                color = badgeColor,
-                modifier = Modifier.padding(end = 12.dp)
-            ) {
-                Text(
-                    text = alert.level.name,
-                    color = badgeTextColor,
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                )
-            }
+            LevelTile(alert.level)
             Column(modifier = Modifier.weight(1f)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = levelShortLabel(alert.level),
+                        style = MaterialTheme.typography.titleSmall,
+                        color = alert.level.style().strong,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Text(
+                        text = formatAlertTime(context, alert.createdAt),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
                 Text(
-                    text = alert.senderDisplay ?: "Unknown",
+                    text = listOfNotNull(alert.senderDisplay ?: stringResource(R.string.unknown_sender), alert.text).joinToString(" · "),
                     style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = alert.text,
-                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
-            Icon(
-                imageVector = Icons.Default.ChevronRight,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.outline
-            )
         }
     }
 }

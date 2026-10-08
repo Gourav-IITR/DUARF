@@ -8,9 +8,7 @@
     <string name="channel_caution_name">ജാഗ്രത</string>
     <string name="channel_caution_desc">സംശയാസ്പദമായ സന്ദേശങ്ങൾക്കായുള്ള ജാഗ്രതാ നിർദ്ദേശം</string>
 
-    <string name="alert_danger_title">%1$s ൽ നിന്നുള്ള തട്ടിപ്പ് സാധ്യത</string>
     <string name="alert_caution_title">%1$s സന്ദേശത്തിൽ ജാഗ്രത പാലിക്കുക</string>
-    <string name="alert_danger_sms_title">%1$s ൽ നിന്നുള്ള SMS: തട്ടിപ്പ് സാധ്യത</string>
     <string name="alert_caution_sms_title">%1$s ൽ നിന്നുള്ള SMS: സംശയാസ്പദ സന്ദേശം</string>
     <string name="alert_generic_summary">ഈ സന്ദേശത്തിൽ സംശയാസ്പദമായ വിവരങ്ങൾ കണ്ടെത്തി</string>
     <string name="action_see_why">കാരണം കാണുക</string>
@@ -61,9 +59,6 @@
     <string name="view_all">എല്ലാം കാണുക</string>
 
     <!-- Alert Detail & Check Result -->
-    <string name="level_danger">അപകടം — തട്ടിപ്പ് സാധ്യത</string>
-    <string name="level_caution">ജാഗ്രത — ശ്രദ്ധിക്കുക</string>
-    <string name="level_safe">സുരക്ഷിതമായി തോന്നുന്നു — ജാഗ്രത പാലിക്കുക</string>
     <string name="label_message_content">സന്ദേശ ഉള്ളടക്കം</string>
     <string name="label_reasons">DUARF ഇത് ഫ്ലാഗ് ചെയ്യാൻ കാരണം</string>
     <string name="label_checked">ഞങ്ങൾ പരിശോധിച്ചവ</string>
@@ -71,7 +66,6 @@
     <string name="advice_caution_soft">ഇത് യഥാർത്ഥമായിരിക്കാം, എന്നാൽ ലിങ്കിൽ ക്ലിക്ക് ചെയ്യുന്നതിന് മുൻപ് ഔദ്യോഗിക ആപ്പിലോ വെബ്സൈറ്റിലോ സ്ഥിരീകരിക്കുക.</string>
     <string name="advice_1">ലിങ്കുകളിൽ ക്ലിക്ക് ചെയ്യുകയോ ഫയലുകൾ തുറക്കുകയോ പണം അയക്കുകയോ ചെയ്യരുത്.</string>
     <string name="advice_2">WhatsApp-ൽ അയച്ചയാളെ ബ്ലോക്ക് ചെയ്യുകയും റിപ്പോർട്ട് ചെയ്യുകയും ചെയ്യുക.</string>
-    <string name="advice_3">നിങ്ങൾ പണമോ ഒടിപിയോ പങ്കുവെച്ചെങ്കിൽ ഉടൻ തന്നെ ദേശീയ സൈബർ ഹെൽപ്പ്‌ലൈൻ 1930 ൽ വിളിക്കുക അല്ലെങ്കിൽ cybercrime.gov.in സന്ദർശിക്കുക.</string>
 
     <string name="btn_this_is_safe">ഇത് സുരക്ഷിതമാണ്</string>
     <string name="btn_this_is_scam">ഇത് തട്ടിപ്പാണ്</string>
@@ -213,7 +207,6 @@
     <!-- Battery guide & listener health strings (§13.3, §19.3) -->
     <!-- Marked for native-speaker review §19.3 -->
     <string name="btn_back">പിന്നിലേക്ക്</string>
-    <string name="status_tap_to_enable">ക്രമീകരണങ്ങളിൽ അറിയിപ്പ് ആക്സസ് പ്രവർത്തനക്ഷമമാക്കാൻ ടാപ്പ് ചെയ്യുക</string>
     <string name="status_listener_paused">സിസ്റ്റം സംരക്ഷണം താൽക്കാലികമായി നിർത്തി. പുനരാരംഭിക്കാൻ ടാപ്പ് ചെയ്യുക.</string>
     <string name="btn_view_device_guide">ഡിവൈസ് ഗൈഡ് കാണുക</string>
     <string name="setting_battery_guide">പശ്ചാത്തല സംരക്ഷണ ഗൈഡ്</string>
@@ -241,5 +234,49 @@
     <string name="onboarding_desc_language">ഇത് എപ്പോൾ വേണമെങ്കിലും ക്രമീകരണങ്ങളിൽ മാറ്റാം.</string>
     <string name="language_detection_note">നിങ്ങൾ ഏത് ഭാഷ തിരഞ്ഞെടുത്താലും, പിന്തുണയുള്ള എല്ലാ ഭാഷകളിലെയും സന്ദേശങ്ങൾ DUARF പരിശോധിക്കും.</string>
     <string name="btn_next">അടുത്തത്</string>
+
+    <!-- Calm Guardian UI: clearer warnings, Stop screen, family contact -->
+    <!-- Marked for native-speaker review §19.3 -->
+    <string name="warn_action_link">ലിങ്ക് തുറക്കരുത്</string>
+    <string name="warn_action_file">ഫയൽ ഇൻസ്റ്റാൾ ചെയ്യരുത്</string>
+    <string name="warn_action_code">ഒരു കോഡും പിന്നും പറയരുത്</string>
+    <string name="warn_action_money">പണം അയയ്ക്കരുത്</string>
+    <string name="warn_action_generic">മറുപടി നൽകരുത്, പണം അയയ്ക്കരുത്</string>
+    <string name="notif_danger_title">%1$s — തട്ടിപ്പാകാം</string>
+    <string name="notif_public_title">തട്ടിപ്പ് സന്ദേശമാകാം</string>
+    <string name="notif_public_text">കാരണം കാണാൻ ഫോൺ അൺലോക്ക് ചെയ്യുക. അതുവരെ ഒരു ലിങ്കും തുറക്കരുത്.</string>
+    <string name="action_call_contact">%1$s-നെ വിളിക്കുക</string>
+    <string name="level_danger_short">തട്ടിപ്പാകാം</string>
+    <string name="level_caution_short">ശ്രദ്ധിക്കുക</string>
+    <string name="level_safe_short">സുരക്ഷിതമെന്ന് തോന്നുന്നു</string>
+    <string name="level_safe_sub">മുന്നറിയിപ്പ് സൂചനകളൊന്നും കണ്ടില്ല. എങ്കിലും ശ്രദ്ധിക്കുക: തട്ടിപ്പുകൾ മാറിക്കൊണ്ടിരിക്കും.</string>
+    <string name="reason_link_goes_to">ലിങ്ക് പോകുന്നത്</string>
+    <string name="reason_real_site">%1$s-ന്റെ യഥാർത്ഥ സൈറ്റ്</string>
+    <string name="advice_paid_title">പണമോ ഒടിപിയോ നൽകിക്കഴിഞ്ഞോ?</string>
+    <string name="advice_paid_body">ഉടൻ ദേശീയ സൈബർ ഹെൽപ്‌ലൈനിൽ വിളിക്കുക.</string>
+    <string name="btn_call_1930">1930-ൽ വിളിക്കുക</string>
+    <string name="detail_feedback_title">ഈ മുന്നറിയിപ്പ് ശരിയായിരുന്നോ?</string>
+    <string name="detail_footer_private">ഈ ഫോണിൽ തന്നെ പരിശോധിച്ചു. ഒന്നും എവിടേക്കും അയച്ചിട്ടില്ല.</string>
+    <string name="share_warning_text">DUARF മുന്നറിയിപ്പ്: എനിക്ക് ലഭിച്ച ഒരു സന്ദേശം തട്ടിപ്പാണെന്ന് തോന്നുന്നു (%1$s). അതിലെ ലിങ്കുകൾ തുറക്കരുത്, ഒരു ഒടിപിയും പറയരുത്.</string>
+    <string name="btn_share">പങ്കിടുക</string>
+    <string name="home_privacy_line">ഇന്റർനെറ്റ് അനുമതിയില്ല. ഒന്നും ഈ ഫോണിൽ നിന്ന് പുറത്തുപോകില്ല.</string>
+    <string name="status_last_checked">അവസാന പരിശോധന %1$s</string>
+    <string name="status_turn_on">സംരക്ഷണം വീണ്ടും ഓണാക്കുക</string>
+    <string name="stop_title">നിൽക്കൂ!</string>
+    <string name="stop_why">എന്തുകൊണ്ട്?</string>
+    <string name="stop_call_contact_sub">എന്തെങ്കിലും ചെയ്യുന്നതിന് മുമ്പ് ചോദിക്കുക</string>
+    <string name="stop_call_1930_sub">പണമോ ഒടിപിയോ നൽകിയിട്ടുണ്ടെങ്കിൽ</string>
+    <string name="stop_ok">ശരി, മനസ്സിലായി</string>
+    <string name="stop_details">പൂർണ്ണ വിവരങ്ങൾ കാണുക</string>
+    <string name="family_title">കുടുംബ കോൺടാക്റ്റ്</string>
+    <string name="family_desc">മുന്നറിയിപ്പ് ലഭിച്ചാൽ എന്തെങ്കിലും ചെയ്യുന്നതിന് മുമ്പ് വിളിക്കാൻ നിങ്ങൾ വിശ്വസിക്കുന്ന ഒരാൾ. ഈ ഫോണിൽ മാത്രം, എൻക്രിപ്റ്റ് ചെയ്ത് സംരക്ഷിക്കുന്നു.</string>
+    <string name="family_name_label">പേര് (ഉദാ: മകൻ)</string>
+    <string name="family_number_label">ഫോൺ നമ്പർ</string>
+    <string name="btn_save">സംരക്ഷിക്കുക</string>
+    <string name="btn_remove">നീക്കം ചെയ്യുക</string>
+    <string name="family_not_set">സജ്ജീകരിച്ചിട്ടില്ല</string>
+    <string name="family_number_invalid">10 മുതൽ 15 അക്ക ഫോൺ നമ്പർ നൽകുക</string>
+    <string name="family_saved">സംരക്ഷിച്ചു</string>
+    <string name="check_result_title">പരിശോധനാ ഫലം</string>
 </resources>
 

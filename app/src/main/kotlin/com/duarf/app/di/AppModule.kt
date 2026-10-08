@@ -81,6 +81,14 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideFamilyContactRepository(
+        preferences: com.duarf.data.prefs.UserPreferencesRepository,
+        crypto: KeyStoreCrypto
+    ): com.duarf.data.repo.FamilyContactRepository =
+        com.duarf.data.repo.FamilyContactRepository(preferences, crypto)
+
+    @Provides
+    @Singleton
     fun provideScamEngine(@ApplicationContext context: Context): ScamEngine =
         com.duarf.app.engine.LazyScamEngine(context)
 }

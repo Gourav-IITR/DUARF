@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+    <!-- Large icon on Danger notifications: red badge with a warning triangle. -->
+    <path
+        android:fillColor="#B42318"
+        android:pathData="M16,0H48A16,16 0 0 1 64,16V48A16,16 0 0 1 48,64H16A16,16 0 0 1 0,48V16A16,16 0 0 1 16,0Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M29.4,15.2a3,3 0 0 1 5.2,0l15.6,27.4a3,3 0 0 1 -2.6,4.4H16.4a3,3 0 0 1 -2.6,-4.4Z" />
+    <path
+        android:fillColor="#B42318"
+        android:pathData="M30,24h4v11h-4zM30,38h4v4h-4z" />
+</vector>

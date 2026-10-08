@@ -4,7 +4,7 @@ import com.duarf.engine.model.SourceApp
 import com.duarf.engine.model.Verdict
 
 interface AlertDispatcher {
-    fun dispatchAlert(
+    suspend fun dispatchAlert(
         alertId: Long,
         fingerprint: String,
         senderDisplay: String?,

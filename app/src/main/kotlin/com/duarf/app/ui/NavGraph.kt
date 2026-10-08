@@ -18,6 +18,7 @@ fun DuarfNavGraph(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val manualResult by viewModel.manualCheckResult.collectAsState()
+    val familyContact by viewModel.familyContact.collectAsState()
 
     // UI language only. Applying it recreates the activity, so this is re-read afterwards.
     val context = LocalContext.current
@@ -46,6 +47,9 @@ fun DuarfNavGraph(
                 },
                 selectedLanguage = uiLanguage,
                 onSelectLanguage = selectLanguage,
+                familyContact = familyContact,
+                onSaveFamilyContact = viewModel::saveFamilyContact,
+                onRemoveFamilyContact = viewModel::removeFamilyContact,
                 onNavigateBatteryGuide = {
                     navController.navigate("battery_guide")
                 }
@@ -76,6 +80,7 @@ fun DuarfNavGraph(
             if (alert != null) {
                 AlertDetailScreen(
                     alert = alert,
+                    familyContact = familyContact,
                     onBack = { navController.popBackStack() },
                     onFeedback = { isScam -> viewModel.setAlertFeedback(alertId, isScam) },
                     onTrustSender = {
@@ -92,6 +97,7 @@ fun DuarfNavGraph(
                 CheckResultScreen(
                     messageText = text,
                     verdict = verdict,
+                    familyContact = familyContact,
                     onBack = {
                         viewModel.clearManualCheck()
                         navController.popBackStack()
@@ -116,6 +122,8 @@ fun DuarfNavGraph(
                 onBack = { navController.popBackStack() },
                 onUpdateSensitivity = { viewModel.updateSensitivity(it) },
                 onNavigateLanguage = { navController.navigate("language") },
+                familyContact = familyContact,
+                onNavigateFamily = { navController.navigate("family") },
                 onUpdateRetention = { viewModel.updateRetentionDays(it) },
                 onUpdateCheckSms = { viewModel.updateCheckSms(it) },
                 onUpdateGroupAlerts = { viewModel.updateGroupAlerts(it) },
@@ -123,6 +131,36 @@ fun DuarfNavGraph(
                 onNavigateBatteryGuide = { navController.navigate("battery_guide") },
                 onNavigateAbout = { navController.navigate("about") },
                 onDeleteAllData = { viewModel.deleteAllData() }
+            )
+        }
+
+        // Danger warnings open here first: one screen, no scrolling needed.
+        composable(
+            route = "stop/{alertId}",
+            arguments = listOf(navArgument("alertId") { type = NavType.LongType })
+        ) { backStackEntry ->
+            val alertId = backStackEntry.arguments?.getLong("alertId") ?: 0L
+            val alert = uiState.recentAlerts.firstOrNull { it.id == alertId }
+            if (alert != null) {
+                StopScreen(
+                    alert = alert,
+                    familyContact = familyContact,
+                    onDone = { navController.popBackStack() },
+                    onDetails = {
+                        navController.navigate("alert_detail/$alertId") {
+                            popUpTo("stop/{alertId}") { inclusive = true }
+                        }
+                    }
+                )
+            }
+        }
+
+        composable("family") {
+            FamilyContactScreen(
+                contact = familyContact,
+                onSave = viewModel::saveFamilyContact,
+                onRemove = viewModel::removeFamilyContact,
+                onBack = { navController.popBackStack() }
             )
         }
 

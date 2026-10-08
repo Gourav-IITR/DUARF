@@ -8,6 +8,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -24,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.duarf.app.R
+import com.duarf.data.repo.FamilyContact
 import com.duarf.capture.notification.WaNotificationListener
 
 @Composable
@@ -32,12 +35,15 @@ fun OnboardingScreen(
     onSendTestAlert: () -> Unit,
     selectedLanguage: String,
     onSelectLanguage: (String) -> Unit,
+    familyContact: FamilyContact?,
+    onSaveFamilyContact: (name: String, number: String) -> Boolean,
+    onRemoveFamilyContact: () -> Unit,
     onNavigateBatteryGuide: () -> Unit = {}
 ) {
     val context = LocalContext.current
     // Saveable: choosing a language recreates the activity, and the user should stay on that step.
     var currentStep by rememberSaveable { mutableStateOf(0) }
-    val lastStep = 6
+    val lastStep = 7
     var hasPostNotificationPermission by remember {
         mutableStateOf(
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -183,7 +189,20 @@ fun OnboardingScreen(
                         }
                     }
                 )
+                // Optional: someone to call straight from a warning.
                 6 -> StepContent(
+                    icon = Icons.Default.FamilyRestroom,
+                    title = stringResource(R.string.family_title),
+                    desc = stringResource(R.string.family_desc),
+                    actionButton = {
+                        FamilyContactForm(
+                            contact = familyContact,
+                            onSave = onSaveFamilyContact,
+                            onRemove = onRemoveFamilyContact
+                        )
+                    }
+                )
+                7 -> StepContent(
                     icon = Icons.Default.VerifiedUser,
                     title = stringResource(R.string.onboarding_title_6),
                     desc = stringResource(R.string.onboarding_desc_6),
@@ -210,7 +229,9 @@ private fun StepContent(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         Surface(
             shape = CircleShape,

@@ -33,7 +33,7 @@ class CanaryTest {
     class TestAlertDispatcher : AlertDispatcher {
         val dispatched = mutableListOf<Long>()
 
-        override fun dispatchAlert(
+        override suspend fun dispatchAlert(
             alertId: Long,
             fingerprint: String,
             senderDisplay: String?,

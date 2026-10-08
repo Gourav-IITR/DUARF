@@ -8,9 +8,7 @@
     <string name="channel_caution_name">સાવધાની</string>
     <string name="channel_caution_desc">શંકાસ્પદ સંદેશાઓ માટે શાંત ચેતવણી</string>
 
-    <string name="alert_danger_title">%1$s તરફથી સંભવિત સ્કેમ</string>
     <string name="alert_caution_title">%1$s ના સંદેશ વિશે સાવચેત રહો</string>
-    <string name="alert_danger_sms_title">%1$s તરફથી સંભવિત સ્કેમ SMS</string>
     <string name="alert_caution_sms_title">%1$s તરફથી શંકાસ્પદ SMS</string>
     <string name="alert_generic_summary">આ સંદેશમાં શંકાસ્પદ તત્વો જણાયા છે</string>
     <string name="action_see_why">કારણ જુઓ</string>
@@ -61,9 +59,6 @@
     <string name="view_all">બધું જુઓ</string>
 
     <!-- Alert Detail & Check Result -->
-    <string name="level_danger">જોખમ — સંભવિત છેતરપિંડી</string>
-    <string name="level_caution">સાવધાન — સાવચેત રહો</string>
-    <string name="level_safe">સુરક્ષિત જણાય છે — સાવધ રહો</string>
     <string name="label_message_content">સંદેશ સામગ્રી</string>
     <string name="label_reasons">DUARF એ આને કેમ ફ્લેગ કર્યું</string>
     <string name="label_checked">અમે શું તપાસ્યું</string>
@@ -71,7 +66,6 @@
     <string name="advice_caution_soft">આ વાસ્તવિક હોઈ શકે છે, પરંતુ લિંક પર ટેપ કરતા પહેલા સત્તાવાર એપ્લિકેશન અથવા વેબસાઇટ પર ચકાસો.</string>
     <string name="advice_1">કોઈપણ લિંક પર ક્લિક કરશો નહીં, ફાઇલ ખોલશો નહીં અથવા પૈસા ટ્રાન્સફર કરશો નહીં.</string>
     <string name="advice_2">WhatsApp માં મોકલનારને બ્લૉક અને રિપોર્ટ કરો.</string>
-    <string name="advice_3">જો તમે પૈસા અથવા OTP શેર કર્યા હોય, તો તરત જ રાષ્ટ્રીય સાયબર હેલ્પલાઇન 1930 પર કૉલ કરો અથવા cybercrime.gov.in ની મુલાકાત લો.</string>
 
     <string name="btn_this_is_safe">આ સુરક્ષિત છે</string>
     <string name="btn_this_is_scam">આ સ્કેમ છે</string>
@@ -213,7 +207,6 @@
     <!-- Battery guide & listener health strings (§13.3, §19.3) -->
     <!-- Marked for native-speaker review §19.3 -->
     <string name="btn_back">પાછળ જાઓ</string>
-    <string name="status_tap_to_enable">સેટિંગ્સમાં નોટિફિકેશન ઍક્સેસ ચાલુ કરવા માટે ટેપ કરો</string>
     <string name="status_listener_paused">સિસ્ટમ દ્વારા સુરક્ષા થોભાવવામાં આવી. ફરી શરૂ કરવા માટે ટેપ કરો।</string>
     <string name="btn_view_device_guide">ડિવાઇસ માર્ગદર્શિકા જુઓ</string>
     <string name="setting_battery_guide">બેકગ્રાઉન્ડ સુરક્ષા માર્ગદર્શિકા</string>
@@ -241,5 +234,49 @@
     <string name="onboarding_desc_language">તમે આ ગમે ત્યારે સેટિંગ્સમાં બદલી શકો છો.</string>
     <string name="language_detection_note">તમે કોઈપણ ભાષા પસંદ કરો, DUARF બધી સમર્થિત ભાષાઓના સંદેશા તપાસે છે.</string>
     <string name="btn_next">આગળ</string>
+
+    <!-- Calm Guardian UI: clearer warnings, Stop screen, family contact -->
+    <!-- Marked for native-speaker review §19.3 -->
+    <string name="warn_action_link">લિંક ખોલશો નહીં</string>
+    <string name="warn_action_file">ફાઇલ ઇન્સ્ટોલ કરશો નહીં</string>
+    <string name="warn_action_code">કોઈ કોડ કે પિન જણાવશો નહીં</string>
+    <string name="warn_action_money">પૈસા મોકલશો નહીં</string>
+    <string name="warn_action_generic">જવાબ આપશો નહીં, પૈસા મોકલશો નહીં</string>
+    <string name="notif_danger_title">%1$s — સંભવિત છેતરપિંડી</string>
+    <string name="notif_public_title">સંભવિત છેતરપિંડીનો સંદેશ</string>
+    <string name="notif_public_text">કારણ જોવા માટે ફોન અનલૉક કરો. ત્યાં સુધી કોઈ લિંક ખોલશો નહીં.</string>
+    <string name="action_call_contact">%1$sને કૉલ કરો</string>
+    <string name="level_danger_short">સંભવિત છેતરપિંડી</string>
+    <string name="level_caution_short">સાવધાન રહો</string>
+    <string name="level_safe_short">સુરક્ષિત લાગે છે</string>
+    <string name="level_safe_sub">કોઈ ચેતવણીના સંકેત મળ્યા નથી. છતાં સાવધાન રહો: છેતરપિંડીની રીતો બદલાતી રહે છે.</string>
+    <string name="reason_link_goes_to">લિંક અહીં જાય છે</string>
+    <string name="reason_real_site">%1$sની સાચી સાઇટ</string>
+    <string name="advice_paid_title">પૈસા કે ઓટીપી આપી દીધા છે?</string>
+    <string name="advice_paid_body">તરત જ રાષ્ટ્રીય સાયબર હેલ્પલાઇન પર કૉલ કરો.</string>
+    <string name="btn_call_1930">1930 પર કૉલ કરો</string>
+    <string name="detail_feedback_title">શું આ ચેતવણી સાચી હતી?</string>
+    <string name="detail_footer_private">તપાસ આ જ ફોન પર થઈ. કંઈ પણ ક્યાંય મોકલાયું નથી.</string>
+    <string name="share_warning_text">DUARF ચેતવણી: મને મળેલો એક સંદેશ છેતરપિંડી લાગે છે (%1$s). તેની લિંક ખોલશો નહીં અને કોઈ ઓટીપી જણાવશો નહીં.</string>
+    <string name="btn_share">શેર કરો</string>
+    <string name="home_privacy_line">ઇન્ટરનેટની પરવાનગી નથી. કંઈ પણ આ ફોનની બહાર જતું નથી.</string>
+    <string name="status_last_checked">છેલ્લી તપાસ %1$s</string>
+    <string name="status_turn_on">સુરક્ષા ફરી ચાલુ કરો</string>
+    <string name="stop_title">રોકાઓ!</string>
+    <string name="stop_why">કેમ?</string>
+    <string name="stop_call_contact_sub">કંઈ પણ કરતાં પહેલાં પૂછી લો</string>
+    <string name="stop_call_1930_sub">જો પૈસા કે ઓટીપી આપી દીધા હોય</string>
+    <string name="stop_ok">ઠીક છે, સમજાયું</string>
+    <string name="stop_details">સંપૂર્ણ વિગતો જુઓ</string>
+    <string name="family_title">પરિવારનો સંપર્ક</string>
+    <string name="family_desc">વિશ્વાસુ વ્યક્તિ, જેને ચેતવણી પર કંઈ કરતાં પહેલાં કૉલ કરી શકાય. ફક્ત આ ફોન પર, એન્ક્રિપ્ટ કરીને સાચવવામાં આવે છે.</string>
+    <string name="family_name_label">નામ (દા.ત.: દીકરો)</string>
+    <string name="family_number_label">ફોન નંબર</string>
+    <string name="btn_save">સાચવો</string>
+    <string name="btn_remove">દૂર કરો</string>
+    <string name="family_not_set">સેટ નથી</string>
+    <string name="family_number_invalid">10 થી 15 અંકનો ફોન નંબર દાખલ કરો</string>
+    <string name="family_saved">સાચવ્યું</string>
+    <string name="check_result_title">તપાસનું પરિણામ</string>
 </resources>
 

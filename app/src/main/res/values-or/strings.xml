@@ -8,9 +8,7 @@
     <string name="channel_caution_name">ସତର୍କତା</string>
     <string name="channel_caution_desc">ସନ୍ଦିଗ୍ଧ ବାର୍ତ୍ତା ପାଇଁ ନୀରବ ସୂଚନା</string>
 
-    <string name="alert_danger_title">%1$s ଠାରୁ ସମ୍ଭାବ୍ୟ ସ୍କାମ</string>
     <string name="alert_caution_title">%1$s ର ବାର୍ତ୍ତା ପ୍ରତି ସାବଧାନ ରୁହନ୍ତୁ</string>
-    <string name="alert_danger_sms_title">%1$s ଠାରୁ ଆସିଥିବା SMS: ସମ୍ଭାବ୍ୟ ସ୍କାମ</string>
     <string name="alert_caution_sms_title">%1$s ଠାରୁ ଆସିଥିବା SMS: ସନ୍ଦିଗ୍ଧ ବାର୍ତ୍ତା</string>
     <string name="alert_generic_summary">ଏହି ବାର୍ତ୍ତାରେ ସନ୍ଦିଗ୍ଧ ଉପାଦାନ ଚିହ୍ନଟ ହୋଇଛି</string>
     <string name="action_see_why">କାରଣ ଦେଖନ୍ତୁ</string>
@@ -61,9 +59,6 @@
     <string name="view_all">ସବୁ ଦେଖନ୍ତୁ</string>
 
     <!-- Alert Detail & Check Result -->
-    <string name="level_danger">ବିପଦ — ସମ୍ଭାବ୍ୟ ସ୍କାମ</string>
-    <string name="level_caution">ସତର୍କତା — ସାବଧାନ ରୁହନ୍ତୁ</string>
-    <string name="level_safe">ସୁରକ୍ଷିତ ଦେଖାଯାଉଛି — ସତର୍କ ରୁହନ୍ତୁ</string>
     <string name="label_message_content">ବାର୍ତ୍ତା ବିବରଣୀ</string>
     <string name="label_reasons">DUARF ଏହାକୁ କାହିଁକି ଚିହ୍ନିତ କଲା</string>
     <string name="label_checked">ଆମେ କ’ଣ ଯାଞ୍ଚ କଲୁ</string>
@@ -71,7 +66,6 @@
     <string name="advice_caution_soft">ଏହା ପ୍ରକୃତ ହୋଇପାରେ, କିନ୍ତୁ ଲିଙ୍କ୍ ଖୋଲିବା ପୂର୍ବରୁ ଅଫିସିଆଲ୍ ଆପ୍ କିମ୍ବା ୱେବସାଇଟରେ ଯାଞ୍ଚ କରନ୍ତୁ।</string>
     <string name="advice_1">କୌଣସି ଲିଙ୍କ୍ କ୍ଲିକ୍ କରନ୍ତୁ ନାହିଁ, ଫାଇଲ୍ ଖୋଲନ୍ତୁ ନାହିଁ କିମ୍ବା ଟଙ୍କା ପଠାନ୍ତୁ ନାହିଁ।</string>
     <string name="advice_2">ହ୍ୱାଟ୍ସଆପ୍‌ରେ ପ୍ରେରକଙ୍କୁ ବ୍ଲକ୍ ଏବଂ ରିପୋର୍ଟ କରନ୍ତୁ।</string>
-    <string name="advice_3">ଯଦି ଆପଣ ଟଙ୍କା କିମ୍ବା ଓଟିପି ସେୟାର କରିଛନ୍ତି, ତେବେ ତୁରନ୍ତ ଜାତୀୟ ସାଇବର ହେଲ୍ପଲାଇନ 1930 କୁ କଲ୍ କରନ୍ତୁ କିମ୍ବା cybercrime.gov.in କୁ ଯାଆନ୍ତୁ।</string>
 
     <string name="btn_this_is_safe">ଏହା ସୁରକ୍ଷିତ</string>
     <string name="btn_this_is_scam">ଏହା ଏକ ସ୍କାମ</string>
@@ -213,7 +207,6 @@
     <!-- Battery guide & listener health strings (§13.3, §19.3) -->
     <!-- Marked for native-speaker review §19.3 -->
     <string name="btn_back">ପଛକୁ ଯାଆନ୍ତୁ</string>
-    <string name="status_tap_to_enable">ସେଟିଂସରେ ବିଜ୍ଞପ୍ତି ଅନୁମତି ସକ୍ଷମ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
     <string name="status_listener_paused">ସୁରକ୍ଷା ସିଷ୍ଟମ୍ ଦ୍ୱାରା ବନ୍ଦ ହୋଇଛି। ପୁନଃ ସକ୍ଷମ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ।</string>
     <string name="btn_view_device_guide">ଡିଭାଇସ୍ ମାର୍ଗଦର୍ଶିକା ଦେଖନ୍ତୁ</string>
     <string name="setting_battery_guide">ପୃଷ୍ଠଭୂମି ସୁରକ୍ଷା ମାର୍ଗଦର୍ଶିକା</string>
@@ -241,5 +234,49 @@
     <string name="onboarding_desc_language">ଆପଣ ଏହାକୁ ଯେକୌଣସି ସମୟରେ ସେଟିଂସରେ ବଦଳାଇପାରିବେ।</string>
     <string name="language_detection_note">ଆପଣ ଯେଉଁ ଭାଷା ବାଛନ୍ତୁ, DUARF ସମସ୍ତ ସମର୍ଥିତ ଭାଷାର ମେସେଜ୍ ଯାଞ୍ଚ କରେ।</string>
     <string name="btn_next">ପରବର୍ତ୍ତୀ</string>
+
+    <!-- Calm Guardian UI: clearer warnings, Stop screen, family contact -->
+    <!-- Marked for native-speaker review §19.3 -->
+    <string name="warn_action_link">ଲିଙ୍କ ଖୋଲନ୍ତୁ ନାହିଁ</string>
+    <string name="warn_action_file">ଫାଇଲ ଇନଷ୍ଟଲ କରନ୍ତୁ ନାହିଁ</string>
+    <string name="warn_action_code">କୌଣସି କୋଡ୍ କିମ୍ବା ପିନ୍ କୁହନ୍ତୁ ନାହିଁ</string>
+    <string name="warn_action_money">ଟଙ୍କା ପଠାନ୍ତୁ ନାହିଁ</string>
+    <string name="warn_action_generic">ଉତ୍ତର ଦିଅନ୍ତୁ ନାହିଁ, ଟଙ୍କା ପଠାନ୍ତୁ ନାହିଁ</string>
+    <string name="notif_danger_title">%1$s — ସମ୍ଭାବ୍ୟ ଠକେଇ</string>
+    <string name="notif_public_title">ସମ୍ଭାବ୍ୟ ଠକେଇ ମେସେଜ୍</string>
+    <string name="notif_public_text">କାରଣ ଦେଖିବା ପାଇଁ ଫୋନ୍ ଅନଲକ୍ କରନ୍ତୁ। ସେପର୍ଯ୍ୟନ୍ତ କୌଣସି ଲିଙ୍କ ଖୋଲନ୍ତୁ ନାହିଁ।</string>
+    <string name="action_call_contact">%1$sଙ୍କୁ କଲ୍ କରନ୍ତୁ</string>
+    <string name="level_danger_short">ସମ୍ଭାବ୍ୟ ଠକେଇ</string>
+    <string name="level_caution_short">ସାବଧାନ ରୁହନ୍ତୁ</string>
+    <string name="level_safe_short">ସୁରକ୍ଷିତ ଲାଗୁଛି</string>
+    <string name="level_safe_sub">କୌଣସି ଚେତାବନୀ ସଙ୍କେତ ମିଳିଲା ନାହିଁ। ତଥାପି ସତର୍କ ରୁହନ୍ତୁ: ଠକେଇର ଢଙ୍ଗ ବଦଳୁଥାଏ।</string>
+    <string name="reason_link_goes_to">ଲିଙ୍କ ଯାଉଥିବା ସ୍ଥାନ</string>
+    <string name="reason_real_site">%1$sର ପ୍ରକୃତ ସାଇଟ୍</string>
+    <string name="advice_paid_title">ଟଙ୍କା କିମ୍ବା ଓଟିପି ଦେଇସାରିଛନ୍ତି କି?</string>
+    <string name="advice_paid_body">ତୁରନ୍ତ ଜାତୀୟ ସାଇବର ହେଲ୍ପଲାଇନକୁ କଲ୍ କରନ୍ତୁ।</string>
+    <string name="btn_call_1930">1930କୁ କଲ୍ କରନ୍ତୁ</string>
+    <string name="detail_feedback_title">ଏହି ଚେତାବନୀ ଠିକ୍ ଥିଲା କି?</string>
+    <string name="detail_footer_private">ଏହି ଫୋନରେ ହିଁ ଯାଞ୍ଚ ହେଲା। କିଛି ବି କୁଆଡେ ପଠାଯାଇନାହିଁ।</string>
+    <string name="share_warning_text">DUARF ଚେତାବନୀ: ମୋତେ ମିଳିଥିବା ଏକ ମେସେଜ୍ ଠକେଇ ପରି ଲାଗୁଛି (%1$s)। ଏହାର ଲିଙ୍କ ଖୋଲନ୍ତୁ ନାହିଁ ଏବଂ କୌଣସି ଓଟିପି କୁହନ୍ତୁ ନାହିଁ।</string>
+    <string name="btn_share">ସେୟାର କରନ୍ତୁ</string>
+    <string name="home_privacy_line">ଇଣ୍ଟରନେଟ୍ ଅନୁମତି ନାହିଁ। କିଛି ବି ଏହି ଫୋନ୍ ବାହାରକୁ ଯାଏ ନାହିଁ।</string>
+    <string name="status_last_checked">ଶେଷ ଯାଞ୍ଚ %1$s</string>
+    <string name="status_turn_on">ସୁରକ୍ଷା ପୁଣି ଚାଲୁ କରନ୍ତୁ</string>
+    <string name="stop_title">ରୁହନ୍ତୁ!</string>
+    <string name="stop_why">କାହିଁକି?</string>
+    <string name="stop_call_contact_sub">କିଛି କରିବା ପୂର୍ବରୁ ପଚାରି ନିଅନ୍ତୁ</string>
+    <string name="stop_call_1930_sub">ଯଦି ଟଙ୍କା କିମ୍ବା ଓଟିପି ଦେଇସାରିଛନ୍ତି</string>
+    <string name="stop_ok">ଠିକ୍ ଅଛି, ବୁଝିଲି</string>
+    <string name="stop_details">ସମ୍ପୂର୍ଣ୍ଣ ବିବରଣୀ ଦେଖନ୍ତୁ</string>
+    <string name="family_title">ପରିବାର ସମ୍ପର୍କ</string>
+    <string name="family_desc">ଜଣେ ବିଶ୍ୱସ୍ତ ବ୍ୟକ୍ତି, ଚେତାବନୀ ପାଇଲେ କିଛି କରିବା ପୂର୍ବରୁ ଯାହାଙ୍କୁ କଲ୍ କରିବେ। କେବଳ ଏହି ଫୋନରେ, ଏନକ୍ରିପ୍ଟ କରି ସଞ୍ଚୟ କରାଯାଏ।</string>
+    <string name="family_name_label">ନାମ (ଯେପରି: ପୁଅ)</string>
+    <string name="family_number_label">ଫୋନ୍ ନମ୍ବର</string>
+    <string name="btn_save">ସଞ୍ଚୟ କରନ୍ତୁ</string>
+    <string name="btn_remove">ହଟାନ୍ତୁ</string>
+    <string name="family_not_set">ସେଟ୍ ହୋଇନାହିଁ</string>
+    <string name="family_number_invalid">10ରୁ 15 ଅଙ୍କର ଫୋନ୍ ନମ୍ବର ଦିଅନ୍ତୁ</string>
+    <string name="family_saved">ସଞ୍ଚୟ ହେଲା</string>
+    <string name="check_result_title">ଯାଞ୍ଚ ଫଳାଫଳ</string>
 </resources>
 

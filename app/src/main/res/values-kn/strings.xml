@@ -8,9 +8,7 @@
     <string name="channel_caution_name">ಎಚ್ಚರಿಕೆ</string>
     <string name="channel_caution_desc">ಅನುಮಾನಾಸ್ಪದ ಸಂದೇಶಗಳಿಗೆ ಸೈಲೆಂಟ್ ಎಚ್ಚರಿಕೆ</string>
 
-    <string name="alert_danger_title">%1$s ಇಂದ ಸಂಭಾವ್ಯ ಸ್ಕ್ಯಾಮ್</string>
     <string name="alert_caution_title">%1$s ಸಂದೇಶದ ಬಗ್ಗೆ ಎಚ್ಚರವಿರಲಿ</string>
-    <string name="alert_danger_sms_title">%1$s ಇಂದ ಬಂದ SMS: ಸಂಭಾವ್ಯ ಸ್ಕ್ಯಾಮ್</string>
     <string name="alert_caution_sms_title">%1$s ಇಂದ ಬಂದ SMS: ಅನುಮಾನಾಸ್ಪದ ಸಂದೇಶ</string>
     <string name="alert_generic_summary">ಈ ಸಂದೇಶದಲ್ಲಿ ಅನುಮಾನಾಸ್ಪದ ಅಂಶಗಳು ಕಂಡುಬಂದಿವೆ</string>
     <string name="action_see_why">ಕಾರಣ ನೋಡಿ</string>
@@ -61,9 +59,6 @@
     <string name="view_all">ಎಲ್ಲವನ್ನೂ ವೀಕ್ಷಿಸಿ</string>
 
     <!-- Alert Detail & Check Result -->
-    <string name="level_danger">ಅಪಾಯ — ಸಂಭಾವ್ಯ ವಂಚನೆ</string>
-    <string name="level_caution">ಎಚ್ಚರಿಕೆ — ಜಾಗರೂಕರಾಗಿರಿ</string>
-    <string name="level_safe">ಸುರಕ್ಷಿತವಾಗಿದೆ — ಜಾಗರೂಕರಾಗಿರಿ</string>
     <string name="label_message_content">ಸಂದೇಶದ ವಿಷಯ</string>
     <string name="label_reasons">DUARF ಇದನ್ನು ಏಕೆ ಫ್ಲ್ಯಾಗ್ ಮಾಡಿದೆ</string>
     <string name="label_checked">ನಾವು ಏನು ಪರಿಶೀಲಿಸಿದ್ದೇವೆ</string>
@@ -71,7 +66,6 @@
     <string name="advice_caution_soft">ಇದು ನೈಜವಾಗಿರಬಹುದು, ಆದರೆ ಲಿಂಕ್ ಟ್ಯಾಪ್ ಮಾಡುವ ಮೊದಲು ಅಧಿಕೃತ ಅಪ್ಲಿಕೇಶನ್ ಅಥವಾ ವೆಬ್‌ಸೈಟ್‌ನಲ್ಲಿ ಪರಿಶೀಲಿಸಿ.</string>
     <string name="advice_1">ಯಾವುದೇ ಲಿಂಕ್ ಕ್ಲಿಕ್ ಮಾಡಬೇಡಿ, ಫೈಲ್‌ಗಳನ್ನು ತೆರೆಯಬೇಡಿ ಅಥವಾ ಹಣ ವರ್ಗಾಯಿಸಬೇಡಿ.</string>
     <string name="advice_2">WhatsApp ನಲ್ಲಿ ಕಳುಹಿಸಿದವರನ್ನು ನಿರ್ಬಂಧಿಸಿ ಮತ್ತು ವರದಿ ಮಾಡಿ.</string>
-    <string name="advice_3">ನೀವು ಹಣ ಅಥವಾ OTP ಹಂಚಿಕೊಂಡಿದ್ದರೆ, ತಕ್ಷಣ ರಾಷ್ಟ್ರೀಯ ಸೈಬರ್ ಸಹಾಯವಾಣಿ 1930 ಗೆ ಕರೆ ಮಾಡಿ ಅಥವಾ cybercrime.gov.in ಗೆ ಭೇಟಿ ನೀಡಿ.</string>
 
     <string name="btn_this_is_safe">ಇದು ಸುರಕ್ಷಿತವಾಗಿದೆ</string>
     <string name="btn_this_is_scam">ಇದು ಸ್ಕ್ಯಾಮ್ ಆಗಿದೆ</string>
@@ -213,7 +207,6 @@
     <!-- Battery guide & listener health strings (§13.3, §19.3) -->
     <!-- Marked for native-speaker review §19.3 -->
     <string name="btn_back">ಹಿಂದಕ್ಕೆ ಹೋಗಿ</string>
-    <string name="status_tap_to_enable">ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ ಅಧಿಸೂಚನೆ ಪ್ರವೇಶವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
     <string name="status_listener_paused">ವ್ಯವಸ್ಥೆಯಿಂದ ರಕ್ಷಣೆ ವಿರಾಮಗೊಂಡಿದೆ. ಮರುಪ್ರಾರಂಭಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ.</string>
     <string name="btn_view_device_guide">ಸಾಧನ ಮಾರ್ಗದರ್ಶಿ ವೀಕ್ಷಿಸಿ</string>
     <string name="setting_battery_guide">ಹಿನ್ನೆಲೆ ರಕ್ಷಣೆ ಮಾರ್ಗದರ್ಶಿ</string>
@@ -241,5 +234,49 @@
     <string name="onboarding_desc_language">ನೀವು ಇದನ್ನು ಯಾವಾಗ ಬೇಕಾದರೂ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಬದಲಾಯಿಸಬಹುದು.</string>
     <string name="language_detection_note">ನೀವು ಯಾವುದೇ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿದರೂ, DUARF ಬೆಂಬಲಿತ ಎಲ್ಲಾ ಭಾಷೆಗಳ ಸಂದೇಶಗಳನ್ನು ಪರಿಶೀಲಿಸುತ್ತದೆ.</string>
     <string name="btn_next">ಮುಂದೆ</string>
+
+    <!-- Calm Guardian UI: clearer warnings, Stop screen, family contact -->
+    <!-- Marked for native-speaker review §19.3 -->
+    <string name="warn_action_link">ಲಿಂಕ್ ತೆರೆಯಬೇಡಿ</string>
+    <string name="warn_action_file">ಫೈಲ್ ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಬೇಡಿ</string>
+    <string name="warn_action_code">ಯಾವುದೇ ಕೋಡ್ ಅಥವಾ ಪಿನ್ ಹೇಳಬೇಡಿ</string>
+    <string name="warn_action_money">ಹಣ ಕಳುಹಿಸಬೇಡಿ</string>
+    <string name="warn_action_generic">ಉತ್ತರಿಸಬೇಡಿ, ಹಣ ಕಳುಹಿಸಬೇಡಿ</string>
+    <string name="notif_danger_title">%1$s — ವಂಚನೆ ಇರಬಹುದು</string>
+    <string name="notif_public_title">ವಂಚನೆಯ ಸಂದೇಶ ಇರಬಹುದು</string>
+    <string name="notif_public_text">ಕಾರಣ ನೋಡಲು ಫೋನ್ ಅನ್‌ಲಾಕ್ ಮಾಡಿ. ಅಲ್ಲಿಯವರೆಗೆ ಯಾವುದೇ ಲಿಂಕ್ ತೆರೆಯಬೇಡಿ.</string>
+    <string name="action_call_contact">%1$s ಅವರಿಗೆ ಕರೆ ಮಾಡಿ</string>
+    <string name="level_danger_short">ವಂಚನೆ ಇರಬಹುದು</string>
+    <string name="level_caution_short">ಎಚ್ಚರದಿಂದಿರಿ</string>
+    <string name="level_safe_short">ಸುರಕ್ಷಿತವಾಗಿ ಕಾಣುತ್ತದೆ</string>
+    <string name="level_safe_sub">ಯಾವುದೇ ಎಚ್ಚರಿಕೆಯ ಸೂಚನೆ ಕಂಡುಬಂದಿಲ್ಲ. ಆದರೂ ಎಚ್ಚರದಿಂದಿರಿ: ವಂಚನೆಗಳು ಬದಲಾಗುತ್ತಲೇ ಇರುತ್ತವೆ.</string>
+    <string name="reason_link_goes_to">ಲಿಂಕ್ ಹೋಗುವ ಸ್ಥಳ</string>
+    <string name="reason_real_site">%1$s ನ ನಿಜವಾದ ಸೈಟ್</string>
+    <string name="advice_paid_title">ಹಣ ಅಥವಾ ಒಟಿಪಿ ಕೊಟ್ಟಾಗಿದೆಯೇ?</string>
+    <string name="advice_paid_body">ತಕ್ಷಣ ರಾಷ್ಟ್ರೀಯ ಸೈಬರ್ ಸಹಾಯವಾಣಿಗೆ ಕರೆ ಮಾಡಿ.</string>
+    <string name="btn_call_1930">1930 ಗೆ ಕರೆ ಮಾಡಿ</string>
+    <string name="detail_feedback_title">ಈ ಎಚ್ಚರಿಕೆ ಸರಿಯಾಗಿತ್ತೇ?</string>
+    <string name="detail_footer_private">ಈ ಫೋನ್‌ನಲ್ಲೇ ಪರಿಶೀಲಿಸಲಾಗಿದೆ. ಏನನ್ನೂ ಎಲ್ಲಿಗೂ ಕಳುಹಿಸಿಲ್ಲ.</string>
+    <string name="share_warning_text">DUARF ಎಚ್ಚರಿಕೆ: ನನಗೆ ಬಂದ ಒಂದು ಸಂದೇಶ ವಂಚನೆಯಂತೆ ಕಾಣುತ್ತದೆ (%1$s). ಅದರ ಲಿಂಕ್ ತೆರೆಯಬೇಡಿ, ಯಾವುದೇ ಒಟಿಪಿ ಹೇಳಬೇಡಿ.</string>
+    <string name="btn_share">ಹಂಚಿಕೊಳ್ಳಿ</string>
+    <string name="home_privacy_line">ಇಂಟರ್ನೆಟ್ ಅನುಮತಿ ಇಲ್ಲ. ಏನೂ ಈ ಫೋನ್‌ನಿಂದ ಹೊರಗೆ ಹೋಗುವುದಿಲ್ಲ.</string>
+    <string name="status_last_checked">ಕೊನೆಯ ಪರಿಶೀಲನೆ %1$s</string>
+    <string name="status_turn_on">ರಕ್ಷಣೆಯನ್ನು ಮತ್ತೆ ಆನ್ ಮಾಡಿ</string>
+    <string name="stop_title">ನಿಲ್ಲಿ!</string>
+    <string name="stop_why">ಏಕೆ?</string>
+    <string name="stop_call_contact_sub">ಏನನ್ನಾದರೂ ಮಾಡುವ ಮೊದಲು ಕೇಳಿ</string>
+    <string name="stop_call_1930_sub">ಹಣ ಅಥವಾ ಒಟಿಪಿ ಕೊಟ್ಟಿದ್ದರೆ</string>
+    <string name="stop_ok">ಸರಿ, ಅರ್ಥವಾಯಿತು</string>
+    <string name="stop_details">ಪೂರ್ಣ ವಿವರಗಳನ್ನು ನೋಡಿ</string>
+    <string name="family_title">ಕುಟುಂಬದ ಸಂಪರ್ಕ</string>
+    <string name="family_desc">ಎಚ್ಚರಿಕೆ ಬಂದಾಗ ಏನನ್ನಾದರೂ ಮಾಡುವ ಮೊದಲು ಕರೆ ಮಾಡಲು ನೀವು ನಂಬುವ ವ್ಯಕ್ತಿ. ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ, ಎನ್‌ಕ್ರಿಪ್ಟ್ ಮಾಡಿ ಉಳಿಸಲಾಗುತ್ತದೆ.</string>
+    <string name="family_name_label">ಹೆಸರು (ಉದಾ: ಮಗ)</string>
+    <string name="family_number_label">ಫೋನ್ ಸಂಖ್ಯೆ</string>
+    <string name="btn_save">ಉಳಿಸಿ</string>
+    <string name="btn_remove">ತೆಗೆದುಹಾಕಿ</string>
+    <string name="family_not_set">ಹೊಂದಿಸಿಲ್ಲ</string>
+    <string name="family_number_invalid">10 ರಿಂದ 15 ಅಂಕಿಯ ಫೋನ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="family_saved">ಉಳಿಸಲಾಗಿದೆ</string>
+    <string name="check_result_title">ಪರಿಶೀಲನೆಯ ಫಲಿತಾಂಶ</string>
 </resources>
 

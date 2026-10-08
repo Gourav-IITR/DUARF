@@ -8,9 +8,7 @@
     <string name="channel_caution_name">Cautions</string>
     <string name="channel_caution_desc">Silent cautions for suspicious messages</string>
 
-    <string name="alert_danger_title">Likely scam from %1$s</string>
     <string name="alert_caution_title">Be careful with message from %1$s</string>
-    <string name="alert_danger_sms_title">Likely scam SMS from %1$s</string>
     <string name="alert_caution_sms_title">Suspicious SMS from %1$s</string>
     <string name="alert_generic_summary">Suspicious elements detected in this message</string>
     <string name="action_see_why">See why</string>
@@ -61,9 +59,6 @@
     <string name="view_all">View all</string>
 
     <!-- Alert Detail & Check Result -->
-    <string name="level_danger">DANGER — Likely Scam</string>
-    <string name="level_caution">CAUTION — Be Careful</string>
-    <string name="level_safe">LOOKS SAFE — Stay Alert</string>
     <string name="label_message_content">Message Content</string>
     <string name="label_reasons">Why DUARF Flagged This</string>
     <string name="label_checked">What We Checked</string>
@@ -71,7 +66,6 @@
     <string name="advice_caution_soft">This may be genuine, but verify on the official app or website before tapping the link.</string>
     <string name="advice_1">Do not click any links, open files, or transfer money.</string>
     <string name="advice_2">Block and report the sender inside WhatsApp.</string>
-    <string name="advice_3">If you shared money or OTP, immediately call national cyber helpline 1930 or visit cybercrime.gov.in.</string>
 
     <string name="btn_this_is_safe">This is safe</string>
     <string name="btn_this_is_scam">This is a scam</string>
@@ -212,7 +206,6 @@
 
     <!-- Battery guide & listener health strings (§13.3, §19.3) -->
     <string name="btn_back">Back</string>
-    <string name="status_tap_to_enable">Tap to enable notification access in settings</string>
     <string name="status_listener_paused">Protection paused by system. Tap to re-enable.</string>
     <string name="btn_view_device_guide">View Device Guide</string>
     <string name="setting_battery_guide">Background Protection Guide</string>
@@ -239,5 +232,48 @@
     <string name="onboarding_desc_language">You can change this any time in Settings.</string>
     <string name="language_detection_note">DUARF checks messages in every supported language, whatever you choose here.</string>
     <string name="btn_next">Next</string>
+
+    <!-- Calm Guardian UI: clearer warnings, Stop screen, family contact -->
+    <string name="warn_action_link">Don\'t open the link</string>
+    <string name="warn_action_file">Don\'t install the file</string>
+    <string name="warn_action_code">Don\'t share any code or PIN</string>
+    <string name="warn_action_money">Don\'t send money</string>
+    <string name="warn_action_generic">Don\'t reply or send money</string>
+    <string name="notif_danger_title">%1$s — likely scam</string>
+    <string name="notif_public_title">Possible scam message</string>
+    <string name="notif_public_text">Unlock to see why. Don\'t open any links until then.</string>
+    <string name="action_call_contact">Call %1$s</string>
+    <string name="level_danger_short">Likely scam</string>
+    <string name="level_caution_short">Be careful</string>
+    <string name="level_safe_short">Looks safe</string>
+    <string name="level_safe_sub">No warning signs found. Stay alert: scams keep changing.</string>
+    <string name="reason_link_goes_to">Link goes to</string>
+    <string name="reason_real_site">%1$s\'s real site</string>
+    <string name="advice_paid_title">Already paid or shared an OTP?</string>
+    <string name="advice_paid_body">Call the national cyber helpline straight away.</string>
+    <string name="btn_call_1930">Call 1930</string>
+    <string name="detail_feedback_title">Was this warning right?</string>
+    <string name="detail_footer_private">Checked on this phone. Nothing was sent anywhere.</string>
+    <string name="share_warning_text">DUARF warning: a message I received looks like a scam (%1$s). Don\'t open its links or share any OTP.</string>
+    <string name="btn_share">Share</string>
+    <string name="home_privacy_line">No internet permission. Nothing leaves this phone.</string>
+    <string name="status_last_checked">Last checked %1$s</string>
+    <string name="status_turn_on">Turn protection back on</string>
+    <string name="stop_title">Stop!</string>
+    <string name="stop_why">Why?</string>
+    <string name="stop_call_contact_sub">Ask before you do anything</string>
+    <string name="stop_call_1930_sub">If you\'ve already paid or shared an OTP</string>
+    <string name="stop_ok">OK, understood</string>
+    <string name="stop_details">See full details</string>
+    <string name="family_title">Family contact</string>
+    <string name="family_desc">Someone you trust, to call before acting on a warning. Saved only on this phone, encrypted.</string>
+    <string name="family_name_label">Name (for example: Son)</string>
+    <string name="family_number_label">Phone number</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_remove">Remove</string>
+    <string name="family_not_set">Not set</string>
+    <string name="family_number_invalid">Enter a phone number with 10 to 15 digits</string>
+    <string name="family_saved">Saved</string>
+    <string name="check_result_title">Check result</string>
 </resources>
 

@@ -10,6 +10,8 @@ import com.duarf.data.prefs.DuarfPreferences
 import com.duarf.data.prefs.UserPreferences
 import com.duarf.data.repo.AlertRepository
 import com.duarf.data.repo.DecryptedAlert
+import com.duarf.data.repo.FamilyContact
+import com.duarf.data.repo.FamilyContactRepository
 import com.duarf.data.repo.StatsRepository
 import com.duarf.engine.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +26,9 @@ data class UiState(
     val recentAlerts: List<DecryptedAlert> = emptyList(),
     val manualCheckVerdict: Verdict? = null,
     val manualCheckText: String? = null,
-    val isCheckingMessage: Boolean = false
+    val isCheckingMessage: Boolean = false,
+    /** False until stored preferences have loaded, so the first screen is not guessed. */
+    val loaded: Boolean = false
 )
 
 @HiltViewModel
@@ -33,8 +37,12 @@ class DuarfViewModel @Inject constructor(
     private val statsRepository: StatsRepository,
     private val preferences: DuarfPreferences,
     private val scamEngine: ScamEngine,
-    private val messageCoordinator: MessageCoordinator
+    private val messageCoordinator: MessageCoordinator,
+    private val familyContacts: FamilyContactRepository
 ) : ViewModel() {
+
+    val familyContact: StateFlow<FamilyContact?> =
+        familyContacts.contact.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     private val _manualCheckResult = MutableStateFlow<Pair<String, Verdict>?>(null)
     val manualCheckResult: StateFlow<Pair<String, Verdict>?> = _manualCheckResult.asStateFlow()
@@ -55,7 +63,8 @@ class DuarfViewModel @Inject constructor(
             listenerHealth = health,
             preferences = prefs,
             weeklyStats = stats,
-            recentAlerts = alerts
+            recentAlerts = alerts,
+            loaded = true
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 
@@ -90,6 +99,17 @@ class DuarfViewModel @Inject constructor(
 
     fun clearManualCheck() {
         _manualCheckResult.value = null
+    }
+
+    /** Returns false, without saving, when the number is not a plausible phone number. */
+    fun saveFamilyContact(name: String, number: String): Boolean {
+        if (FamilyContactRepository.normalizeNumber(number) == null) return false
+        viewModelScope.launch { familyContacts.save(name, number) }
+        return true
+    }
+
+    fun removeFamilyContact() {
+        viewModelScope.launch { familyContacts.clear() }
     }
 
     fun setOnboardingCompleted() {

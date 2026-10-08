@@ -6,199 +6,118 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.duarf.app.R
+import com.duarf.app.notification.WarningAction
+import com.duarf.app.ui.components.*
+import com.duarf.app.ui.theme.style
 import com.duarf.data.repo.DecryptedAlert
+import com.duarf.data.repo.FamilyContact
 import com.duarf.engine.model.AlertLevel
 import com.duarf.engine.model.Reason
-import com.duarf.engine.model.TextSpan
 
-@OptIn(ExperimentalMaterial3Api::class)
+private val HARD_SIGNALS = setOf("L01", "L10", "L11", "A01", "A02", "A04")
+
+/** A Caution with no hard signal gets the softer "verify first" advice. */
+fun isSoftCaution(level: AlertLevel, reasons: List<Reason>): Boolean =
+    level == AlertLevel.CAUTION && reasons.none { it.signalId in HARD_SIGNALS }
+
 @Composable
 fun AlertDetailScreen(
     alert: DecryptedAlert,
+    familyContact: FamilyContact?,
     onBack: () -> Unit,
     onFeedback: (Boolean) -> Unit,
     onTrustSender: () -> Unit
 ) {
     val context = LocalContext.current
     var feedbackGiven by remember { mutableStateOf(alert.userFeedback) }
+    var showShare by remember { mutableStateOf(false) }
 
     val isDanger = alert.level == AlertLevel.DANGER
-    val bannerBg = if (isDanger) Color(0xFFD32F2F) else Color(0xFFF57C00)
-    val bannerText = if (isDanger) stringResource(R.string.level_danger) else stringResource(R.string.level_caution)
+    val subtitle = if (isDanger) {
+        stringResource(WarningAction.forReasons(alert.reasons).textRes) + "."
+    } else {
+        alert.reasons.firstOrNull()?.let { reasonTitle(context, it) }
+    }
+    val meta = listOfNotNull(
+        sourceLabel(alert.app),
+        alert.senderDisplay,
+        formatAlertTime(context, alert.createdAt).ifEmpty { null }
+    ).joinToString(" · ")
+    val shareText = stringResource(
+        R.string.share_warning_text,
+        alert.reasons.firstOrNull()?.let { reasonTitle(context, it) } ?: levelShortLabel(alert.level)
+    )
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(alert.category.name.replace("_", " ")) },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.btn_back)
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
-                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                            type = "text/plain"
-                            putExtra(
-                                Intent.EXTRA_TEXT,
-                                "DUARF Security Alert: Detected likely WhatsApp scam (${alert.category.name.replace('_', ' ')}). Please do not open suspicious links or share OTPs!"
-                            )
-                        }
-                        context.startActivity(Intent.createChooser(shareIntent, "Share Warning"))
-                    }) {
-                        Icon(Icons.Default.Share, contentDescription = "Share")
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .background(MaterialTheme.colorScheme.background)
                 .verticalScroll(rememberScrollState())
         ) {
-            // Level banner with icon and text badge (§13.3)
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(bannerBg)
-                    .padding(vertical = 12.dp, horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = if (isDanger) Icons.Default.Warning else Icons.Default.Info,
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(Modifier.width(8.dp))
-                Text(
-                    text = bannerText,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
+            VerdictHeader(
+                level = alert.level,
+                title = levelShortLabel(alert.level),
+                subtitle = subtitle,
+                meta = meta,
+                onBack = onBack,
+                onShare = { showShare = true }
+            )
 
             Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                modifier = Modifier
+                    .padding(16.dp)
+                    .navigationBarsPadding(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // Sender info
-                if (!alert.senderDisplay.isNullOrEmpty()) {
-                    val label = if (alert.app.isSms) {
-                        "SMS from ${alert.senderDisplay}"
-                    } else {
-                        "From: ${alert.senderDisplay}"
-                    }
-                    Text(
-                        text = label,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-
-                // Message content with highlights (§11, §13.3)
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = stringResource(R.string.label_message_content),
-                            style = MaterialTheme.typography.labelMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            text = buildHighlightedText(alert.text, alert.highlights),
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                }
-
-                // Reasons section (§11)
                 Text(
-                    text = stringResource(R.string.label_reasons),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-
-                alert.reasons.forEach { reason ->
-                    ReasonItemCard(reason = reason)
-                }
-
-                // Actionable advice (§13.3)
-                val isSoftCaution = alert.level == AlertLevel.CAUTION &&
-                        alert.reasons.none { it.signalId in setOf("L01", "L10", "L11", "A01", "A02", "A04") }
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = stringResource(R.string.label_advice),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSecondaryContainer
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        if (isSoftCaution) {
-                            Text(stringResource(R.string.advice_caution_soft), style = MaterialTheme.typography.bodySmall)
-                        } else {
-                            Text("1. " + stringResource(R.string.advice_1), style = MaterialTheme.typography.bodySmall)
-                            Spacer(Modifier.height(4.dp))
-                            Text("2. " + stringResource(R.string.advice_2), style = MaterialTheme.typography.bodySmall)
-                            Spacer(Modifier.height(4.dp))
-                            Text("3. " + stringResource(R.string.advice_3), style = MaterialTheme.typography.bodySmall)
-                        }
-                    }
-                }
-
-                // User Feedback Buttons (§13.3)
-                Text(
-                    text = "Help improve DUARF:",
-                    style = MaterialTheme.typography.labelLarge,
+                    text = stringResource(R.string.label_message_content),
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
+                HighlightedMessage(
+                    text = alert.text,
+                    highlights = alert.highlights,
+                    reasons = alert.reasons,
+                    level = alert.level,
+                    sender = alert.senderDisplay
+                )
+
+                Spacer(Modifier.height(8.dp))
+                SectionTitle(stringResource(R.string.label_reasons))
+                alert.reasons.forEachIndexed { i, reason ->
+                    ReasonCard(number = i + 1, reason = reason, level = alert.level)
+                }
+
+                Spacer(Modifier.height(8.dp))
+                SectionTitle(stringResource(R.string.label_advice))
+                WhatToDoCard(softCaution = isSoftCaution(alert.level, alert.reasons), familyContact = familyContact)
+
+                // Feedback stays on this device only (§13.3).
+                Spacer(Modifier.height(8.dp))
+                Text(text = stringResource(R.string.detail_feedback_title), style = MaterialTheme.typography.titleMedium)
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     OutlinedButton(
                         onClick = {
                             feedbackGiven = "SAFE"
                             onFeedback(false)
                         },
-                        modifier = Modifier.weight(1f),
-                        colors = if (feedbackGiven == "SAFE") ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer) else ButtonDefaults.outlinedButtonColors()
+                        modifier = Modifier.weight(1f).heightIn(min = 52.dp),
+                        colors = if (feedbackGiven == "SAFE") {
+                            ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                        } else {
+                            ButtonDefaults.outlinedButtonColors()
+                        }
                     ) {
-                        Icon(Icons.Default.ThumbUp, contentDescription = null, modifier = Modifier.size(16.dp))
-                        Spacer(Modifier.width(6.dp))
                         Text(stringResource(R.string.btn_this_is_safe))
                     }
                     Button(
@@ -206,27 +125,52 @@ fun AlertDetailScreen(
                             feedbackGiven = "SCAM"
                             onFeedback(true)
                         },
-                        modifier = Modifier.weight(1f),
-                        colors = if (feedbackGiven == "SCAM") ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error) else ButtonDefaults.buttonColors()
+                        modifier = Modifier.weight(1f).heightIn(min = 52.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (feedbackGiven == "SCAM") MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+                        )
                     ) {
-                        Icon(Icons.Default.ThumbDown, contentDescription = null, modifier = Modifier.size(16.dp))
-                        Spacer(Modifier.width(6.dp))
                         Text(stringResource(R.string.btn_this_is_scam))
                     }
                 }
-
-                // Trust sender option
                 TextButton(
                     onClick = onTrustSender,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(Alignment.CenterHorizontally).heightIn(min = 48.dp)
                 ) {
                     Text(stringResource(R.string.btn_trust_sender))
                 }
 
-                // Beta language disclaimer footer (§19, M5 done-when)
                 BetaLanguageFooter(text = alert.text)
+                PrivateFooter()
             }
         }
+        StatusBarScrim(alert.level.style().strong)
+    }
+
+    // "Share this warning" shows the exact text first; the original message is never included (§13.3, invariant 9).
+    if (showShare) {
+        AlertDialog(
+            onDismissRequest = { showShare = false },
+            title = { Text(stringResource(R.string.btn_share_warning)) },
+            text = { Text(shareText) },
+            confirmButton = {
+                TextButton(onClick = {
+                    showShare = false
+                    val send = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, shareText)
+                    }
+                    context.startActivity(Intent.createChooser(send, null))
+                }) {
+                    Text(stringResource(R.string.btn_share))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showShare = false }) {
+                    Text(stringResource(R.string.btn_cancel))
+                }
+            }
+        )
     }
 }
 
@@ -238,8 +182,8 @@ fun BetaLanguageFooter(text: String, modifier: Modifier = Modifier) {
     if (langInfo != null && langInfo.isBeta) {
         Surface(
             modifier = modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(8.dp),
-            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
+            shape = RoundedCornerShape(12.dp),
+            color = MaterialTheme.colorScheme.surfaceVariant
         ) {
             Row(
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
@@ -247,7 +191,7 @@ fun BetaLanguageFooter(text: String, modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Surface(
-                    shape = RoundedCornerShape(4.dp),
+                    shape = RoundedCornerShape(6.dp),
                     color = MaterialTheme.colorScheme.tertiaryContainer
                 ) {
                     Text(
@@ -262,81 +206,6 @@ fun BetaLanguageFooter(text: String, modifier: Modifier = Modifier) {
                     text = stringResource(R.string.beta_disclaimer_testing),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun ReasonItemCard(reason: Reason) {
-    val context = LocalContext.current
-    val titleRes = context.resources.getIdentifier(reason.titleKey, "string", context.packageName)
-    val detailRes = context.resources.getIdentifier(reason.detailKey, "string", context.packageName)
-
-    val title = if (titleRes != 0) context.getString(titleRes) else reason.signalId
-    val detail = if (detailRes != 0) context.getString(detailRes) else ""
-
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(10.dp)
-    ) {
-        Column(modifier = Modifier.padding(12.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Surface(
-                    shape = RoundedCornerShape(4.dp),
-                    color = MaterialTheme.colorScheme.errorContainer,
-                    modifier = Modifier.padding(end = 8.dp)
-                ) {
-                    Text(
-                        text = reason.signalId,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onErrorContainer,
-                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                    )
-                }
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            if (detail.isNotEmpty()) {
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = detail,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-            if (reason.args.isNotEmpty()) {
-                Spacer(Modifier.height(4.dp))
-                val argsText = reason.args.entries.joinToString(", ") { "${it.key}: ${it.value}" }
-                Text(
-                    text = argsText,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.outline
-                )
-            }
-        }
-    }
-}
-
-fun buildHighlightedText(text: String, highlights: List<TextSpan>): AnnotatedString {
-    return buildAnnotatedString {
-        append(text)
-        for (span in highlights) {
-            val start = span.start.coerceIn(0, text.length)
-            val end = span.end.coerceIn(0, text.length)
-            if (start < end) {
-                addStyle(
-                    style = SpanStyle(
-                        background = Color(0xFFFFF176),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    ),
-                    start = start,
-                    end = end
                 )
             }
         }

@@ -8,9 +8,7 @@
     <string name="channel_caution_name">జాగ్రత్తలు</string>
     <string name="channel_caution_desc">అనుమానాస్పద సందేశాలకు నిశ్శబ్ద హెచ్చరికలు</string>
 
-    <string name="alert_danger_title">%1$s నుండి అనుమానాస్పద స్కామ్</string>
     <string name="alert_caution_title">%1$s సందేశంతో జాగ్రత్తగా ఉండండి</string>
-    <string name="alert_danger_sms_title">%1$s నుండి వచ్చిన SMS: సంభావ్య స్కామ్</string>
     <string name="alert_caution_sms_title">%1$s నుండి వచ్చిన SMS: అనుమానాస్పద సందేశం</string>
     <string name="alert_generic_summary">ఈ సందేశంలో అనుమానాస్పద అంశాలు గుర్తించబడ్డాయి</string>
     <string name="action_see_why">కారణం చూడండి</string>
@@ -61,9 +59,6 @@
     <string name="view_all">అన్నీ చూడండి</string>
 
     <!-- Alert Detail & Check Result -->
-    <string name="level_danger">ప్రమాదం — సంభావ్య స్కామ్</string>
-    <string name="level_caution">జాగ్రత్త — అప్రమత్తంగా ఉండండి</string>
-    <string name="level_safe">సురక్షితంగా కనిపిస్తోంది — అప్రమత్తంగా ఉండండి</string>
     <string name="label_message_content">సందేశం కంటెంట్</string>
     <string name="label_reasons">DUARF దీన్ని ఎందుకు ఫ్లాగ్ చేసింది</string>
     <string name="label_checked">మేము ఏమి తనిఖీ చేసాము</string>
@@ -71,7 +66,6 @@
     <string name="advice_caution_soft">ఇది నిజమైనది కావచ్చు, కానీ లింక్‌పై నొక్కే ముందు అధికారిక యాప్ లేదా వెబ్‌సైట్‌లో ధృవీకరించండి.</string>
     <string name="advice_1">ఎలాంటి లింక్‌లను క్లిక్ చేయవద్దు, ఫైల్‌లను తెరవవద్దు లేదా డబ్బు బదిలీ చేయవద్దు.</string>
     <string name="advice_2">వాట్సాప్‌లో పంపినవారిని బ్లాక్ చేసి రిపోర్ట్ చేయండి.</string>
-    <string name="advice_3">మీరు డబ్బు లేదా ఓటీపీ పంచుకున్నట్లయితే, వెంటనే జాతీయ సైబర్ హెల్ప్‌లైన్ 1930కి కాల్ చేయండి లేదా cybercrime.gov.inని సందర్శించండి.</string>
 
     <string name="btn_this_is_safe">ఇది సురక్షితం</string>
     <string name="btn_this_is_scam">ఇది స్కామ్</string>
@@ -213,7 +207,6 @@
     <!-- Battery guide & listener health strings (§13.3, §19.3) -->
     <!-- Marked for native-speaker review §19.3 -->
     <string name="btn_back">వెనుకకు</string>
-    <string name="status_tap_to_enable">సెట్టింగ్‌లలో నోటిఫికేషన్ యాక్సెస్‌ను ఆన్ చేయడానికి నొక్కండి</string>
     <string name="status_listener_paused">సిస్టమ్ ద్వారా రక్షణ తాత్కాలికంగా ఆపివేయబడింది. మళ్లీ ప్రారంభించడానికి నొక్కండి.</string>
     <string name="btn_view_device_guide">డివైస్ గైడ్‌ను చూడండి</string>
     <string name="setting_battery_guide">బ్యాక్‌గ్రౌండ్ రక్షణ గైడ్</string>
@@ -241,5 +234,49 @@
     <string name="onboarding_desc_language">మీరు దీన్ని ఎప్పుడైనా సెట్టింగ్‌లలో మార్చవచ్చు.</string>
     <string name="language_detection_note">మీరు ఏ భాషను ఎంచుకున్నా, DUARF మద్దతు ఉన్న అన్ని భాషల సందేశాలను తనిఖీ చేస్తుంది.</string>
     <string name="btn_next">తదుపరి</string>
+
+    <!-- Calm Guardian UI: clearer warnings, Stop screen, family contact -->
+    <!-- Marked for native-speaker review §19.3 -->
+    <string name="warn_action_link">లింక్ తెరవకండి</string>
+    <string name="warn_action_file">ఫైల్‌ను ఇన్‌స్టాల్ చేయకండి</string>
+    <string name="warn_action_code">ఏ కోడ్ లేదా పిన్ చెప్పకండి</string>
+    <string name="warn_action_money">డబ్బు పంపకండి</string>
+    <string name="warn_action_generic">జవాబు ఇవ్వకండి, డబ్బు పంపకండి</string>
+    <string name="notif_danger_title">%1$s — మోసం కావచ్చు</string>
+    <string name="notif_public_title">మోసపూరిత సందేశం కావచ్చు</string>
+    <string name="notif_public_text">కారణం చూడటానికి ఫోన్ అన్‌లాక్ చేయండి. అప్పటివరకు ఏ లింక్ తెరవకండి.</string>
+    <string name="action_call_contact">%1$sకి కాల్ చేయండి</string>
+    <string name="level_danger_short">మోసం కావచ్చు</string>
+    <string name="level_caution_short">జాగ్రత్తగా ఉండండి</string>
+    <string name="level_safe_short">సురక్షితంగా అనిపిస్తోంది</string>
+    <string name="level_safe_sub">హెచ్చరిక సంకేతాలు ఏవీ కనిపించలేదు. అయినా జాగ్రత్తగా ఉండండి: మోసాలు మారుతూ ఉంటాయి.</string>
+    <string name="reason_link_goes_to">లింక్ వెళ్లే చోటు</string>
+    <string name="reason_real_site">%1$s అసలు సైట్</string>
+    <string name="advice_paid_title">డబ్బు లేదా ఓటీపీ ఇచ్చేశారా?</string>
+    <string name="advice_paid_body">వెంటనే జాతీయ సైబర్ హెల్ప్‌లైన్‌కు కాల్ చేయండి.</string>
+    <string name="btn_call_1930">1930కి కాల్ చేయండి</string>
+    <string name="detail_feedback_title">ఈ హెచ్చరిక సరైనదేనా?</string>
+    <string name="detail_footer_private">ఈ ఫోన్‌లోనే తనిఖీ జరిగింది. ఏదీ ఎక్కడికీ పంపబడలేదు.</string>
+    <string name="share_warning_text">DUARF హెచ్చరిక: నాకు వచ్చిన ఒక సందేశం మోసంలా ఉంది (%1$s). దాని లింక్‌లు తెరవకండి, ఏ ఓటీపీ చెప్పకండి.</string>
+    <string name="btn_share">షేర్ చేయండి</string>
+    <string name="home_privacy_line">ఇంటర్నెట్ అనుమతి లేదు. ఏదీ ఈ ఫోన్ నుండి బయటకు వెళ్లదు.</string>
+    <string name="status_last_checked">చివరి తనిఖీ %1$s</string>
+    <string name="status_turn_on">రక్షణను మళ్లీ ఆన్ చేయండి</string>
+    <string name="stop_title">ఆగండి!</string>
+    <string name="stop_why">ఎందుకు?</string>
+    <string name="stop_call_contact_sub">ఏదైనా చేసే ముందు అడగండి</string>
+    <string name="stop_call_1930_sub">డబ్బు లేదా ఓటీపీ ఇచ్చేసి ఉంటే</string>
+    <string name="stop_ok">సరే, అర్థమైంది</string>
+    <string name="stop_details">పూర్తి వివరాలు చూడండి</string>
+    <string name="family_title">కుటుంబ సంప్రదింపు</string>
+    <string name="family_desc">హెచ్చరిక వచ్చినప్పుడు ఏదైనా చేసే ముందు కాల్ చేయడానికి మీరు నమ్మే వ్యక్తి. ఈ ఫోన్‌లో మాత్రమే, ఎన్‌క్రిప్ట్ చేసి సేవ్ అవుతుంది.</string>
+    <string name="family_name_label">పేరు (ఉదా: కొడుకు)</string>
+    <string name="family_number_label">ఫోన్ నంబర్</string>
+    <string name="btn_save">సేవ్ చేయండి</string>
+    <string name="btn_remove">తీసివేయండి</string>
+    <string name="family_not_set">సెట్ చేయలేదు</string>
+    <string name="family_number_invalid">10 నుండి 15 అంకెల ఫోన్ నంబర్ ఇవ్వండి</string>
+    <string name="family_saved">సేవ్ అయింది</string>
+    <string name="check_result_title">తనిఖీ ఫలితం</string>
 </resources>
 

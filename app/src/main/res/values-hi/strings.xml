@@ -8,9 +8,7 @@
     <string name="channel_caution_name">सावधानी</string>
     <string name="channel_caution_desc">संदिग्ध संदेशों के लिए मूक सूचनाएं</string>
 
-    <string name="alert_danger_title">%1$s से संभावित स्कैम</string>
     <string name="alert_caution_title">%1$s के संदेश से सावधान रहें</string>
-    <string name="alert_danger_sms_title">%1$s से आया SMS: संभावित स्कैम</string>
     <string name="alert_caution_sms_title">%1$s से आया SMS: संदिग्ध संदेश</string>
     <string name="alert_generic_summary">इस संदेश में संदिग्ध तत्व पाए गए हैं</string>
     <string name="action_see_why">कारण देखें</string>
@@ -61,9 +59,6 @@
     <string name="view_all">सभी देखें</string>
 
     <!-- Alert Detail & Check Result -->
-    <string name="level_danger">खतरा — संभावित धोखाधड़ी</string>
-    <string name="level_caution">सावधान — सतर्क रहें</string>
-    <string name="level_safe">सुरक्षित लग रहा है</string>
     <string name="label_message_content">संदेश सामग्री</string>
     <string name="label_reasons">चेतावनी के मुख्य कारण</string>
     <string name="label_checked">जांचे गए बिंदु</string>
@@ -71,7 +66,6 @@
     <string name="advice_caution_soft">यह संदेश असली हो सकता है, लेकिन लिंक पर टैप करने से पहले आधिकारिक ऐप या वेबसाइट पर जांच करें।</string>
     <string name="advice_1">किसी भी लिंक पर क्लिक न करें, फाइल न खोलें और पैसे न भेजें।</string>
     <string name="advice_2">व्हाट्सएप में प्रेषक को तुरंत ब्लॉक और रिपोर्ट करें।</string>
-    <string name="advice_3">यदि पैसे या ओटीपी साझा किए हैं, तो तुरंत साइबर हेल्पलाइन 1930 पर कॉल करें या cybercrime.gov.in पर जाएं।</string>
 
     <string name="btn_this_is_safe">यह सुरक्षित है</string>
     <string name="btn_this_is_scam">यह स्कैम है</string>
@@ -212,7 +206,6 @@
 
     <!-- Battery guide & listener health strings (§13.3, §19.3) -->
     <string name="btn_back">पीछे जाएं</string>
-    <string name="status_tap_to_enable">सेटिंग्स में नोटिफिकेशन अनुमति चालू करने के लिए टैप करें</string>
     <string name="status_listener_paused">सिस्टम द्वारा सुरक्षा रोकी गई। फिर से चालू करने के लिए टैप करें।</string>
     <string name="btn_view_device_guide">डिवाइस गाइड देखें</string>
     <string name="setting_battery_guide">बैकग्राउंड सुरक्षा गाइड</string>
@@ -240,5 +233,49 @@
     <string name="onboarding_desc_language">आप इसे कभी भी सेटिंग में बदल सकते हैं।</string>
     <string name="language_detection_note">आप कोई भी भाषा चुनें, DUARF हर समर्थित भाषा के संदेशों की जांच करता है।</string>
     <string name="btn_next">आगे</string>
+
+    <!-- Calm Guardian UI: clearer warnings, Stop screen, family contact -->
+    <!-- Marked for native-speaker review §19.3 -->
+    <string name="warn_action_link">लिंक न खोलें</string>
+    <string name="warn_action_file">फ़ाइल इंस्टॉल न करें</string>
+    <string name="warn_action_code">कोई भी कोड या पिन न बताएं</string>
+    <string name="warn_action_money">पैसे न भेजें</string>
+    <string name="warn_action_generic">जवाब न दें, पैसे न भेजें</string>
+    <string name="notif_danger_title">%1$s — संभावित स्कैम</string>
+    <string name="notif_public_title">संभावित स्कैम संदेश</string>
+    <string name="notif_public_text">कारण देखने के लिए फ़ोन अनलॉक करें। तब तक कोई लिंक न खोलें।</string>
+    <string name="action_call_contact">%1$s को कॉल करें</string>
+    <string name="level_danger_short">संभावित स्कैम</string>
+    <string name="level_caution_short">सावधान रहें</string>
+    <string name="level_safe_short">सुरक्षित लगता है</string>
+    <string name="level_safe_sub">कोई चेतावनी का संकेत नहीं मिला। फिर भी सतर्क रहें: स्कैम बदलते रहते हैं।</string>
+    <string name="reason_link_goes_to">लिंक यहां जाता है</string>
+    <string name="reason_real_site">%1$s की असली साइट</string>
+    <string name="advice_paid_title">पैसे या ओटीपी दे दिए हैं?</string>
+    <string name="advice_paid_body">तुरंत राष्ट्रीय साइबर हेल्पलाइन पर कॉल करें।</string>
+    <string name="btn_call_1930">1930 पर कॉल करें</string>
+    <string name="detail_feedback_title">क्या यह चेतावनी सही थी?</string>
+    <string name="detail_footer_private">जांच इसी फ़ोन पर हुई। कुछ भी कहीं नहीं भेजा गया।</string>
+    <string name="share_warning_text">DUARF चेतावनी: मुझे मिला एक संदेश स्कैम लगता है (%1$s)। इसके लिंक न खोलें और कोई ओटीपी न बताएं।</string>
+    <string name="btn_share">साझा करें</string>
+    <string name="home_privacy_line">इंटरनेट की अनुमति नहीं। कुछ भी इस फ़ोन से बाहर नहीं जाता।</string>
+    <string name="status_last_checked">आखिरी जांच %1$s</string>
+    <string name="status_turn_on">सुरक्षा फिर से चालू करें</string>
+    <string name="stop_title">रुकिए!</string>
+    <string name="stop_why">क्यों?</string>
+    <string name="stop_call_contact_sub">कुछ भी करने से पहले पूछ लें</string>
+    <string name="stop_call_1930_sub">अगर पैसे या ओटीपी दे दिए हैं</string>
+    <string name="stop_ok">ठीक है, समझ गए</string>
+    <string name="stop_details">पूरी जानकारी देखें</string>
+    <string name="family_title">परिवार का संपर्क</string>
+    <string name="family_desc">कोई भरोसेमंद व्यक्ति, जिसे चेतावनी पर कुछ करने से पहले कॉल करें। केवल इसी फ़ोन पर, एन्क्रिप्ट करके सहेजा जाता है।</string>
+    <string name="family_name_label">नाम (जैसे: बेटा)</string>
+    <string name="family_number_label">फ़ोन नंबर</string>
+    <string name="btn_save">सहेजें</string>
+    <string name="btn_remove">हटाएं</string>
+    <string name="family_not_set">सेट नहीं है</string>
+    <string name="family_number_invalid">10 से 15 अंकों का फ़ोन नंबर डालें</string>
+    <string name="family_saved">सहेजा गया</string>
+    <string name="check_result_title">जांच का नतीजा</string>
 </resources>
 

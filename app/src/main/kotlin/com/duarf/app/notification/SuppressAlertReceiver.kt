@@ -25,6 +25,7 @@ class SuppressAlertReceiver : BroadcastReceiver() {
         // Cancel the notification
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(notificationId)
+        NotificationDispatcher.updateGroupSummary(context, notificationManager)
 
         if (fingerprint != null) {
             val pendingResult = goAsync()

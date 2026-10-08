@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+    <!-- Large icon on Caution notifications: amber badge with an exclamation circle. -->
+    <path
+        android:fillColor="#8A4B00"
+        android:pathData="M16,0H48A16,16 0 0 1 64,16V48A16,16 0 0 1 48,64H16A16,16 0 0 1 0,48V16A16,16 0 0 1 16,0Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,14a18,18 0 1 1 0,36a18,18 0 1 1 0,-36Z" />
+    <path
+        android:fillColor="#8A4B00"
+        android:pathData="M30,22h4v13h-4zM30,38h4v4h-4z" />
+</vector>

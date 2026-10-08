@@ -8,9 +8,7 @@
     <string name="channel_caution_name">எச்சரிக்கைகள்</string>
     <string name="channel_caution_desc">சந்தேகத்திற்கிடமான செய்திகளுக்கான அமைதியான எச்சரிக்கைகள்</string>
 
-    <string name="alert_danger_title">%1$s இடமிருந்து சாத்தியமான மோசடி</string>
     <string name="alert_caution_title">%1$s அனுப்பிய செய்தியில் கவனமாக இருங்கள்</string>
-    <string name="alert_danger_sms_title">%1$s அனுப்பிய SMS: சாத்தியமான மோசடி</string>
     <string name="alert_caution_sms_title">%1$s அனுப்பிய SMS: சந்தேகத்திற்கிடமான செய்தி</string>
     <string name="alert_generic_summary">இந்த செய்தியில் சந்தேகத்திற்கிடமான கூறுகள் கண்டறியப்பட்டுள்ளன</string>
     <string name="action_see_why">காரணத்தைப் பார்க்கவும்</string>
@@ -61,9 +59,6 @@
     <string name="view_all">அனைத்தையும் காட்டு</string>
 
     <!-- Alert Detail & Check Result -->
-    <string name="level_danger">ஆபத்து — சாத்தியமான மோசடி</string>
-    <string name="level_caution">எச்சரிக்கை — கவனமாக இருங்கள்</string>
-    <string name="level_safe">பாதுகாப்பாகத் தெரிகிறது — விழிப்புடன் இருங்கள்</string>
     <string name="label_message_content">செய்தி விவரம்</string>
     <string name="label_reasons">DUARF இதை ஏன் கொடியிட்டது</string>
     <string name="label_checked">நாங்கள் சரிபார்த்தவை</string>
@@ -71,7 +66,6 @@
     <string name="advice_caution_soft">இது உண்மையானதாக இருக்கலாம், ஆனால் இணைப்பைத் தட்டுவதற்கு முன் அதிகாரப்பூர்வ ஆப் அல்லது இணையதளத்தில் சரிபார்க்கவும்.</string>
     <string name="advice_1">எந்த இணைப்புகளையும் கிளிக் செய்யாதீர்கள், கோப்புகளைத் திறக்காதீர்கள் அல்லது பணம் அனுப்பாதீர்கள்.</string>
     <string name="advice_2">வாட்ஸ்அப்பில் அனுப்புநரை பிளாக் செய்து புகாரளிக்கவும்.</string>
-    <string name="advice_3">நீங்கள் பணம் அல்லது ஓடிபியைப் பகிர்ந்திருந்தால், உடனடியாக தேசிய சைபர் உதவி எண் 1930 ஐ அழைக்கவும் அல்லது cybercrime.gov.in ஐப் பார்வையிடவும்.</string>
 
     <string name="btn_this_is_safe">இது பாதுகாப்பானது</string>
     <string name="btn_this_is_scam">இது மோசடி</string>
@@ -213,7 +207,6 @@
     <!-- Battery guide & listener health strings (§13.3, §19.3) -->
     <!-- Marked for native-speaker review §19.3 -->
     <string name="btn_back">பின்னே செல்</string>
-    <string name="status_tap_to_enable">அமைப்புகளில் அறிவிப்பு அனுமதியை இயக்க தட்டவும்</string>
     <string name="status_listener_paused">கணினியால் பாதுகாப்பு இடைநிறுத்தப்பட்டது. மீண்டும் இயக்க தட்டவும்.</string>
     <string name="btn_view_device_guide">சாதன வழிகாட்டியைப் பார்க்கவும்</string>
     <string name="setting_battery_guide">பின்னணி பாதுகாப்பு வழிகாட்டி</string>
@@ -241,5 +234,49 @@
     <string name="onboarding_desc_language">இதை எப்போது வேண்டுமானாலும் அமைப்புகளில் மாற்றலாம்.</string>
     <string name="language_detection_note">நீங்கள் எந்த மொழியைத் தேர்ந்தெடுத்தாலும், ஆதரிக்கப்படும் எல்லா மொழிகளிலும் உள்ள செய்திகளை DUARF சரிபார்க்கும்.</string>
     <string name="btn_next">அடுத்து</string>
+
+    <!-- Calm Guardian UI: clearer warnings, Stop screen, family contact -->
+    <!-- Marked for native-speaker review §19.3 -->
+    <string name="warn_action_link">இணைப்பைத் திறக்காதீர்கள்</string>
+    <string name="warn_action_file">கோப்பை நிறுவாதீர்கள்</string>
+    <string name="warn_action_code">எந்த குறியீடு அல்லது பின்னையும் சொல்லாதீர்கள்</string>
+    <string name="warn_action_money">பணம் அனுப்பாதீர்கள்</string>
+    <string name="warn_action_generic">பதில் அளிக்காதீர்கள், பணம் அனுப்பாதீர்கள்</string>
+    <string name="notif_danger_title">%1$s — மோசடியாக இருக்கலாம்</string>
+    <string name="notif_public_title">மோசடி செய்தியாக இருக்கலாம்</string>
+    <string name="notif_public_text">காரணத்தைப் பார்க்க போனைத் திறக்கவும். அதுவரை எந்த இணைப்பையும் திறக்காதீர்கள்.</string>
+    <string name="action_call_contact">%1$s-ஐ அழைக்கவும்</string>
+    <string name="level_danger_short">மோசடியாக இருக்கலாம்</string>
+    <string name="level_caution_short">கவனமாக இருங்கள்</string>
+    <string name="level_safe_short">பாதுகாப்பானதாகத் தெரிகிறது</string>
+    <string name="level_safe_sub">எச்சரிக்கை அறிகுறிகள் எதுவும் இல்லை. இருந்தாலும் கவனமாக இருங்கள்: மோசடிகள் மாறிக்கொண்டே இருக்கும்.</string>
+    <string name="reason_link_goes_to">இணைப்பு செல்லும் இடம்</string>
+    <string name="reason_real_site">%1$s-இன் உண்மையான தளம்</string>
+    <string name="advice_paid_title">பணம் அல்லது OTP கொடுத்துவிட்டீர்களா?</string>
+    <string name="advice_paid_body">உடனே தேசிய சைபர் உதவி எண்ணை அழைக்கவும்.</string>
+    <string name="btn_call_1930">1930-ஐ அழைக்கவும்</string>
+    <string name="detail_feedback_title">இந்த எச்சரிக்கை சரியானதா?</string>
+    <string name="detail_footer_private">இந்த போனிலேயே சரிபார்க்கப்பட்டது. எதுவும் எங்கும் அனுப்பப்படவில்லை.</string>
+    <string name="share_warning_text">DUARF எச்சரிக்கை: எனக்கு வந்த ஒரு செய்தி மோசடியாகத் தெரிகிறது (%1$s). அதன் இணைப்புகளைத் திறக்காதீர்கள், எந்த OTP-யையும் சொல்லாதீர்கள்.</string>
+    <string name="btn_share">பகிரவும்</string>
+    <string name="home_privacy_line">இணைய அனுமதி இல்லை. எதுவும் இந்த போனை விட்டு வெளியே செல்லாது.</string>
+    <string name="status_last_checked">கடைசி சரிபார்ப்பு %1$s</string>
+    <string name="status_turn_on">பாதுகாப்பை மீண்டும் இயக்கவும்</string>
+    <string name="stop_title">நில்லுங்கள்!</string>
+    <string name="stop_why">ஏன்?</string>
+    <string name="stop_call_contact_sub">எதையும் செய்வதற்கு முன் கேட்டுக்கொள்ளுங்கள்</string>
+    <string name="stop_call_1930_sub">பணம் அல்லது OTP கொடுத்திருந்தால்</string>
+    <string name="stop_ok">சரி, புரிந்தது</string>
+    <string name="stop_details">முழு விவரங்களைப் பார்க்கவும்</string>
+    <string name="family_title">குடும்பத் தொடர்பு</string>
+    <string name="family_desc">எச்சரிக்கை வந்தால் எதையும் செய்வதற்கு முன் அழைக்க நீங்கள் நம்பும் ஒருவர். இந்த போனில் மட்டும், மறையாக்கம் செய்து சேமிக்கப்படும்.</string>
+    <string name="family_name_label">பெயர் (எ.கா: மகன்)</string>
+    <string name="family_number_label">தொலைபேசி எண்</string>
+    <string name="btn_save">சேமிக்கவும்</string>
+    <string name="btn_remove">அகற்றவும்</string>
+    <string name="family_not_set">அமைக்கப்படவில்லை</string>
+    <string name="family_number_invalid">10 முதல் 15 இலக்க தொலைபேசி எண்ணை உள்ளிடவும்</string>
+    <string name="family_saved">சேமிக்கப்பட்டது</string>
+    <string name="check_result_title">சரிபார்ப்பு முடிவு</string>
 </resources>
 

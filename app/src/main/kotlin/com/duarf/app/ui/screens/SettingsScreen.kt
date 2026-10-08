@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.duarf.app.R
 import com.duarf.app.locale.AppLanguage
+import com.duarf.data.repo.FamilyContact
 import com.duarf.app.ui.UiState
 import com.duarf.engine.model.Sensitivity
 
@@ -28,6 +29,8 @@ fun SettingsScreen(
     onBack: () -> Unit,
     onUpdateSensitivity: (Sensitivity) -> Unit,
     onNavigateLanguage: () -> Unit,
+    familyContact: FamilyContact?,
+    onNavigateFamily: () -> Unit,
     onUpdateRetention: (Int) -> Unit,
     onUpdateCheckSms: (Boolean) -> Unit,
     onUpdateGroupAlerts: (Boolean) -> Unit,
@@ -102,6 +105,32 @@ fun SettingsScreen(
                     )
                     Text(
                         text = currentLanguage.nativeName,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.outline
+                )
+            }
+
+            // Someone to call from a warning; saved encrypted on this phone only.
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable(onClick = onNavigateFamily),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.family_title),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = familyContact?.name ?: stringResource(R.string.family_not_set),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
