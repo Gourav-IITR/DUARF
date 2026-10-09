@@ -4,9 +4,9 @@
 
 On-device scam detection for WhatsApp and SMS on Android. Checks WhatsApp and SMS notifications. Never reads your inbox. The name is "fraud" spelled backwards.
 
-> **Status**: Milestone M6 Complete (Release Hardening, Evaluation & Packaging). Ready for 12-tester closed testing.
-> Real-time notification monitoring, share-sheet checks, and in-app paste analysis across 12 Indian languages (English, Hindi, Bengali, Gujarati, Kannada, Malayalam, Marathi, Odia, Punjabi, Tamil, Telugu, and Hinglish).
-> Fully offline on-device protection with AES-256-GCM encryption, OEM battery optimization guides, listener health monitoring, zero internet permissions, and audited numeric logging.
+> **Status**: Milestones M0–M6 complete. Preparing for Play closed testing (12 testers for 14 days). Verified on a Pixel 7 emulator; not yet tested on physical phones.
+> Real-time notification monitoring, share-sheet checks, and in-app paste analysis. Scam detection is fully supported in English, Hindi and Hinglish, in beta for Bengali, Marathi, Telugu, Tamil and Odia, and in early preview for Gujarati, Kannada, Malayalam and Punjabi. The app's screens are available in all 12 of these languages.
+> Fully offline: no internet permission, AES-256-GCM encryption on the device, listener health monitoring, OEM battery guides, and logs that contain only numeric event codes.
 
 ---
 
@@ -14,17 +14,31 @@ On-device scam detection for WhatsApp and SMS on Android. Checks WhatsApp and SM
 
 Duarf runs entirely on your phone to identify fraud, phishing, and malicious attachments in incoming messages. Checks WhatsApp and SMS notifications. Never reads your inbox. It reads notification text locally without requesting SMS inbox permissions (`READ_SMS` or `RECEIVE_SMS`), parses TRAI DLT headers (`-T`, `-S`, `-G`, `-P`), detects institutional claims from personal numbers (`S04`), catches header mismatches (`S05`), extracts indicators like APK filenames, suspicious links, and urgency claims, and displays an on-device notification with concrete reasons. Benign personal messages are analyzed in memory and immediately discarded.
 
-Example alert notification for an APK lure from an unknown number:
+Example alert notification for an APK lure from an unknown number. The title says what to do first; the body names the sender and up to three reasons:
 ```text
-Likely scam from +91 XXXXX XXXXX
-Malicious or unexpected APK file
+Don't install the file — likely scam
++91 XXXXX XXXXX
 
 • Malicious or unexpected APK file
 • Sent from an unknown number
 • First message from this sender
 
-[See why]   [Not a scam]
+[See why]   [Call <family contact>]   [Not a scam]
 ```
+
+On the lock screen, the warning shows only "Possible scam message. Unlock to see why. Don't open any links until then."
+
+---
+
+## Using the App
+
+- **Setup** starts with choosing a language (English by default), then explains privacy, asks for notification access and permission to post alerts, guides you through battery settings, lets you add one optional family contact, and ends with a test scam alert.
+- **Stop screen**: tapping a Danger warning opens a single screen first: "Stop!", what not to do, the top reason (for example, "link goes to X, the brand's real site is Y"), and buttons to call your family contact, call the 1930 cybercrime helpline, or see full details. Caution alerts open the full details directly.
+- **Alert details**: the message with suspicious parts highlighted and numbered to match the reasons, a "What to do" card (call 1930, report at cybercrime.gov.in), and a "Share this warning" button that shows exactly what will be shared and never includes the message itself.
+- **Check a message**: paste text in the app, share it to DUARF from another app, or select text and choose "Check with DUARF".
+- **Family contact**: one optional name and number, entered by hand (no contacts access). "Call <name>" opens the phone dialer and sends nothing.
+- **Language**: switch at any time from the Home top bar or Settings › Language. The UI language does not affect detection; every language pack is always loaded.
+- **Settings**: detection sensitivity, the Check SMS toggle, group message alerts, data retention period, battery guide, Proof of Privacy, open-source licences, and Delete All Data.
 
 ---
 
@@ -63,7 +77,8 @@ Duarf operates under strict architectural guarantees documented in [docs/ARCHITE
 - **Zero SMS Inbox Permissions**: The app never requests `android.permission.READ_SMS`, `android.permission.RECEIVE_SMS`, or the default SMS role. Checks WhatsApp and SMS notifications. Never reads your inbox. It only reads incoming notifications via `NotificationListenerService`.
 - **No analytics, ads, crash-reporting or networking libraries**: No Google Analytics, Firebase, Crashlytics, Sentry, ads, or network client libraries are included in release builds.
 - **Benign Discard**: Benign messages are analyzed strictly in volatile memory; benign message text is never written to disk (only hashed counters).
-- **Local Encryption**: Flagged alerts are encrypted with AES-256-GCM authenticated encryption using keys stored in Android Keystore (hardware-backed where the device supports it). HMAC-SHA256 is used for hashing conversation identifiers, not integrity.
+- **Local Encryption**: Flagged alerts and the optional family contact are encrypted with AES-256-GCM authenticated encryption using keys stored in Android Keystore (hardware-backed where the device supports it). Only the platform's `javax.crypto` and Keystore are used; no third-party crypto libraries. HMAC-SHA256 is used for hashing conversation identifiers, not integrity.
+- **No Contacts or Phone Permissions**: The family contact is typed in by hand and calls go through the dialer (`ACTION_DIAL`), so `READ_CONTACTS` and `CALL_PHONE` are never requested. "Delete All Data" removes alerts, the family contact and the encryption keys.
 - **Automatic Purge**: Alerts older than the retention period (default 30 days) are automatically deleted upon insertion and on demand.
 - **Audited Logging**: Application logs use integer event codes only (`SafeLog`). Raw message text, phone numbers, and keys are never logged.
 
@@ -104,18 +119,24 @@ Duarf cannot protect against every vector. Known architectural constraints inclu
 - **Images and Voice Notes**: The MVP does not perform OCR on images or audio transcription on voice notes. Scams contained entirely within screenshot flyers cannot be read automatically.
 - **Work Profiles and Cloned Apps**: WhatsApp in work profiles or dual/cloned apps is not covered.
 - **Offline Updates**: Because Duarf lacks network access, detection rules and model weights only update when you update the application package.
-- **Known M4 Detection Gap**: Obfuscated scams using descriptive Indic paraphrasing (such as "गुप्त सत्यापन कोड" instead of "OTP") wrapped in security advisory pretexting are currently caught at lower recall (adversarial recall 0.50, Hindi recall 0.886). Hardening is scheduled for M6.
+- **Obfuscated Scams**: Scams that paraphrase "OTP" in descriptive Hindi (such as "गुप्त सत्यापन कोड") inside a fake security warning were caught at lower recall on the last frozen Tier 1 test (adversarial recall 0.50, Hindi recall 0.886). See [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md) item 7.
+- **Early-Preview Languages**: Gujarati, Kannada, Malayalam and Punjabi detection misses many scams (recall 0.33–0.73 on held-out tests), especially utility disconnection notices, UPI PIN receive lures and code requests written in native script.
+- **SMS App Coverage**: Only Google Messages and Samsung Messages are monitored, and their notification formats have not yet been confirmed with real-device recordings. Other OEM SMS apps (Xiaomi, OPPO/Realme, Vivo, Transsion) are not covered until verified.
+- **Unverified Brands**: Some regional electricity distributors have no verified official domain yet, so brand/domain mismatch checks stay off for them (see [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md) item 4).
 
 ---
 
 ## Supported Languages
 
-| Language | Code | Current Status |
-| :--- | :--- | :--- |
-| English | `en` | Supported (Tier 1) |
-| Hindi (Devanagari) | `hi` | Supported (Tier 1) |
-| Hinglish (Latin script) | `hi-Latn` | Supported (Tier 1) |
-| Regional Indic (Marathi, Tamil, Telugu, etc.) | - | Planned for Milestone M5 |
+| Language | Code | Detection | App UI |
+| :--- | :--- | :--- | :--- |
+| English | `en` | Supported (Tier 1) | Yes |
+| Hindi (Devanagari) | `hi` | Supported (Tier 1) | Yes |
+| Hinglish (Latin script) | `hi-Latn` | Supported (Tier 1) | Yes |
+| Bengali, Marathi, Telugu, Tamil, Odia | `bn`, `mr`, `te`, `ta`, `or` | Beta (Tier 2, rules only) | Yes |
+| Gujarati, Kannada, Malayalam, Punjabi | `gu`, `kn`, `ml`, `pa` | Early preview (Tier 3, rules only) | Yes |
+
+Tier 2 and Tier 3 languages are detected by rules and language packs only; the ML model is switched off for scripts it was not trained on (and for Marathi, to keep it apart from Hindi). Regional packs and translations are awaiting native-speaker review, and the app labels them as beta.
 
 ---
 
@@ -133,6 +154,15 @@ Evaluated strictly once on the frozen synthetic test split (`eval/m4_fresh_test_
 | **Rules-only vs Rules+ML Recall** | - | **0.648 $\to$ 0.957** (+30.9 pp) | PASS |
 | **Adversarial Subset Recall** | - | **0.500** (47 / 94) | Known gap |
 | **Tier 1 Per-Language Gates** | All $\ge 0.90$ | `en`: 1.0, `hi-Latn`: 0.987, `hi`: 0.886 | **FAIL** (`hi` recall < 0.90) |
+
+This frozen Tier 1 test split has not been re-run since M4.
+
+**Regional languages** (synthetic, 160 rows per language, 60 scam / 100 benign):
+
+| Tier | Languages | Danger Precision | Benign Raised to Danger / Caution | Caution+ Recall |
+| :--- | :--- | :--- | :--- | :--- |
+| Tier 2 (gated) | `bn`, `mr`, `te`, `ta`, `or` | 1.0 | 0.0% / 0.0% | 0.80–1.00 (gate $\ge 0.80$) |
+| Tier 3 (reported, ungated) | `gu`, `kn`, `ml`, `pa` | 1.0 | 0.0% / 0.0% | `gu` 0.333, `kn` 0.600, `ml` 0.667, `pa` 0.733 |
 
 *Real-world check*: Scored traffic challan APK lure (`eval/real_world.jsonl`, 1 message; notification format unverified) evaluated to `DANGER` (score 0.969, rule score 0.85).
 
@@ -152,7 +182,9 @@ Evaluated strictly once on the frozen synthetic test split (`eval/m4_fresh_test_
 | [`packs/`](packs/) | Detection rules (`rules.json`), brand database, PSL, and model weights (`model.bin`). |
 | [`ml/`](ml/) | Python training scripts, synthetic dataset generators, and requirement specs. |
 | [`eval/`](eval/) | Evaluation datasets (`corpus.jsonl`, `real_world.jsonl`) and test result reports. |
-| [`tools/ci/`](tools/ci/) | Gradle verification tasks enforcing zero-network and zero-logging invariants. |
+| [`tools/ci/`](tools/ci/) | Gradle verification tasks enforcing zero-network and zero-logging invariants, plus the PII pre-commit hook. |
+| [`tools/eval/`](tools/eval/) | Regional dataset generators, native-speaker review kit generator, and real-world intake tooling. |
+| [`docs/`](docs/) | Architecture spec, privacy policy, Play Store listing, pack update spec, and brand assets. |
 
 ---
 
@@ -229,13 +261,21 @@ The resulting `packs/model/model.bin` (262,176 bytes) and `packs/model/model.jso
 - [x] **Milestone M2**: Notification capture, deduplication, and share target.
 - [x] **Milestone M3**: Encrypted storage, retention purge, Compose UI, Section 16.4 privacy tests.
 - [x] **Milestone M4**: Kotlin featurizer, linear classifier, Platt calibration, product rule gating, evaluation reports.
-- [ ] **Milestone M5**: Regional language packs (Tier 2/3).
-- [ ] **Milestone M6**: Hardening (paraphrase and obfuscation defense), low-end device performance, accessibility, Play release.
+- [x] **Milestone M5**: Regional language packs (Tier 2: `bn`, `mr`, `te`, `ta`, `or`; Tier 3: `gu`, `kn`, `ml`, `pa`). SMS notification checks with TRAI DLT header parsing were added just before M5.
+- [x] **Milestone M6**: Release hardening, listener health monitoring, OEM battery guide, accessibility, benchmarks, 2.0 MB release APK.
+- [x] **UI**: Abhaya shield icon, Calm Guardian design, Stop screen, family contact, language choice at setup.
+
+### Next
+
+- Play closed testing (12 testers, 14 days) and testing on physical phones.
+- Native-speaker review of regional language packs and translations.
+- Real-device recordings to verify SMS app notification formats.
+- Better recall for early-preview languages and obfuscated Hindi scams, measured on new frozen test splits.
 
 ### Post-MVP Ideas
 
-- On-device OCR for traffic violation and banking notice screenshots.
-- Support for SMS and Telegram message notifications.
+- On-device OCR for scam screenshots shared to DUARF (no media permission).
+- Support for Telegram message notifications.
 - Local family protection mode (optional high-risk notification relay between paired devices).
 
 ---
@@ -249,7 +289,8 @@ The resulting `packs/model/model.bin` (262,176 bytes) and `packs/model/model.jso
    ```
 2. **Adding Rules or Signals**: Rules are defined in [`packs/rules.json`](packs/rules.json). Language lexicons live in [`packs/lang/{lang}.json`](packs/lang/). All regexes must behave identically across JVM and Android ICU without unsupported flags.
 3. **Evaluation Protocol**: Test split results are strictly frozen. When false negatives are found, developers must **never** tune rules, lexicons, or training templates to match test split rows directly. Corrections must be addressed through development splits (`dev`, `dev2`, `dev3`).
-4. **Invariant Enforcement**: Every pull request must pass `./gradlew check`. Any attempt to introduce network permissions, tracking SDKs, unredacted PII, or raw content logging will fail the build.
+4. **Real Messages as Fixtures**: Redact names, phone numbers, account numbers, amounts and codes before turning a real notification or message into a test fixture. Only the redacted fixture is committed; raw recordings stay on your machine and are gitignored.
+5. **Invariant Enforcement**: Every pull request must pass `./gradlew check`. Any attempt to introduce network permissions, tracking SDKs, unredacted PII, or raw content logging will fail the build.
 
 ---
 
