@@ -339,5 +339,4 @@ Copyright (C) 2026 Gourav Mahunta
 ## Google Play Store
 
 DUARF is currently preparing for closed testing on Google Play (12 testers for 14 continuous days).  
-If you would like to participate in the closed beta, please see [docs/play-store/duarf_launch_posts.md](docs/play-store/duarf_launch_posts.md) or open an issue.
-
+If you would like to participate in the closed beta, please open an issue or reach out via GitHub.
