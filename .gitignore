@@ -10,6 +10,11 @@ captures
 .cxx
 *.apk
 *.aab
+*.jks
+*.keystore
+*.key
+keystore.properties
+key.properties
 app/src/main/assets/packs/
 engine-cli/eval/
 ml/venv/

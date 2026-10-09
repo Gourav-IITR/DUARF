@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2026 Gourav Mahunta
 
+import java.io.File
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -32,6 +36,29 @@ android {
         }
     }
 
+    val keystorePropertiesFile = rootProject.file("keystore.properties")
+    val hasReleaseKeystore = keystorePropertiesFile.exists()
+
+    signingConfigs {
+        if (hasReleaseKeystore) {
+            val keystoreProperties = Properties().apply {
+                FileInputStream(keystorePropertiesFile).use { load(it) }
+            }
+            create("release") {
+                val storeFilePath = keystoreProperties.getProperty("storeFile") ?: ""
+                val f = File(storeFilePath)
+                storeFile = if (f.isAbsolute) {
+                    f
+                } else {
+                    rootProject.file(storeFilePath)
+                }
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -40,7 +67,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug") // Placeholder for dev/CI builds
+            signingConfig = if (hasReleaseKeystore) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug") // Fallback for environments without release keys
+            }
         }
         debug {
             applicationIdSuffix = ".debug"
