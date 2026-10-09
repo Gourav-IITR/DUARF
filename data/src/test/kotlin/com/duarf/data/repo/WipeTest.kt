@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Gourav Mahunta
+
 package com.duarf.data.repo
 
 import com.duarf.data.crypto.SoftwareCryptoEngine
@@ -71,11 +74,17 @@ class WipeTest {
         preferences.updateLanguageCode("hi")
         preferences.setOnboardingCompleted(true)
 
+        val contactRepo = FamilyContactRepository(preferences, crypto)
+        val contactSaved = contactRepo.save("Uncle Bob", "+919876543210")
+        assertThat(contactSaved).isTrue()
+
         // Verify pre-conditions
         assertThat(alertDao.getAllRawEntities()).isNotEmpty()
         assertThat(suppressedDao.isSuppressed("fp_suppressed")).isTrue()
         assertThat(statsRepository.getMessageCount("conv_key_1")).isEqualTo(1)
         assertThat(preferences.userPreferencesFlow.first().retentionDays).isEqualTo(14)
+        assertThat(preferences.userPreferencesFlow.first().familyContactCipher).isNotNull()
+        assertThat(contactRepo.current()).isEqualTo(FamilyContact("Uncle Bob", "+919876543210"))
         assertThat(crypto.decrypt(ciphertextBeforeWipe)).isEqualTo("Sensitive message to be wiped")
 
         // 2. Perform Wipe (§12, §16.4)
@@ -95,11 +104,38 @@ class WipeTest {
         assertThat(resetPrefs.groupAlerts).isFalse()
         assertThat(resetPrefs.onboardingCompleted).isFalse()
         assertThat(resetPrefs.languageCode).isEqualTo("en")
+        assertThat(resetPrefs.familyContactCipher).isNull()
+        assertThat(contactRepo.current()).isNull()
 
         // KeyStore keys wiped: previous ciphertexts can never be decrypted
         assertThrows(AEADBadTagException::class.java) {
             crypto.decrypt(ciphertextBeforeWipe)
         }
+        }
+    }
+
+    @Test
+    fun `wipe completely clears family contact and destroys crypto keys`() {
+        runBlocking {
+        val contactRepo = FamilyContactRepository(preferences, crypto)
+        val saved = contactRepo.save("Trusted Sister", "+919876543210")
+        assertThat(saved).isTrue()
+        assertThat(contactRepo.current()).isEqualTo(FamilyContact("Trusted Sister", "+919876543210"))
+
+        val cipherBeforeWipe = preferences.userPreferencesFlow.first().familyContactCipher
+        assertThat(cipherBeforeWipe).isNotNull()
+
+        // Perform wipe (§12)
+        alertRepository.deleteAllData()
+
+        // Contact and cipher are gone
+        assertThat(contactRepo.current()).isNull()
+        assertThat(preferences.userPreferencesFlow.first().familyContactCipher).isNull()
+
+            // Keys wiped: previous ciphertext can never be decrypted
+            assertThrows(AEADBadTagException::class.java) {
+                crypto.decrypt(java.util.Base64.getDecoder().decode(cipherBeforeWipe))
+            }
         }
     }
 }

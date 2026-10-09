@@ -278,5 +278,10 @@
     <string name="family_number_invalid">10 ते 15 अंकी फोन नंबर टाका</string>
     <string name="family_saved">जतन केले</string>
     <string name="check_result_title">तपासणीचा निकाल</string>
+    <!-- Open Source Licences -->
+    <string name="setting_licenses">मुक्त स्रोत परवाने</string>
+    <string name="licenses_title">मुक्त स्रोत परवाने</string>
+    <string name="licenses_third_party_title">तृतीय-पक्ष लायब्ररी</string>
+    <string name="licenses_third_party_subtitle">DUARF मध्ये खालील मुक्त स्रोत लायब्ररी वापरल्या जातात:</string>
 </resources>
 

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Gourav Mahunta
+
 package com.duarf.app.ui.screens
 
 import androidx.compose.foundation.clickable
@@ -37,6 +40,7 @@ fun SettingsScreen(
     onNavigatePrivacyProof: () -> Unit,
     onNavigateBatteryGuide: () -> Unit,
     onNavigateAbout: () -> Unit,
+    onNavigateLicenses: () -> Unit = {},
     onDeleteAllData: () -> Unit
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -269,6 +273,12 @@ fun SettingsScreen(
                 headlineContent = { Text(stringResource(R.string.setting_about)) },
                 trailingContent = { Icon(Icons.Default.ChevronRight, contentDescription = null) },
                 modifier = Modifier.clickable(onClick = onNavigateAbout)
+            )
+
+            ListItem(
+                headlineContent = { Text(stringResource(R.string.setting_licenses)) },
+                trailingContent = { Icon(Icons.Default.ChevronRight, contentDescription = null) },
+                modifier = Modifier.clickable(onClick = onNavigateLicenses)
             )
 
             HorizontalDivider()

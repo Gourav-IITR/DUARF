@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Gourav Mahunta
+
 package com.duarf.engine.signal
 
 import com.duarf.engine.extract.*

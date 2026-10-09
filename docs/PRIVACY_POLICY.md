@@ -42,9 +42,9 @@ DUARF requires Android's Notification Access permission to monitor incoming noti
 - **Hardware-Backed Key Protection:** Cryptographic keys are generated and protected using the Android Keystore system (backed by hardware security modules / StrongBox on supported devices). Keys never leave your device.
 
 ### 3.4 Optional Family Contact
-- You may save one name and phone number of someone you trust, so warnings can offer a "Call" button. It is optional and typed in by you; DUARF does not read your contacts.
-- It is stored only on your device, encrypted with the same AES-256-GCM Keystore key as alerts, and is used only to open your phone's dialer when you tap that button. Nothing is dialled automatically and nothing else is passed to the dialer.
-- You can remove it at any time in **Settings > Family contact**; deleting all data removes it too.
+- You may optionally save one contact (name and phone number) of someone you trust, so scam warnings can offer a quick "Call" button. It is completely optional and typed in directly by you; DUARF does not request or require `READ_CONTACTS` or `CALL_PHONE` permissions.
+- One optional contact (name + number) is stored encrypted on the device only (using the platform's Android Keystore AES-256-GCM encryption), is never shared or transmitted anywhere, and is used solely to open your phone's dialer (`ACTION_DIAL`) with the number pre-filled upon your tap. Nothing is dialed automatically.
+- You can change or remove this contact at any time in **Settings > Family contact**, and it is completely deleted by "Delete all data".
 
 ---
 

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Gourav Mahunta
+
 """
 tools/eval/generate_review_kit.py
 Generates comprehensive human-reviewable Native Speaker Review Packets (§19.3)

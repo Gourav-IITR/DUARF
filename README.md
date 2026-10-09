@@ -1,5 +1,7 @@
 # Duarf
 
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg)](LICENSE)
+
 On-device scam detection for WhatsApp and SMS on Android. Checks WhatsApp and SMS notifications. Never reads your inbox. The name is "fraud" spelled backwards.
 
 > **Status**: Milestone M6 Complete (Release Hardening, Evaluation & Packaging). Ready for 12-tester closed testing.
@@ -259,7 +261,15 @@ Duarf is an independent project and is not affiliated with, sponsored by, or end
 
 ## License
 
-License: TBD (Tracked in [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md))
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg)](LICENSE)
+
+Code and our own packs: GPL-3.0-or-later; bundled third-party data: see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+All application code, rule definitions, brand catalogs, language packs in `packs/`, and trained ML model files (`packs/model/model.bin`, `packs/model/model.json`) are licensed under the GNU General Public License v3.0 or later (GPL-3.0-or-later).
+
+Bundled third-party data, specifically the Public Suffix List subset in `packs/lists/psl.dat`, is licensed under the Mozilla Public License 2.0 (MPL-2.0). See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for full notices and upstream URLs.
+
+Copyright (C) 2026 Gourav Mahunta
 
 <!-- TODO: Add application screenshots once UI review is complete -->
 <!-- TODO: Add Google Play Store download link once released -->

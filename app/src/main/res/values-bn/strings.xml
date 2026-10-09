@@ -278,5 +278,10 @@
     <string name="family_number_invalid">10 থেকে 15 সংখ্যার ফোন নম্বর দিন</string>
     <string name="family_saved">সংরক্ষিত</string>
     <string name="check_result_title">পরীক্ষার ফলাফল</string>
+    <!-- Open Source Licences -->
+    <string name="setting_licenses">ওপেন-সোর্স লাইসেন্স</string>
+    <string name="licenses_title">ওপেন-সোর্স লাইসেন্স</string>
+    <string name="licenses_third_party_title">থার্ড-পার্টি লাইব্রেরি</string>
+    <string name="licenses_third_party_subtitle">DUARF-এ নিম্নলিখিত ওপেন-সোর্স লাইব্রেরি ব্যবহার করা হয়েছে:</string>
 </resources>
 

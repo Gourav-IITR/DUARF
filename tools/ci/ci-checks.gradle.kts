@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Gourav Mahunta
+
 // Privacy and Security Invariant Verification Tasks (§2, §14)
 
 val verifyDependencies by tasks.registering {
@@ -13,9 +16,11 @@ val verifyDependencies by tasks.registering {
             "com.facebook",
             "com.appsflyer",
             "com.amplitude",
-            "com.mixpanel"
+            "com.mixpanel",
+            "androidx.security",
+            "com.google.crypto.tink"
         )
-        val forbiddenKeywords = listOf("okhttp", "retrofit", "ktor-client")
+        val forbiddenKeywords = listOf("okhttp", "retrofit", "ktor-client", "security-crypto", "tink")
 
         val components = project.configurations.named("releaseRuntimeClasspath").get().incoming.resolutionResult.allComponents
         components.forEach { component ->
@@ -281,6 +286,7 @@ val verifyNoPiiLeakage by tasks.registering {
             if (domLower == "test" || domLower.endsWith(".test")) return true
             if (domLower == "invalid" || domLower.endsWith(".invalid")) return true
             if (domLower == "localhost" || domLower.endsWith(".localhost")) return true
+            if (domLower == "users.noreply.github.com" || domLower.endsWith(".noreply.github.com") || domLower == "noreply.github.com") return true
             return false
         }
 

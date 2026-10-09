@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Gourav Mahunta
+
 """
 tools/eval/generate_new_tier3_test.py
 Generates fresh frozen Tier 3 held-out test splits (eval/test_{gu,kn,ml,pa}.jsonl)

@@ -278,5 +278,10 @@
     <string name="family_number_invalid">10 ರಿಂದ 15 ಅಂಕಿಯ ಫೋನ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ</string>
     <string name="family_saved">ಉಳಿಸಲಾಗಿದೆ</string>
     <string name="check_result_title">ಪರಿಶೀಲನೆಯ ಫಲಿತಾಂಶ</string>
+    <!-- Open Source Licences -->
+    <string name="setting_licenses">ಓಪನ್-ಸೋರ್ಸ್ ಪರವಾನಗಿಗಳು</string>
+    <string name="licenses_title">ಓಪನ್-ಸೋರ್ಸ್ ಪರವಾನಗಿಗಳು</string>
+    <string name="licenses_third_party_title">ತೃತೀಯ ಪಕ್ಷದ ಲೈಬ್ರರಿಗಳು</string>
+    <string name="licenses_third_party_subtitle">DUARF ನಲ್ಲಿ ಕೆಳಗಿನ ಓಪನ್-ಸೋರ್ಸ್ ಲೈಬ್ರರಿಗಳನ್ನು ಬಳಸಲಾಗಿದೆ:</string>
 </resources>
 

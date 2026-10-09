@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Gourav Mahunta
+
 """
 tools/eval/generate_tier2_datasets.py
 Generates Tier 2 evaluation splits (dev and test) for Bengali (bn), Marathi (mr),

@@ -278,5 +278,10 @@
     <string name="family_number_invalid">10 முதல் 15 இலக்க தொலைபேசி எண்ணை உள்ளிடவும்</string>
     <string name="family_saved">சேமிக்கப்பட்டது</string>
     <string name="check_result_title">சரிபார்ப்பு முடிவு</string>
+    <!-- Open Source Licences -->
+    <string name="setting_licenses">திறந்த மூல உரிமங்கள்</string>
+    <string name="licenses_title">திறந்த மூல உரிமங்கள்</string>
+    <string name="licenses_third_party_title">மூன்றாம் தரப்பு நூலகங்கள்</string>
+    <string name="licenses_third_party_subtitle">DUARF இல் பின்வரும் திறந்த மூல நூலகங்கள் பயன்படுத்தப்படுகின்றன:</string>
 </resources>
 

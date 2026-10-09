@@ -275,5 +275,18 @@
     <string name="family_number_invalid">Enter a phone number with 10 to 15 digits</string>
     <string name="family_saved">Saved</string>
     <string name="check_result_title">Check result</string>
+
+    <!-- Open Source Licences Screen -->
+    <string name="setting_licenses">Open-source licences</string>
+    <string name="licenses_title">Open-source licences</string>
+    <string name="licenses_app_title" translatable="false">DUARF</string>
+    <string name="licenses_app_license" translatable="false">GNU General Public License v3.0 or later (GPL-3.0-or-later)</string>
+    <string name="licenses_app_copyright" translatable="false">Copyright (C) 2026 Gourav Mahunta</string>
+    <string name="licenses_app_notice" translatable="false">This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</string>
+    <string name="licenses_psl_title" translatable="false">Public Suffix List</string>
+    <string name="licenses_psl_license" translatable="false">Mozilla Public License 2.0 (MPL-2.0)</string>
+    <string name="licenses_psl_notice" translatable="false">Subset bundled in packs/lists/psl.dat under MPL-2.0.\nSource: https://publicsuffix.org/</string>
+    <string name="licenses_third_party_title">Third-party libraries</string>
+    <string name="licenses_third_party_subtitle">The following open-source libraries are used in DUARF:</string>
 </resources>
 

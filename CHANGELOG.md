@@ -698,3 +698,27 @@ Chosen by the user from the design canvas: direction A (Calm Guardian), the "cle
 - **Strings**: 41 new strings in all 12 locales (non-English marked for native-speaker review, §19.3); 7 strings the redesign replaced were removed. Lint's unused-resource count is 84, down from 85.
 - **Tests**: `FamilyContactRepositoryTest` (round trip, never stored in clear, invalid numbers, clear), `WarningActionTest`, `BrandDisplayNameTest`. `./gradlew check` and the §14 CI checks pass (192 unit tests).
 - **Verified on a Pixel 7 emulator (API 37)** with a fresh install: setup with a family contact, the built-in SBI test scam produced "Don't open the link — likely scam" with See why / Call Son / Not a scam, a private lock-screen version and the group key; See why opened the Stop screen; the detail and Home screens rendered in the new theme. Not checked on a physical phone; the group summary (two or more warnings at once) was not exercised.
+
+## Open Source & Licensing: GPL-3.0-or-later (2026-10-09)
+- **Licensing under GPL-3.0-or-later**:
+  - Full unmodified GNU General Public License v3.0 added to `LICENSE`.
+  - Added SPDX license headers (`// SPDX-License-Identifier: GPL-3.0-or-later`, `// Copyright (C) 2026 Gourav Mahunta`) to all 132 source files across `:app`, `:capture`, `:data`, `:engine`, `:engine-cli`, `ml/`, `eval/`, and `tools/`.
+  - Updated `README.md` with GPL-3.0-or-later badge and licensing section.
+  - Documented third-party bundled data in `THIRD_PARTY_NOTICES.md`: Public Suffix List subset in `packs/lists/psl.dat` identified under MPL-2.0; all other packs, lists, and model weights authored by DUARF licensed under GPL-3.0-or-later.
+- **Build-Time License Generation & In-App Screen**:
+  - Automated `generateLicenses` task in `app/build.gradle.kts`: inspects POM and parent POM metadata for all runtime dependencies in `releaseRuntimeClasspath`, enforces GPL-3.0 compatibility (Apache-2.0, MIT, BSD, MPL), and writes `build/generated/assets/licenses/licenses.json`.
+  - Added `LicensesScreen.kt` in `:app`: displays DUARF's application license, PSL notices, and third-party dependency coordinates with their respective licenses completely offline without network permissions.
+  - Linked from Settings › "Open-source licences" (`setting_licenses`).
+- **Privacy Policy Hosting**:
+  - Created standalone responsive `docs/index.html` for GitHub Pages hosting from the `/docs` branch.
+
+## Pure Platform Crypto & Family Contact Privacy Hardening (2026-10-09)
+- **Removal of `androidx.security:security-crypto` and Tink**:
+  - Purged `androidx.security:security-crypto` and transitive `com.google.crypto.tink:tink-android` from dependencies.
+  - Hardened Section 12 invariant: only platform `javax.crypto` and Android Keystore AES-256-GCM are used.
+  - Updated `verifyDependencies` in `tools/ci/ci-checks.gradle.kts` to strictly forbid `androidx.security` and `com.google.crypto.tink`.
+- **Family Contact & Data Wipe Verification**:
+  - Confirmed family contact is stored encrypted using existing platform Keystore AES-256-GCM via `CryptoEngine`.
+  - Added unit test in `WipeTest` proving "Delete all data" completely wipes the family contact, deletes DataStore ciphertext, and destroys Keystore cryptographic keys.
+  - Verified zero contacts or phone permissions requested (`READ_CONTACTS` and `CALL_PHONE` absent; manual entry + `ACTION_DIAL`).
+  - Updated `docs/PRIVACY_POLICY.md`, `docs/index.html`, and `docs/PLAY_STORE_LISTING.md`.

@@ -278,5 +278,10 @@
     <string name="family_number_invalid">10ରୁ 15 ଅଙ୍କର ଫୋନ୍ ନମ୍ବର ଦିଅନ୍ତୁ</string>
     <string name="family_saved">ସଞ୍ଚୟ ହେଲା</string>
     <string name="check_result_title">ଯାଞ୍ଚ ଫଳାଫଳ</string>
+    <!-- Open Source Licences -->
+    <string name="setting_licenses">ଓପନ୍-ସୋର୍ସ ଲାଇସେନ୍ସ</string>
+    <string name="licenses_title">ଓପନ୍-ସୋର୍ସ ଲାଇସେନ୍ସ</string>
+    <string name="licenses_third_party_title">ତୃତୀୟ-ପକ୍ଷ ଲାଇବ୍ରେରୀ</string>
+    <string name="licenses_third_party_subtitle">DUARF ରେ ନିମ୍ନଲିଖିତ ଓପନ୍-ସୋର୍ସ ଲାଇବ୍ରେରୀ ବ୍ୟବହୃତ ହୋଇଛି:</string>
 </resources>
 

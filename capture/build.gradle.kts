@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Gourav Mahunta
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)

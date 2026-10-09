@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Gourav Mahunta
+
 package com.duarf.app.ui
 
 import androidx.compose.runtime.*
@@ -130,6 +133,7 @@ fun DuarfNavGraph(
                 onNavigatePrivacyProof = { navController.navigate("privacy_proof") },
                 onNavigateBatteryGuide = { navController.navigate("battery_guide") },
                 onNavigateAbout = { navController.navigate("about") },
+                onNavigateLicenses = { navController.navigate("licenses") },
                 onDeleteAllData = { viewModel.deleteAllData() }
             )
         }
@@ -186,6 +190,10 @@ fun DuarfNavGraph(
                 modelVersion = viewModel.modelVersion,
                 onBack = { navController.popBackStack() }
             )
+        }
+
+        composable("licenses") {
+            LicensesScreen(onBack = { navController.popBackStack() })
         }
     }
 }

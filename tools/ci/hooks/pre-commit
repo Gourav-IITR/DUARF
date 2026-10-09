@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Gourav Mahunta
+
 # tools/ci/hooks/pre-commit
 # Versioned Git pre-commit hook to prevent unredacted PII from being committed (§2, §14, §19)
 set -euo pipefail

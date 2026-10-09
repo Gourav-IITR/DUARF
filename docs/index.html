@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUARF — Privacy Policy</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --primary: #2F3A8F;
+            --primary-light: #e0e7ff;
+            --border-color: #e2e8f0;
+            --tag-bg: #f1f5f9;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f172a;
+                --card-bg: #1e293b;
+                --text-color: #f8fafc;
+                --text-muted: #94a3b8;
+                --primary: #818cf8;
+                --primary-light: #312e81;
+                --border-color: #334155;
+                --tag-bg: #1e293b;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.65;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .meta {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+        h2 {
+            color: var(--text-color);
+            font-size: 1.35rem;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.4rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .highlight-box {
+            background-color: var(--tag-bg);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+        .highlight-box p:last-child {
+            margin-bottom: 0;
+        }
+        a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            background: var(--tag-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="badge">Privacy Policy</span>
+            <h1>DUARF: On-Device Scam Warning</h1>
+            <div class="meta">
+                <span><strong>Package:</strong> <code>com.duarf.app</code></span>
+                <span><strong>Effective Date:</strong> October 8, 2026</span>
+                <span><strong>Last Updated:</strong> October 8, 2026</span>
+            </div>
+        </header>
+
+        <section>
+            <h2>1. Overview &amp; Core Philosophy</h2>
+            <p>DUARF is built around a single, foundational principle: <strong>Privacy by Design</strong>.</p>
+            <p>DUARF is an on-device utility designed to detect and warn users about scam messages received via notifications (such as WhatsApp and SMS). Unlike traditional security applications that transmit user data or telemetry to cloud servers, DUARF operates entirely on your physical device.</p>
+            <div class="highlight-box">
+                <p><strong>DUARF has no internet permission and cannot transmit data to any remote server or third party under any circumstances.</strong></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>2. Zero Network Permission &amp; Zero Cloud Collection</h2>
+            <ul>
+                <li><strong>No Network Access:</strong> DUARF does not declare or request <code>android.permission.INTERNET</code>, <code>android.permission.ACCESS_NETWORK_STATE</code>, or <code>android.permission.ACCESS_WIFI_STATE</code> in its Android manifest. It is technically impossible for DUARF to establish network connections, transmit data, or make outbound requests.</li>
+                <li><strong>Zero Remote Collection:</strong> We do not collect, store, transmit, or sell your personal data, device identifiers, IP addresses, location data, message contents, phone numbers, or application usage statistics.</li>
+                <li><strong>No Third-Party SDKs:</strong> DUARF contains zero advertising SDKs, zero analytics trackers (no Google Analytics, Firebase Analytics, Mixpanel, etc.), and zero remote crash reporting services (no Sentry, Firebase Crashlytics, etc.).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>3. How We Process Notification Data</h2>
+            <h3>3.1 Permission Used: Notification Access (<code>NotificationListenerService</code>)</h3>
+            <p>DUARF requires Android's Notification Access permission to monitor incoming notifications from specified messaging applications (WhatsApp and SMS):</p>
+            <ul>
+                <li><strong>Purpose:</strong> To read the text, title, and sender identifier of incoming message notifications so our local rule engine and machine learning classifier can evaluate them for fraud signals.</li>
+                <li><strong>Scope:</strong> DUARF does not request <code>READ_SMS</code>, <code>RECEIVE_SMS</code>, contacts, storage, or microphone permissions. It only reads notifications as they appear on your device's notification bar.</li>
+            </ul>
+
+            <h3>3.2 Benign Message Discard (In-Memory Processing)</h3>
+            <ul>
+                <li>Messages evaluated as <strong>benign</strong> (not scam) are processed strictly in volatile device memory (RAM) and are discarded immediately after analysis.</li>
+                <li>Raw message content, sender information, and timestamps of benign messages are <strong>never written to persistent storage or disk</strong>.</li>
+                <li>Only high-level, aggregate counters (such as the total count of analyzed messages) are stored locally.</li>
+            </ul>
+
+            <h3>3.3 Flagged Alert Storage &amp; Encryption</h3>
+            <ul>
+                <li>When a message contains definitive scam indicators and triggers a <code>CAUTION</code> or <code>DANGER</code> alert, a record of the alert is saved locally on your device so you can view it within the app's Alerts feed.</li>
+                <li><strong>Encryption at Rest:</strong> All flagged alert records (including sender and message snippet) are stored in an encrypted database using <strong>AES-256-GCM authenticated encryption</strong>.</li>
+                <li><strong>Hardware-Backed Key Protection:</strong> Cryptographic keys are generated and protected using the Android Keystore system (backed by hardware security modules / StrongBox on supported devices). Keys never leave your device.</li>
+            </ul>
+
+            <h3>3.4 Optional Family Contact</h3>
+            <ul>
+                <li>You may optionally save one contact (name and phone number) of someone you trust, so scam warnings can offer a quick "Call" button. It is completely optional and typed in directly by you; DUARF does not request or require <code>READ_CONTACTS</code> or <code>CALL_PHONE</code> permissions.</li>
+                <li>One optional contact (name + number) is stored encrypted on the device only (using the platform's Android Keystore AES-256-GCM encryption), is never shared or transmitted anywhere, and is used solely to open your phone's dialer (<code>ACTION_DIAL</code>) with the number pre-filled upon your tap. Nothing is dialed automatically.</li>
+                <li>You can change or remove this contact at any time in <strong>Settings &gt; Family contact</strong>, and it is completely deleted by "Delete all data".</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. User Control &amp; Data Deletion</h2>
+            <p>You maintain complete ownership and control over all data stored on your device:</p>
+            <ul>
+                <li><strong>Automatic Purge:</strong> Flagged alerts older than your configured retention period (default: 30 days) are automatically and permanently deleted from local storage.</li>
+                <li><strong>Instant Manual Deletion:</strong> You can delete individual alerts or delete all stored alerts at any time via <strong>Settings &gt; Clear All Alerts</strong>.</li>
+                <li><strong>App Uninstall:</strong> Uninstalling DUARF completely deletes all local databases, encrypted alert records, and cryptographic keys generated by the application.</li>
+                <li><strong>Revoking Permissions:</strong> You can revoke Notification Access at any time in your phone's system settings under <strong>Settings &gt; Apps &gt; Special app access &gt; Device &amp; app notifications</strong>. When revoked, DUARF ceases all notification processing immediately.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>5. Audited Logging</h2>
+            <p>To prevent accidental data leakage into Android system logs:</p>
+            <ul>
+                <li>DUARF employs strict numeric event code logging (<code>SafeLog</code>).</li>
+                <li>The app never logs message content, phone numbers, sender names, URLs, or cryptographic keys to Android's <code>logcat</code>.</li>
+                <li>Invariant CI checks (<code>verifyNoContentLogging</code>) continuously enforce this restriction across the entire codebase.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>6. Children's Privacy</h2>
+            <p>DUARF does not knowingly collect or solicit any personal information from children under the age of 13 (or under 16 in the European Union). Because DUARF operates strictly offline and collects no user data whatsoever, it complies with COPPA, GDPR-K, and equivalent child privacy regulations.</p>
+        </section>
+
+        <section>
+            <h2>7. Open Source Verification</h2>
+            <p>DUARF is developed transparently under the GNU General Public License v3.0 or later (GPL-3.0-or-later). Independent researchers and users can verify our privacy architecture, manifest permissions, and offline invariants directly by inspecting the source code and verifying release binaries:</p>
+            <ul>
+                <li>Manifest permissions can be independently verified using <code>apkanalyzer manifest permissions app-release.apk</code> or <code>aapt2 dump permissions</code>.</li>
+                <li>Dependencies can be audited using Gradle dependency reports.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>8. Changes to this Privacy Policy</h2>
+            <p>We may update this Privacy Policy from time to time to reflect architectural changes or regulatory requirements. Any updates will be included in future application release notes and published in our source repository.</p>
+        </section>
+
+        <section>
+            <h2>9. Contact Us</h2>
+            <p>If you have questions, feedback, or security concerns regarding this Privacy Policy or DUARF's privacy practices, please contact us:</p>
+            <ul>
+                <li><strong>Project Repository:</strong> <a href="https://github.com/Gourav-IITR/DUARF" target="_blank" rel="noopener">github.com/Gourav-IITR/DUARF</a></li>
+                <li><strong>Maintainer / Developer:</strong> Gourav Mahunta</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Gourav Mahunta. Licensed under GPL-3.0-or-later.</p>
+            <p>DUARF is an independent open-source project and is not affiliated with WhatsApp or Meta Platforms, Inc.</p>
+        </footer>
+    </div>
+</body>
+</html>

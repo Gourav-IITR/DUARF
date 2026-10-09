@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Gourav Mahunta
+
 """
 tools/ci/check_pii.py
 Enforces that no unredacted PII (Indian mobile numbers, bank account numbers,
@@ -107,6 +110,8 @@ def is_allowed_email(addr: str, domain: str) -> bool:
     if domain_lower == "invalid" or domain_lower.endswith(".invalid"):
         return True
     if domain_lower == "localhost" or domain_lower.endswith(".localhost"):
+        return True
+    if domain_lower == "users.noreply.github.com" or domain_lower.endswith(".noreply.github.com") or domain_lower == "noreply.github.com":
         return True
     return False
 

@@ -278,5 +278,10 @@
     <string name="family_number_invalid">10 నుండి 15 అంకెల ఫోన్ నంబర్ ఇవ్వండి</string>
     <string name="family_saved">సేవ్ అయింది</string>
     <string name="check_result_title">తనిఖీ ఫలితం</string>
+    <!-- Open Source Licences -->
+    <string name="setting_licenses">ఓపెన్-సోర్స్ లైసెన్స్‌లు</string>
+    <string name="licenses_title">ఓపెన్-సోర్స్ లైసెన్స్‌లు</string>
+    <string name="licenses_third_party_title">థర్డ్-పార్టీ లైబ్రరీలు</string>
+    <string name="licenses_third_party_subtitle">DUARF లో క్రింది ఓపెನ್-సోర్స్ లైబ్రరీలు ఉపయోగించబడుతున్నాయి:</string>
 </resources>
 

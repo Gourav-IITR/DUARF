@@ -277,5 +277,10 @@
     <string name="family_number_invalid">10 से 15 अंकों का फ़ोन नंबर डालें</string>
     <string name="family_saved">सहेजा गया</string>
     <string name="check_result_title">जांच का नतीजा</string>
+    <!-- Open Source Licences -->
+    <string name="setting_licenses">ओपन-सोर्स लाइसेंस</string>
+    <string name="licenses_title">ओपन-सोर्स लाइसेंस</string>
+    <string name="licenses_third_party_title">थर्ड-पार्टी लाइब्रेरीज़</string>
+    <string name="licenses_third_party_subtitle">DUARF में निम्नलिखित ओपन-सोर्स लाइब्रेरीज़ का उपयोग किया गया है:</string>
 </resources>
 

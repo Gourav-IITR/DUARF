@@ -34,7 +34,7 @@ Items marked "verify" and Section 19 human inputs are tracked here.
         - Add dev-set adversarial cases of security-warning-wrapped OTP requests.
      3. **Normalizer improvements**: Enhance `TextNormalizer` to handle homoglyphs, spacing/delimiters, and mixed scripts across Indic/Latin.
      - *Evaluation protocol*: Evaluated exclusively on dev splits (`dev`, `dev2`, `dev3`). Frozen test split re-runs strictly deferred until the M6 checkpoint.
-8. **License**: Open-source license TBD.
+8. **License**: Resolved (GPL-3.0-or-later; bundled Public Suffix List subset under MPL-2.0, see `THIRD_PARTY_NOTICES.md`).
 9. **SMS Notification Format Verification (§19)**:
    - **Status**: **Structure unverified**. No real-device notification recordings yet.
    - Google Messages (`com.google.android.apps.messaging`) and Samsung Messages (`com.samsung.android.messaging`) are monitored behind the "Check SMS" toggle. The parser extracts sender from `MessagingStyle.person.name` or `EXTRA_TITLE` and logs which field the sender originated from via `NotificationRecorder`. Real-world recordings from Google Messages and Samsung Messages will be provided to verify structure and extras key conventions.

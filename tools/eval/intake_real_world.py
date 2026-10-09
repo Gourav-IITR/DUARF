@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Gourav Mahunta
+
 """
 tools/eval/intake_real_world.py
 Intake tool for adding sanitized real-world messages (§19.2) into eval/real_world.jsonl.

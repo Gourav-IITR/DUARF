@@ -77,5 +77,10 @@
     <string name="family_number_invalid">10 se 15 ankon ka phone number daalein</string>
     <string name="family_saved">Save ho gaya</string>
     <string name="check_result_title">Jaanch ka nateeja</string>
+    <!-- Open Source Licences -->
+    <string name="setting_licenses">Open-source licences</string>
+    <string name="licenses_title">Open-source licences</string>
+    <string name="licenses_third_party_title">Third-party libraries</string>
+    <string name="licenses_third_party_subtitle">DUARF mein yeh open-source libraries use hoti hain:</string>
 </resources>
 

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Gourav Mahunta
+
 """
 tools/eval/generate_tier3_datasets.py
 Generates Tier 3 evaluation splits (dev and test) for Gujarati (gu), Kannada (kn),

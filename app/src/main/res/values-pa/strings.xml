@@ -278,5 +278,10 @@
     <string name="family_number_invalid">10 ਤੋਂ 15 ਅੰਕਾਂ ਦਾ ਫ਼ੋਨ ਨੰਬਰ ਦਰਜ ਕਰੋ</string>
     <string name="family_saved">ਸੰਭਾਲਿਆ ਗਿਆ</string>
     <string name="check_result_title">ਜਾਂਚ ਦਾ ਨਤੀਜਾ</string>
+    <!-- Open Source Licences -->
+    <string name="setting_licenses">ਓਪਨ-ਸੋਰਸ ਲਾਇਸੈਂਸ</string>
+    <string name="licenses_title">ਓਪਨ-ਸੋਰਸ ਲਾਇਸੈਂਸ</string>
+    <string name="licenses_third_party_title">ਤੀਜੀ-ਧਿਰ ਲਾਇਬ੍ਰੇਰੀਆਂ</string>
+    <string name="licenses_third_party_subtitle">DUARF ਵਿੱਚ ਹੇਠ ਲਿਖੀਆਂ ਓਪਨ-ਸੋਰਸ ਲਾਇਬ੍ਰੇਰੀਆਂ ਵਰਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ:</string>
 </resources>
 

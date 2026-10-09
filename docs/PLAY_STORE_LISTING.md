@@ -59,7 +59,10 @@ Ground all answers in verified manifest and code invariants ([support.google.com
 - **Tracking**: App does not track users (Zero third-party SDKs, zero analytics).
 - **Security Practices**:
   - All local on-device alert data encrypted at rest using Android Keystore AES-256-GCM (§12).
-  - Users can delete all stored alerts and data directly in the app at any time.
+  - Users can delete all stored alerts and data directly in the app at any time via "Delete all data".
+- **Optional Family Contact**:
+  - One optional contact (name + number) stored encrypted on the device only (Android Keystore AES-256-GCM, platform javax.crypto only), never shared, and deleted by "Delete all data".
+  - Requires zero contact permissions (`READ_CONTACTS` not requested; manual user entry) and zero calling permissions (`CALL_PHONE` not requested; opens system dialer with `ACTION_DIAL`).
 
 ### 3.3 Prominent Disclosures & Special App Access
 Per Google Play Policy on Special App Access and Prominent Disclosures ([support.google.com/googleplay/android-developer/answer/9799150](https://support.google.com/googleplay/android-developer/answer/9799150)):
