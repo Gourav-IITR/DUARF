@@ -1,6 +1,16 @@
+<p align="center">
+  <img src="docs/play-store/feature_graphic.png" alt="DUARF Banner" width="100%"/>
+</p>
+
 # Duarf
 
-[![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg)](LICENSE)
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg" alt="License: GPL-3.0-or-later"></a>
+  <img src="https://img.shields.io/badge/Platform-Android%208.0%2B%20(API%2026%2B)-green.svg" alt="Android 8.0+">
+  <img src="https://img.shields.io/badge/Internet%20Permission-None%20(Zero)-red.svg" alt="Zero Internet Permission">
+  <img src="https://img.shields.io/badge/Analytics%20%2F%20Trackers-Zero-purple.svg" alt="Zero Analytics">
+  <a href="https://gourav-iitr.github.io/DUARF/"><img src="https://img.shields.io/badge/Privacy%20Policy-GitHub%20Pages-informational.svg" alt="Privacy Policy"></a>
+</p>
 
 On-device scam detection for WhatsApp and SMS on Android. Checks WhatsApp and SMS notifications. Never reads your inbox. The name is "fraud" spelled backwards.
 
@@ -39,6 +49,18 @@ On the lock screen, the warning shows only "Possible scam message. Unlock to see
 - **Family contact**: one optional name and number, entered by hand (no contacts access). "Call <name>" opens the phone dialer and sends nothing.
 - **Language**: switch at any time from the Home top bar or Settings › Language. The UI language does not affect detection; every language pack is always loaded.
 - **Settings**: detection sensitivity, the Check SMS toggle, group message alerts, data retention period, battery guide, Proof of Privacy, open-source licences, and Delete All Data.
+
+---
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/play-store/screenshot_1.png" width="31%" alt="Stop Screen & Clear Warnings" />
+  &nbsp;&nbsp;
+  <img src="docs/play-store/screenshot_2.png" width="31%" alt="Home Dashboard & Protection Status" />
+  &nbsp;&nbsp;
+  <img src="docs/play-store/screenshot_3.png" width="31%" alt="Alert Details & Actionable Advice" />
+</p>
 
 ---
 
@@ -312,5 +334,10 @@ Bundled third-party data, specifically the Public Suffix List subset in `packs/l
 
 Copyright (C) 2026 Gourav Mahunta
 
-<!-- TODO: Add application screenshots once UI review is complete -->
-<!-- TODO: Add Google Play Store download link once released -->
+---
+
+## Google Play Store
+
+DUARF is currently preparing for closed testing on Google Play (12 testers for 14 continuous days).  
+If you would like to participate in the closed beta, please see [docs/play-store/duarf_launch_posts.md](docs/play-store/duarf_launch_posts.md) or open an issue.
+

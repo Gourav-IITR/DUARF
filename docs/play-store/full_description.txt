@@ -1,0 +1,28 @@
+DUARF warns you about likely scam messages — fake payment requests, digital arrest threats, malicious APK files and OTP or UPI PIN tricks — as they arrive in your notifications.
+
+PRIVACY BY DESIGN
+• No internet permission: DUARF does not declare android.permission.INTERNET, so it has no network access of its own.
+• Checked on your phone: messages that look fine are analysed in memory and discarded. Only flagged alerts are saved, encrypted, on your phone — and you can delete them at any time.
+• No ads, no analytics, no trackers.
+• Open source (GPL-3.0-or-later): anyone can inspect the code.
+
+HOW IT WORKS
+When a notification arrives from a supported messaging app (such as WhatsApp or your SMS app), DUARF's on-device engine looks for common fraud patterns:
+• Digital arrest and authority impersonation: fake police, CBI or customs threats.
+• Malicious APK downloads: fake traffic challan or utility "update" files.
+• UPI PIN and cashback tricks: requests to enter your PIN to "receive" money.
+• Urgency pretexts: false claims that your bank account or SIM will be blocked.
+
+When something looks risky, DUARF shows a clear warning, explains why in plain language and suggests safe next steps. You can also share any message to DUARF to check it.
+
+DUARF can miss scams and can occasionally flag a genuine message. Always verify through official channels before acting.
+
+LANGUAGES
+• Full support: English, Hindi and Hinglish.
+• Beta: Bengali, Marathi, Telugu, Tamil, Odia.
+• Early preview (limited detection): Gujarati, Kannada, Malayalam, Punjabi.
+
+PERMISSIONS
+DUARF asks for Notification Access so it can read the text of incoming messages from the messaging apps you choose. This is used only to check for scam signs on your phone. You can turn it off any time in Android Settings.
+
+DUARF is an independent project and is not affiliated with WhatsApp or Meta.
